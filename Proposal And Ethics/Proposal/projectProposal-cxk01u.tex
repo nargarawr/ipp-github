@@ -1,0 +1,152 @@
+\documentclass[a4paper,twoside,notitlepage,11pt]{article}
+\usepackage{etex}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyeq}
+\usepackage{amstext}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{lscape}
+\usepackage{titletoc}
+\usepackage{setspace}
+\usepackage[all]{xy}
+\usepackage{nccmath}
+\usepackage[a4paper,hmargin=50pt,vmargin=75pt]{geometry}
+\usepackage[hypcap]{caption}
+\usepackage{cleveref}
+\usepackage{mathpartir}
+\usepackage{float}
+\usepackage[compact]{titlesec}
+\usepackage{layouts}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{pgfgantt}
+
+\hypersetup{
+    unicode=false,
+    pdftoolbar=true,  
+    pdfmenubar=true,     
+    pdffitwindow=false,    
+    pdfstartview={FitH},  
+    pdftitle={Title},  
+    pdfauthor={Craig Knott},
+    pdfsubject={CS},
+    pdfnewwindow=true,  
+    colorlinks=true,  
+    linkcolor=black,  
+    citecolor=black, 
+    filecolor=black,  
+    urlcolor=black  
+}
+
+\newcommand{\paperTitleShort}{Niceway.to, Scenic Map Routing}
+\newcommand{\paperTitle}{Project Proposal}
+
+\setlength{\parskip}{0.25em}
+
+\renewcommand{\headrulewidth}{0.0pt}
+
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\fancyhead[LO]{Craig Knott}
+	\fancyhead[CO]{\textit{Niceway.to, Scenic Map Routing}}
+	\fancyhead[RO]{\thepage}
+	\fancyhead[LE]{\thepage}
+	\fancyhead[CE]{\textit{Project Proposal}}
+	\fancyhead[RE]{Craig Knott}
+}
+
+\begin{document}
+
+
+\pagestyle{empty}
+\begin{center}
+ {\LARGE \textbf{Project Proposal} \\ [0.2cm]}
+ \textbf{G54IPP - 40 Credits}\\
+   \textbf{Title: Niceway.to, Scenic Map Routing}\\
+    \textbf{Craig Knott (cxk01u)} \\
+	 \textbf{\today}
+\end{center}
+
+\section{Project Background}
+
+{\color{red}
+	Mention the two types of user
+}
+
+\section{Aims \& Objectives}
+\section{External Aspect}
+
+\newpage
+\newgeometry{left=40pt,right=50pt,top=70pt,bottom=40pt}
+\begin{landscape}
+\begin{center}
+	\begin{ganttchart}[
+	y unit chart = 0.7cm,
+	y unit title = 0.8cm,
+	x unit = 0.57cm,
+	vgrid,
+	hgrid
+	]{1}{32}
+		\gantttitle{Project Time Plan}{32}\\ 
+		\gantttitlelist{"Oct","Nov"}{4}
+		\gantttitlelist{"Dec"}{5}	
+		\gantttitlelist{"Jan","Feb"}{4}
+		\gantttitlelist{"Mar"}{5}			
+		\gantttitlelist{"Apr"}{4}	
+		\gantttitlelist{"May"}{2}\\
+	    \gantttitlelist{7,14,21,28,
+	                    4,11,18,25,
+	                    2,9,16,23,30,
+	                    6,13,20,27,
+	                    3,10,17,24,
+	                    3,10,17,24,31,
+	                    7,14,21,28,
+	                    5,12}{1}\\
+			\ganttbar{Look up basics of web scripting}{1}{1}\\
+			\ganttbar{Look for supplementary HTML services}{2}{2}\\		
+			\ganttbar{Recap fundamentals of fuzzy logic}{3}{3}\\	
+			\ganttbar{Recap principles of HCI}{4}{4}\\									
+			\ganttbar{Membership function creator}{4}{6}\\		% mf creator
+			\ganttbar{Input variable creator}{7}{9}\\		% input var
+			\ganttbar{Output variable creator}{10}{11}\\	% output var
+			\ganttbar[
+				bar/.append style={fill=gray}
+			]{Christmas break/January Exams}{12}{16}\\
+			\ganttbar{Rule creator}{17}{18}\\	% rule creator
+			\ganttbar{System evaluator}{19}{21}\\	% evaluation
+			\ganttbar{Evaluator supplements}{22}{23}\\	% eval supp
+			\ganttbar{File Saving/Loading}{19}{20}\\
+			\ganttbar{Help system}{5}{21}\\		% help system
+
+			\ganttbar{Research ease of use of other systems}{20}{22}\\	
+			\ganttbar{Research ease of use of my system}{22}{24}\\	
+			\ganttbar{Document findings of investigations}{25}{26}\\
+			
+			\ganttbar{Dissertation introductory sections}{5}{6}\\		% title, intro, abs, ack
+			\ganttbar{Dissertation main body}{18}{29}\\		% main body
+			\ganttbar{Dissertation conclusions}{30}{31}\\		% conclusions
+			\ganttbar{Dissertations appendices/references}{18}{31}\\		% ref, apndx, figures
+			\ganttmilestone{Hand-in week}{31}
+			
+			\ganttlink{elem8}{elem11}
+			\ganttlink{elem4}{elem5}
+			\ganttlink{elem4}{elem10}
+			\ganttlink{elem4}{elem6}			
+			\ganttlink{elem5}{elem8}			
+			\ganttlink{elem6}{elem8}
+			\ganttlink{elem8}{elem9}
+			\ganttlink{elem9}{elem10}
+			\ganttlink{elem10}{elem14}
+			\ganttlink{elem13}{elem15}			
+			\ganttlink{elem14}{elem15}
+			\ganttlink{elem15}{elem18}			
+			\ganttlink{elem17}{elem18}
+			\ganttlink{elem18}{elem20}
+	\end{ganttchart}
+\end{center}
+\end{landscape}
+\end{document}
