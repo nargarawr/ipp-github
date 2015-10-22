@@ -1,0 +1,231 @@
+html,
+body {
+    font-family: 'Open Sans', sans-serif !important;
+    height: 100%;
+}
+
+html .jumbotron:nth-child(odd) {
+    background: #E5ECFB;
+}
+
+body {
+    font-size: 15px;
+    line-height: 1.64;
+}
+
+.jumbotron {
+    background: #F4F7FE;
+    position: relative;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.jumbotron .container {
+    padding-top: 70px;
+    padding-bottom: 110px;
+}
+
+#landingPage.jumbotron {
+    background: no-repeat center right fixed url(../../images/index/background.png);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#aandiPage.jumbotron p {
+    font-size: 15px;
+}
+
+#landingPage.jumbotron .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: -webkit-linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    background: -o-linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    background: -moz-linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+}
+
+#landingPage.jumbotron .container {
+    position: relative;
+    top: 28%;
+    z-index: 4;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+#landingPage.jumbotron .container h1 {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    display: inline-block;
+}
+
+#landingPage.jumbotron .container a:hover,
+#landingPage.jumbotron .container a:focus {
+    text-decoration: none;
+    color: #999999;
+    border: none;
+}
+
+#landingPage.jumbotron .container a {
+    color: #FFFFFF;
+}
+
+#profilePage.jumbotron .row.contentContainer {
+    padding-top: 15px;
+}
+
+.jumbotron .scrollButtonDown:hover .glyphicon {
+    color: #999999;
+}
+
+.jumbotron .scrollButtonDown {
+    position: absolute;
+    cursor: pointer;
+    height: 80px;
+    width: 110px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#landingPage.jumbotron .scrollButtonDown .glyphicon {
+    color: #FFFFFF;
+}
+
+#landingPage.jumbotron .scrollButtonDown:hover .glyphicon {
+    color: #999999;
+}
+
+.jumbotron .scrollButtonUp .glyphicon {
+    padding-top: 40px;
+    color: #000000;
+}
+
+.jumbotron .scrollButtonUp:hover .glyphicon {
+    color: #999999;
+}
+
+.jumbotron .scrollButtonUp {
+    position: absolute;
+    cursor: pointer;
+    height: 80px;
+    width: 110px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.titleContainer {
+    padding-bottom: 45px;
+}
+
+.experienceListing .title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#workPage.jumbotron .container h1 {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.experienceListing .date {
+    padding-bottom: 10px;
+}
+
+.experienceListing {
+    padding-bottom: 45px;
+}
+
+.experienceContainer img {
+    width: 80%;
+}
+
+#contactPage.jumbotron {
+    background-color: #434242;
+    color: #FFFFFF;
+}
+
+#contactPage.jumbotron .scrollButtonUp .glyphicon {
+    color: #FFFFFF;
+}
+
+#contactPage.jumbotron .scrollButtonUp:hover .glyphicon {
+    color: #999999;
+}
+
+.contact-link {
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+.contact-link:visited {
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.contact-link:hover {
+    text-decoration: none;
+    color: #CCCCCC;
+}
+
+.contact-link .fa {
+    font-size: 36px;
+}
+
+.contact-link .icon-text {
+    padding-left: 10px;
+}
+
+@media (max-width: 991px) {
+    .jumbotron .container h1 {
+        padding-bottom: 30px;
+    }
+
+    .jumbotron .container {
+        padding-bottom: 60px;
+    }
+
+    .experienceContainer {
+        padding-top: 20px;
+    }
+
+    .experienceListing {
+        padding-top: 0;
+        padding-bottom: 25px;
+        border-bottom: 1px solid #CCCCCC;
+        margin-bottom: 20px;
+    }
+
+    .experienceListing:last-child {
+        border-bottom: none;
+    }
+
+    .experienceListing .leftSideContainer {
+        float: right;
+        text-align: right;
+    }
+
+    #profilePage.jumbotron .row.contentContainer .leftContainer {
+        padding-bottom: 25px;
+    }
+
+    .sm-hidden {
+        display: none;
+    }
+
+    .sm-margin {
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+    }
+}

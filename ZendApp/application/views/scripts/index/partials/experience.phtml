@@ -1,0 +1,35 @@
+<?
+/**
+ * Name - experience.phtml
+ * Author - Craig Knott
+ * Description - Draws a work experience/school experience
+ * Params - {
+ *  $this->position: What you did
+ *  $this->place: Where you did it
+ *  $this->dates: Between which dates
+ *  $this->info: Detailed explanation
+ * }
+ */
+?>
+
+<div class="row experienceListing">
+    <div class="col-md-4 col-md-offset-2 col-xs-12">
+        <div class="leftSideContainer">
+            <div class="title place">
+                <?= $this->place ?>
+            </div>
+            <div class="date">
+                <?= $this->dates ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="position title">
+            <?= $this->position ?>
+        </div>
+        <div class="info">
+            <?= $this->info ?>
+        </div>
+    </div>
+</div>
+

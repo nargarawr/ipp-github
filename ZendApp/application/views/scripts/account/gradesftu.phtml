@@ -1,0 +1,47 @@
+<div class="row gradesFTU">
+    <div class="part1">
+        <div class='col-md-12'>
+            <label>How long is your course?</label>
+            <div class="input-group">
+                <input type="number" id="ftuCourseLength" class="form-control" aria-describedby="yrs_addon" placeholder="Please a whole number, in years">
+                <span class="input-group-addon" id="yrs_addon">Years</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-success pull-right" id="goToPart2">
+                Next
+            </button>
+        </div>
+    </div>
+
+    <div class="part2 hidden">
+        <div class='col-md-12'>
+            <label>What year are you in currently?</label>
+            <div class="form-group">
+                <select class="form-control" id="ftuDefaultTab">
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-success pull-right" id="goToPart3">
+                Next
+            </button>
+        </div>
+    </div>
+
+    <div class="part3 hidden">
+        <div class="col-md-12">
+            <label>
+                How much is each year worth to your final grade?
+            </label>
+        </div>
+        <div id="yearWorthEntry">
+
+        </div>
+        <div class="col-md-12">
+            <button class="btn btn-success pull-right" id="submitForm">
+                Submit
+            </button>
+        </div>
+    </div>
+</div>

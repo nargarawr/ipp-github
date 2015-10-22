@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col-md-5">
+        <label> Custom Categories </label>
+        <table class="table table-striped">
+            <? if (count($this->customCategories) > 0) { ?>
+                <? foreach($this->customCategories as $category) { ?>
+                    <tr class="customCategoryRow" id="cat_<?= $category->id ?>">
+                        <td>
+                            <div class="nameContainer">
+                                <?= $category->name ?>
+                            </div>
+                            <div class="editNameContainer hidden">
+                                <input type="text" class="form-control editCatNameInput" value="<?= $category->name ?>">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="iconContainer">
+                                <span class="cPointer right glyphicon glyphicon-remove glyphicon-20"></span>
+                                <span class="cPointer r_margin_5 right glyphicon glyphicon-pencil glyphicon-20"></span>
+                            </div>
+                            <div class="editCatSubmitContainer hidden">
+                                <span class="cPointer r_margin_5 right glyphicon glyphicon-ok glyphicon-20"></span>
+                            </div>
+                        </td>
+                    </tr>
+                <? } ?>
+            <? } else { ?>
+                <tr> <td> None added yet! </td> </tr>
+            <? } ?>
+        </table>
+
+        <div class="newCategoryForm">
+            <div class="showFormControls">
+                <input class="showForm btn btn-success" type="button" value="Add New"/>
+            </div>
+
+            <div class="formControls hidden">
+                <input type="text" class="form-control newCatTextInput" placeholder="New Category Name">
+                <input type="button" class="btn btn-success submitForm" value="Submit">
+                <input class="hideForm btn btn-danger" type="button" value="Cancel"/>
+            </div>
+        </div>
+    </div>
+
+    <div class='col-md-7 borderLeft'>
+        <label>Salary</label>
+        <div class="input-group">
+            <span class="input-group-addon" id="pound_addon">&pound;</span>
+            <input type="number" id="in_salary" class="form-control" aria-describedby="pound_addon"
+                   value="<?= $this->settings->salary ?>">
+        </div>
+
+        <label>Post Tax</label>
+        <div class="input-group">
+            <span class="input-group-addon" id="pound_addon">&pound;</span>
+            <input type="number" id="in_posttax" class="form-control" aria-describedby="pound_addon"
+                   value="<?= $this->settings->post_tax ?>">
+        </div>
+
+        <label>Bills Per Week</label>
+        <div class="input-group">
+            <span class="input-group-addon" id="pound_addon">&pound;</span>
+            <input type="number" id="in_bills" class="form-control" aria-describedby="pound_addon"
+                   value="<?= $this->settings->bills ?>">
+        </div>
+
+        <label>Weeks This Year (lower for students)</label>
+        <div class="input-group">
+            <span class="input-group-addon" id="hash_addon">#</span>
+            <input type="number" id="in_yearl" class="form-control" aria-describedby="pound_addon"
+                   value="<?= $this->settings->year_length ?>">
+        </div>
+    </div>
+
+    <div class="col-md-12 noBtmMargin">
+        <input id="updatePurchase" type="submit" class="btn btn-success" value="Submit"/>
+    </div>
+</div>

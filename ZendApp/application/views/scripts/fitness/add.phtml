@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-md-12">
+        <h2> Add Exercise </h2>
+    </div>
+    <div class="form-group col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <label> Exercise Name </label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-md-12">
+                <label> Muscles </label>
+                <div class="row">
+                    <? foreach ($this->muscles as $muscle) { ?>
+                        <div class="col-md-3 col-sm-6">
+                            <label>
+                                <input type="checkbox">
+                                <?= $muscle->name ?>
+                            </label>
+                        </div>
+                    <? } ?>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <input type="button" class="btn btn-success" value="Add Exercise">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

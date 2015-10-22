@@ -1,0 +1,197 @@
+.tab-pane.active {
+    margin-top: 15px;
+}
+
+.detailsTitle {
+    margin-top: 10px;
+}
+
+.challenge {
+    margin-bottom: 5px;
+}
+
+.challenge img {
+    margin-right: 5px;
+}
+
+.semis, .finals {
+    width: 400px;
+    float: left;
+    margin-right: 50px;
+}
+
+.bracket-header {
+    border-radius: 2px;
+    border: 1px solid #aaa;
+    padding: 2px 0 2px 0;
+    position: relative;
+    left: 0;
+    right: 0;
+    line-height: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: #ebebeb;
+}
+
+.player-bottom, .player-top {
+    border-radius: 0 0 2px 2px;
+    border: solid #aaa 1px;
+    position: absolute;
+    padding: 1px;
+    min-height: 40px;
+    line-height: 18px;
+    background: #f2f2f2;
+    left: 0;
+    right: 0;
+}
+
+.player-bottom {
+    top: 39px;
+}
+
+.score {
+    text-align: center;
+    background: #ebebeb;
+    border-left: 1px solid #aaa;
+    position: absolute;
+    line-height: 22px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.bracket-game {
+    position:relative;
+    width: 96%;
+    margin-left: 2%;
+}
+
+.bracket-bottom {
+    top: 100px;
+}
+
+.bracket-game .name {
+    margin-top: 2px;
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.bracket-game .name img {
+    margin-right: 5px;
+}
+
+.bracket-game .score {
+    width: 10%;
+    font-size: 16px;
+    font-weight: bold;
+    padding-top: 8px;
+}
+
+.winner {
+    background-color: rgb(184, 242, 184)
+}
+
+.loser {
+    background: rgb(242, 184, 184);
+}
+
+.bracket-game .glyphicon-info-sign {
+    z-index: 99;
+    float: left;
+    right: -335px;
+    top: 30px;
+}
+
+.bracket-game.bracket-bottom .glyphicon-info-sign {
+    right: -315px;
+}
+
+.finals .bracket-game {
+    top: 52px;
+}
+
+.bracket-game-details {
+    top: 80px;
+    z-index: 100;
+    width: 100%;
+    padding: 2px 0;
+    position: absolute;
+    text-align: center;
+    border: 1px solid #aaa;
+    background: rgba(242,242,242,0.9);
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 4px 4px 6px #BBBBBB;
+}
+
+.bracket-game-details .ticksLeft,
+.bracket-game-details .ticksRight {
+    width: 10%;
+    float: left;
+}
+
+.bracket-game-details .miniRow {
+    min-height: 20px;
+}
+
+.bracket-game-details .glyphicon {
+    font-size: 16px;
+}
+
+.bracket-game-details .mapNames {
+    width: 80%;
+    float: left;
+}
+
+.bracket-game-details .title {
+    border-bottom: 1px solid black;
+}
+
+.modal_header {
+    font-size: 22px;
+}
+
+.youtube-thumb {
+    height: 158px;
+    width: 280px;
+}
+
+.season {
+    margin-bottom: 30px;
+}
+
+.episodes {
+    height: 177px;
+    white-space: nowrap;
+    overflow: auto;
+    overflow-y: hidden;
+    border: #CCC 1px solid;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.youtube-video {
+    height: 320px;
+    width: 560px;
+}
+
+.modal_episode_participants,
+.modal_episode_challenges {
+    float: left;
+    width: 50%;
+}
+
+@media (max-width: 680px) {
+    .youtube-video {
+        width: 95%;
+        height: -moz-calc(100% / 6);
+        height: -webkit-calc(100% / 6);
+        height: -o-calc(100% / 6);
+        height: calc(100% / 6);
+    }
+
+    .modal_episode_participants,
+    .modal_episode_challenges {
+        width: 100%;
+    }
+}

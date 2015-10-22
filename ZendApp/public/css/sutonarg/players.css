@@ -1,0 +1,14 @@
+.player-name {
+    float: left;
+    font-size: 18px;
+    margin-top: 5px;
+    margin-left: 6px;
+}
+
+.panel-body img {
+    float: left;
+}
+
+.fa-trophy {
+    font-size: 14px;
+}

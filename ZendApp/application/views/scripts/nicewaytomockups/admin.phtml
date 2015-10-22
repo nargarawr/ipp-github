@@ -1,0 +1,167 @@
+
+<style>
+    .margin_b_15 {
+        margin-bottom:15px;
+    }
+
+    .margin_t_15 {
+        margin-top:15px;
+    }
+
+    hr {
+        margin-top:0px;
+        margin-bottom:10px;
+    }
+
+    label .sectionHeading {
+        margin-bottom: 0px;
+    }
+
+    .lrg {
+        width:30%;
+        margin:1%;
+        height:50px;
+    }
+</style>
+
+<div class="row margin_t_15">
+    <div class="col-md-3">
+        <div class="list-group">
+          <a href="/nicewaytomockups/mydetails" class="list-group-item">
+            <h4 class="list-group-item-heading">My Details</h4>
+            <p class="list-group-item-text">View and edit your account information and password</p>
+          </a>
+            <a href="/nicewaytomockups/myroutes" class="list-group-item">
+            <h4 class="list-group-item-heading">My Routes</h4>
+            <p class="list-group-item-text">View and edit your submitted routes</p>
+          </a>
+           <a href="/nicewaytomockups/admin" class="list-group-item active">
+            <h4 class="list-group-item-heading">Admin</h4>
+            <p class="list-group-item-text">Access administrative tools to manage the site</p>
+          </a>  
+        </div>
+    </div>
+    <div class="col-md-8">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Manage Users</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Type a user name, or user ID">
+                    </div>
+                    <div class="col-md-6">
+                        <input type="button" class="btn btn-success" value="Search">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Contributions</th>
+                                    <th>Ban</th>
+                                    <th>Manage</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>cxk</td>
+                                        <td>Craig Knott</td>
+                                        <td>1 Route, 5 Comments</td>
+                                        <td>
+                                            <span class="glyphicon glyphicon-volume-off" style="font-size: 18px"></span>
+                                            <span class="glyphicon glyphicon-lock" style="font-size: 18px"></span>
+                                        </td>
+                                        <td>                                            
+                                            <span class="glyphicon glyphicon-pencil" style="font-size: 18px"></span>
+                                            <span class="glyphicon glyphicon-remove" style="font-size: 18px"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>cxk2</td>
+                                        <td>Craig Knott 2</td>
+                                        <td>0 Route, 0 Comments</td>
+                                        <td>
+                                            <span class="glyphicon glyphicon-volume-off" style="font-size: 18px; color:#5cb85c"></span>
+                                            <span class="glyphicon glyphicon-lock" style="font-size: 18px"></span>
+                                        </td>
+                                        <td>                                            
+                                            <span class="glyphicon glyphicon-pencil" style="font-size: 18px"></span>
+                                            <span class="glyphicon glyphicon-remove" style="font-size: 18px"></span>
+                                        </td>
+                                    </tr>                                            
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Create User</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row margin_b_15">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="Username">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="Password">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" class="btn btn-success right" value="Create">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Post Announcement</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row margin_b_15">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" value="Enter your message">
+                            </div>
+                            <div class="col-md-3">
+                                Email as well? <input type="checkbox">
+                            </div>                            
+                            <div class="col-md-3">
+                                <input type="button" class="btn btn-success right" value="Post">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Server Management</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="button" class="btn btn-success lrg" value="Take backup">
+                        <input type="button" class="btn btn-success lrg" value="Deauthorise active sessions">
+                        <input type="button" class="btn btn-success lrg" value="Lock the site">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 

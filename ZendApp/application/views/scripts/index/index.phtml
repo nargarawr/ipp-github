@@ -1,0 +1,330 @@
+<div class="jumbotron" id="landingPage">
+    <div class="container">
+        <h1>Craig Knott</h1>
+        <h3> Software Engineer @
+            <a href="http://www.nextjump.co.uk" target="_blank">
+                Next Jump
+            </a>
+        </h3>
+    </div>
+    <div class="overlay"></div>
+    <div class="scrollButtonDown">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
+</div>
+
+<div class="jumbotron" id="profilePage">
+    <div class="scrollButtonUp">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div class="container">
+        <div class="col-md-12">
+            <div class="titleContainer text-center">
+                <h1>About</h1>
+            </div>
+            <div class="row contentContainer">
+                <div class="col-md-4 col-md-offset-2 col-xs-12 leftContainer">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 text-center">
+                            <img src="/images/index/cxkface.jpg" class="img-thumbnail">
+                        </div>
+                        <div class="col-md-12 col-xs-6">
+                            <? /* TODO
+                            <div class="bioItem">
+                                Craig Knott
+                            </div>
+                            <div class="bioItem">
+                                Software Engineer @ Next Jump
+                            </div>
+                            */ ?>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6 sm-margin">
+                    I am currently working as an Intern for Next Jump Ltd, after which I will
+                    return to finish my fourth year of my Computer Science MSci at the University
+                    of Nottingham. My interests include Robotics, Web Development, Statistics,
+                    Type Setting, and Programming in general. I also enjoy video games and am an
+                    avid player of both StarCraft II and Diablo III, and I am currently practicing
+                    <a href="https://www.youtube.com/playlist?list=PL_hDX952s4P0HzM53wWSmoDnOnxQTDUuJ">
+                        speed running Half-Life 2
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="scrollButtonDown">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
+</div>
+
+<div class="jumbotron" id="workPage">
+    <div class="scrollButtonUp">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div class="container">
+        <div class="col-md-12">
+            <div class="titleContainer text-center">
+                <h1>Work Experience</h1>
+            </div>
+            <div class="row experienceContainer">
+                <?= $this->partial('index', 'experience', array(
+                    'position' => 'Software Engineer (Intern)',
+                    'place'    => 'Next Jump Ltd.',
+                    'dates'    => 'Sep 2014 - Sp 2015',
+                    'info'     => 'Worked on various solo projects in PHP and Javascript,
+                                using the Zend and Prototype frameworks, to add additional
+                                functionality to the both the company\'s front facing
+                                platform, and some internal tools.'
+                )); ?>
+                <?= $this->partial('index', 'experience', array(
+                    'position' => 'Student Helper',
+                    'place'    => 'University of Nottingham',
+                    'dates'    => 'Sep 2012 - Apr 2013',
+                    'info'     => 'Working for the Computer Science department to chaperone
+                                potential students around the School of Computer Science,
+                                whilst answering any questions they may have, and expressing
+                                my passion for the subject'
+                )); ?>
+                <?= $this->partial('index', 'experience', array(
+                    'position' => 'Technical and Sales Assistant',
+                    'place'    => 'Total Computing Systems Ltd.',
+                    'dates'    => 'Oct 2008 - Sep 2011',
+                    'info'     => 'Worked with both the sales and technical teams for
+                                a variety of jobs, including the assembly and repair
+                                of computers, and the serving of customers'
+                )); ?>
+            </div>
+        </div>
+    </div>
+    <div class="scrollButtonDown">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
+</div>
+
+<div class="jumbotron" id="academiaPage">
+    <div class="scrollButtonUp">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div class="container">
+        <div class="col-md-12">
+            <div class="titleContainer text-center">
+                <h1>Academia</h1>
+            </div>
+            <?= $this->partial('index', 'experience', array(
+                'position' => 'MSci Hons Computer Science',
+                'place'    => 'University of Nottingham',
+                'dates'    => 'Sep 2011 - Jun 2016',
+                'info'     => 'Grades thus far:<br>
+                                87% average for year 3,<br>
+                                84% average for year 2,<br>
+                                79% average for year 1.
+                                <br><br>
+                                Third Year Project (Mark Received: 88%):<br>
+                                Web-Based Fuzzy Logic Visualisation and Inferencing
+                                <br><br>
+                                Fourth Year Project: TBD'
+            )); ?>
+            <?= $this->partial('index', 'experience', array(
+                'position' => 'A-Level Qualifications',
+                'place'    => 'St.Ivo School',
+                'dates'    => 'Sep 2009 - June 2011',
+                'info'     => 'Double Applied ICT (A*A), Maths (B)'
+            )); ?>
+            <?= $this->partial('index', 'experience', array(
+                'position' => 'GCSE Qualifications',
+                'place'    => 'St.Ivo School',
+                'dates'    => 'Sep 2007 - June 2009',
+                'info'     => '9 GCSEs, ranging from A* to B'
+            )); ?>
+        </div>
+    </div>
+    <div class="scrollButtonDown">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
+</div>
+
+<div class="jumbotron" id="aandiPage">
+    <div class="scrollButtonUp">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div class="container">
+        <div class="col-md-6">
+            <h1 class="text-center titleContainer">
+                Achievements
+            </h1>
+            <p>
+                Awarded the School of Computer Science High
+                Achievers Awards for my Qualifying Year of study
+                (2012), my Second Year of study (2013), and my
+                Third Year of study at the University of Nottingham
+                (2014). The first student to get the award for
+                all three years.
+            </p>
+            <p>
+                As part of my Second Year Group Project at the
+                University of Nottingham, I worked on a package
+                that allows for the use of Fuzzy Logic within the
+                R Programming Language. This package, named
+                FuzzyToolkitUoN, is officially hosted on CRAN (the
+                Comprehensive R Archive Network)
+            </p>
+            <p>
+                Eureka, an Android application that I worked on,
+                won the Audience Favourite award at Over The Air
+                2013.
+            </p>
+        </div>
+        <div class="col-md-6 sm-margin">
+            <h1 class="text-center titleContainer">
+                Involvements
+            </h1>
+            <p>
+                Co-Founder and General Secretary of HackSoc, the
+                University of Nottingham's programming society
+                (2012-2014)
+            </p>
+            <p>
+                General Secretary of CompSoc, the University of
+                Nottingham's official Computer Society (2013-2014)
+                Participated in the University of Nottingham's
+                Computer Science Guru Programme (2012-2014).
+            </p>
+            <p>
+                Taught basic programming at Nottingham High
+                School for Boys Afterschool programming club, and
+                took part in a scheme to teach basic IT skills to
+                a group of unemployed individuals, in coordination
+                with SIFE and Nottingham Central College. (2013)
+            </p>
+            <p>
+                Tutoring for other third year students for the Summer
+                exam period. (2014)
+            </p>
+        </div>
+    </div>
+    <div class="scrollButtonDown">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
+</div>
+
+<div class="jumbotron" id="resourcesPage">
+    <div class="scrollButtonUp">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div class="container">
+        <div class="col-md-12">
+            <h1 class="text-center titleContainer">
+                Resources
+            </h1>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 sm-margin">
+                    <h4> Dissertation </h4>
+                    <ul>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/dissertation-cxk01u.pdf">
+                                Improving the usability and accessibility of Fuzzy Logic software systems with a
+                                web-based approach
+                            </a>
+                        </li>
+                    </ul>
+
+                    <h4> Revision Guides </h4>
+                    <ul>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g51fse-revisionGuide.pdf">G51FSE Revision Guide</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g52ads-quizGuide.pdf">G52ADS Quiz Revision Guide</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g52sem-revisionGuide.pdf">G52SEM Revision Guide</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g52ccn-revisionGuide.pdf">G52CCN Revision Guide</a> &amp;
+                            <a href="http://quizlet.com/_e7b1d">Flash Cards</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g52con-revisionGuide.pdf">G52CON Revision Guide</a> &amp;
+                            <a href="http://quizlet.com/_e6z37">Flash Cards</a></li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g52mal-revisionCollection.pdf"> G52MAL Revision Guide Collection</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g53ars-notes.pdf">G53ARS Revision Guide</a>,
+                            <a href="/resources/g53ars-formulae.pdf">Formula Sheet</a> &amp;
+                            <a href="http://quizlet.com/32209685/autonomous-mobile-robotics-uon-g53ars-flash-cards/">Flash Cards</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g53sqm-revisionGuide.pdf"> G53SQM Revision Guide</a> &amp;
+                            <a href="http://quizlet.com/32734821/software-quality-management-uon-g53sqm-flash-cards/">Flash Cards</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g53cmp-revisionGuide.pdf">G53CMP Revision Guide</a> &amp;
+                            <a href="http://quizlet.com/32978513/compilers-uon-g53cmp-flash-cards/">Flash Cards</a>
+                        </li>
+                        <li>
+                            <img src="/images/index/pdf_icon.png">
+                            <a href="/resources/g53fuz-formulae.pdf">G53FUZ Formula Sheet</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="scrollButtonDown">
+        <span class="glyphicon glyphicon-chevron-down"></span>
+    </div>
+</div>
+
+<div class="jumbotron" id="contactPage">
+    <div class="scrollButtonUp">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </div>
+    <div class="container">
+        <div class="col-md-12">
+            <h1 class="text-center titleContainer">
+                Contact
+            </h1>
+            <? for ($i = 0; $i < count($this->icons); $i += 2) { ?>
+                <div class="row">
+                    <div class="col-md-2 hidden-sm hidden-xs">
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-10">
+                        <a class="contact-link" target="_blank" href="<?= $this->icons[$i]->link ?>">
+                            <i class="fa <?= $this->icons[$i]->icon ?>"></i>
+                            <span class="icon-text">
+                                <?= $this->icons[$i]->name ?>
+                            </span>
+                        </a>
+                    </div>
+                    <? if (array_key_exists($i+1, $this->icons)) { ?>
+                        <div class="col-md-4 col-sm-6 col-xs-10">
+                            <a class="contact-link" target="_blank" href="<?= $this->icons[$i+1]->link ?>">
+                                <i class="fa <?= $this->icons[$i+1]->icon ?>"></i>
+                                <span class="icon-text">
+                                    <?= $this->icons[$i+1]->name ?>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-md-2 hidden-sm hidden-xs">
+                        </div>
+                    <? } ?>
+                </div>
+            <? } ?>
+        </div>
+    </div>
+</div>

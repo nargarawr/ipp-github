@@ -1,0 +1,15 @@
+You owe &pound;<?= $this->loanAmount ?>, how much have you paid back?
+
+<form method="post" action="/purchase/payloan">
+    <input type="hidden" name="loanId" value="<?= $this->loanId ?>" >
+    <input type="hidden" name="updatedBy" value="<?= $this->updatedBy ?>">
+
+    <label>Amount To Pay</label>
+    <div class="input-group">
+        <span class="input-group-addon" id="pound_addon">&pound;</span>
+        <input type="number" class="form-control" name="amountInput"
+               aria-describedby="pound_addon">
+    </div>
+
+    <input type="submit" class="btn btn-success" value="Send Payment">
+</form>

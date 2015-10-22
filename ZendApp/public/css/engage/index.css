@@ -1,0 +1,49 @@
+.tileHolder {
+    height: 300px;
+    position: relative;
+    width: 100%;
+    display: inline-block;
+}
+
+.tileHolder a {
+    text-decoration: none;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 50;
+    left: 0;
+}
+
+.tileTextBg, .tileTextFooterBg {
+    opacity: 0.80;
+    top: 0;
+    width: 100%;
+    position: absolute;
+    height: 70px;
+    background: none repeat scroll 0 0 #1abc9c;
+}
+
+.tileTextFooterBg {
+    top: 230px;
+}
+
+.tileHolder .tileText,
+.tileHolder .tileFooterText {
+    font-family: 'Roboto', Arial, sans-serif;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: #ffffff;
+}
+
+.tileHolder .tileText {
+    font-size: 20px;
+    height: 50px;
+    top: 20px;
+    text-transform: uppercase;
+}
+
+.tileHolder .tileFooterText {
+    font-size: 16px;
+    top: 245px;
+}

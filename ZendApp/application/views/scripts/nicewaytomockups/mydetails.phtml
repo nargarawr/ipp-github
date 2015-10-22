@@ -1,0 +1,97 @@
+
+<style>
+    .margin_b_15 {
+        margin-bottom:15px;
+    }
+
+    .margin_t_15 {
+        margin-top:15px;
+    }
+</style>
+
+<div class="row margin_t_15">
+    <div class="col-md-3">
+
+<div class="list-group">
+  <a href="/nicewaytomockups/mydetails" class="list-group-item active">
+    <h4 class="list-group-item-heading">My Details</h4>
+    <p class="list-group-item-text">View and edit your account information and password</p>
+  </a>
+    <a href="/nicewaytomockups/myroutes" class="list-group-item">
+    <h4 class="list-group-item-heading">My Routes</h4>
+    <p class="list-group-item-text">View and edit your submitted routes</p>
+  </a>
+           <a href="/nicewaytomockups/admin" class="list-group-item">
+            <h4 class="list-group-item-heading">Admin</h4>
+            <p class="list-group-item-text">Access administrative tools to manage the site</p>
+          </a>  
+</div>
+
+    </div>
+    <div class="col-md-8">
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">My Details</h3>
+  </div>
+  <div class="panel-body">
+        <div class="row">
+            
+
+            <div class="col-md-12 noBtmMargin">
+                <label>Name</label>
+            </div>
+
+            <div class="col-md-6 margin_b_15">
+                <input type="text" class="form-control" id="in_fname" placeholder="First Name">
+            </div>
+            <div class="col-md-6 margin_b_15">
+                <input type="text" class="form-control" id="in_lname" placeholder="Last Name">
+            </div>
+
+            <div class="col-md-6 margin_b_15">
+                <label> Email </label>
+                <input type="text" id="in_email" class="form-control" placeholder="Your email address">
+            </div>
+
+            <div class="col-md-6 margin_b_15">
+                <label> Location </label>
+                <input type="text" id="in_email" class="form-control" placeholder="Your location">
+            </div>
+
+            <div class="col-md-12">
+                <input id="updateAccount" type="submit" class="btn btn-success right" value="Submit"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label> Change Password</label>
+                <div class="form-group" id="in_curPassWrapper">
+                    <input type="password" class="form-control" id="in_curPass" placeholder="Enter Current Password">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" id="in_newPass1Wrapper">
+                    <input type="password" class="form-control" id="in_newPass1" placeholder="Enter New Password">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group" id="in_newPass2Wrapper">
+                    <input type="password" class="form-control" id="in_newPass2" placeholder="Confirm New Password">
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <input id="updatePassword" type="submit" class="btn btn-success right" value="Change Password"/>
+            </div>
+        </div>
+  </div>
+</div>
+
+
+
+    </div>
+</div>
+ 

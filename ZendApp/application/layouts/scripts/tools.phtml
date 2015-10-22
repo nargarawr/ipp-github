@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-md-3 noRightPad">
+        <div id="setupCont">
+            <div id="setupLeft">
+                <div class="h3Cont">
+                    <h3>Accounts</h3>
+                </div>
+                <ul>
+                    <li class="<?= ($this->action == 'createuser') ? 'optSelected' : '' ?>">
+                        <a href="<?= $this->url(array('action' => 'createuser', 'controller' => 'tools'), null, true) ?>">
+                            Create New Account
+                        </a>
+                    </li>
+                    <li class="<?= ($this->action == 'suppressions') ? 'optSelected' : '' ?>">
+                        <a href="<?= $this->url(array('action' => 'suppressions', 'controller' => 'tools'), null, true) ?>">
+                            Manage Suppressions
+                        </a>
+                    </li>
+                    <li class="<?= ($this->action == 'searchuser') ? 'optSelected' : '' ?>">
+                        <a href="<?= $this->url(array('action' => 'searchuser', 'controller' => 'tools'), null, true) ?>">
+                            Search Users
+                        </a>
+                    </li>
+                </ul>
+                <div class="h3Cont">
+                    <h3> Site </h3>
+                </div>
+                <ul>
+                    <li class="<?= ($this->action == 'siren') ? 'optSelected' : '' ?>">
+                        <a href="<?= $this->url(array('action' => 'siren', 'controller' => 'tools'), null, true) ?>">
+                            Manage Siren Messages
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 noPad">
+        <div class="row">
+            <div class="col-md-12 mobile-md-12">
+                <div id="setupCont">
+                    <div id="setupLeft">
+                        <div id="createNewContainer">
+                            <div class="h3Cont">
+                                <h3>
+                                    <?= $this->panelName ?>
+                                </h3>
+                            </div>
+                            <div class="innerContainer">
+                                <?= $this->layout()->content; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

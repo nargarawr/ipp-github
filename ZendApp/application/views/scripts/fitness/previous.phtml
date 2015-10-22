@@ -1,0 +1,53 @@
+<div class="col-xs-12">
+    <div class="panel-group">
+        <? foreach ($this->previousWorkouts as $i => $workout) { ?>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse_wo_<?= $i ?>">
+                            <?= $workout->datetime ?> <?= $workout->id ?>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse_wo_<?= $i ?>" class="panel-collapse collapse">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <h3> Details </h3>
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td> Started</td>
+                                    <td> 12:00AM</td>
+                                </tr>
+                                <tr>
+                                    <td> Ended</td>
+                                    <td> 13:00PM</td>
+                                </tr>
+                                <tr>
+                                    <td> Duration</td>
+                                    <td> 1:00</td>
+                                </tr>
+                                <tr>
+                                    <td> Weight Moved </td>
+                                    <td> 500Kg </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-center">
+                                <h3> Exercise List </h3>
+                            </div>
+
+                            <?= $this->action('exerciselist', 'fitness', null, array(
+                                'workoutId' => $workout->id
+                            )); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <? } ?>
+    </div>
+</div>

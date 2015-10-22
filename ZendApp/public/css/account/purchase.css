@@ -1,0 +1,23 @@
+.input-group {
+    padding-bottom: 5px;
+}
+
+@media only screen and (min-width: 980px) {
+    .borderLeft {
+        border-left: 1px solid #ccc;
+    }
+}
+
+@media only screen and (max-width: 995px) {
+    .borderLeft {
+        margin-top: 50px;
+    }
+}
+
+.newCatTextInput {
+    margin-bottom: 5px;
+}
+
+.hideForm {
+    float: left !important;
+}

@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-md-12">
+        <div id="ftuBanner" class="hidden">
+            <div class="alert alert-info">This page will generate after your first purchase</div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="index_content">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="#" class="noLink" style="color:#333">
+                    Cost Per <span class="periodTitle">Week</span>
+                </a>
+                <select id="purchasePeriodSelector" class="form-control pull-right">
+                    <option> Week </option>
+                    <option> Month </option>
+                    <option> Year </option>
+                </select>
+            </div>
+            <div class="panel-body noBottomPadding">
+                <div id="table_container">
+                    <table class="table thinTable table-hover">
+                        <tbody id="costPerWeekTable">
+                            <img src="/images/global/loading.gif" class="loading" id="spwT_loading">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+                    <nav id="spw_pagination_container">
+                        <ul class="pagination" id="spw_pagination">
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 noPadding">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">General Figures</div>
+                    <div class="panel-body">
+                        <table class="table table-hover thinTable">
+                            <tbody>
+                            <tr>
+                                <td>Salary</td>
+                                <td>
+                                    <? if (isset($this->settings->salary)) { ?>
+                                        &pound;<?= number_format($this->settings->salary, 2); ?>
+                                    <? } else { ?>
+                                        <a href="#" class="noLink" data-toggle="tooltip"
+                                           title="Go to 'My Account' and edit this in the finance manager section">
+                                            [?]
+                                        </a>
+                                    <? } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Post Tax</td>
+                                <td>
+                                    <? if (isset($this->settings->post_tax)) { ?>
+                                        &pound;<?= number_format($this->settings->post_tax, 2); ?>
+                                    <? } else { ?>
+                                        <a href="#" class="noLink" data-toggle="tooltip"
+                                           title="Go to 'My Account' and edit this in the finance manager section">
+                                            [?]
+                                        </a>
+                                    <? } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Per Month</td>
+                                <td>
+                                    <? if (isset($this->settings->post_tax)) { ?>
+                                        &pound;<?= number_format($this->settings->post_tax / 12, 2); ?>
+                                    <? } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Per Week</td>
+                                <td>
+                                    <? if (isset($this->settings->post_tax)) { ?>
+                                        &pound;<?= number_format($this->settings->post_tax / 53, 2); ?>
+                                    <? } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Weekly Bills</td>
+                                <td>
+                                    <? if (isset($this->settings->bills)) { ?>
+                                        <a href="#" class="noLink" data-toggle="tooltip" title="Rent &amp; Utilities">
+                                            &pound;<?= number_format($this->settings->bills, 2); ?>
+                                        </a>
+                                    <? } else { ?>
+                                        <a href="#" class="noLink" data-toggle="tooltip"
+                                           title="Go to 'My Account' and edit this in the finance manager section">
+                                            [?]
+                                        </a>
+                                    <? } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Remaining per Week</td>
+                                <td>
+                                    <? if (isset($this->settings->post_tax)) { ?>
+                                        <? $weeks = isset($this->settings->year_length) ? $this->settings->year_length : 53; ?>
+                                        <? $remPerWeek = ($this->settings->post_tax / $weeks) - $this->settings->bills; ?>
+                                        &pound;<?= number_format($remPerWeek, 2); ?>
+                                    <? } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Spend/Week Average</td>
+                                <td>&pound;<?= number_format($this->spendAggregates->average, 2); ?></td>
+                            </tr>
+                            <tr>
+                                <td>Save/Week Average</td>
+                                <td>&pound;<?= number_format($remPerWeek - $this->spendAggregates->average, 2) ?></td>
+                            </tr>
+                            <tr>
+                                <td>Total Spend</td>
+                                <td>&pound;<?= number_format($this->spendAggregates->total, 2); ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Cost by Category</div>
+                    <div class="panel-body" id="costbycatPanelBody">
+                        <img src="/images/global/loading.gif" class="loading" id="costbycat_loading">
+                        <div id="category_chart_div" style="width:100%"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-9 noPadding">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Spendings per <span class="periodTitle">Week</span></div>
+                    <div class="panel-body" id="spwPanelBody">
+                        <img src="/images/global/loading.gif" class="loading" id="spw_loading">
+                        <div id="perWeek_chart_div"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Breakdown By Category</div>
+                    <div class="panel-body" id="catBdPanelBody">
+                        <img src="/images/global/loading.gif" class="loading" id="catBd_loading">
+                        <div id="category_per_time_chart_div" style="width:100%; height:300px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

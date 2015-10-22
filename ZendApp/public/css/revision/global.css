@@ -1,0 +1,36 @@
+.row-centered {
+    text-align: center;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.panel-heading {
+    font-weight: bold;
+}
+
+.noLink {
+    cursor: default;
+}
+
+.loading {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.thinTable {
+    margin-bottom: 0px;
+}
+
+thead {
+    font-weight: bold;
+}
+
+#revision_planning_tbody input[type=number] {
+    padding-left: 8px;
+}

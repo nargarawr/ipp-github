@@ -1,0 +1,63 @@
+#displayTimer {
+    font-size: 10vw;
+}
+
+@media only screen and (max-device-width: 480px) {
+    #displayTimer {
+        font-size: 20vw;
+    }
+}
+
+@media only screen and (min-width: 1465px) {
+    #displayTimer {
+        font-size: 150px !important;
+    }
+}
+
+#dateWrapper {
+    margin-bottom: 5px;
+}
+
+tr.pbarTop td {
+    background-color: #AEAEAE !important;
+}
+
+.pbar > td {
+    padding-top: 0 !important;
+    padding-bottom: 5px !important;
+    border-top: none !important;
+    background-color: #AEAEAE !important;
+}
+
+.pbar {
+    border-top: none !important;
+}
+
+.pbar .progress {
+    margin-bottom: 0;
+}
+
+.spacedTd {
+    max-width: 30px;
+    width: 30px;
+    min-width: 30px;
+}
+
+.form-control.short {
+    height: 25px;
+}
+
+.popup-trigger {
+    text-decoration: none !important;
+}
+
+.blackText:hover,
+.blackText:visited,
+.blackText:focus,
+.blackText {
+    color: #000000;
+}
+
+.editRowBtn {
+    font-size: 16px;
+}

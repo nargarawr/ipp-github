@@ -1,0 +1,18 @@
+<div class="monthHeader">
+    <h3>
+        <? foreach ($this->months as $month) { ?>
+            <span id="mh_<?= $month->name ?>"><?= $month->name ?></span>
+        <? } ?>
+    </h3>
+</div>
+
+<? foreach ($this->months as $month) { ?>
+    <?= $this->partial('livi', 'month', array(
+        'month' => $month->name,
+        'startDay' => $month->startDay,
+        'numOfDays' => $month->numOfDays,
+        'idPrefix' => $month->idPrefix,
+        'events' => $month->events,
+        'selected' => property_exists($month, 'selected')
+    )); ?>
+<? } ?>

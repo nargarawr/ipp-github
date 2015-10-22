@@ -1,0 +1,11 @@
+.yearWeightsTitle {
+    font-weight: bold;
+}
+
+.yearWeightsTitle a {
+    color: #000000;
+}
+
+.yearWeightsTitle .tooltip {
+    font-weight: normal;
+}

@@ -1,0 +1,63 @@
+<?
+/**
+ * Name - month.phtml
+ * Author - Craig Knott
+ * Description - Draws a month's calendar
+ * Params - {
+ *  $this->month: The name of the month this represents
+ *  $this->startDay: First day of this month (0 = Mon, 6 = Sun)
+ *  $this->numOfDays: The number of days in this month
+ *  $this->idPrefix: String in format 'year-mon' (2015-03)
+ *  $this->events: Array of event objects
+ *  $this->selected (optional): Default selected month
+ * }
+ */
+?>
+<? $dmy = getdate(); ?>
+<? $parts = explode('-', $this->idPrefix) ?>
+<? $thisMonth = (int) $parts[1]; ?>
+
+<? if ($this->selected) { ?>
+    <input type="hidden" id="selected_<?= $this->month ?>">
+<? } ?>
+
+<table class="table month_table" id="tbl_<?= $this->month ?>" class="hidden">
+    <thead>
+    <tr>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+        <th>Sunday</th>
+    </tr>
+    </thead>
+
+    <? for ($i = (0 - $this->startDay); $i < $this->numOfDays; $i++) { ?>
+        <? $mod = $i % 7; ?>
+        <? $dayOfMonth = $i + 1; ?>
+        <? if ($mod == (7 + (0 - $this->startDay))) { ?>
+            <tr>
+        <? } ?>
+
+        <td class="<?= (($dmy['mday'] === $dayOfMonth) && ($dmy['mon'] === $thisMonth))? 'today' : '' ?>">
+            <? if ($i >= 0) { ?>
+                <b><?= $dayOfMonth ?></b>
+                <input type="button" value="+" class="addBtn" id="<?= $this->idPrefix ?>-<?= $dayOfMonth ?>"?>
+                <br>
+                <? foreach ($this->events as $event) { ?>
+                    <? $dateParts = explode('-', $event->day); ?>
+                    <? if ((int) $dateParts[2] === $dayOfMonth) { ?>
+                        <?= $event->event ?> <a href="/livi/delete/id/<?= $event->id ?>">[x]</a>
+                        <br>
+                    <? } ?>
+                <? } ?>
+            <? } ?>
+        </td>
+
+        <? if ($mod == (6 + (0 - $this->startDay))) { ?>
+            </tr>
+        <? } ?>
+    <? } ?>
+</table>

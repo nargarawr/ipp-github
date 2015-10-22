@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-3 noRightPad">
+        <div id="setupCont">
+            <div id="setupLeft">
+                <div class="h3Cont">
+                    <h3>General</h3>
+                </div>
+                <ul>
+                    <li class="<?= $this->action === 'index' ? 'optSelected' : '' ?>">
+                        <a href="<?= $this->url(array('action' => 'index', 'controller' => 'account'), null, true) ?>">Account
+                            Information </a>
+                    </li>
+                </ul>
+                <div class="h3Cont">
+                    <h3> App Settings </h3>
+                </div>
+                <ul>
+                    <? foreach ($this->appsWithSettings as $app) { ?>
+                        <li class="<?= $this->action === $app->url ? 'optSelected' : '' ?>">
+                            <a href="<?= $this->url(array('action' => $app->url, 'controller' => 'account'), null, true) ?>"><?= $app->name ?></a>
+                        </li>
+                    <? } ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 noPad">
+        <div class="row">
+            <div class="col-md-12 mobile-md-12">
+                <div id="setupCont">
+                    <div id="setupLeft">
+                        <div id="createNewContainer">
+                            <div class="h3Cont">
+                                <h3>
+                                    <?= $this->appName ?>
+                                    <? if ($this->action !== 'index') { ?>
+                                        <a href="/<?= $this->action ?>/index" class="right">Go to app</a>
+                                    <? } ?>
+                                </h3>
+                            </div>
+                            <div class="innerContainer">
+                                <?= $this->layout()->content; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

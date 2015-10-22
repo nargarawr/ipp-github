@@ -1,0 +1,10 @@
+div.list-group-item.active {
+    color: #fff;
+    background-color: #428bca;
+    border-color: #428bca;
+    font-size: 18px
+}
+
+.fa.fa-lg {
+    margin-top: 4px;
+}

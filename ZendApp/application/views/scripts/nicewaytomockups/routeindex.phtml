@@ -1,0 +1,97 @@
+<style>
+    .well {
+        margin-top: 20%;
+    }
+    .well.reducedPadding {
+        padding:10px;
+        padding-bottom:20px;
+    }
+
+    .well.reducedPadding h2 {
+        margin-top:10px;
+    }
+
+    .well.reducedPadding .col-md-6 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    body {
+        background-image: url("/images/gmaps.png");
+        background-size: 100vw 100vh;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
+
+    a.ul {
+        text-decoration: underline
+    }
+
+    .linkHolder {
+        text-align: right;
+        margin-top: 5px;
+    }
+
+    .searchBtn {
+        width: 100px;
+    }
+
+    .searchBtnContainer {
+        margin-top:15px;
+        text-align: center;
+    }
+
+    .pad_r_10 { padding-right: 10px !important; }
+    .pad_l_10 { padding-left: 10px !important; }
+
+
+    #helpPopover {
+        position:relative; 
+        display: block;
+    }
+
+    .btn-good {
+        background-color: #C2D59A;
+        color: white;
+        width: 150px;
+        padding: 10px;    
+        cursor:pointer;
+    }
+</style>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="well reducedPadding">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="title">Welcome, Craig!</h2>
+                </div>
+                <div class="col-md-6 pad_l_10">
+                    <input type="text" class="form-control" placeholder="Enter Start Location">
+                </div>
+                <div class="col-md-6 pad_r_10">
+                    <input type="text" class="form-control" placeholder="Enter Finishing Location">
+                </div>         
+                <div class="col-md-12">
+                    <div class="linkHolder">
+                        <a href="" class="ul"> Want to be more specific?</a>
+                    </div>
+                </div>     
+                <div class="col-md-12">
+                    <div class="searchBtnContainer">
+                        <div class="btn-good" style="position: relative;left: 250px;">Search</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+
+<div class="popover left in" id="helpPopover">
+    <div class="arrow"></div>
+    <h3 class="popover-title">What is this place?</h3>
+    <div class="popover-content">Niceway.to is a website where you can search for scenic routes between two locations. This helps to improve the joy of driving, and will help you to see the beauty in the world around you.</div>
+</div> 

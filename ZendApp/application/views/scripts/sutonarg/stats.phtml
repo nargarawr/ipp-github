@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> Position </th>
+                    <th> Challenge </th>
+                    <th> Plays </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <? foreach ($this->mostPlayed as $i => $challenge) {?>
+                        <tr>
+                            <td><?= ($i+1) ?></td>
+                            <td><?= $challenge->name ?></td>
+                            <td><?= $challenge->plays ?></td>
+                        </tr>
+                    <? } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> Position </th>
+                    <th> Player </th>
+                    <th> Wins </th>
+                </tr>
+                </thead>
+                <tbody>
+                <? foreach ($this->winners as $i => $winner) {?>
+                    <tr>
+                        <td><?= ($i+1) ?></td>
+                        <td><?= $winner->name ?></td>
+                        <td><?= $winner->wins ?></td>
+                    </tr>
+                <? } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

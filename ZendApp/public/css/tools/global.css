@@ -1,0 +1,99 @@
+h3 {
+    font-family: 'GillSans', Arial;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+}
+
+#setupCont {
+    font-family: 'OpenSans', Arial, Helvetica, Verdana, sans-serif;
+}
+
+@media only screen and (max-width: 991px) {
+    .mobile-md-12 {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .col-md-9.noPad {
+        padding-top: 15px;
+        padding-left: 15px;
+        padding-right: 5px;
+    }
+}
+
+#setupCont #setupLeft {
+    border: 1px solid #CCCCCC;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+#setupCont .h3Cont {
+    background-color: #333333;
+    line-height: 35px;
+    padding: 8px 8px 8px 8px;
+}
+
+#setupCont h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+#setupCont #setupLeft ul {
+    list-style-type: none;
+    margin: 8px 0;
+    padding-left: 0;
+}
+
+#setupCont #setupLeft ul li {
+    border: 2px solid #FFFFFF;
+    margin-top: 2px;
+    padding: 5px;
+}
+
+#setupCont #setupLeft ul li a {
+    display: block;
+    text-decoration: none;
+    color: #0954A8;
+}
+
+#setupCont #setupLeft ul li.optSelected {
+    background: none repeat scroll 0 0 #DDF4FB;
+    border: 2px solid #C6EDF9;
+}
+
+#setupCont #setupLeft ul li:hover {
+    background: none repeat scroll 0 0 #DDF4FB;
+    border: 2px solid #C6EDF9;
+}
+
+.noRightPad {
+    padding-right: 5px;
+}
+
+.noPad {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#setupLeft .innerContainer {
+    padding: 10px;
+    overflow: hidden;
+}
+
+.req {
+    color: red;
+}
+
+.btn-right {
+    float: right;
+}
+
+.sirenSubsection .panel-heading {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 0px;
+}

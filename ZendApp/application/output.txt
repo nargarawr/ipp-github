@@ -1,0 +1,397 @@
+
+FILE: /var/www/ZendApp/application/models/RevisionFactory.php
+----------------------------------------------------------------------
+FOUND 29 ERRORS AND 8 WARNINGS AFFECTING 30 LINES
+----------------------------------------------------------------------
+   3 | ERROR   | [x] Opening brace of a class must be on the line
+     |         |     after the definition
+  15 | ERROR   | [ ] Variable "period_id" is not in valid camel caps
+     |         |     format
+  15 | ERROR   | [x] Opening brace should be on a new line
+  32 | ERROR   | [ ] Variable "period_id" is not in valid camel caps
+     |         |     format
+  38 | WARNING | [ ] Line exceeds 80 characters; contains 90
+     |         |     characters
+  43 | WARNING | [ ] Line exceeds 80 characters; contains 110
+     |         |     characters
+  47 | ERROR   | [x] Opening brace should be on a new line
+  73 | WARNING | [ ] Line exceeds 80 characters; contains 92
+     |         |     characters
+  78 | WARNING | [ ] Line exceeds 80 characters; contains 112
+     |         |     characters
+  82 | ERROR   | [x] Opening brace should be on a new line
+ 117 | ERROR   | [ ] Variable "period_id" is not in valid camel caps
+     |         |     format
+ 117 | ERROR   | [x] Opening brace should be on a new line
+ 136 | ERROR   | [ ] Variable "period_id" is not in valid camel caps
+     |         |     format
+ 151 | ERROR   | [ ] Variable "period_id" is not in valid camel caps
+     |         |     format
+ 151 | ERROR   | [x] Opening brace should be on a new line
+ 170 | ERROR   | [ ] Variable "period_id" is not in valid camel caps
+     |         |     format
+ 185 | ERROR   | [x] Opening brace should be on a new line
+ 214 | WARNING | [ ] Line exceeds 80 characters; contains 112
+     |         |     characters
+ 214 | ERROR   | [x] Opening brace should be on a new line
+ 269 | WARNING | [ ] Line exceeds 80 characters; contains 113
+     |         |     characters
+ 269 | ERROR   | [x] Opening brace should be on a new line
+ 301 | WARNING | [ ] Line exceeds 80 characters; contains 82
+     |         |     characters
+ 303 | ERROR   | [x] Opening brace should be on a new line
+ 327 | ERROR   | [x] Opening brace should be on a new line
+ 349 | ERROR   | [ ] Variable "start_date" is not in valid camel caps
+     |         |     format
+ 349 | ERROR   | [ ] Variable "end_date" is not in valid camel caps
+     |         |     format
+ 349 | ERROR   | [x] Opening brace should be on a new line
+ 358 | ERROR   | [ ] Variable "start_date" is not in valid camel caps
+     |         |     format
+ 359 | ERROR   | [ ] Variable "end_date" is not in valid camel caps
+     |         |     format
+ 371 | WARNING | [ ] Line exceeds 80 characters; contains 90
+     |         |     characters
+ 373 | ERROR   | [x] Opening brace should be on a new line
+ 399 | ERROR   | [x] Opening brace should be on a new line
+ 429 | ERROR   | [x] Opening brace should be on a new line
+ 492 | ERROR   | [x] Opening brace should be on a new line
+ 514 | ERROR   | [x] Opening brace should be on a new line
+ 539 | ERROR   | [x] Opening brace should be on a new line
+ 570 | ERROR   | [x] Opening brace should be on a new line
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 19 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/Utilities.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AND 4 WARNINGS AFFECTING 8 LINES
+----------------------------------------------------------------------
+  3 | ERROR   | [x] Opening brace of a class must be on the line
+    |         |     after the definition
+ 12 | WARNING | [ ] Line exceeds 80 characters; contains 95
+    |         |     characters
+ 16 | ERROR   | [x] Opening brace should be on a new line
+ 40 | WARNING | [ ] Line exceeds 80 characters; contains 92
+    |         |     characters
+ 42 | WARNING | [ ] Line exceeds 80 characters; contains 92
+    |         |     characters
+ 55 | WARNING | [ ] Line exceeds 80 characters; contains 85
+    |         |     characters
+ 57 | ERROR   | [x] Opening brace should be on a new line
+ 91 | ERROR   | [x] Opening brace should be on a new line
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/User.php
+----------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 1 | WARNING | No PHP code was found in this file and short open tags
+   |         | are not allowed by this install of PHP. This file may
+   |         | be using short open tags but PHP does not allow them.
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/EngageFactory.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AND 1 WARNING AFFECTING 5 LINES
+----------------------------------------------------------------------
+  3 | ERROR   | [x] Opening brace of a class must be on the line
+    |         |     after the definition
+ 14 | ERROR   | [x] Opening brace should be on a new line
+ 41 | WARNING | [ ] Line exceeds 80 characters; contains 88
+    |         |     characters
+ 43 | ERROR   | [x] Opening brace should be on a new line
+ 73 | ERROR   | [x] Opening brace should be on a new line
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/GradesFactory.php
+----------------------------------------------------------------------
+FOUND 19 ERRORS AND 17 WARNINGS AFFECTING 30 LINES
+----------------------------------------------------------------------
+   3 | ERROR   | [x] Opening brace of a class must be on the line
+     |         |     after the definition
+  14 | ERROR   | [x] Opening brace should be on a new line
+  42 | ERROR   | [x] Opening brace should be on a new line
+  71 | WARNING | [ ] Line exceeds 80 characters; contains 99
+     |         |     characters
+  75 | WARNING | [ ] Line exceeds 80 characters; contains 85
+     |         |     characters
+  75 | ERROR   | [x] Opening brace should be on a new line
+  83 | WARNING | [ ] Line exceeds 80 characters; contains 85
+     |         |     characters
+ 121 | ERROR   | [x] Opening brace should be on a new line
+ 145 | WARNING | [ ] Line exceeds 80 characters; contains 89
+     |         |     characters
+ 153 | WARNING | [ ] Line exceeds 80 characters; contains 84
+     |         |     characters
+ 181 | WARNING | [ ] Line exceeds 80 characters; contains 89
+     |         |     characters
+ 183 | ERROR   | [x] Opening brace should be on a new line
+ 198 | ERROR   | [ ] Variable "pk_grades_module_id" is not in valid
+     |         |     camel caps format
+ 199 | ERROR   | [ ] Variable "pk_grades_module_id" is not in valid
+     |         |     camel caps format
+ 205 | ERROR   | [ ] Variable "fk_pk_grades_module_id" is not in
+     |         |     valid camel caps format
+ 205 | ERROR   | [ ] Variable "pk_grades_module_id" is not in valid
+     |         |     camel caps format
+ 205 | WARNING | [ ] Line exceeds 80 characters; contains 88
+     |         |     characters
+ 214 | WARNING | [ ] Line exceeds 80 characters; contains 81
+     |         |     characters
+ 231 | WARNING | [ ] Line exceeds 80 characters; contains 91
+     |         |     characters
+ 244 | WARNING | [ ] Line exceeds 80 characters; contains 106
+     |         |     characters
+ 248 | ERROR   | [x] Opening brace should be on a new line
+ 288 | WARNING | [ ] Line exceeds 80 characters; contains 92
+     |         |     characters
+ 288 | ERROR   | [x] Opening brace should be on a new line
+ 327 | ERROR   | [x] Opening brace should be on a new line
+ 358 | ERROR   | [x] Opening brace should be on a new line
+ 383 | WARNING | [ ] Line exceeds 80 characters; contains 101
+     |         |     characters
+ 383 | ERROR   | [x] Opening brace should be on a new line
+ 407 | WARNING | [ ] Line exceeds 80 characters; contains 85
+     |         |     characters
+ 411 | ERROR   | [x] Opening brace should be on a new line
+ 430 | WARNING | [ ] Line exceeds 80 characters; contains 82
+     |         |     characters
+ 434 | ERROR   | [x] Opening brace should be on a new line
+ 457 | WARNING | [ ] Line exceeds 80 characters; contains 82
+     |         |     characters
+ 457 | ERROR   | [x] Opening brace should be on a new line
+ 478 | WARNING | [ ] Line exceeds 80 characters; contains 89
+     |         |     characters
+ 482 | ERROR   | [x] Opening brace should be on a new line
+ 489 | WARNING | [ ] Line exceeds 80 characters; contains 101
+     |         |     characters
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 15 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/LiviFactory.php
+----------------------------------------------------------------------
+FOUND 4 ERRORS AFFECTING 4 LINES
+----------------------------------------------------------------------
+  3 | ERROR | [x] Opening brace of a class must be on the line after
+    |       |     the definition
+ 12 | ERROR | [x] Opening brace should be on a new line
+ 32 | ERROR | [x] Opening brace should be on a new line
+ 52 | ERROR | [x] Opening brace should be on a new line
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 4 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/SirenFactory.php
+----------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 1 | WARNING | No PHP code was found in this file and short open tags
+   |         | are not allowed by this install of PHP. This file may
+   |         | be using short open tags but PHP does not allow them.
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/LabsFactory.php
+----------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 1 | WARNING | No PHP code was found in this file and short open tags
+   |         | are not allowed by this install of PHP. This file may
+   |         | be using short open tags but PHP does not allow them.
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/PurchaseFactory.php
+----------------------------------------------------------------------
+FOUND 28 ERRORS AND 15 WARNINGS AFFECTING 41 LINES
+----------------------------------------------------------------------
+   3 | ERROR   | [x] Opening brace of a class must be on the line
+     |         |     after the definition
+   6 | WARNING | [ ] Line exceeds 80 characters; contains 81
+     |         |     characters
+  21 | WARNING | [ ] Line exceeds 80 characters; contains 107
+     |         |     characters
+  22 | WARNING | [ ] Line exceeds 80 characters; contains 113
+     |         |     characters
+  22 | ERROR   | [x] Opening brace should be on a new line
+  86 | ERROR   | [x] Opening brace should be on a new line
+ 107 | ERROR   | [x] Opening brace should be on a new line
+ 127 | ERROR   | [x] Opening brace should be on a new line
+ 151 | ERROR   | [x] Opening brace should be on a new line
+ 175 | ERROR   | [x] Opening brace should be on a new line
+ 201 | WARNING | [ ] Line exceeds 80 characters; contains 116
+     |         |     characters
+ 210 | ERROR   | [x] Opening brace should be on a new line
+ 222 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 129 characters
+ 230 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 121 characters
+ 248 | ERROR   | [x] Opening brace should be on a new line
+ 254 | WARNING | [ ] Line exceeds 80 characters; contains 101
+     |         |     characters
+ 279 | ERROR   | [x] Opening brace should be on a new line
+ 299 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 131 characters
+ 304 | WARNING | [ ] Line exceeds 80 characters; contains 85
+     |         |     characters
+ 310 | ERROR   | [x] Opening brace should be on a new line
+ 330 | ERROR   | [x] Opening brace should be on a new line
+ 337 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 129 characters
+ 358 | ERROR   | [x] Opening brace should be on a new line
+ 381 | ERROR   | [x] Opening brace should be on a new line
+ 388 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 130 characters
+ 412 | ERROR   | [x] Opening brace should be on a new line
+ 433 | WARNING | [ ] Line exceeds 80 characters; contains 114
+     |         |     characters
+ 440 | WARNING | [ ] Line exceeds 80 characters; contains 104
+     |         |     characters
+ 443 | ERROR   | [x] Opening brace should be on a new line
+ 452 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 152 characters
+ 459 | WARNING | [ ] Line exceeds 80 characters; contains 82
+     |         |     characters
+ 471 | WARNING | [ ] Line exceeds 80 characters; contains 82
+     |         |     characters
+ 475 | WARNING | [ ] Line exceeds 80 characters; contains 108
+     |         |     characters
+ 476 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 157 characters
+ 490 | WARNING | [ ] Line exceeds 80 characters; contains 94
+     |         |     characters
+ 496 | WARNING | [ ] Line exceeds 80 characters; contains 100
+     |         |     characters
+ 498 | ERROR   | [x] Opening brace should be on a new line
+ 502 | WARNING | [ ] Line exceeds 80 characters; contains 95
+     |         |     characters
+ 527 | WARNING | [ ] Line exceeds 80 characters; contains 98
+     |         |     characters
+ 527 | ERROR   | [x] Opening brace should be on a new line
+ 560 | ERROR   | [x] Opening brace should be on a new line
+ 587 | ERROR   | [x] Opening brace should be on a new line
+ 608 | ERROR   | [x] Opening brace should be on a new line
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 21 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/FitnessFactory.php
+----------------------------------------------------------------------
+FOUND 9 ERRORS AND 9 WARNINGS AFFECTING 17 LINES
+----------------------------------------------------------------------
+   3 | ERROR   | [x] Opening brace of a class must be on the line
+     |         |     after the definition
+  10 | WARNING | [ ] Line exceeds 80 characters; contains 85
+     |         |     characters
+  12 | ERROR   | [x] Opening brace should be on a new line
+  35 | WARNING | [ ] Line exceeds 80 characters; contains 93
+     |         |     characters
+  37 | ERROR   | [x] Opening brace should be on a new line
+  54 | WARNING | [ ] Line exceeds 80 characters; contains 99
+     |         |     characters
+  55 | WARNING | [ ] Line exceeds 80 characters; contains 92
+     |         |     characters
+  67 | WARNING | [ ] Line exceeds 80 characters; contains 85
+     |         |     characters
+  85 | ERROR   | [x] Opening brace should be on a new line
+ 122 | ERROR   | [x] Opening brace should be on a new line
+ 160 | ERROR   | [x] Opening brace should be on a new line
+ 190 | ERROR   | [x] Opening brace should be on a new line
+ 202 | WARNING | [ ] Line exceeds 80 characters; contains 84
+     |         |     characters
+ 208 | WARNING | [ ] Line exceeds 80 characters; contains 100
+     |         |     characters
+ 210 | WARNING | [ ] Line exceeds 80 characters; contains 102
+     |         |     characters
+ 212 | WARNING | [ ] Line exceeds 80 characters; contains 88
+     |         |     characters
+ 212 | ERROR   | [x] Opening brace should be on a new line
+ 249 | ERROR   | [x] Opening brace should be on a new line
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 9 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/AccountFactory.php
+----------------------------------------------------------------------
+FOUND 23 ERRORS AND 10 WARNINGS AFFECTING 31 LINES
+----------------------------------------------------------------------
+   3 | ERROR   | [x] Opening brace of a class must be on the line
+     |         |     after the definition
+  12 | ERROR   | [x] Opening brace should be on a new line
+  33 | ERROR   | [x] Opening brace should be on a new line
+  53 | ERROR   | [x] Opening brace should be on a new line
+  72 | WARNING | [ ] Line exceeds 80 characters; contains 98
+     |         |     characters
+  74 | ERROR   | [x] Opening brace should be on a new line
+  96 | ERROR   | [x] Opening brace should be on a new line
+ 122 | ERROR   | [x] Opening brace should be on a new line
+ 144 | ERROR   | [ ] Variable "number_value" is not in valid camel
+     |         |     caps format
+ 145 | ERROR   | [ ] Variable "string_value" is not in valid camel
+     |         |     caps format
+ 146 | ERROR   | [ ] Variable "number_value" is not in valid camel
+     |         |     caps format
+ 164 | WARNING | [ ] Line exceeds 80 characters; contains 82
+     |         |     characters
+ 164 | ERROR   | [x] Opening brace should be on a new line
+ 185 | WARNING | [ ] Line exceeds 80 characters; contains 120
+     |         |     characters
+ 189 | ERROR   | [x] Opening brace should be on a new line
+ 218 | ERROR   | [x] Opening brace should be on a new line
+ 242 | WARNING | [ ] Line exceeds 80 characters; contains 117
+     |         |     characters
+ 246 | ERROR   | [x] Opening brace should be on a new line
+ 255 | ERROR   | [ ] Line exceeds maximum limit of 120 characters;
+     |         |     contains 141 characters
+ 256 | WARNING | [ ] Line exceeds 80 characters; contains 116
+     |         |     characters
+ 260 | WARNING | [ ] Line exceeds 80 characters; contains 84
+     |         |     characters
+ 261 | WARNING | [ ] Line exceeds 80 characters; contains 88
+     |         |     characters
+ 282 | WARNING | [ ] Line exceeds 80 characters; contains 98
+     |         |     characters
+ 282 | ERROR   | [x] Opening brace should be on a new line
+ 323 | ERROR   | [x] Opening brace should be on a new line
+ 347 | WARNING | [ ] Line exceeds 80 characters; contains 106
+     |         |     characters
+ 348 | ERROR   | [x] Opening brace should be on a new line
+ 396 | ERROR   | [x] Opening brace should be on a new line
+ 413 | ERROR   | [x] Opening brace should be on a new line
+ 443 | WARNING | [ ] Line exceeds 80 characters; contains 86
+     |         |     characters
+ 445 | ERROR   | [x] Opening brace should be on a new line
+ 474 | ERROR   | [ ] Variable "is_active" is not in valid camel caps
+     |         |     format
+ 486 | ERROR   | [ ] Variable "pk_app_id" is not in valid camel caps
+     |         |     format
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 17 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------
+
+
+FILE: /var/www/ZendApp/application/models/ModelFactory.php
+----------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 1 | WARNING | No PHP code was found in this file and short open tags
+   |         | are not allowed by this install of PHP. This file may
+   |         | be using short open tags but PHP does not allow them.
+----------------------------------------------------------------------
+
+Time: 596ms; Memory: 9.25Mb
+

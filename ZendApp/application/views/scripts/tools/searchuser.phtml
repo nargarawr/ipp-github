@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-12">
+        Enter as many details as possible to locate the user
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-6">
+        <label> User Id </label>
+
+        <div class="form-group" id="useridInputWrapper">
+            <input type="text" id="useridInput" class="form-control" placeholder="Account user Id">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label> Username </label>
+
+        <div class="form-group" id="usernameInputWrapper">
+            <input type="text" id="usernameInput" class="form-control" placeholder="Account user name">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <label> First Name</label>
+
+        <div class="form-group" id="fnameInputWrapper">
+            <input type="text" id="fnameInput" class="form-control" placeholder="First name">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <label> Last Name</label>
+
+        <div class="form-group" id="lnameInputWrapper">
+            <input type="text" id="lnameInput" class="form-control" placeholder="Last Name">
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <label> Email Address </label>
+
+        <div class="form-group" id="emailInputWrapper">
+            <input type="text" id="emailInput" class="form-control" placeholder="Contact email address">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <input id="searchAccount" type="submit" class="btn btn-success btn-right" value="Search"/>
+    </div>
+</div>
+
+
+<div class="row hidden" id="errorDisplay">
+    <hr>
+    <div class="alert alert-danger" role="alert">
+        <span class="sr-only">Error:</span>
+        No user found!
+    </div>
+</div>
+<div class="row hidden" id="userInfoDisplay">
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>User Details </h4>
+
+            <div class="table-responsive">
+                <table class="table table-condensed table-striped" id="userInfoDisplayTable">
+                    <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date Joined</th>
+                        <th>Active</th>
+                    </tr>
+                    </thead>
+                    <tbody id="userInfoDisplayTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

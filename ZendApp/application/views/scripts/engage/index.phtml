@@ -1,0 +1,20 @@
+<div class="row">
+    <? foreach ($this->apps as $app) { ?>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div class="tileHolder"
+                 style="background: url('/images/engage/<?=$app->url?>.png') no-repeat scroll center center transparent;">
+                <a href="<?= $this->url(array('action' => 'index', 'controller' => $app->url), null, true) ?>"
+                   class="tileLink"></a>
+                <div class="tileTextBg"></div>
+                <div class="tileText">
+                    <?= $app->name ?>
+                </div>
+
+                <div class="tileTextFooterBg"></div>
+                <div class="tileFooterText">
+                    <?= $app->shortDesc ?>
+                </div>
+            </div>
+        </div>
+    <? } ?>
+</div>

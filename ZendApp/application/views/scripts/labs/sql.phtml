@@ -1,0 +1,53 @@
+<div class="row">
+    <form action="/labs/sql" method="post">
+        <div class="col-md-8">
+            <textarea class="form-control" rows="5" name="sqlInput"><?= (!is_null($this->sql) ? $this->sql : '') ?></textarea>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" name="method">
+                <option value="fetch"> Fetch </option>
+                <option value="update"> Update </option>
+                <option value="insert"> Insert </option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <br>
+            <input type="submit" class="btn btn-success">
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="resultsContainer">
+            <h2> Results </h2>
+            <? if ($this->results['isValid']) { ?>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <? if (!empty($this->results['results'])) { ?>
+                                <tr>
+                                    <? foreach($this->results['results'][0] as $key => $value) { ?>
+                                        <th> <?= ($key) ?> </th>
+                                    <? } ?>
+                                </tr>
+                            <? } ?>
+                        </thead>
+                        <? if (!empty($this->results['results'])) { ?>
+                            <? foreach($this->results['results'] as $result) { ?>
+                                <tr>
+                                    <? foreach($result as $key => $value) { ?>
+                                        <td> <?= ($value) ?> </td>
+                                    <? } ?>
+                                </tr>
+                            <? } ?>
+                        <? } ?>
+
+                    </table>
+                </div>
+            <? } else { ?>
+                <?= $this->results['message'] ?>
+            <? } ?>
+        </div>
+    </div>
+</div>

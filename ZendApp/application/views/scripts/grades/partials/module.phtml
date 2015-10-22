@@ -1,0 +1,227 @@
+<?
+/**
+ * Name - module.phtml
+ * Author - Craig Knott
+ * Description - Draw a modules in a detailed format
+ * Params - {
+ *     $this->module: The module object (with id, code, name, credits and assessments)
+ *     $this->courseLength: Number of years the course is
+ * }
+ */
+?>
+<?
+    $panelType = "default";
+
+    if ($this->module->grade > 0) {
+        $panelType = "danger";
+    }
+    if ($this->module->grade >= 40) {
+        $panelType = "warning";
+    }
+    if ($this->module->grade >= 70) {
+        $panelType = "success";
+    }
+?>
+
+<div class="moduleContainer panel panel-<?= $panelType ?>">
+    <input type="hidden" class="moduleId" value="<?= $this->module->pk_grades_module_id ?>">
+    <div class="panel-heading text-center">
+        <div class="row">
+            <div class="col-xs-3">
+                <div class="moduleShowDetails hidden">
+                    <span class="glyphicon glyphicon-collapse-up hidden"> </span>
+                    <span class="glyphicon glyphicon-collapse-down"> </span>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="moduleCode">
+                    <div class="displayTag">
+                        <?= $this->module->code ?>
+                    </div>
+                    <div class="editTag hidden">
+                        <input type="text" class="form-control" value="<?= $this->module->code ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="moduleModificationButtons hidden pull-right">
+                    <div class="displayTag">
+                        <span class="glyphicon glyphicon-pencil"> </span>
+                        <span class="glyphicon glyphicon-remove"> </span>
+                    </div>
+                </div>
+                <div class="editTag hidden">
+                    <button class="btn btn-success moduleSubmitButton">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="moduleDetails">
+            <div class="row text-center">
+                <div class="col-md-12 name moduleName">
+                    <div class="displayTag">
+                        <?= $this->module->name ?>
+                    </div>
+                    <div class="editTag hidden">
+                        <input type="text" class="form-control" value="<?= $this->module->name ?>">
+                    </div>
+                </div>
+                <div class="col-md-4 moduleCredits">
+                    <div class="name">
+                        Credits
+                    </div>
+                    <div class="text">
+                        <div class="displayTag">
+                            <?= $this->module->credits ?>
+                        </div>
+                        <div class="editTag hidden">
+                            <input type="number" class="form-control" value="<?= $this->module->credits ?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 moduleYear">
+                    <div class="name">
+                        Year
+                    </div>
+                    <div class="text">
+                        <div class="displayTag">
+                            <?= $this->module->year ?><?= ordinalSuffix($this->module->year) ?>
+                        </div>
+                        <div class="editTag hidden">
+                            <select class="form-control">
+                                <? for ($i = 1; $i <= $this->courseLength; $i++) { ?>
+                                    <option <?= ($i == $this->module->year) ? 'selected' : '' ?> value="<?= $i ?>">
+                                        Year <?= $i ?>
+                                    </option>
+                                <? } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 moduleSemester">
+                    <div class="name">
+                        Semester
+                    </div>
+                    <div class="text">
+                        <div class="displayTag">
+                            <?= $this->module->semester ?>
+                        </div>
+                        <div class="editTag hidden">
+                            <select class="form-control">
+                                <? $semesters = array('Full Year', 'Autumn', 'Spring'); ?>
+                                <? foreach ($semesters as $i => $semester) { ?>
+                                    <option <?= ($semester == $this->module->semester) ? 'selected' : '' ?> value="<?= $i ?>">
+                                        <?= $semester ?>
+                                    </option>
+                                <? } ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table moduleTable">
+                <thead>
+                <tr>
+                    <th> Assessment </th>
+                    <th> Weight </th>
+                    <th> Mark </th>
+                    <th> Weighted </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <? if (count($this->module->assessments) > 0) { ?>
+                        <? foreach ($this->module->assessments as $assessment) { ?>
+                            <? $wGrade = ($assessment->weight * $assessment->grade)/100 ?>
+                            <tr class="assessmentRow">
+                                <input type="hidden" class="assessmentId" value="<?= $assessment->id ?>">
+                                <td>
+                                    <div class="displayTag">
+                                        <div class="assessmentNameValue">
+                                            <?= $assessment->name ?>
+                                        </div>
+                                    </div>
+                                    <div class="editTag hidden">
+                                        <input type="text" class="form-control assessmentName" value="<?= $assessment->name ?>">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="displayTag">
+                                        <div class="assessmentWeightValue">
+                                            <?= $assessment->weight ?>
+                                        </div>
+                                    </div>
+                                    <div class="editTag hidden">
+                                        <input type="number" class="form-control assessmentWeight" value="<?= $assessment->weight ?>">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="displayTag">
+                                        <div class="assessmentGradeValue">
+                                            <?= $assessment->grade ?>
+                                        </div>
+                                    </div>
+                                    <div class="editTag hidden">
+                                        <input type="number" class="form-control assessmentGrade" value="<?= $assessment->grade ?>">
+                                    </div>
+                                </td>
+                                <td>
+                                    <?= $wGrade ?>
+                                    <div class="editTag pull-right hidden">
+                                        <span class="glyphicon glyphicon-remove"> </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        <? } ?>
+                        <tr class="editTag hidden">
+                            <td colSpan="2">
+                            </td>
+                            <td colSpan="2">
+                                <button type="button" data-mid="<?= $this->module->pk_grades_module_id ?>" class="btn btn-primary thin pull-right assAddBtn">
+                                    Add Assessment
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan="3">
+                                <div class="refreshReminder hidden">
+                                    You will need to  save and refresh the page to see updates
+                                    to module grades, and newly added assessments
+                                </div>
+                            </td>
+                            <td>
+                                <?= $this->module->grade ?>
+                            </td>
+                        </tr>
+                    <? } else { ?>
+                        <tr class="text-center displayTag">
+                            <td colSpan="4">
+                                No assessments added yet, hover over the module title and
+                                click the edit button (the pencil) to add some
+                            </td>
+                        </tr>
+                        <tr class="refreshReminder hidden">
+                            <td colSpan="4">
+                                You will need to save and refresh the page to see updates
+                                to module grades, and newly added assessments
+                            </td>
+                        </tr>
+                        <tr class="editTag hidden">
+                            <td colSpan="2">
+                            </td>
+                            <td colSpan="2">
+                                <button type="button" data-mid="<?= $this->module->pk_grades_module_id ?>" class="btn btn-primary thin pull-right assAddBtn">
+                                    Add Assessment
+                                </button>
+                            </td>
+                        </tr>
+                    <? } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
