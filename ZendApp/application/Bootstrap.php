@@ -12,24 +12,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $view = $this->getResource('view');
         $view->doctype('XHTML1_STRICT');
 
-        // By default all pages have top and nav bar
-        $this->view->hasTopBar = true;
-        $this->view->hasNavBar = true;
-        $this->view->isExternal = false;
-
         $scriptsDir = APPLICATION_PATH . '/views/scripts/';
         $view->addScriptPath(array($scriptsDir));
         $layout->getView()->addScriptPath(array($scriptsDir));
-
-        // Include global php file
-        require_once('../public/global.php');
 
         // Include base controller
         require_once('../application/controllers/BaseController.php');
 
         $config = new Zend_Config_Ini(
             '../application/configs/db_config.ini',
-            (isDevelopment()) ? 'offline' : 'online'
+            'online'
         );
         $registry = Zend_Registry::getInstance();
         $registry->set('db_config', $config);
