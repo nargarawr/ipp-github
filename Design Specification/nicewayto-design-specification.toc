@@ -3,27 +3,25 @@
 \contentsline {subsection}{\numberline {1.2}Non-Functional Requirements}{3}{subsection.1.2}
 \contentsline {paragraph}{Accessibility}{3}{section*.2}
 \contentsline {paragraph}{Usability and Operability}{3}{section*.3}
-\contentsline {paragraph}{Maintainability}{3}{section*.4}
+\contentsline {paragraph}{Maintainability \& Documentation}{3}{section*.4}
 \contentsline {paragraph}{Quality}{3}{section*.5}
 \contentsline {paragraph}{Resource Requirements and Constraints}{3}{section*.6}
 \contentsline {paragraph}{Cross Platform Compatibility}{3}{section*.7}
 \contentsline {paragraph}{Security}{4}{section*.8}
-\contentsline {paragraph}{Reliability and Robustness}{4}{section*.9}
-\contentsline {paragraph}{Documentation}{4}{section*.10}
-\contentsline {paragraph}{Disaster Recovery}{4}{section*.11}
+\contentsline {paragraph}{Disaster Recovery}{4}{section*.9}
 \contentsline {section}{\numberline {2}Annotated Designs}{5}{section.2}
 \contentsline {subsection}{\numberline {2.1}The Landing Page/Route Discovery Page}{5}{subsection.2.1}
-\contentsline {paragraph}{First Design}{5}{section*.12}
-\contentsline {paragraph}{Second Design}{6}{section*.14}
-\contentsline {paragraph}{Third Design}{6}{section*.16}
+\contentsline {paragraph}{Minimal Design}{5}{section*.10}
+\contentsline {paragraph}{Detailed Search Design}{6}{section*.12}
+\contentsline {paragraph}{Modern Design}{6}{section*.14}
 \contentsline {subsection}{\numberline {2.2}The Route Listing Page (RLP)}{7}{subsection.2.2}
-\contentsline {paragraph}{First Design}{7}{section*.18}
-\contentsline {paragraph}{Second Design}{8}{section*.20}
-\contentsline {paragraph}{Third Design}{8}{section*.22}
+\contentsline {paragraph}{Two Column Design}{7}{section*.16}
+\contentsline {paragraph}{Minimalist Design}{8}{section*.18}
+\contentsline {paragraph}{Map-less Design}{8}{section*.20}
 \contentsline {subsection}{\numberline {2.3}The Route Detail Page (RDP)}{9}{subsection.2.3}
-\contentsline {paragraph}{First Design}{9}{section*.24}
-\contentsline {paragraph}{Second Design}{9}{section*.26}
-\contentsline {paragraph}{Third Design}{10}{section*.28}
+\contentsline {paragraph}{Left-heavy Design}{9}{section*.22}
+\contentsline {paragraph}{Two Column Design}{9}{section*.24}
+\contentsline {paragraph}{Map Centric Design}{10}{section*.26}
 \contentsline {subsection}{\numberline {2.4}The Route Creation Page (RCP)}{10}{subsection.2.4}
 \contentsline {subsection}{\numberline {2.5}Generic Page Designs}{11}{subsection.2.5}
 \contentsline {subsubsection}{\numberline {2.5.1}Login Page}{11}{subsubsection.2.5.1}
@@ -34,9 +32,19 @@
 \contentsline {subsection}{\numberline {2.6}User Flow Diagram}{13}{subsection.2.6}
 \contentsline {section}{\numberline {3}Market Research}{14}{section.3}
 \contentsline {subsection}{\numberline {3.1}Analysis Of Similar Applications}{14}{subsection.3.1}
-\contentsline {paragraph}{Google's ``My Maps'', \url {https://www.google.com/maps/d}}{14}{section*.37}
-\contentsline {paragraph}{MyScenicDrives, \url {https://www.myscenicdrives.com}}{15}{section*.39}
-\contentsline {paragraph}{Mad Maps}{16}{section*.41}
+\contentsline {paragraph}{Google's ``My Maps'', \url {https://www.google.com/maps/d}}{14}{section*.35}
+\contentsline {paragraph}{MyScenicDrives, \url {https://www.myscenicdrives.com}}{15}{section*.37}
+\contentsline {paragraph}{Mad Maps}{16}{section*.39}
 \contentsline {subsection}{\numberline {3.2}Web Applications VS Native Mobile Applications}{16}{subsection.3.2}
-\contentsline {paragraph}{Web Applications}{16}{section*.43}
-\contentsline {paragraph}{Native Mobile Applications}{17}{section*.44}
+\contentsline {paragraph}{Web Applications}{16}{section*.41}
+\contentsline {paragraph}{Native Mobile Applications}{17}{section*.42}
+\contentsline {section}{\numberline {4}Final Designs}{17}{section.4}
+\contentsline {subsection}{\numberline {4.1}Landing Page}{18}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Route Listing Page}{18}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Route Detail Page}{19}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Route Creation Page}{19}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}My Details Page}{20}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}My Routes Page}{20}{subsection.4.6}
+\contentsline {subsection}{\numberline {4.7}Admin Page}{21}{subsection.4.7}
+\contentsline {subsection}{\numberline {4.8}Login Page}{21}{subsection.4.8}
+\contentsline {subsection}{\numberline {4.9}Signup Page}{22}{subsection.4.9}
