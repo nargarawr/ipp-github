@@ -3,37 +3,19 @@
 class MemberController extends BaseController {
 
     public function init() {
+        $this->view->isExternal = true;
         parent::init();
     }
 
-    public function debug() {
-        $trace = debug_backtrace();
-        $rootPath = dirname(dirname(__FILE__));
-        $file = str_replace($rootPath, '', $trace[0]['file']);
-        $line = $trace[0]['line'];
-        $var = $trace[0]['args'][0];
-        $lineInfo = sprintf('<div><strong>%s</strong> (line <strong>%s</strong>)</div>', $file, $line);
-        $debugInfo = sprintf('<pre>%s</pre>', print_r($var, true));
-        print_r($lineInfo.$debugInfo);
-    }
-
     public function loginAction() {
+        // If the user is already logged in, redirect them to their detail page
         if (Zend_Auth::getInstance()->hasIdentity()) {
-            die(var_dump('already online'));
-            // TODO: redirect if logged in
-            //$this->_redirect('engage');
+            $this->_redirect('user/details');
         }
 
-        /*
-            
-            if (!is_null($request->getParam("redirect"))) {
-                $redirect = str_replace("-", "/", $request->getParam("redirect"));
-            }
-            */
-            
+        // If user is trying to log in, check their credentials are valid
         $request = $this->getRequest();
         $loginForm = $this->getLoginForm();
-
         if ($request->isPost()) {
             if ($loginForm->isValid($request->getPost())) {
                 $authAdapter = $this->getAuthAdapter();
@@ -43,28 +25,25 @@ class MemberController extends BaseController {
                 $authAdapter->setIdentity($username)
                     ->setCredential($password);
                 $auth = Zend_Auth::getInstance();
-                
-                // This line breaks everything
-                try {
-                    $result = $auth->authenticate($authAdapter);
-                } catch (Exception $e) {
-                    $this->debug($e);
-                }
-die();
 
+                $result = $auth->authenticate($authAdapter);
+
+                // If there is a corresponding row in the database, get the user details
                 if ($result->isValid()) {
                     $userInfo = $authAdapter->getResultRowObject(null, 'password');
                     $authStorage = $auth->getStorage();
                     $authStorage->write($userInfo);
 
-/* where do we go? */
-                    if (!is_null($redirect)) {
+                    // Take the user to the page they originally attempted to access
+                    $redir = $request->getParam("redirect");
+                    if ($redir != "") {
+                        $redirect = str_replace("-", "/", $redir);
                         $this->_redirect('/' . $redirect);
                     } else {
-                        $this->_redirect('/engage/index');
+                        $this->_redirect('/user/details');
                     }
                 } else {
-                    $this->view->errorMessage = 'Could not login: Username or password was wrong';
+                    $this->view->errorMessage = '<b>Could not login:</b> Username or password was wrong';
                 }
             }
         }
@@ -152,16 +131,14 @@ die();
         $submit->setLabel('Login')
             ->setAttrib('class', 'btn btn-success');
 
-/*
         if (!is_null($this->_request->getParam("redirect"))) {
             $redirect = $this->_request->getParam("redirect");
         } else {
-            $redirect = "route/index";
+            $redirect = "/index";
         }
-*/
 
         $loginForm = new Zend_Form();
-        $loginForm->setAction($this->_request->getBaseUrl() . '/member/login/')
+        $loginForm->setAction($this->_request->getBaseUrl() . '/member/login/redirect/' . $redirect)
             ->setMethod('post')
             ->addElement($username)
             ->addElement($password)

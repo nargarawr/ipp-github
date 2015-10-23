@@ -3,12 +3,13 @@
 class ErrorController extends BaseController {
 
     public function init() {
+        $this->view->isExternal = true;
         parent::init();
     }
 
     public function errorAction() {
         $showErrors = $this->getRequest()->getParam('forceShowErrors', 0);
-        $this->view->showErrors = $showErrors;
+        $this->view->showErrors = true || $showErrors;
 
         $errors = $this->_getParam('error_handler');
 
