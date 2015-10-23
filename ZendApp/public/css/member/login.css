@@ -1,0 +1,53 @@
+body {
+    background-image: url("/images/bg2.jpg");
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+dt {
+    padding-top: 5px;
+}
+
+.well {
+    margin-top: 25%;
+}
+
+.well .title {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#login-element {
+    text-align: center;
+}
+
+#login-element input {
+    width: 100px;
+}
+
+.signupBtn {
+    width: 100px;
+}
+
+.orSignup {
+    text-align: center;
+}
+
+.orSignup p {
+    margin-top: 0px;
+    margin-bottom: 5px;    
+}
+
+.zend_form {
+    margin-bottom: 0px;
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 992px) {
+    .well {
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-top: 5%;
+    }
+}
