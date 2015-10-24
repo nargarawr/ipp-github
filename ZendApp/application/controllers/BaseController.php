@@ -21,9 +21,10 @@ class BaseController extends Zend_Controller_Action {
             } else {
                 // If the user is not logged in, redirect to the login page
                 $this->_helper->redirector('login', 'member', null, array(
-                    'redirect' => $controller . "-" . $action
+                    'redirect'     => $controller . "-" . $action,
+                    'fromRedirect' => 1
                 ));
             }
         }
     }
-}?>
+}

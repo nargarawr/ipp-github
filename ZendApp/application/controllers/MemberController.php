@@ -31,7 +31,7 @@ class MemberController extends BaseController {
         }
 
         // If the user was redirected here, explain the situation to them
-        if ($redir != "") {
+        if ($redir != "" && $this->getRequest()->getParam("fromRedirect") == 1) {
             $this->view->infoMessage = '<b>Please log in</b> before accessing that page';
         }
 
@@ -117,6 +117,7 @@ class MemberController extends BaseController {
         $password = new Zend_Form_Element_Password('password');
         $password->setAttrib('class', 'form-control')
             ->setAttrib('placeholder', 'Password')
+            ->addValidator('stringLength', false, array(6))
             ->setRequired(true);
 
         $submit = new Zend_Form_Element_Submit('signup');

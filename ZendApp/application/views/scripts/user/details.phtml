@@ -16,58 +16,76 @@
                 </h3>
             </div>
             <div class="panel-body">
+                <? if (!is_null($this->errorMessage)) { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fa fa-exclamation-circle"></i>
+                        <?= $this->errorMessage; ?>
+                    </div>
+                <? } ?>
+                <? if (!is_null($this->successMessage)) { ?>
+                    <div class="alert alert-success" role="alert">
+                        <i class="fa fa-check"></i>
+                        <?= $this->successMessage; ?>
+                    </div>
+                <? } ?>
                 <div class="row">
-                    <div class="col-md-12 noBtmMargin">
-                        <label>Name</label>
-                    </div>
+                    <form enctype="application/x-www-form-urlencoded" method="post"
+                          action="/user/updateaccountdetails">
+                        <div class="col-md-12 noBtmMargin">
+                            <label>Name</label>
+                        </div>
 
-                    <div class="col-md-6 margin_b_15">
-                        <input type="text" class="form-control" id="in_fname"
-                               placeholder="First Name" value="<?= $this->user->fname ?>">
-                    </div>
-                    <div class="col-md-6 margin_b_15">
-                        <input type="text" class="form-control" id="in_lname"
-                               placeholder="Last Name" value="<?= $this->user->lname ?>">
-                    </div>
+                        <div class="col-md-6 margin_b_15">
+                            <input type="text" class="form-control" name="fname"
+                                   placeholder="First Name" value="<?= $this->user->fname ?>">
+                        </div>
+                        <div class="col-md-6 margin_b_15">
+                            <input type="text" class="form-control" name="lname"
+                                   placeholder="Last Name" value="<?= $this->user->lname ?>">
+                        </div>
 
-                    <div class="col-md-6 margin_b_15">
-                        <label> Email </label>
-                        <input type="text" id="in_email" class="form-control"
-                               placeholder="Your email address" value="<?= $this->user->email ?>">
-                    </div>
+                        <div class="col-md-6 margin_b_15">
+                            <label> Email </label>
+                            <input type="text" name="email" class="form-control"
+                                   placeholder="Your email address" value="<?= $this->user->email ?>">
+                        </div>
 
-                    <div class="col-md-6 margin_b_15">
-                        <label> Location </label>
-                        <input type="text" id="in_email" class="form-control"
-                               placeholder="Your location" value="<?= $this->user->location ?>">
-                    </div>
+                        <div class="col-md-6 margin_b_15">
+                            <label> Location </label>
+                            <input type="text" name="location" class="form-control"
+                                   placeholder="Your location" value="<?= $this->user->location ?>">
+                        </div>
 
-                    <div class="col-md-12">
-                        <input id="updateAccount" type="submit" class="btn btn-success right" value="Submit"/>
-                    </div>
+                        <div class="col-md-12">
+                            <input id="updateAccount" type="submit" class="btn btn-success right" value="Submit"/>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-12">
-                        <label> Change Password</label>
-                        <div class="form-group" id="in_curPassWrapper">
-                            <input type="password" class="form-control" id="in_curPass" placeholder="Enter Current Password">
+                    <form enctype="application/x-www-form-urlencoded" method="post"
+                          action="/user/updatepassword">
+                        <div class="col-md-12">
+                            <label> Change Password</label>
+                            <div class="form-group" id="in_curPassWrapper">
+                                <input type="password" class="form-control" name="currentPass" placeholder="Enter Current Password">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" id="in_newPass1Wrapper">
-                            <input type="password" class="form-control" id="in_newPass1" placeholder="Enter New Password">
+                        <div class="col-md-6">
+                            <div class="form-group" id="in_newPass1Wrapper">
+                                <input type="password" class="form-control" name="newPass1" placeholder="Enter New Password">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" id="in_newPass2Wrapper">
-                            <input type="password" class="form-control" id="in_newPass2" placeholder="Confirm New Password">
+                        <div class="col-md-6">
+                            <div class="form-group" id="in_newPass2Wrapper">
+                                <input type="password" class="form-control" name="newPass2" placeholder="Confirm New Password">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-12">
-                        <input id="updatePassword" type="submit" class="btn btn-success right" value="Change Password"/>
-                    </div>
+                        <div class="col-md-12">
+                            <input id="updatePassword" type="submit" class="btn btn-success right" value="Change Password"/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
