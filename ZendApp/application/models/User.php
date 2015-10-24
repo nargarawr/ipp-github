@@ -1,12 +1,15 @@
 <?
+
 class User {
 
     public $username;
     public $userId;
     public $fname;
     public $lname;
+    public $email;
     public $location;
     public $loginCount;
+    public $lastLogin;
     public $isAdmin;
     public $isBanned;
     public $isShadowBanned;
@@ -26,8 +29,10 @@ class User {
         $this->userId = $userIdentity->pk_user_id;
         $this->fname = $userIdentity->fname;
         $this->lname = $userIdentity->lname;
+        $this->email = $userIdentity->email;
         $this->location = $userIdentity->location;
         $this->loginCount = $userIdentity->login_count;
+        $this->lastLogin = $userIdentity->last_login;
         $this->isAdmin = $userIdentity->is_admin;
         $this->isBanned = $userIdentity->is_banned;
         $this->isShadowBanned = $userIdentity->is_shadow_banned;

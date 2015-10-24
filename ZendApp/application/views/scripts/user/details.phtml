@@ -1,13 +1,75 @@
-<h3>User Information</h3>
+<div class="row margin_t_15">
+    <div class="col-md-3">
+        <?= $this->partial('user', 'navigation', array(
+            'userIsAdmin' => $this->user->isAdmin,
+            'activePage'  => 'My Details'
+        )); ?>
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    My Details
+                    <span class="right font_">
+                        Account Created: <?= date("d/m/y", strtotime($this->user->datetimeCreated)) ?>
+                    </span>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 noBtmMargin">
+                        <label>Name</label>
+                    </div>
 
-<p> Username <?= $this->user->username ?> </p>
-<p> User id <?= $this->user->userId ?> </p>
-<p> First name <?= $this->user->fname ?> </p>
-<p> Last name <?= $this->user->lname ?> </p>
-<p> Location <?= $this->user->location ?> </p>
-<p> Login Count <?= $this->user->loginCount ?> </p>
-<p> Is admin <?= $this->user->isAdmin ?> </p>
-<p> Is banned <?= $this->user->isBanned ?> </p>
-<p> Is shadow banned <?= $this->user->isShadowBanned ?> </p>
-<p> Created <?= $this->user->datetimeCreated ?> </p>
-<p> Updated <?= $this->user->datetimeUpdated ?> </p>
+                    <div class="col-md-6 margin_b_15">
+                        <input type="text" class="form-control" id="in_fname"
+                               placeholder="First Name" value="<?= $this->user->fname ?>">
+                    </div>
+                    <div class="col-md-6 margin_b_15">
+                        <input type="text" class="form-control" id="in_lname"
+                               placeholder="Last Name" value="<?= $this->user->lname ?>">
+                    </div>
+
+                    <div class="col-md-6 margin_b_15">
+                        <label> Email </label>
+                        <input type="text" id="in_email" class="form-control"
+                               placeholder="Your email address" value="<?= $this->user->email ?>">
+                    </div>
+
+                    <div class="col-md-6 margin_b_15">
+                        <label> Location </label>
+                        <input type="text" id="in_email" class="form-control"
+                               placeholder="Your location" value="<?= $this->user->location ?>">
+                    </div>
+
+                    <div class="col-md-12">
+                        <input id="updateAccount" type="submit" class="btn btn-success right" value="Submit"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <label> Change Password</label>
+                        <div class="form-group" id="in_curPassWrapper">
+                            <input type="password" class="form-control" id="in_curPass" placeholder="Enter Current Password">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" id="in_newPass1Wrapper">
+                            <input type="password" class="form-control" id="in_newPass1" placeholder="Enter New Password">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" id="in_newPass2Wrapper">
+                            <input type="password" class="form-control" id="in_newPass2" placeholder="Confirm New Password">
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <input id="updatePassword" type="submit" class="btn btn-success right" value="Change Password"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

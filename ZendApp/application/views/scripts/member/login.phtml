@@ -12,11 +12,16 @@
                             <?= $this->errorMessage; ?>
                         </div>
                     <? } ?>
+                    <? if (!is_null($this->infoMessage)) { ?>
+                        <div class="alert alert-warning" role="alert">
+                            <?= $this->infoMessage; ?>
+                        </div>
+                    <? } ?>
                     <?= $this->loginForm; ?>
                     <div class="orSignup">
                         <p>or</p>
                         <a href="/member/signup">
-                            <input type="button" class="btn btn-primary signupBtn" value="Sign Up">    
+                            <input type="button" class="btn btn-primary signupBtn" value="Sign Up">
                         </a>
                     </div>
                 </div>

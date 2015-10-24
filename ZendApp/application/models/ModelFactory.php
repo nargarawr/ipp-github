@@ -1,6 +1,7 @@
 <?
 
 class ModelFactory {
+
     /**
      * Connect to the database and return the connection
      *
@@ -76,8 +77,8 @@ class ModelFactory {
         if ($result === false) {
             return $result;
         } else {
-            return (object) $result;
+            return (object)$result;
         }
     }
-    
+
 }

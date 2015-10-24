@@ -1,0 +1,33 @@
+<? $navArray = array(
+    (object)array(
+        'href'        => '/user/details',
+        'name'        => 'My Details',
+        'description' => 'View and edit your account information and password',
+        'isAdminOnly' => 0
+    ),
+    (object)array(
+        'href'        => '/nicewaytomockups/myroutes',
+        'name'        => 'My Routes',
+        'description' => 'View and edit your submitted routes',
+        'isAdminOnly' => 0
+    ),
+    (object)array(
+        'href'        => '/nicewaytomockups/admin',
+        'name'        => 'Admin',
+        'description' => 'Access administrative tools to manage the site',
+        'isAdminOnly' => 1
+    )
+) ?>
+
+<div class="list-group">
+    <? foreach ($navArray as $navItem) { ?>
+        <? if ($navItem->isAdminOnly && ($this->userIsAdmin != 1)) { ?>
+            <? continue; ?>
+        <? } ?>
+        <? $active = $navItem->name == $this->activePage ?>
+        <a href="<?= $navItem->href ?>" class="list-group-item<?= ($active) ? ' active' : '' ?>">
+            <h4 class="list-group-item-heading"><?= $navItem->name ?></h4>
+            <p class="list-group-item-text"><?= $navItem->description ?></p>
+        </a>
+    <? } ?>
+</div>

@@ -16,38 +16,26 @@ class MemberController extends BaseController {
         // If user is trying to log in, check their credentials are valid
         $request = $this->getRequest();
         $loginForm = $this->getLoginForm();
+        $redir = $request->getParam("redirect");
         if ($request->isPost()) {
             if ($loginForm->isValid($request->getPost())) {
-                $authAdapter = $this->getAuthAdapter();
                 $username = $loginForm->getValue('username');
                 $password = $loginForm->getValue('password');
 
-                $authAdapter->setIdentity($username)
-                    ->setCredential($password);
-                $auth = Zend_Auth::getInstance();
-
-                $result = $auth->authenticate($authAdapter);
-
-                // If there is a corresponding row in the database, get the user details
-                if ($result->isValid()) {
-                    $userInfo = $authAdapter->getResultRowObject(null, 'password');
-                    $authStorage = $auth->getStorage();
-                    $authStorage->write($userInfo);
-
-                    // Take the user to the page they originally attempted to access
-                    $redir = $request->getParam("redirect");
-                    if ($redir != "") {
-                        $redirect = str_replace("-", "/", $redir);
-                        $this->_redirect('/' . $redirect);
-                    } else {
-                        $this->_redirect('/user/details');
-                    }
-                } else {
+                // If we can't login, display an error
+                $loginSuccesful = $this->login($username, $password, $redir);
+                if (!$loginSuccesful) {
                     $this->view->errorMessage = '<b>Could not login:</b> Username or password was wrong';
                 }
             }
         }
 
+        // If the user was redirected here, explain the situation to them
+        if ($redir != "") {
+            $this->view->infoMessage = '<b>Please log in</b> before accessing that page';
+        }
+
+        // Display the log in form
         $this->view->loginForm = $this->getLoginForm();
     }
 
@@ -57,7 +45,39 @@ class MemberController extends BaseController {
     }
 
     public function signupAction() {
-        $this->view->signupForm = $this->getSignupForm();
+        // If the user is already logged in, redirect them to their detail page
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $this->_redirect('user/details');
+        }
+
+        // Check entered information is valid
+        $request = $this->getRequest();
+        $signupForm = $this->getSignupForm();
+        if ($request->isPost()) {
+            if ($signupForm->isValid($request->getPost())) {
+                $postData = $request->getPost();
+
+                $uniqueUser = LoginFactory::checkUserUnique($postData["username"], $postData["email"]);
+                if ($uniqueUser) {
+                    LoginFactory::createNewUser(
+                        $postData["username"],
+                        $postData["password"],
+                        $postData["email"],
+                        $postData["firstName"],
+                        $postData["location"]
+                    );
+
+                    $this->login($postData["username"], $postData["password"]);
+                } else {
+                    $this->view->errorMessage = '<b>There was a problem creating your account:</b> That email or username is already registered';
+                }
+            } else {
+                $this->view->errorMessage = '<b>There was a problem creating your account:</b> Some required fields are missing';
+            }
+        }
+
+        // Display the sign up form
+        $this->view->signupForm = $signupForm;
     }
 
     protected function getAuthAdapter() {
@@ -104,7 +124,7 @@ class MemberController extends BaseController {
             ->setAttrib('class', 'btn btn-primary');
 
         $signupForm = new Zend_Form();
-        $signupForm->setAction('/member/create')
+        $signupForm->setAction('/member/signup')
             ->setMethod('post')
             ->addElement($username)
             ->addElement($email)
@@ -132,13 +152,13 @@ class MemberController extends BaseController {
             ->setAttrib('class', 'btn btn-success');
 
         if (!is_null($this->_request->getParam("redirect"))) {
-            $redirect = $this->_request->getParam("redirect");
+            $redirect = '/member/login/redirect/' . $this->_request->getParam("redirect");
         } else {
-            $redirect = "/index";
+            $redirect = "/member/login";
         }
 
         $loginForm = new Zend_Form();
-        $loginForm->setAction($this->_request->getBaseUrl() . '/member/login/redirect/' . $redirect)
+        $loginForm->setAction($this->_request->getBaseUrl() . $redirect)
             ->setMethod('post')
             ->addElement($username)
             ->addElement($password)
@@ -146,4 +166,37 @@ class MemberController extends BaseController {
 
         return $loginForm;
     }
+
+    protected function login($username, $password, $redirect = null) {
+        // Check if the user exists and the password is correct
+        $authAdapter = $this->getAuthAdapter();
+        $authAdapter->setIdentity($username)
+            ->setCredential($password);
+        $auth = Zend_Auth::getInstance();
+
+        // If there is a corresponding row in the database, get the user details
+        $result = $auth->authenticate($authAdapter);
+        if ($result->isValid()) {
+            // If there is a corresponding row in the database, get the user details
+            $userInfo = $authAdapter->getResultRowObject(null, 'password');
+
+            // Register the user logging on
+            LoginFactory::registerUserLogin($userInfo->pk_user_id);
+
+            // Store user details
+            $authStorage = $auth->getStorage();
+            $authStorage->write($userInfo);
+
+            // Take the user to the page they originally attempted to access
+            if (!is_null($redirect) && $redirect != "") {
+                $redirect = str_replace("-", "/", $redirect);
+                $this->_redirect('/' . $redirect);
+            } else {
+                $this->_redirect('/user/details');
+            }
+        }
+
+        return false;
+    }
+
 }

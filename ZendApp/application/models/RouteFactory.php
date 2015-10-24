@@ -1,5 +1,5 @@
 <?
 
 class RouteFactory extends ModelFactory {
-       
+
 }

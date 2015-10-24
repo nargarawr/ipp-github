@@ -1,1 +1,21 @@
-/* Empty for now */
+.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.margin_b_15 {
+    margin-bottom:15px;
+}
+
+.margin_t_15 {
+    margin-top:15px;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+

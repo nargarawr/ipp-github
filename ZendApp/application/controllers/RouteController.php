@@ -3,7 +3,7 @@
 class RouteController extends BaseController {
 
     public function init() {
-        $this->view->isExternal = false;
+        $this->view->isExternal = true;
         parent::init();
     }
 
