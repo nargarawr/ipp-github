@@ -16,6 +16,8 @@
                 '/libs/Bootstrap/bootstrap.min.css',
                 '/libs/magnific/magnific-popup.css',
                 '/libs/font-awesome-4.3.0/css/font-awesome.min.css',
+                '/libs/mapbox/mapbox.css',
+                '/libs/leaflet/leaflet.css',
                 '/css/global.css',
                 '/css/' . $c . '/global.css',
                 '/css/' . $c . '/' . $a . '.css'
@@ -33,7 +35,6 @@
 
     <? // Display the content of the HTML page?>
     <?= $this->layout()->content; ?>
-
     <? /* Create an array of js files and import them if they exist */
         $jsFiles = array(
             '/libs/JQuery/jquery.js',
@@ -41,6 +42,8 @@
             '/libs/JQuery/jquery-ui.js',
             '/libs/Bootstrap/bootstrap.min.js',
             '/libs/magnific/magnific.js',
+            '/libs/mapbox/mapbox.js',
+            '/libs/leaflet/leaflet.js',
             '/js/global.js',
             '/js/' . $c . '/global.js',
             '/js/' . $c . '/' . $a . '.js'
