@@ -9,7 +9,7 @@ class ErrorController extends BaseController {
 
     public function errorAction() {
         $showErrors = $this->getRequest()->getParam('forceShowErrors', 0);
-        $this->view->showErrors = true || $showErrors;
+        $this->view->showErrors = $showErrors;
 
         $errors = $this->_getParam('error_handler');
 
@@ -24,13 +24,11 @@ class ErrorController extends BaseController {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
-                $priority = Zend_Log::NOTICE;
                 $this->view->message = 'Page not found';
                 break;
             default:
                 // Application error
                 $this->getResponse()->setHttpResponseCode(500);
-                $priority = Zend_Log::CRIT;
                 $this->view->message = 'Application error';
                 break;
         }

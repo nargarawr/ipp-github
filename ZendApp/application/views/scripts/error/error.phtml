@@ -1,15 +1,26 @@
 <? if (!($this->showErrors)) { ?>
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            <h2>
-                Uh Oh
-            </h2>
-            <p>
-                Sorry, it looks like something is wrong with this page (or it doesn't exist!)
-            </p>
+        <div class="col-md-3 col-sm-2 col-xs-1"></div>
+        <div class="col-md-6 col-sm-8 col-xs-10">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <h2>
+                        <i class="fa fa-info-circle"></i> Uh Oh!
+                    </h2>
+                    <h3>
+                        Sorry, it looks like there was no <i>Niceway.to</i> this page!
+                    </h3>
+                    <p>
+                        This could because this page doesn't exist, or there is a problem with Niceway.to at the moment.
+                    </p>
+                    <p>
+                        Please make sure you have spelled the web address correctly. If that does not fix the problem, please
+                        wait and one of our engineers will be along to fix this issue as soon as possible!
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-3 col-sm-2 col-xs-1"></div>
     </div>
 <? } else { ?>
     <h1>
