@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  26 OCT 2015 15:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  26 OCT 2015 15:27
 entering extended mode
 **problemLog.tex
 
@@ -1116,19 +1116,23 @@ Package layouts Warning: Layout scale set to 0.5 on input line 62.
 
 \c@lstlisting=\count231
 ABD: EveryShipout initializing macros
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 76.
- [1
+Underfull \hbox (badness 10000) in paragraph at lines 78--85
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 86.
+[1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 76.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 86.
 
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\problemLog
 .aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 76.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 76.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 86.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 86.
 Package rerunfilecheck Info: File `problemLog.out' has not changed.
 (rerunfilecheck)             Checksum: 3EBF8EC9744A01313E8EDBF43A7A3B7E;52.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 76.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 86.
  ) 
 Here is how much of TeX's memory you used:
  23942 strings out of 493921
@@ -1141,7 +1145,7 @@ Here is how much of TeX's memory you used:
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on problemLog.pdf (1 page, 40699 bytes).
+Output written on problemLog.pdf (1 page, 41022 bytes).
 PDF statistics:
  33 PDF objects out of 1000 (max. 8388607)
  5 named destinations out of 1000 (max. 500000)

@@ -13,7 +13,7 @@
 \usepackage{setspace}
 \usepackage[all]{xy}
 \usepackage{nccmath}
-\usepackage[a4paper,hmargin=50pt,vmargin=75pt]{geometry}
+\usepackage[a4paper,hmargin=40pt,vmargin=75pt]{geometry}
 \usepackage[hypcap]{caption}
 \usepackage{cleveref}
 \usepackage{mathpartir}
@@ -63,7 +63,7 @@
 
 \pagestyle{empty}
 \begin{center}
- {\LARGE \textbf{Project Proposal} \\ [0.2cm]}
+ {\LARGE \textbf{Project Proposal} \\ [0.1cm]}
  \textbf{G54IPP - 40 Credits}\\
    \textbf{Title: Niceway.to, Scenic Map Routing}\\
     \textbf{Craig Knott (psyck)} \\
@@ -71,16 +71,16 @@
 \end{center}
 
 \section{Project Background}
-American author Greg Anderson, once said: ``Focus on the journey, not the destination. Joy is found not in finishing an activity, but in doing it''. However, in recent years the technologies behind satellite navigation and routing services have advanced greatly, allowing them to produce the quickest route between two points, without spending more than a few seconds calculating it. As a result of this, travelling to a given location is quicker and easier than it ever has been before, meaning that a lot of people forget about the beauty in the world around them, and instead focus on getting to their destination as quickly as possible. This mentality promotes a culture of instant gratification, impatience, and self-involvement.
+American author Greg Anderson, once said: ``Focus on the journey, not the destination. Joy is found not in finishing an activity, but in doing it''. However, in recent years, the technologies behind satellite navigation and routing services have advanced greatly, allowing them to produce the quickest route between two points, without spending more than a few seconds calculating it, even with technological limits \cite{lou2009map}. As a result of this, travelling to a given location is quicker and easier than it ever has been before, meaning that a lot of people forget about the beauty in the world around them, and instead focus on getting to their destination as quickly as possible. This mentality promotes a culture of instant gratification, impatience, and self-involvement.
 \ \\
 \ \\
-There are some applications and services that attempt to solve this problem by offering scenic routes to get from one location to another. Services such as MADMAPS, MyScenicDrives and Google's ``My Maps'' are examples of these, but these have several major downfalls, which mean they do not wholly solve the problem (screen shots of these systems are available in Appendix \ref{app-othersystems}). The biggest of these is the method of delivery. They are both desktop optimised websites, and do not function fully on mobile phones - which is arguably the most popular and convenient medium for finding directions. There are also other issues that some or all of the applications possess, which make them unsuitable. These include: primitive search functionality (only allowing users to specify a huge geographic region to search), small user bases (some of the applications are not very well known), cost (some of the applications are \textit{not} free), and speed (some of the applications are very slow and unresponsive). The final large problem with these systems (excepts Google's ``My Maps'') is that they do not allow for user contributions, meaning they are lacking in both content, and social interaction.
+After the success of efficient routing algorithms, research began to focus on other characteristics. Some of these include: how ``nice'' a route is, using social network data \cite{peregrino2012mapping}\cite{van2011time}; how to get the most enjoyment out of public transport \cite{ludwig2009recommendation}; and even personalization of efficient routes \cite{chen2011discovering}. There are also some applications that already exist, which offer scenic routes to get from one location to another. Services such as MADMAPS\cite{url2015madmaps}, MyScenicDrives\cite{url2015myscenicdrives} and Google's ``My Maps''\cite{url2015gmaps} are examples of these, but they have several major downfalls, which mean they do not wholly solve the problem (screen shots of these systems are available in Appendix \ref{app-othersystems}). The biggest of these is the method of delivery. They are desktop optimised websites, and do not function fully on mobile phones - which is arguably the most popular and convenient medium for finding directions. There are also other issues that some of the applications possess, which make them unsuitable, including: primitive search functionality (only allowing users to specify a huge geographic region to search), small user bases (some are not well known), cost (some are \textit{not} free), and speed (some are very slow and unresponsive). The final large problem with these systems (except Google's ``My Maps'') is that they do not allow for user contributions, meaning they are lacking in both content, and social interaction.
 \ \\
 \ \\
-Niceway.to is an application which aims to solve this problem by allowing users to discover scenic and visually interesting routes to their destinations, instead of simply focusing on the quickest route. The service will allow users to search for a start and end point, and will suggest routes to them, based on visual appearance. These routes will be submitted by other users of the service. This means that when you search, you know someone else has been on this route, and is personally recommending it. One of the main driving factors of using Niceway.to, will be the community. Users will be able to contributes routes, and other users can leave feedback, including slight alterations to make the route even better. The application will be aimed at two main user groups, ``experts'', and ``travellers''. The experts are those that actively, and regularly, contribute to the site by adding routes, commenting on other routes, and will generally have a geographical region of expertise. The travellers will be those with minimal interaction with the members only area of the site, and will mostly take advantage of the service provided, potentially seasonally.
+Niceway.to is an application which aims to solve this problem by allowing users to discover scenic and visually interesting routes to their destinations, instead of simply focusing on the quickest route. The service will allow users to search for a start and end point, and will suggest routes to them, based on visual appearance. These routes will be submitted by other users of the service. Which means that when you search, you know someone else has been on this route, and is personally recommending it. One of the main driving factors of using Niceway.to, will be the community. Users will be able to contributes routes, and other users can leave feedback, including slight alterations to make the route even better. The application will be aimed at two main user groups, ``experts'', and ``travellers''. The experts are those that actively, and regularly, contribute to the site by adding routes, commenting on other routes, and will generally have a geographical region of expertise. The travellers will be those with minimal interaction with the members only area of the site, and will mostly take advantage of the service provided, potentially seasonally.
 \ \\
 \ \\
-To address the specific issues mentioned with the other applications (method of delivery, cost, speed, and lack of community) Niceway.to will be built as a free to access, responsive web application, using HTML, CSS and JavaScript. This will mean the application is not restricted to computers, and can be used where ever (exactly as one would expect with a navigation application). It will also mean that users can interact with the system where ever they are, and keep the social commentary and community of the application strong.\ \\
+To address the specific issues mentioned with the other applications (method of delivery, cost, speed, and lack of community) Niceway.to will be built as a free to access, responsive web application, using HTML, CSS and JavaScript. This will mean the application is not restricted to computers, and can be used where ever (exactly as one would expect with a navigation application). It will also mean that users can interact with the system wherever they are, and keep the social commentary and community of the application strong.\ \\
 \ \\
 Some initial designs of the system, which were shared with my client, can be seen in appendix \ref{app-designs}.
 
@@ -100,15 +100,15 @@ Below is a list of objectives that the project must fulfil. These are small to m
 	\item Allow for the search of user-submitted routes in a geographic region
 	\item Allow for the contribution of routes to the system
 	\item Allow for a social commentary with the routes
-	\item Allow for users to create and manage an account with the system
+	\item Allow for users to create and manage an account within the system
 	\item Allow for administrative users to access a range of tools to manage the system content
 	\item Allow for the downloading of routes
 \end{enumerate}
 
 \section{External Aspect}
-My project was given to me by Matthew Pike, who works for a small start-up company in China. The project, Niceway.to, has already had some work carried out on it, but it was not to the standard that my client was happy with, and he would like for a complete rewrite of the software. The project aims to improve the travelling experience of those that use the system, by offering them more visually appealing routes to travel between two locations. My client has stressed the importance of a social community around the application, so the ability to express opinions on the content, as well as sharing it, is extremely important.\ \\
+My project was given to me by Matthew Pike, who works for a small start-up company in China. The project, Niceway.to, has already had some work carried out on it, but it was not to the standard that my client was happy with, and he would like for a complete rewrite of the software. The project aims to improve the travelling experience of those that use the system, by offering them more visually appealing routes to travel between locations. My client has stressed the importance of a social community around the application, this means that the ability to express opinions on the content, as well as sharing it, is extremely important.\ \\
 \ \\
-To begin the project, my client has provided me with a detailed specification of the major aspects of the system, including a list of functional requirements. From this document, I have created a in-depth design specification, including a detailed list of functional and non-functional requirements, similar applications in the market, a justification of which platform to use, as well as some preliminary designs and a system flow chart (appendix \ref{app-sfc}). This was used to ensure that my client and I had the same vision for the project.\ \\
+To begin the project, my client has provided me with a detailed specification of the major aspects of the system, including a list of functional requirements. From this document, I have created a in-depth design specification, which included: a detailed list of functional and non-functional requirements, research into similar applications in the market, a justification of which platform to use, as well as some preliminary designs and a system flow chart (appendix \ref{app-sfc}). This was used to ensure that my client and I had the same vision for the project.\ \\
 
 
 \newgeometry{left=15pt,right=20pt,top=30pt,bottom=20pt}
@@ -203,6 +203,8 @@ After the route creation page, I will begin work on the main user search flow, i
 \ \\
 After the January exam period is over, the final part of the programming (Tasks 12-13) will be completed. This includes the route listing page, which will complete the user search flow, and the administration page (Objective 5). At this point, the implementation will be complete and rigorous testing can be completed to ensure the system is as easy to use as possible (Aim 2 \& 3), followed by the writing of the dissertation, of which the majority will take place in the last three weeks before the deadline. After the dissertation deadline, there is a five week gap before I will begin preparing for the demonstration. I will use this time to finish any coursework for other modules, and revise for my Spring semester exams.
 
+\bibliographystyle{plain}
+\bibliography{bib}
 
 \newpage 
 \appendix
@@ -231,17 +233,18 @@ You can visit MyScenicDrives at \url{https://www.myscenicdrives.com/}
 	\centering
 	\begin{minipage}{.49\textwidth}
 		\begin{center}
-			\includegraphics[width=0.95\textwidth]{images/msd-1.png}
+			\includegraphics[width=0.925\textwidth]{images/msd-1.png}
 			\caption{MyScenicDrive's Route detail page}
 		\end{center}
 	\end{minipage}
 	\begin{minipage}{.49\textwidth}
 		\begin{center}
-			\includegraphics[width=0.9\textwidth]{images/msd-2.png}
+			\includegraphics[width=0.875\textwidth]{images/msd-2.png}
 			\caption{MyScenicDrive's Map Search Feature}
 		\end{center}
 	\end{minipage}
 \end{figure}
+\newpage 
 
 
 \subsection{GoogleMaps ``My Maps''} 
@@ -264,7 +267,7 @@ You can visit Google's ``My Maps'' at \url{https://www.google.com/maps/d/}
 	\vspace{-6mm}
 	\caption{Initial landing page design}
 \end{figure}
-\newpage 
+
 \begin{figure}[!ht]
 	\begin{center}
 			\includegraphics[width=0.99\textwidth]{images/ui-rlp-3.png}
@@ -272,27 +275,30 @@ You can visit Google's ``My Maps'' at \url{https://www.google.com/maps/d/}
 	\vspace{-6mm}
 	\caption{Initial route listing page design}
 \end{figure}
+
 \begin{figure}[!ht]
 	\begin{center}
-			\includegraphics[width=0.99\textwidth]{images/ui-detail-1.png}
-	\end{center}
-	\vspace{-6mm}
-	\caption{Initial route creation page design}
-\end{figure}
-\begin{figure}[!ht]
-	\begin{center}
-			\includegraphics[width=0.99\textwidth]{images/ui-rlp-3.png}
+			\includegraphics[width=0.98\textwidth]{images/ui-detail-1.png}
 	\end{center}
 	\vspace{-6mm}
 	\caption{Initial route detail page design}
 \end{figure}
+
+\begin{figure}[!ht]
+	\begin{center}
+			\includegraphics[width=0.98\textwidth]{images/ui-rcp-1.png}
+	\end{center}
+	\vspace{-6mm}
+	\caption{Initial route creation page design}
+\end{figure}
+
 
 \newpage 
 \section{System Flow Chart}
 \label{app-sfc}
  \begin{figure}[!ht]
  	\begin{center}
- 		\includegraphics[width=0.9\textwidth]{images/flow.png}
+ 		\includegraphics[width=0.75\textwidth]{images/flow.png}
  	\end{center}
  	\caption{System Flow Chart, detaiingl the user journey through the application}
  \end{figure}
