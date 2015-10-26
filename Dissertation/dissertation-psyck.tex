@@ -1,0 +1,216 @@
+\documentclass[a4paper,twoside,notitlepage,11pt]{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyeq}
+\usepackage{amstext}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{multirow}
+\usepackage{tocloft}
+\usepackage{lscape}
+\usepackage{transparent}
+\usepackage{subcaption}
+\usepackage{rotating}
+\usepackage{titletoc}
+\usepackage{setspace}
+\usepackage[all]{xy}
+\usepackage{nccmath}
+\usepackage[a4paper,hmargin=2.5cm,vmargin=2.5cm]{geometry}
+\usepackage[hypcap]{caption}
+\usepackage{qtree}
+\usepackage{cleveref}
+\usepackage{mathpartir}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage[compact]{titlesec}
+\usepackage{layouts}
+\usepackage{wrapfig}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+
+\hypersetup{
+    unicode=false,
+    pdftoolbar=true,  
+    pdfmenubar=true,     
+    pdffitwindow=false,    
+    pdfstartview={FitH},  
+    pdftitle={Title},  
+    pdfauthor={Craig Knott},
+    pdfsubject={CS},
+    pdfnewwindow=true,  
+    colorlinks=true,  
+    linkcolor=black,  
+    citecolor=black, a
+    filecolor=black,  
+    urlcolor=black  
+}
+
+\newcommand{\paperTitleShort}{Niceway.to: Scenic Route Mapping}
+\newcommand{\paperTitle}{Niceway.to: Scenic Route Mapping}
+
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+\setlength{\parskip}{0.25em}
+
+\renewcommand{\headrulewidth}{0.0pt}
+
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\fancyhead[LO]{Craig Knott}
+	\fancyhead[CO]{\textit{\paperTitleShort}}
+	\fancyhead[RO]{\thepage}
+	\fancyhead[LE]{\thepage}
+	\fancyhead[CE]{\textit{\paperTitleShort}}
+	\fancyhead[RE]{Craig Knott}
+}
+
+\fancypagestyle{appendix}{
+	\fancyhf{}
+	\fancyhead[LO]{Craig Knott}
+	\fancyhead[CO]{\textit{\paperTitleShort}}
+	\fancyhead[RO]{\thepage}
+	\fancyhead[LE]{\thepage}
+	\fancyhead[CE]{\textit{\paperTitleShort}}
+	\fancyhead[RE]{Craig Knott}
+}
+
+\fancypagestyle{biblio}{
+	\fancyhf{}
+	\fancyhead[LO]{cxk01u}
+	\fancyhead[CO]{\textit{\paperTitleShort}}
+	\fancyhead[RO]{\thepage}
+	\fancyhead[LE]{\thepage}
+	\fancyhead[CE]{\textit{\paperTitleShort}}
+	\fancyhead[RE]{Craig Knott}
+}
+
+\begin{document}
+
+%
+%
+% Title Page
+%
+%
+
+\pagestyle{empty}
+\newgeometry{left=99pt, right=99pt, top = 75pt, bottom=75pt}
+\input{sections/titlepage}
+\cleardoublepage
+
+%
+%
+% Abstract
+%
+%
+
+\begin{abstract}
+{\color{red} Project abstract}
+\end{abstract}
+
+\null
+\vfill
+\begin{flushright}
+	\begin{tabular}{r|l}
+		Words in text	& 19,552 \\
+	\end{tabular}
+	\ \\
+	\ \\
+	\begin{tabular}{cc}
+		\multicolumn{2}{r}{Calculated with the TeXCount web service}\\
+		\multicolumn{2}{r}{\url{http://app.uio.no/ifi/texcount/online.php}}
+	\end{tabular}
+\end{flushright}
+
+\cleardoublepage
+
+%
+%
+% Table of Contents
+%
+%
+
+
+\newgeometry{left=3cm, right=3cm, top = 75pt, bottom=75pt}
+\setlength{\cftbeforesecskip}{0.6ex}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\tableofcontents
+\cleardoublepage
+
+%
+%
+% Sections 
+%
+%
+
+\newpage
+\pagestyle{plain}
+\setcounter{page}{1}
+
+\input{sections/introduction}
+\newpage 
+\input{sections/motivation}
+\newpage 
+\input{sections/background}
+\newpage 
+\input{sections/specification}
+\newpage 
+\input{sections/design}
+\newpage 
+\input{sections/implementation}
+\newpage 
+\input{sections/evaluation}
+\newpage 
+\input{sections/furtherwork}
+\newpage 
+\input{sections/summary}
+
+
+
+%
+%
+% Bibliography
+%
+%
+
+\newpage
+\pagestyle{biblio}
+\bibliographystyle{plain}
+
+\bibliography{bib}
+
+
+%
+%
+%  Appendix 
+% 
+%
+\newpage
+\pagestyle{appendix}
+\appendix
+\input{appendix}
+
+
+%
+%
+% Qed
+%
+%
+
+\end{document}	

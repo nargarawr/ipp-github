@@ -1,0 +1,135 @@
+\section{System Specification}
+\label{sec:spec}
+As has been mentioned multiple times, the system to be produced is an on-line fuzzy logic inferencing and visualisation system, with the specific goal to be as user friendly, and as accessible as possible. In this section, the functional requirements (goals that the software must achieve), and non-functional requirements (constraints placed upon the system) of the system have been enumerated. This allows for the reader to see what functionality and features the system will have, but also provides a list of test criteria for later stages of the project.
+
+\subsection{Functional Requirements}
+\label{sec:funcs}
+
+In this section, the functional requirements of the project have been enumerated, so that they can be referred to at the evaluation stages of the project.
+
+\begin{enumerate}
+\item Users can manipulate membership functions
+	\begin{enumerate}[label*=\arabic*.]
+		\item Users will be able to create membership functions, of type...
+		\begin{enumerate}[label*=\arabic*.]
+			\item Gaussian
+			\item 2-Part Gaussian 
+			\item Trapezoidal
+			\item Triangular
+		\end{enumerate}
+		\item Users will be able to add membership functions to variables	
+		\item Users will be able to edit membership functions, including:
+			\begin{enumerate}[label*=\arabic*.]
+			\item Membership function names
+			\item Any function parameters
+			\end{enumerate}
+		\item Users will be able to delete membership functions from variables
+		\item Users will be able to access help on how to create membership functions
+		\item Users will be able to see a plot of their membership functions
+	\end{enumerate}
+	
+\item Users will be able to manipulate linguistic variables
+	\begin{enumerate}[label*=\arabic*.]
+		\item Users will be able to create linguistic variables
+			\begin{enumerate}[label*=\arabic*.]
+				\item Users will be able to create input variables
+				\item Users will be able to create output variables
+			\end{enumerate}	
+		\item Users will be able to edit the range of linguistic variables
+		\item Users will be able to delete variables
+		\item Users will be able to rename variables
+		\item Users will be able to access help on how to create variables
+	\end{enumerate}
+	
+\item Users will be able to manipulate system rules
+	\begin{enumerate}[label*=\arabic*.]
+		\item Users will be able to create rules for the system
+		\begin{enumerate}[label*=\arabic*.]
+			\item Users will be able to specify rule terms
+			\item Users will be able to negate certain terms in a rule
+			\item Users will be able to change the weight of a rule
+			\item Users will be able to specify the connective to be used in the rule
+		\end{enumerate}
+		\item Users will be able to edit any previously constructed rules
+		\item Users will be able to delete any previously constructed rules
+		\item Users can access help on how to create rules
+	\end{enumerate}		
+
+\item Users will be able to manipulate system-wide parameters
+	\begin{enumerate}[label*=\arabic*.]
+		\item Users will be able to edit the system-wide parameters
+		\begin{enumerate}[label*=\arabic*.]
+			\item Name of the system
+			\item Type of evaluation to use
+			\item Intersection method to use
+			\item Union method to use
+			\item Aggregation method to use
+			\item Implication method to use
+			\item Defuzzification method to use		
+		\end{enumerate}
+		\item Users will be able to access help on what affect these changes make
+	\end{enumerate}
+
+\item Users will be able to perform file input/output on the system
+	\begin{enumerate}[label*=\arabic*.]
+		\item Users will be able to export their system to various formats, including	
+		\begin{enumerate}[label*=\arabic*.]			
+			\item MATLAB .fis file
+			\item FuzzyToolkitUoN .fis file
+			\item JSON Object file		
+		\end{enumerate}
+		\item Users can access help on how to export files and what is supported
+		\item Users will be able to import previously made systems of various formats, including
+		\begin{enumerate}[label*=\arabic*.]
+			\item MATLAB .fis file
+			\item FuzzyToolkitUoN .fis file
+			\item JSON Object file	
+		\end{enumerate}
+		\item Users can access help on how to import files and what is supported		
+	\end{enumerate}
+
+\item Users will be able to evaluate their system
+	\begin{enumerate}[label*=\arabic*.]
+		\item Users can provide a value for each input, and receive the output value
+		\item Users can access help on how the evaluation process works
+	\end{enumerate}	
+\end{enumerate}
+
+\subsection{Non-Functional Requirements}
+\label{sec:non-funcs}
+In this section, a list of the non-functional requirements, that place constraints on the system, is provided.
+
+\paragraph{Accessibility}\ \\
+This is, naturally, a huge goal for the system, as it was one of the reasons for it's conception. The proposed system is to be made available entirely on-line, allowing anyone with internet access, and a computer, to use the system. The system's accessibility will be further increased by it's lack of client-side dependencies, meaning the user is not required to download or install any additional software if they wish to use the software. The only potential issue with accessibility is if the server that is hosting the website was to stop functioning. This is, however, a potential issue that does not have a solution.
+
+\paragraph{Usability and Operability}\ \\
+Due to the large range of potential users, the system will be designed in a way that is easy to navigate and use, regardless of the skill of the user. There will be a dedicated help system present in the system, that will allow the user to get help, whenever they need it, without having to leave the system and check some external documentation. The graphical user interface of the system helps to promote the ease of use, as the user is not expected to memorise a collection of commands, and instead need only press a few buttons to construct the system they wish to construct.
+
+\paragraph{Maintainability}\ \\
+One of the eventual goals of the project is that the inference engine, that will initially be a bespoke JavaScript implementation, or using the FuzzyToolkitUoN implementation, can be swapped out, and any compatible engine be used. This means that this system would evolve into a web-front end, for any Fuzzy Logic back end; greatly expanding it's usefulness. As a result of this, and a result of good software engineering practices in general, the code will be kept as readable and modular as possible. The large quantity of JavaScript code that is required will be split into separate files, so that the maintaining programmer can easily identify issues. Each function will be commented in a JavaScript equivalent of JavaDoc, so that automated documentation can be produced, if necessary. This will hopefully ensure that new back-ends can be easily incorporated into the system, and any additions necessary will be quick and easy for the maintaining developers.
+
+\paragraph{Quality}\ \\
+As this system is to be used externally, and will be a representation of both myself, and the University of Nottingham, there are several quality issues that must be addressed. The system must be built so that it is robust, and works as the user expects, but it must also contain as few bugs as possible. Any bugs that are identified should be reportable to the maintainer, and be fixed as soon as possible.\ \\
+\ \\
+The quality of the code must also be considered. In this regard, the code will be written in as modular a way as possible, and useful comments will be provided to highlight the purpose of each function, and to illustrate any particularly complex code.
+
+\paragraph{Resource Requirements and Constraints}\ \\
+As this system is aimed at any users of any skill level, no assumptions can be made on the level of hardware that the users will possess. For this reason, the system will be designed to use as few resources as possible. Fortunately, due to being a web-based system, the load of the system would be fairly minimal anyway, as it is mostly loading only JavaScript and HTML. The only true computation takes place when the system is evaluated, but this could take place on the server side, and thus would not be a concern for the user.\ \\
+\ \\
+The ability to load and save files potentially causes a problem, but only if the user has very little hard drive space, and attempts to save an extremely large file from the system. Unfortunately, there is nothing that can be done about this, although even very large systems will have a relatively small file size.
+
+
+\paragraph{Cross Platform Compatibility}\ \\
+Due to the project being a web-based system, it is difficult for it not to be cross platform compatible. However, there are still a few issues that may have to be dealt with, especially when looking at different browsers that the user may be using. For this reason, research into how the system performs on different browsers will be important, so that it can be assured that any user using any browser will have full access to the system, as it was meant to be.
+
+\paragraph{Security}\ \\
+The issue of security is not one that need be discussed in great detail, as there are no security issues with the system to be produced. In a web-based system, there is potential for many security issues to be present, such as the storing of cookies without the users permission, or the tracking of what a user may be doing. However, the system being produced here is simply a tool for the users to create fuzzy systems in, and there is no useful information that tracking their movements would return. There is also no need to save cookies, as the system will have full file loading and saving functionality.
+
+\paragraph{Reliability and Robustness}\ \\
+As the system is to be used by experts and novices alike, the system needs to be as robust and as reliable as possible. This is to ensure that the expert users can work uninterrupted, and that the novice users do not get confused, if something unexpected happens. This is why there will be rigorous testing of the system, by both novices, and by experts (both in regards to fuzzy logic, and in regards to the use of a PC), so that the system can be thoroughly bug-checked, and feedback can be gained on the usability of the system.
+
+\paragraph{Documentation}\ \\
+The system will be fully documented through comments in the JavaScript code. This will be done using a style similar to JavaDoc, so that documentation pages can be generated easily. The system itself will have the extensive help system present on every page, so that any user confused with the system can be guided in the right direction. For these reasons, there will be no external documentation for the project produced (which actually helps the ``ease of use'' objective, as the user does not need to look through a large external document to find help).
+
+\paragraph{Disaster Recovery}\ \\
+All of the files for the project are stored in a GitHub repository (which is, for the time being, private), so any issues involving loss of code are not a concern. There is potential for the system server to go down, and in this case, due care and attention will be dedicated to resolving this issue. The only other issue that requires disaster recovery is if the user enters their system, and closes the browser without saving. This is, however, out of my control, although a pop-up warning the user may be implemented.

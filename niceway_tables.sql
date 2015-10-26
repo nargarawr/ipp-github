@@ -10,6 +10,7 @@ CREATE TABLE tb_user (
     username varchar(32) not null,
     fname varchar(32),
     lname varchar(32),
+    email varchar(128),
     location varchar(64),
     password varchar(32) not null,
     login_count int not null default 0,
@@ -24,9 +25,9 @@ CREATE TABLE tb_user (
 
 insert into tb_user (
   pk_user_id,username,fname,lname,location,login_count,last_login,is_admin,
-  is_banned,is_shadow_banned,datetime_created,datetime_updated,password
+  is_banned,is_shadow_banned,datetime_created,datetime_updated,password,email
 ) values (
-    1, 'cxk01u', 'Craig', 'Knott', 'Nottingham', 0, NOW(), 1, 0, 0, NOW(), NOW(), MD5('a')
+    1, 'cxk01u', 'Craig', 'Knott', 'Nottingham', 0, NOW(), 1, 0, 0, NOW(), NOW(), MD5('a'), 'cxk01u@googlemail.com'
 );
 
 CREATE TABLE tb_announcement (

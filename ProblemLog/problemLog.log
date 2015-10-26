@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  26 OCT 2015 15:10
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  26 OCT 2015 15:02
 entering extended mode
-**projectProposal-cxk01u.tex
+**problemLog.tex
 
-("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Proposal And Ethics\P
-roposal\projectProposal-cxk01u.tex"
+("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\problemLog
+.tex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -183,11 +183,10 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip43
 )
-("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Proposal And Ethics\P
-roposal\fancyeq.sty"
+("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\fancyeq.st
+y"
 Package: fancyeq 
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip44
 
@@ -507,8 +506,8 @@ LaTeX Info: Redefining \Cpagerefrange on input line 2230.
 LaTeX Info: Redefining \labelcref on input line 2230.
 LaTeX Info: Redefining \labelcpageref on input line 2230.
 )
-("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Proposal And Ethics\P
-roposal\mathpartir.sty"
+("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\mathpartir
+.sty"
 Package: mathpartir 2005/12/20 version 1.2.0 Math Paragraph for Typesetting Inf
 erence Rules
 \mpr@andskip=\skip89
@@ -517,8 +516,7 @@ erence Rules
 \mpr@hlist=\box32
 \mpr@vlist=\box33
 \mpr@right=\box34
-)
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
+) ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\float\float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count130
 \float@exts=\toks33
@@ -1009,8 +1007,8 @@ Package hyperref Info: Option `pdffitwindow' set `false' on input line 43.
 Package hyperref Info: Option `pdfnewwindow' set `true' on input line 43.
 Package hyperref Info: Option `colorlinks' set `true' on input line 43.
 
-("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Proposal And Ethics\P
-roposal\projectProposal-cxk01u.aux")
+("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\problemLog
+.aux")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
 LaTeX Font Info:    ... okay on input line 62.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 62.
@@ -1025,8 +1023,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 62.
 LaTeX Font Info:    ... okay on input line 62.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 62.
 LaTeX Font Info:    ... okay on input line 62.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count224
 \scratchdimen=\dimen232
@@ -1059,14 +1056,13 @@ LaTeX Info: Redefining \ref on input line 62.
 LaTeX Info: Redefining \pageref on input line 62.
 LaTeX Info: Redefining \nameref on input line 62.
 
-("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Proposal And Ethics\P
-roposal\projectProposal-cxk01u.out")
-("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Proposal And Ethics\P
-roposal\projectProposal-cxk01u.out")
+("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\problemLog
+.out")
+("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\problemLog
+.out")
 \@outlinefile=\write6
 LaTeX Font Info:    Try loading font information for U+msa on input line 62.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 62.
@@ -1120,198 +1116,34 @@ Package layouts Warning: Layout scale set to 0.5 on input line 62.
 
 \c@lstlisting=\count231
 ABD: EveryShipout initializing macros
-Underfull \hbox (badness 10000) in paragraph at lines 74--86
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 74--86
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 74--86
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 74--86
-
- []
-
-[1
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 76.
+ [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 109--112
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 76.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 109--112
-
- []
-
-[2]
-*geometry* verbose mode - [ newgeometry ] result:
-* driver: pdftex
-* paper: a4paper
-* layout: <same size as paper>
-* layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: twoside 
-* h-part:(L,W,R)=(15.0pt, 562.50787pt, 20.0pt)
-* v-part:(T,H,B)=(30.0pt, 795.04684pt, 20.0pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=562.50787pt
-* \textheight=795.04684pt
-* \oddsidemargin=-57.26999pt
-* \evensidemargin=-52.26999pt
-* \topmargin=-79.26999pt
-* \headheight=12.0pt
-* \headsep=25.0pt
-* \topskip=11.0pt
-* \footskip=30.0pt
-* \marginparwidth=103.0pt
-* \marginparsep=10.0pt
-* \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumnfalse
-* \@twosidetrue
-* \@mparswitchtrue
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
-
- [3
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 195--205
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 195--205
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 195--205
-
- []
-
-[4
-
-
-] <images/mm-1.png, id=80, 377.15906pt x 641.39626pt>
-File: images/mm-1.png Graphic file (type png)
- <use images/mm-1.png>
-Package pdftex.def Info: images/mm-1.png used on input line 216.
-(pdftex.def)             Requested size: 158.45653pt x 269.46288pt.
-
-<images/mm-2.png, id=81, 371.13657pt x 660.96938pt>
-File: images/mm-2.png Graphic file (type png)
- <use images/mm-2.png>
-Package pdftex.def Info: images/mm-2.png used on input line 222.
-(pdftex.def)             Requested size: 152.36348pt x 271.35219pt.
-
-<images/msd-1.png, id=83, 607.51968pt x 548.80031pt>
-File: images/msd-1.png Graphic file (type png)
- <use images/msd-1.png>
-Package pdftex.def Info: images/msd-1.png used on input line 234.
-(pdftex.def)             Requested size: 231.59175pt x 209.20782pt.
-
-<images/msd-2.png, id=84, 337.26pt x 340.27126pt>
-File: images/msd-2.png Graphic file (type png)
- <use images/msd-2.png>
-Package pdftex.def Info: images/msd-2.png used on input line 240.
-(pdftex.def)             Requested size: 219.40193pt x 221.3658pt.
-
-<images/google_maps.png, id=86, 644.4075pt x 427.5975pt>
-File: images/google_maps.png Graphic file (type png)
-
-<use images/google_maps.png>
-Package pdftex.def Info: images/google_maps.png used on input line 251.
-(pdftex.def)             Requested size: 348.25398pt x 231.09494pt.
- [5 <C:/Users/Cxk/Google Drive/University/Fourth Year/G54IPP/Proposal And Ethic
-s/Proposal/images/mm-1.png> <C:/Users/Cxk/Google Drive/University/Fourth Year/G
-54IPP/Proposal And Ethics/Proposal/images/mm-2.png> <C:/Users/Cxk/Google Drive/
-University/Fourth Year/G54IPP/Proposal And Ethics/Proposal/images/msd-1.png> <C
-:/Users/Cxk/Google Drive/University/Fourth Year/G54IPP/Proposal And Ethics/Prop
-osal/images/msd-2.png>]
-<images/ui-landing-1.png, id=94, 657.657pt x 376.2858pt>
-File: images/ui-landing-1.png Graphic file (type png)
-
-<use images/ui-landing-1.png>
-Package pdftex.def Info: images/ui-landing-1.png used on input line 262.
-(pdftex.def)             Requested size: 492.53552pt x 281.81747pt.
- [6 <C:/Users/Cxk/Google Drive/University/Fourth Year/G54IPP/Proposal And Ethic
-s/Proposal/images/google_maps.png> <C:/Users/Cxk/Google Drive/University/Fourth
- Year/G54IPP/Proposal And Ethics/Proposal/images/ui-landing-1.png>] <images/ui-
-rlp-3.png, id=103, 659.5842pt x 378.213pt>
-File: images/ui-rlp-3.png Graphic file (type png)
-
-<use images/ui-rlp-3.png>
-Package pdftex.def Info: images/ui-rlp-3.png used on input line 270.
-(pdftex.def)             Requested size: 492.53552pt x 282.42981pt.
-
-<images/ui-detail-1.png, id=104, 542.5068pt x 354.6048pt>
-File: images/ui-detail-1.png Graphic file (type png)
-
-<use images/ui-detail-1.png>
-Package pdftex.def Info: images/ui-detail-1.png used on input line 277.
-(pdftex.def)             Requested size: 492.53552pt x 321.94415pt.
-File: images/ui-rlp-3.png Graphic file (type png)
- <use images/ui-rlp-3.png>
-Package pdftex.def Info: images/ui-rlp-3.png used on input line 284.
-(pdftex.def)             Requested size: 492.53552pt x 282.42981pt.
- [7 <C:/Users/Cxk/Google Drive/University/Fourth Year/G54IPP/Proposal And Ethic
-s/Proposal/images/ui-rlp-3.png> <C:/Users/Cxk/Google Drive/University/Fourth Ye
-ar/G54IPP/Proposal And Ethics/Proposal/images/ui-detail-1.png>]
-<images/flow.png, id=114, 690.4194pt x 432.1746pt>
-File: images/flow.png Graphic file (type png)
- <use images/flow.png>
-Package pdftex.def Info: images/flow.png used on input line 295.
-(pdftex.def)             Requested size: 447.75404pt x 280.2771pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 300.
-
-[8 <C:/Users/Cxk/Google Drive/University/Fourth Year/G54IPP/Proposal And Ethics
-/Proposal/images/flow.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 300.
-
-("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Proposal And Ethics\P
-roposal\projectProposal-cxk01u.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 300.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 300.
-
-
-Package rerunfilecheck Warning: File `projectProposal-cxk01u.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `projectProposal-cxk01u.out':
-(rerunfilecheck)             Before: 065211572363377761E0DA12CB22BDEB;575
-(rerunfilecheck)             After:  C6AC9E5B1D39DB3062FB26AC59373383;585.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 300.
+("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\ProblemLog\problemLog
+.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 76.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 76.
+Package rerunfilecheck Info: File `problemLog.out' has not changed.
+(rerunfilecheck)             Checksum: 3EBF8EC9744A01313E8EDBF43A7A3B7E;52.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 76.
  ) 
 Here is how much of TeX's memory you used:
- 24712 strings out of 493921
- 434056 string characters out of 3144882
- 615514 words of memory out of 3000000
- 27522 multiletter control sequences out of 15000+200000
- 12375 words of font info for 50 fonts, out of 3000000 for 9000
+ 23942 strings out of 493921
+ 417952 string characters out of 3144882
+ 597497 words of memory out of 3000000
+ 26796 multiletter control sequences out of 15000+200000
+ 11256 words of font info for 46 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 63i,9n,74p,3253b,789s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 63i,5n,59p,3241b,332s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
-:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/P
-rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pro
-gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on projectProposal-cxk01u.pdf (8 pages, 2497061 bytes).
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+Output written on problemLog.pdf (1 page, 40699 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
- 138 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 33 PDF objects out of 1000 (max. 8388607)
+ 5 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
