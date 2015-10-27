@@ -29,6 +29,9 @@ class UserController extends BaseController {
 
     }
 
+    public function adminAction() {
+
+    }
 
     public function updateaccountdetailsAction() {
         $this->_helper->layout()->disableLayout();

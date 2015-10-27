@@ -49,31 +49,62 @@
             </a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-left">
-                <? foreach ($this->navBar as $navElement) { ?>
-                    <? if (!$navElement->shouldDisplay) continue; ?>
-                    <? if ($navElement->type == 'link') { ?>
-                        <li class="<?= $navElement->isActive ? 'active' : '' ?>">
-                            <a href="<?= $navElement->link ?>"><?= $navElement->name ?></a>
-                        </li>
-                    <? } else if ($navElement->type == 'dropdown') {?>
-                        <li class="dropdown<?= $navElement->isActive ? ' active' : '' ?>">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                               role="button" aria-haspopup="true" aria-expanded="false">
-                                <?= $navElement->name ?>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <? foreach ($navElement->children as $childElement) { ?>
-                                    <? if (!$childElement->shouldDisplay) continue; ?>
-                                    <li>
-                                        <a href="<?= $childElement->link ?>">
-                                            <?= $childElement->name ?>
-                                        </a>
-                                    </li>
-                                <? } ?>
-                            </ul>
-                        </li>
+            <? if (!is_null($this->user)) { ?>
+                <ul class="nav navbar-nav navbar-left">
+                    <? foreach ($this->navBar as $navElement) { ?>
+                        <? if (!$navElement->shouldDisplay) {
+                            continue;
+                        } ?>
+                        <? if ($navElement->type == 'link') { ?>
+                            <li class="<?= $navElement->isActive ? 'active' : '' ?>">
+                                <a href="<?= $navElement->link ?>"><?= $navElement->name ?></a>
+                            </li>
+                        <? } else if ($navElement->type == 'dropdown') { ?>
+                            <li class="dropdown<?= $navElement->isActive ? ' active' : '' ?>">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-haspopup="true" aria-expanded="false">
+                                    <?= $navElement->name ?>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <? foreach ($navElement->children as $childElement) { ?>
+                                        <? if (!$childElement->shouldDisplay) {
+                                            continue;
+                                        } ?>
+                                        <li>
+                                            <a href="<?= $childElement->link ?>">
+                                                <?= $childElement->icon ?> <?= $childElement->name ?>
+                                            </a>
+                                        </li>
+                                    <? } ?>
+                                </ul>
+                            </li>
+                        <? } ?>
                     <? } ?>
+                </ul>
+            <? } ?>
+            <ul class="nav navbar-nav navbar-right">
+                <? if (!is_null($this->user)) { ?>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Logged in as
+                            <?= (is_null($this->user->fname) ? $this->user->username : $this->user->fname) ?>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="/member/logout">
+                                    <i class="fa fa-sign-out"></i> Log Out
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <? } else { ?>
+                    <a href="/member/login">
+                        <input type="button" class="btn btn-success" value="Log in">
+                    </a>
+                    <a href="/member/signup">
+                        <input type="button" class="btn btn-primary" value="Sign up">
+                    </a>
                 <? } ?>
             </ul>
         </div>
@@ -83,6 +114,7 @@
 
 <? // Display the content of the HTML page?>
 <?= $this->layout()->content; ?>
+
 <? /* Create an array of js files and import them if they exist */
 $jsFiles = array(
     '/libs/JQuery/jquery.js',

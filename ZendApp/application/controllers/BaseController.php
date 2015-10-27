@@ -14,19 +14,18 @@ class BaseController extends Zend_Controller_Action {
         $action = $this->getRequest()->getActionName();
 
         // If the user needs to be logged in to access this page, redirect them to the login page
-        if ($this->view->isExternal == false) {
-            if (Zend_Auth::getInstance()->hasIdentity()) {
-                // Create the user object
-                $this->view->user = $this->user = new User(Zend_Auth::getInstance()->getIdentity());
-            } else {
-                // If the user is not logged in, redirect to the login page
-                $this->_helper->redirector('login', 'member', null, array(
-                    'redirect'     => $controller . "-" . $action,
-                    'fromRedirect' => 1
-                ));
-            }
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            // Create the user object
+            $this->view->user = $this->user = new User(Zend_Auth::getInstance()->getIdentity());
+        } else if ($this->view->isExternal == false) {
+            // If the user is not logged in, redirect to the login page
+            $this->_helper->redirector('login', 'member', null, array(
+                'redirect'     => $controller . "-" . $action,
+                'fromRedirect' => 1
+            ));
         }
 
+        $this->view->shouldDisplayNav = ($controller != 'member');
         $this->view->navBar = $this->getNavBar($controller, $action);
     }
 
@@ -50,22 +49,26 @@ class BaseController extends Zend_Controller_Action {
             'profile' => (object)array(
                 'name'          => 'My Profile',
                 'type'          => 'dropdown',
+                'link'          => '/user/routes',
                 'shouldDisplay' => true,
                 'isActive'      => false,
                 'children'      => array(
                     (object)array(
                         'name'          => 'My Routes',
                         'link'          => '/user/routes',
+                        'icon'         => '<i class="fa fa-map-marker"></i>',
                         'shouldDisplay' => true
                     ),
                     (object)array(
                         'name'          => 'My Details',
                         'link'          => '/user/details',
+                        'icon'         => '<i class="fa fa-user"></i>',
                         'shouldDisplay' => true
                     ),
                     (object)array(
                         'name'          => 'Administration',
                         'link'          => '/user/admin',
+                        'icon'         => '<i class="fa fa-cog"></i>',
                         'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin)
                     ),
                 )
