@@ -2,6 +2,4 @@
 
 class RouteFactory extends ModelFactory {
 
-
-
 }

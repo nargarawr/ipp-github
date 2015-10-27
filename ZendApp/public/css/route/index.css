@@ -1,0 +1,22 @@
+.section-title {
+    font-size: 3em;
+}
+
+.section-icon {
+    font-size: 6em;
+}
+
+.section-header {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.hero {
+    background-color:green;
+    height: 500px
+}
+
+.section {
+    background-color:aliceblue;
+    height: 400px
+}

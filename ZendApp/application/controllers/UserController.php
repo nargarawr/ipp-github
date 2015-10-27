@@ -3,8 +3,8 @@
 class UserController extends BaseController {
 
     public function init() {
-        $this->view->isExternal = false;
         parent::init();
+        $this->view->isExternal = false;
     }
 
     public function detailsAction() {

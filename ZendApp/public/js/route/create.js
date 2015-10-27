@@ -24,6 +24,7 @@ var MapManager = Class.extend({
         }).addTo(map);
 
         this.isPopupOpen = false;
+        this.numPoints = 0;
 
         this.setupListeners();
     },
@@ -32,8 +33,8 @@ var MapManager = Class.extend({
         /*
          TODO
          Show list of points to the left
-         Remove points (on left and on click)
-         Connect points
+         Remove points (on left)
+         Connect points - mapbox directions
          */
 
         map.on('click', function (e) {
@@ -48,19 +49,27 @@ var MapManager = Class.extend({
     addPointToMap:  function (e) {
         var _self = this;
 
-        L.marker([e.latlng.lat, e.latlng.lng])
+        _self.numPoints++;
+        var marker = L.marker([e.latlng.lat, e.latlng.lng])
             .bindPopup(this.getPopupHTML(e))
-            .on('click', function () {
+            .on('popupopen', function(){
                 _self.isPopupOpen = true;
+                var tempMarker = this;
+                $(".marker-delete-button:visible").click(function () {
+                    _self.isPopupOpen = false;
+                    map.removeLayer(tempMarker);
+                });
             })
             .addTo(map);
     },
     getPopupHTML:   function (e) {
-        var title = "<p>TITLE</p>";
-        var coordinates = e.latlng.lat + ", " + e.latlng.lng;
-        var description = "<p>DESCRIPTION</p>";
-        var deleteBtn = "<p>DELETE BTN</p>";
+        var container = $('<div>').addClass('pointContainer');
+        var pointTitle = $('<div>').addClass('title').text('Point ' + this.numPoints);
+        var coordinates = $('<div>').addClass('coords').text(e.latlng.lat + ", " + e.latlng.lng);
+        var pointDesc = $('<div>').addClass('description').text('Point Description');
+        var deleteBtn = $('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>");
 
-        return title + " " + coordinates + " " + description + " " + deleteBtn;
+        container.append(pointTitle, coordinates, pointDesc, deleteBtn);
+        return container[0];
     }
 });
