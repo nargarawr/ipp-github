@@ -5,76 +5,104 @@
 <? $a = Zend_Controller_Front::getInstance()->getRequest()->getActionName(); ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title> <?= $this->title ?> </title>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title> <?= $this->title ?> </title>
 
-        <? /* Create an array of css files and import them if they exist */
-            $cssFiles = array(
-                '/libs/JQuery/jquery-ui.css',
-                '/libs/Bootstrap/bootstrap.min.css',
-                '/libs/magnific/magnific-popup.css',
-                '/libs/font-awesome-4.3.0/css/font-awesome.min.css',
-                '/libs/mapbox/mapbox.css',
-                '/libs/leaflet/leaflet.css',
-                '/css/global.css',
-                '/css/' . $c . '/global.css',
-                '/css/' . $c . '/' . $a . '.css'
-            );
+    <? /* Create an array of css files and import them if they exist */
+    $cssFiles = array(
+        '/libs/JQuery/jquery-ui.css',
+        '/libs/Bootstrap/bootstrap.min.css',
+        '/libs/magnific/magnific-popup.css',
+        '/libs/font-awesome-4.3.0/css/font-awesome.min.css',
+        '/libs/mapbox/mapbox.css',
+        '/libs/leaflet/leaflet.css',
+        '/css/global.css',
+        '/css/' . $c . '/global.css',
+        '/css/' . $c . '/' . $a . '.css'
+    );
 
-            foreach ($cssFiles as $cssFile) {
-                if (file_exists(getcwd() . $cssFile)) {
-                    $this->headLink()->appendStylesheet($cssFile);
-                }
-            }
-            echo $this->headLink();
-        ?>
-     </head>
-    <body>
-
-    <? // Display the navigation bar ?>
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="/route/index">
-                    <img class="navbar-logo" src="/images/logo-solo-small.png">
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-            </div>
-        </div>
-    </nav>
-    <div class="navbar-stripe"></div>
-
-    <? // Display the content of the HTML page?>
-    <?= $this->layout()->content; ?>
-    <? /* Create an array of js files and import them if they exist */
-        $jsFiles = array(
-            '/libs/JQuery/jquery.js',
-            '/libs/JQuery/jquery-extended.js',
-            '/libs/JQuery/jquery-ui.js',
-            '/libs/Bootstrap/bootstrap.min.js',
-            '/libs/magnific/magnific.js',
-            '/libs/mapbox/mapbox.js',
-            '/libs/leaflet/leaflet.js',
-            '/js/global.js',
-            '/js/' . $c . '/global.js',
-            '/js/' . $c . '/' . $a . '.js'
-        );
-
-        foreach ($jsFiles as $jsFile) {
-            if (file_exists(getcwd() . $jsFile)) {
-                $this->headScript()->appendFile($jsFile, 'text/javascript');
-            }
+    foreach ($cssFiles as $cssFile) {
+        if (file_exists(getcwd() . $cssFile)) {
+            $this->headLink()->appendStylesheet($cssFile);
         }
-        echo $this->headScript();
+    }
+    echo $this->headLink();
     ?>
-    </body>
+</head>
+<body>
+
+<? // Display the navigation bar ?>
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <? // Shows hotdog menu on mobile ?>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/route/index">
+                <img class="navbar-logo" src="/images/logo-solo-small.png">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <? foreach ($this->navBar as $navElement) { ?>
+                    <? if (!$navElement->shouldDisplay) continue; ?>
+                    <? if ($navElement->type == 'link') { ?>
+                        <li class="<?= $navElement->isActive ? 'active' : '' ?>">
+                            <a href="<?= $navElement->link ?>"><?= $navElement->name ?></a>
+                        </li>
+                    <? } else if ($navElement->type == 'dropdown') {?>
+                        <li class="dropdown<?= $navElement->isActive ? ' active' : '' ?>">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <?= $navElement->name ?>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <? foreach ($navElement->children as $childElement) { ?>
+                                    <? if (!$childElement->shouldDisplay) continue; ?>
+                                    <li>
+                                        <a href="<?= $childElement->link ?>">
+                                            <?= $childElement->name ?>
+                                        </a>
+                                    </li>
+                                <? } ?>
+                            </ul>
+                        </li>
+                    <? } ?>
+                <? } ?>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="navbar-stripe"></div>
+
+<? // Display the content of the HTML page?>
+<?= $this->layout()->content; ?>
+<? /* Create an array of js files and import them if they exist */
+$jsFiles = array(
+    '/libs/JQuery/jquery.js',
+    '/libs/JQuery/jquery-extended.js',
+    '/libs/JQuery/jquery-ui.js',
+    '/libs/Bootstrap/bootstrap.min.js',
+    '/libs/magnific/magnific.js',
+    '/libs/mapbox/mapbox.js',
+    '/libs/leaflet/leaflet.js',
+    '/js/global.js',
+    '/js/' . $c . '/global.js',
+    '/js/' . $c . '/' . $a . '.js'
+);
+
+foreach ($jsFiles as $jsFile) {
+    if (file_exists(getcwd() . $jsFile)) {
+        $this->headScript()->appendFile($jsFile, 'text/javascript');
+    }
+}
+echo $this->headScript();
+?>
+</body>
 </html>

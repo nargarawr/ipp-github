@@ -1,0 +1,11 @@
+<div class="row margin_t_15">
+    <div class="col-md-3">
+        <?= $this->partial('user', 'navigation', array(
+            'userIsAdmin' => $this->user->isAdmin,
+            'activePage'  => 'My Routes'
+        )); ?>
+    </div>
+    <div class="col-md-8">
+        My routes
+    </div>
+</div>

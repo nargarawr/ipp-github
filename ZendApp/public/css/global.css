@@ -26,7 +26,7 @@
 }
 
 .navbar-inverse {
-    color: #252628;
+    background-color: #252628;
     border: none;
 }
 
@@ -38,4 +38,29 @@
 
 .navbar-logo {
     padding-left: 10px;
+}
+
+.nav.navbar-nav.navbar-left {
+    margin-left: 10px;
+}
+
+.nav.navbar-nav.navbar-left li a {
+    margin-top: 25px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.nav.navbar-nav.navbar-left .active a {
+    color: #FFB347;
+}
+
+.nav.navbar-nav.navbar-left li a:hover  {
+    color: #FFB347;
+}
+
+@media only screen and (min-width: 768px) {
+    /* Make Navigation Toggle on Desktop Hover */
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
 }

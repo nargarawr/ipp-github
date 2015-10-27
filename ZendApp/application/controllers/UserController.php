@@ -25,6 +25,11 @@ class UserController extends BaseController {
         }
     }
 
+    public function routesAction() {
+
+    }
+
+
     public function updateaccountdetailsAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

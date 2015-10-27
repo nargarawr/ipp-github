@@ -26,5 +26,65 @@ class BaseController extends Zend_Controller_Action {
                 ));
             }
         }
+
+        $this->view->navBar = $this->getNavBar($controller, $action);
+    }
+
+    protected function getNavBar($c, $a) {
+        $currentUrl = "/" . $c . "/" . $a;
+        $navBar = array(
+            'search'  => (object)array(
+                'name'          => 'Search Routes',
+                'link'          => '/route/index',
+                'type'          => 'link',
+                'shouldDisplay' => true,
+                'isActive'      => false
+            ),
+            'create'  => (object)array(
+                'name'          => 'Create a Route',
+                'link'          => '/route/create',
+                'type'          => 'link',
+                'shouldDisplay' => true,
+                'isActive'      => false
+            ),
+            'profile' => (object)array(
+                'name'          => 'My Profile',
+                'type'          => 'dropdown',
+                'shouldDisplay' => true,
+                'isActive'      => false,
+                'children'      => array(
+                    (object)array(
+                        'name'          => 'My Routes',
+                        'link'          => '/user/routes',
+                        'shouldDisplay' => true
+                    ),
+                    (object)array(
+                        'name'          => 'My Details',
+                        'link'          => '/user/details',
+                        'shouldDisplay' => true
+                    ),
+                    (object)array(
+                        'name'          => 'Administration',
+                        'link'          => '/user/admin',
+                        'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin)
+                    ),
+                )
+            )
+        );
+
+        $activeSelected = false;
+        foreach ($navBar as &$nav) {
+            if ($nav->link === $currentUrl) {
+                $nav->isActive = true;
+                $activeSelected = true;
+                break;
+            }
+        }
+
+        if (!$activeSelected) {
+            $navBar['profile']->isActive = true;
+        }
+
+        return $navBar;
     }
 }
