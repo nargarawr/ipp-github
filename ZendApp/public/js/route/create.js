@@ -8,6 +8,7 @@ $(document).ready(function () {
 var MapManager = Class.extend({
     init:           function (lat, long, zoom) {
         map = L.map('map').setView([lat, long], zoom);
+        this.pointListManager = new PointListManager();
 
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
         var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
@@ -30,13 +31,6 @@ var MapManager = Class.extend({
     },
     setupListeners: function () {
         var _self = this;
-        /*
-         TODO
-         Show list of points to the left
-         Remove points (on left)
-         Connect points - mapbox directions
-         */
-
         map.on('click', function (e) {
             // Only add a new point if popup is NOT showing
             if (_self.isPopupOpen) {
@@ -52,15 +46,24 @@ var MapManager = Class.extend({
         _self.numPoints++;
         var marker = L.marker([e.latlng.lat, e.latlng.lng])
             .bindPopup(this.getPopupHTML(e))
-            .on('popupopen', function(){
+            .on('popupopen', function (f) {
+                console.log(f);
                 _self.isPopupOpen = true;
                 var tempMarker = this;
+
                 $(".marker-delete-button:visible").click(function () {
                     _self.isPopupOpen = false;
                     map.removeLayer(tempMarker);
+                    _self.pointListManager.removePoint(tempMarker._leaflet_id);
+                });
+
+                $(".marker-update-button:visible").click(function () {
+                    console.log('updating this node');
                 });
             })
             .addTo(map);
+
+        this.pointListManager.addPoint(marker, e);
     },
     getPopupHTML:   function (e) {
         var container = $('<div>').addClass('pointContainer');
@@ -68,8 +71,65 @@ var MapManager = Class.extend({
         var coordinates = $('<div>').addClass('coords').text(e.latlng.lat + ", " + e.latlng.lng);
         var pointDesc = $('<div>').addClass('description').text('Point Description');
         var deleteBtn = $('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>");
+        var updateBtn = $('<button>').addClass('marker-update-button btn btn-success').html("<i class='fa fa-check'></i>");
 
-        container.append(pointTitle, coordinates, pointDesc, deleteBtn);
+        container.append(pointTitle, coordinates, pointDesc, deleteBtn, updateBtn);
         return container[0];
+    }
+});
+
+var PointListManager = Class.extend({
+    init:           function () {
+        this.container = $('#left-hand-display');
+        this.pointsList = this.container.find('.pointsList');
+        this.submitBtn = this.container.find('.submit');
+
+        this.setupListeners();
+    },
+    setupListeners: function () {
+        this.submitBtn.click(function () {
+            console.log('saving route...');
+        });
+    },
+    addPoint:       function (marker, e) {
+        var _self = this;
+
+        var moveIcon = $('<i>').addClass('fa fa-arrows');
+
+        var editIcon = $('<button>').addClass('marker-edit-button btn btn-primary').html("<i class='fa fa-pencil'></i>");
+        editIcon.click(function () {
+            marker.openPopup();
+        });
+
+        var deleteIcon = $('<button>').addClass('marker-delete-button-popup btn btn-danger').html("<i class='fa fa-trash'></i>");
+        deleteIcon.click(function () {
+            map.removeLayer(marker);
+            _self.removePoint(marker._leaflet_id);
+        });
+
+        var pointName = $('<div>').text(marker._popup._content.firstChild.innerHTML);
+        var pointLatLng = $('<div>').text(e.latlng.lat + ", " + e.latlng.lng);
+        var pointContainer = $('<div>').addClass('point').attr('data-point-id', marker._leaflet_id);
+
+        pointContainer.append(moveIcon, pointName, pointLatLng, editIcon, deleteIcon);
+
+        this.pointsList.append(pointContainer);
+    },
+    updatePoint:    function (markerId) {
+        var obj = this.findPointById(markerId);
+        // do updating
+    },
+    removePoint:    function (markerId) {
+        this.findPointById(markerId).remove();
+    },
+    findPointById:  function (markerId) {
+        var objToReturn = null;
+        this.pointsList.children().each(function (i, obj) {
+            if ($(obj).attr('data-point-id') == markerId) {
+                objToReturn = $(obj);
+            }
+        });
+
+        return objToReturn;
     }
 });

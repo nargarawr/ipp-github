@@ -1,3 +1,46 @@
 #map {
-    height: 720px;
+    height: 957px;
 }
+
+#left-hand-display {
+    position: fixed;
+    top: 65px;
+    left: 5px;
+    width: 250px;
+    background-color: #fefefe;
+    z-index: 1001;
+}
+
+#left-hand-display .title {
+    font-size: 24px;
+    text-align: center;
+}
+
+#left-hand-display .submit {
+    text-align:center;
+    color: white;
+    height:40px;
+    font-size: 18px;
+    background-color: #C2D59A;
+    cursor: pointer;
+    padding-top: 7px;
+    padding-bottom:10px;
+}
+
+#left-hand-display .pointsList .point {
+    border-bottom: 1px solid #FFB347;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#left-hand-display .pointsList {
+    max-height: 700px;
+    overflow: auto;
+}
+
+@media only screen and (max-width: 768px) {
+    #left-hand-display {
+        display: none;
+    }
+}
+
