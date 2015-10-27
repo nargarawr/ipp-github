@@ -1,0 +1,46 @@
+\begin{thebibliography}{1}
+
+\bibitem{url2015gmaps}
+{Google Maps, My Maps} website.
+\newblock \url{https://www.google.com/maps/d}.
+\newblock Accessed: 01/10/2015.
+
+\bibitem{url2015madmaps}
+{MADMAPs} website.
+\newblock \url{http://www.madmaps.net/}.
+\newblock Accessed: 01/10/2015.
+
+\bibitem{url2015myscenicdrives}
+{My Scenic Drives} website.
+\newblock \url{https://www.myscenicdrives.com/}.
+\newblock Accessed: 01/10/2015.
+
+\bibitem{chen2011discovering}
+Zaiben Chen, Heng~Tao Shen, and Xiaofang Zhou.
+\newblock Discovering popular routes from trajectories.
+\newblock In {\em Data Engineering (ICDE), 2011 IEEE 27th International
+  Conference on}, pages 900--911. IEEE, 2011.
+
+\bibitem{lou2009map}
+Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang.
+\newblock Map-matching for low-sampling-rate gps trajectories.
+\newblock In {\em Proceedings of the 17th ACM SIGSPATIAL International
+  Conference on Advances in Geographic Information Systems}, pages 352--361.
+  ACM, 2009.
+
+\bibitem{ludwig2009recommendation}
+Bernd Ludwig, Bj{\o}rn Zenker, and Jan Schrader.
+\newblock Recommendation of personalized routes with public transport
+  connections.
+\newblock In {\em Intelligent Interactive Assistance and Mobile Multimedia
+  Computing}, pages 97--107. Springer, 2009.
+
+\bibitem{peregrino2012mapping}
+Fernando~S Peregrino, David Tom{\'a}s, Paul Clough, and Fernando Llopis.
+\newblock Mapping routes of sentiments.
+
+\bibitem{van2011time}
+Steven Van~Canneyt, Steven Schockaert, Olivier Van~Laere, and Bart Dhoedt.
+\newblock Time-dependent recommendation of tourist attractions using flickr.
+
+\end{thebibliography}
