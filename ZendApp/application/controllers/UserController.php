@@ -26,7 +26,8 @@ class UserController extends BaseController {
     }
 
     public function routesAction() {
-        RouteFactory::getRoutesForUser($userId);
+        $routes = RouteFactory::getRoutesForUser($this->user->userId);
+        var_dump($routes);
     }
 
     public function adminAction() {

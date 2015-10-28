@@ -51,6 +51,11 @@
     overflow: auto;
 }
 
+#left-hand-display .noPointsYet {
+    font-weight: bold;
+    padding: 10px;
+}
+
 #left-hand-display .pointsList .point .left-side {
     width: 25px;
     float: left;
@@ -134,4 +139,12 @@ textarea {
 
 #saveroute-popup .checkContainer {
     padding-top: 10px;
+}
+
+#saveroute-popup .errorMessage {
+    color: red;
+}
+
+#saveroute-popup #routeName.error {
+    border: red 1px solid;
 }

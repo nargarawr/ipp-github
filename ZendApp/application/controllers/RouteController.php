@@ -22,6 +22,7 @@ class RouteController extends BaseController {
     }
 
     public function listAction() {
+
     }
 
     public function detailAction() {

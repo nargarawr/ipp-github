@@ -3,6 +3,8 @@ var map;
 $(document).ready(function () {
     mm = new MapManager(52.95338, -1.18689, 13);
 
+    $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
+
     $('.popup-trigger').magnificPopup({
         type:            'inline',
         fixedContentPos: false,
@@ -16,6 +18,15 @@ $(document).ready(function () {
     });
 
     $('#submitRoute').click(function () {
+        if ($('#routeName').val() == "") {
+            $('#noNameError').removeClass('hidden');
+            $('#routeName').addClass('error');
+            return;
+        } else {
+            $('#noNameError').addClass('hidden');
+            $('#routeName').removeClass('error');
+        }
+
         $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
 
         $.ajax({
@@ -27,8 +38,6 @@ $(document).ready(function () {
                 privacy: $('#routePrivacy').val()
             }
         }).success(function (response) {
-            console.log('Creating route with id ' + response);
-            console.log('Redirecting...');
             window.location.href = '/route/create/id/' + response;
         });
     });
@@ -36,6 +45,8 @@ $(document).ready(function () {
 
 var MapManager = Class.extend({
     init:           function (lat, long, zoom) {
+        $('#map').css('height', window.innerHeight - 62);
+
         map = L.map('map').setView([lat, long], zoom);
         this.pointListManager = new PointListManager();
 
