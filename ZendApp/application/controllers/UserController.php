@@ -26,7 +26,7 @@ class UserController extends BaseController {
     }
 
     public function routesAction() {
-
+        RouteFactory::getRoutesForUser($userId);
     }
 
     public function adminAction() {

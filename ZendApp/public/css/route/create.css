@@ -1,3 +1,9 @@
+@media only screen and (max-width: 768px) {
+    #left-hand-display {
+        display: none;
+    }
+}
+
 #map {
     height: 957px;
 }
@@ -7,7 +13,7 @@
     top: 65px;
     left: 5px;
     width: 250px;
-    background-color: #fefefe;
+    background-color: #FEFEFE;
     z-index: 1001;
 }
 
@@ -17,20 +23,27 @@
 }
 
 #left-hand-display .submit {
-    text-align:center;
+    text-align: center;
     color: white;
-    height:40px;
+    height: 40px;
     font-size: 18px;
     background-color: #C2D59A;
     cursor: pointer;
     padding-top: 7px;
-    padding-bottom:10px;
+    padding-bottom: 10px;
+}
+
+#left-hand-display .submit:hover {
+    background-color: #A1BF64;
 }
 
 #left-hand-display .pointsList .point {
-    border-bottom: 1px solid #FFB347;
-    margin-right: 10px;
-    margin-left: 10px;
+    border-top: 1px solid #FFB347;
+    overflow: hidden;
+}
+
+#left-hand-display .pointsList .point:first-child {
+    border-top: none;
 }
 
 #left-hand-display .pointsList {
@@ -38,9 +51,87 @@
     overflow: auto;
 }
 
-@media only screen and (max-width: 768px) {
-    #left-hand-display {
-        display: none;
-    }
+#left-hand-display .pointsList .point .left-side {
+    width: 25px;
+    float: left;
+    height: 50px;
+    background-color: #F1F1F1;
+    text-align: center;
+    padding-top: 16px;
+    cursor: -webkit-grab;
 }
 
+#left-hand-display .pointsList .point .middle-side {
+    width: 145px;
+    float: left;
+    padding-left: 5px;
+    background-color: #FEFEFE;
+}
+
+#left-hand-display .pointsList .point .middle-side .title {
+    padding-top: 2px;
+    font-size: 18px;
+    text-align: left;
+}
+
+#left-hand-display .pointsList .point .middle-side .coords {
+    font-size: 14px;
+    color: #999999;
+}
+
+#left-hand-display .pointsList .point .right-side {
+    width: 60px;
+    float: left;
+    padding-left: 5px;
+    background-color: #FEFEFE;
+}
+
+#left-hand-display .pointsList .point .right-side button {
+    padding: 1px 6px;
+    margin-top: 13px;
+}
+
+#left-hand-display .pointsList .point .right-side button.marker-delete-button-lhd {
+    margin-left: 3px;
+}
+
+.leaflet-popup-content {
+    width: 250px;
+    padding-top: 8px;
+    margin: 0;
+}
+
+.leaflet-popup-content .pointContainer button {
+    margin-top: 8px;
+    margin-left: 5px;
+    padding: 1px 6px;
+}
+
+.leaflet-popup-content .pointContainer textarea {
+    margin-top: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+.leaflet-popup-content .pointContainer .buttons {
+    text-align: right;
+}
+
+#saveroute-popup h3 {
+    margin-top: 0;
+}
+
+#saveroute-popup .textContainer {
+    padding-top: 10px;
+}
+
+#saveroute-popup .btnContainer {
+    text-align: right;
+    padding-top: 10px;
+}
+
+#saveroute-popup .checkContainer {
+    padding-top: 10px;
+}

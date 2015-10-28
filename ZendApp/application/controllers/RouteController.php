@@ -19,15 +19,27 @@ class RouteController extends BaseController {
                 'fromRedirect' => 1
             ));
         }
-
     }
 
     public function listAction() {
-
     }
 
     public function detailAction() {
-        $routeId = $this->getRequest()->getParam('id', null);
+        //$routeId = $this->getRequest()->getParam('id', null);
+    }
+
+    public function saveAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $name = $this->getRequest()->getParam('name', null);
+        $desc = $this->getRequest()->getParam('description', null);
+        $isPrivate = $this->getRequest()->getParam('privacy', 0);
+
+        $routeId = RouteFactory::createRoute($name, $desc, $isPrivate, $this->user->userId);
+
+        echo Zend_Json::encode($routeId);
+        exit;
     }
 
 }

@@ -5,7 +5,6 @@ class IndexController extends BaseController {
     public function init() {
         parent::init();
         $this->view->isExternal = true;
-
     }
 
     public function indexAction() {

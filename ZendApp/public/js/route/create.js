@@ -1,8 +1,37 @@
 var map;
-var mm;
 
 $(document).ready(function () {
     mm = new MapManager(52.95338, -1.18689, 13);
+
+    $('.popup-trigger').magnificPopup({
+        type:            'inline',
+        fixedContentPos: false,
+        fixedBgPos:      true,
+        overflowY:       'auto',
+        closeBtnInside:  true,
+        preloader:       false,
+        midClick:        true,
+        removalDelay:    300,
+        mainClass:       'my-mfp-zoom-in'
+    });
+
+    $('#submitRoute').click(function () {
+        $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
+
+        $.ajax({
+            type: 'POST',
+            url:  '/route/save',
+            data: {
+                name: $('#routeName').val(),
+                description: $('#routeDesc').val(),
+                privacy: $('#routePrivacy').val()
+            }
+        }).success(function (response) {
+            console.log('Creating route with id ' + response);
+            console.log('Redirecting...');
+            window.location.href = '/route/create/id/' + response;
+        });
+    });
 });
 
 var MapManager = Class.extend({
@@ -46,19 +75,20 @@ var MapManager = Class.extend({
         _self.numPoints++;
         var marker = L.marker([e.latlng.lat, e.latlng.lng])
             .bindPopup(this.getPopupHTML(e))
-            .on('popupopen', function (f) {
-                console.log(f);
+            .on('popupopen', function () {
                 _self.isPopupOpen = true;
                 var tempMarker = this;
 
-                $(".marker-delete-button:visible").click(function () {
+                $(".marker-delete-button").click(function () {
                     _self.isPopupOpen = false;
                     map.removeLayer(tempMarker);
                     _self.pointListManager.removePoint(tempMarker._leaflet_id);
                 });
 
-                $(".marker-update-button:visible").click(function () {
-                    console.log('updating this node');
+                $(".marker-update-button").click(function () {
+                    var newName = $(marker._popup._content).find('.point_title').val();
+                    _self.pointListManager.updatePoint(tempMarker._leaflet_id, newName);
+                    marker.closePopup();
                 });
             })
             .addTo(map);
@@ -67,62 +97,84 @@ var MapManager = Class.extend({
     },
     getPopupHTML:   function (e) {
         var container = $('<div>').addClass('pointContainer');
-        var pointTitle = $('<div>').addClass('title').text('Point ' + this.numPoints);
-        var coordinates = $('<div>').addClass('coords').text(e.latlng.lat + ", " + e.latlng.lng);
-        var pointDesc = $('<div>').addClass('description').text('Point Description');
-        var deleteBtn = $('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>");
-        var updateBtn = $('<button>').addClass('marker-update-button btn btn-success').html("<i class='fa fa-check'></i>");
+        container.append($('<div>').addClass('coords right')
+            .text(e.latlng.lat.toString().slice(0, 7) + ", " + e.latlng.lng.toString().slice(0, 7)));
+        container.append($('<input>').addClass('form-control point_title').attr('value', 'Point ' + this.numPoints));
+        container.append($('<textarea>').addClass('form-control').attr('placeholder', 'Enter a description'));
 
-        container.append(pointTitle, coordinates, pointDesc, deleteBtn, updateBtn);
+        var buttons = $('<div>').addClass('buttons');
+        buttons.append($('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>"));
+        buttons.append($('<button>').addClass('marker-update-button btn btn-success').html("<i class='fa fa-check'></i>"));
+
+        container.append(buttons);
         return container[0];
     }
 });
 
 var PointListManager = Class.extend({
-    init:           function () {
+    init:          function () {
         this.container = $('#left-hand-display');
         this.pointsList = this.container.find('.pointsList');
-        this.submitBtn = this.container.find('.submit');
+        this.noPointsYet = this.container.find('.noPointsYet');
 
-        this.setupListeners();
-    },
-    setupListeners: function () {
-        this.submitBtn.click(function () {
-            console.log('saving route...');
+        $('.pointsList').sortable({
+            handle: ".left-side"
         });
     },
-    addPoint:       function (marker, e) {
+    addPoint:      function (marker, e) {
+        if (this.pointsList.children().length == 0) {
+            this.noPointsYet.hide();
+        }
+
         var _self = this;
 
-        var moveIcon = $('<i>').addClass('fa fa-arrows');
+        var left = $('<div>').addClass('left-side');
+        left.append($('<i>').addClass('fa fa-arrows'));
 
-        var editIcon = $('<button>').addClass('marker-edit-button btn btn-primary').html("<i class='fa fa-pencil'></i>");
-        editIcon.click(function () {
+        var mid = $('<div>').addClass('middle-side');
+        mid.append($('<div>').addClass('title').text(
+            $(marker._popup._content).find('.point_title').val()
+        ));
+        mid.append($('<div>').addClass('coords').text(
+            e.latlng.lat.toString().slice(0, 7) + ", " + e.latlng.lng.toString().slice(0, 7)
+        ));
+
+        var right = $('<div>').addClass('right-side');
+        var editButton = $('<button>').addClass('marker-edit-button btn btn-primary')
+            .html("<i class='fa fa-pencil'></i>");
+        editButton.click(function () {
             marker.openPopup();
         });
 
-        var deleteIcon = $('<button>').addClass('marker-delete-button-popup btn btn-danger').html("<i class='fa fa-trash'></i>");
-        deleteIcon.click(function () {
+        var deleteButton = $('<button>').addClass('marker-delete-button-lhd btn btn-danger')
+            .html("<i class='fa fa-trash'></i>");
+        deleteButton.click(function () {
             map.removeLayer(marker);
             _self.removePoint(marker._leaflet_id);
         });
+        right.append(editButton, deleteButton);
 
-        var pointName = $('<div>').text(marker._popup._content.firstChild.innerHTML);
-        var pointLatLng = $('<div>').text(e.latlng.lat + ", " + e.latlng.lng);
         var pointContainer = $('<div>').addClass('point').attr('data-point-id', marker._leaflet_id);
-
-        pointContainer.append(moveIcon, pointName, pointLatLng, editIcon, deleteIcon);
-
+        pointContainer.append(left, mid, right);
         this.pointsList.append(pointContainer);
+
+
     },
-    updatePoint:    function (markerId) {
+    updatePoint:   function (markerId, newName) {
         var obj = this.findPointById(markerId);
-        // do updating
+        obj.find('.title').text(newName);
     },
-    removePoint:    function (markerId) {
-        this.findPointById(markerId).remove();
+    removePoint:   function (markerId) {
+        var obj = this.findPointById(markerId);
+        if (obj != null) {
+            obj.remove();
+        }
+
+        if (this.pointsList.children().length == 0) {
+            this.noPointsYet.show();
+        }
     },
-    findPointById:  function (markerId) {
+    findPointById: function (markerId) {
         var objToReturn = null;
         this.pointsList.children().each(function (i, obj) {
             if ($(obj).attr('data-point-id') == markerId) {

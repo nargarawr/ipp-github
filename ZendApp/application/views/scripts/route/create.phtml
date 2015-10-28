@@ -4,19 +4,38 @@
         <h3>Your Points</h3>
     </div>
     <div class="navbar-stripe"></div>
-    <div class="pointsList">
-
+    <div class="noPointsYet">
+        You have no points added yet
     </div>
-    <div class="submit">
+    <div class="pointsList">
+    </div>
+    <div href="#saveroute-popup" class="popup-trigger submit">
         Save Route
     </div>
 </div>
 
+<div id="saveroute-popup" class="white-popup-block zoom-anim-dialog mfp-hide">
+    <h3>Save your route</h3>
 
-<? /*
- map size =
- window.innerHeight - 62
+    <label>Route Name</label>
+    <input type="text" class="form-control" placeholder="Craig's River Adventure" id="routeName">
 
+    <div class="textContainer">
+        <label>Route Description (optional)</label>
+        <textarea placeholder="This route has lots of rivers and is really beautiful around dusk"
+                  class="form-control" rows="3" id="routeDesc"></textarea>
+    </div>
 
-
- */ ?>
+    <div class="checkContainer">
+        <label>Select privacy setting:</label>
+        <select class="form-control" id="routePrivacy">
+            <option value="0">Public (visible to everyone)</option>
+            <option value="1">Private (only visible to you)</option>
+        </select>
+    </div>
+    <div class="btnContainer">
+        <button class="btn btn-success" id="submitRoute">
+            <i class="fa fa-check"></i> Save Route
+        </button>
+    </div>
+</div>

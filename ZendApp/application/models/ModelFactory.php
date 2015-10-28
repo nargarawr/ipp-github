@@ -50,14 +50,21 @@ class ModelFactory {
      *
      * @author Craig Knott
      *
-     * @param string       $sql    The SQL to run
-     * @param array(param) $params Array of parameters to the query (':param' => val)
+     * @param string       $sql      The SQL to run
+     * @param array(param) $params   Array of parameters to the query (':param' => val)
+     * @param bool         $returnId Whether to return the ID of the last inserted row
      *
-     * @return void
+     * @return int Id of the last row inserted (if returnId is true);
      */
-    public static function execute($sql, $params = null) {
-        $stmt = new Zend_Db_Statement_Pdo(self::getDb(), $sql);
+    public static function execute($sql, $params = null, $returnId = false) {
+        $db = self::getDb();
+        $stmt = new Zend_Db_Statement_Pdo($db, $sql);
         $stmt->execute($params);
+
+        if ($returnId) {
+            return (int)$db->lastInsertId();
+        }
+
     }
 
     /**
