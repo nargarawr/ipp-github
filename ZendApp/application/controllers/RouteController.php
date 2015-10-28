@@ -36,8 +36,9 @@ class RouteController extends BaseController {
         $name = $this->getRequest()->getParam('name', null);
         $desc = $this->getRequest()->getParam('description', null);
         $isPrivate = $this->getRequest()->getParam('privacy', 0);
+        $points = $this->getRequest()->getParam('points', null);
 
-        $routeId = RouteFactory::createRoute($name, $desc, $isPrivate, $this->user->userId);
+        $routeId = RouteFactory::createRoute($name, $desc, $isPrivate, $points, $this->user->userId);
 
         echo Zend_Json::encode($routeId);
         exit;

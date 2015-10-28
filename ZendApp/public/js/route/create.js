@@ -1,4 +1,5 @@
 var map;
+var mm;
 
 $(document).ready(function () {
     mm = new MapManager(52.95338, -1.18689, 13);
@@ -29,13 +30,29 @@ $(document).ready(function () {
 
         $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
 
+        // Get all points
+        var pointsList = mm.pointListManager.pointsList.children();
+        var points = [];
+        for (var i = 0; i < pointsList.length; i++) {
+            var pointId = $(pointsList[i]).attr('data-point-id');
+            var pointPopup = $(map._layers[pointId]._popup._content);
+
+            var point = {};
+            point.name = pointPopup.find('.point_title').val();
+            point.description = pointPopup.find('textarea').val();
+            point.lat = pointPopup.find('.latHidden').text();
+            point.lng = pointPopup.find('.lngHidden').text();
+            points.push(point);
+        }
+
         $.ajax({
             type: 'POST',
             url:  '/route/save',
             data: {
-                name: $('#routeName').val(),
+                name:        $('#routeName').val(),
                 description: $('#routeDesc').val(),
-                privacy: $('#routePrivacy').val()
+                privacy:     $('#routePrivacy').val(),
+                points:      points
             }
         }).success(function (response) {
             window.location.href = '/route/create/id/' + response;
@@ -112,6 +129,8 @@ var MapManager = Class.extend({
             .text(e.latlng.lat.toString().slice(0, 7) + ", " + e.latlng.lng.toString().slice(0, 7)));
         container.append($('<input>').addClass('form-control point_title').attr('value', 'Point ' + this.numPoints));
         container.append($('<textarea>').addClass('form-control').attr('placeholder', 'Enter a description'));
+        container.append($('<div>').addClass('hidden latHidden').text(e.latlng.lat.toString()));
+        container.append($('<div>').addClass('hidden lngHidden').text(e.latlng.lng.toString()));
 
         var buttons = $('<div>').addClass('buttons');
         buttons.append($('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>"));
