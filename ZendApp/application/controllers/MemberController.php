@@ -27,7 +27,9 @@ class MemberController extends BaseController {
                 if (!$loginSuccesful) {
                     $this->view->errorMessage = '<b>Could not login:</b> Username or password was wrong';
                 }
-            }
+            } else {
+            $this->view->errorMessage = '<b>Could not log in:</b> Some required fields are missing or invalid';
+        }
         }
 
         // If the user was redirected here, explain the situation to them
@@ -70,7 +72,7 @@ class MemberController extends BaseController {
                     $this->view->errorMessage = '<b>There was a problem creating your account:</b> That email or username is already registered';
                 }
             } else {
-                $this->view->errorMessage = '<b>There was a problem creating your account:</b> Some required fields are missing';
+                $this->view->errorMessage = '<b>There was a problem creating your account:</b> Some required fields are missing or invalid';
             }
         }
 

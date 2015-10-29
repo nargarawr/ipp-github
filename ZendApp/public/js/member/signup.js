@@ -3,18 +3,23 @@ $(document).ready(function(){
 });
 
 $("#signupLaunch").click(function () {
-    var loginForm = $('#hiddenSignupForm').clone();
-    loginForm.down().attr('id','signupForm');
+    var signupForm = $('#hiddenSignupForm').clone();
+    signupForm.find('form').attr('id','signupForm');
 
-    $.alert({
+    $.confirm({
         title: 'Sign up to Niceway.to',
         icon: 'fa fa-sign-in',
-        content: loginForm.html(),
+        content: signupForm.html(),
         theme: 'black',
         confirmButton: 'Sign Up',
+        cancelButton: 'Login',
         backgroundDismiss: false,
+        keyboardEnabled: true,
         confirm: function() {
             $('#signupForm').submit()
+        },
+        cancel: function() {
+            window.location = "/member/login";
         }
     });
 });

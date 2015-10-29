@@ -4,17 +4,22 @@ $(document).ready(function(){
 
 $("#loginLaunch").click(function () {
     var loginForm = $('#hiddenLoginForm').clone();
-    loginForm.down().attr('id','loginForm');
+    loginForm.find('form').attr('id','loginForm');
 
-    $.alert({
+    $.confirm({
         title: 'Login to Niceway.to',
         icon: 'fa fa-sign-in',
         content: loginForm.html(),
         theme: 'black',
         confirmButton: 'Login',
+        cancelButton: 'Signup',
         backgroundDismiss: false,
+        keyboardEnabled: true,
         confirm: function() {
             $('#loginForm').submit()
+        },
+        cancel: function() {
+            window.location = "/member/signup";
         }
     });
 });
