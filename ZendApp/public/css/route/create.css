@@ -220,3 +220,7 @@ textarea {
 .jconfirm-box .buttons .btn:first-child {
     color: #FFB347 !important;
 }
+
+.leaflet-top, .leaflet-bottom {
+    z-index: 5;
+}
