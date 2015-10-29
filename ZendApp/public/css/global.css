@@ -76,7 +76,7 @@
 .nav.navbar-nav.navbar-right a:focus {
     outline: none;
     outline-offset: none;
-    color: inherit;
+    color: #FFFFFF;
     text-decoration: none;
 }
 
@@ -90,3 +90,60 @@
         display: block;
     }
 }
+
+/* Fixes for navigation on mobile */
+@media only screen and (max-width: 767px) {
+
+    #navbar-collapse {
+        position: relative;
+        z-index: 1002;
+        background-color: #252628;
+        border: none;
+        padding-left: 0;
+    }
+
+    .nav.navbar-nav li a {
+        margin-top: 0;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .nav.navbar-nav.navbar-right,
+    .nav.navbar-nav.navbar-left {
+        margin-top: 0;
+        margin-left: 0;
+        margin-bottom: 0;
+    }
+
+    .nav.navbar-nav.navbar-right {
+        margin-bottom: 5px;
+    }
+
+    .nav.navbar-nav .active a {
+        color: #999999;
+    }
+
+    .navbar-header {
+        border-bottom: 2px #FFB347 solid;
+    }
+
+    .navbar-inverse .navbar-nav .open a,
+    .navbar-inverse .navbar-nav .open a:hover,
+    .navbar-inverse .navbar-nav .open a:focus,
+    .navbar-inverse .navbar-nav .active a,
+    .navbar-inverse .navbar-nav .active a:hover,
+    .navbar-inverse .navbar-nav .active a:focus {
+        background-color: #252628;
+        color: #999;
+    }
+
+    .navbar-inverse .navbar-nav .active a:hover,
+    .navbar-inverse .navbar-nav .open a:hover,
+    .navbar-inverse .navbar-nav .open .dropdown-menu li a:hover,
+    .navbar-inverse .navbar-nav .open .dropdown-menu li a:focus {
+        color: #FFB347;
+    }
+
+}
+
+
