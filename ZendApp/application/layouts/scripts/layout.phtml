@@ -35,7 +35,10 @@
 <body>
 
 <? // Display the navigation bar ?>
-<input type="hidden" id="nav-username" value="<?= ((is_null($this->user->fname) || $this->user->fname === '') ? $this->user->username : $this->user->fname) ?>">
+<? if (!is_null($this->user)) { ?>
+    <input type="hidden" id="nav-username" value="<?= (is_null($this->user->fname) || $this->user->fname === '')
+        ? $this->user->username : $this->user->fname ?>">
+<? } ?>
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
