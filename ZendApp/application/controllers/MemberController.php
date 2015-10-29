@@ -62,9 +62,7 @@ class MemberController extends BaseController {
                     LoginFactory::createNewUser(
                         $postData["username"],
                         $postData["password"],
-                        $postData["email"],
-                        $postData["firstName"],
-                        $postData["location"]
+                        $postData["email"]
                     );
 
                     $this->login($postData["username"], $postData["password"]);
@@ -95,44 +93,26 @@ class MemberController extends BaseController {
     protected function getSignupForm() {
         $username = new Zend_Form_Element_Text('username');
         $username->setAttrib('class', 'form-control')
-            ->setAttrib('placeholder', 'Username')
+            ->setLabel('Username:')
             ->setRequired(true);
 
         $email = new Zend_Form_Element_Text('email');
         $email->setAttrib('class', 'form-control')
-            ->setAttrib('placeholder', 'Email')
-            ->setLabel(" ")
+            ->setLabel('Email:')
             ->setRequired(true);
-
-        $firstName = new Zend_Form_Element_Text('firstName');
-        $firstName->setAttrib('class', 'form-control')
-            ->setAttrib('placeholder', 'First Name (optional)')
-            ->setRequired(false);
-
-        $location = new Zend_Form_Element_Text('location');
-        $location->setAttrib('class', 'form-control')
-            ->setAttrib('placeholder', 'Location (optional)')
-            ->setRequired(false);
 
         $password = new Zend_Form_Element_Password('password');
         $password->setAttrib('class', 'form-control')
-            ->setAttrib('placeholder', 'Password')
             ->addValidator('stringLength', false, array(6))
+            ->setLabel('Password:')
             ->setRequired(true);
-
-        $submit = new Zend_Form_Element_Submit('signup');
-        $submit->setLabel('Sign Up')
-            ->setAttrib('class', 'btn btn-primary');
 
         $signupForm = new Zend_Form();
         $signupForm->setAction('/member/signup')
             ->setMethod('post')
             ->addElement($username)
             ->addElement($email)
-            ->addElement($firstName)
-            ->addElement($location)
-            ->addElement($password)
-            ->addElement($submit);
+            ->addElement($password);
 
         return $signupForm;
     }
@@ -148,10 +128,6 @@ class MemberController extends BaseController {
             ->setAttrib('class', 'form-control')
             ->setRequired(true);
 
-        $submit = new Zend_Form_Element_Submit('login');
-        $submit->setLabel('Login')
-            ->setAttrib('class', 'btn btn-success');
-
         if (!is_null($this->_request->getParam("redirect"))) {
             $redirect = '/member/login/redirect/' . $this->_request->getParam("redirect");
         } else {
@@ -162,8 +138,7 @@ class MemberController extends BaseController {
         $loginForm->setAction($this->_request->getBaseUrl() . $redirect)
             ->setMethod('post')
             ->addElement($username)
-            ->addElement($password)
-            ->addElement($submit);
+            ->addElement($password);
 
         return $loginForm;
     }

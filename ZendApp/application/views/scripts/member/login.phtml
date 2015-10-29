@@ -1,31 +1,5 @@
-<div class="row">
-    <div class="col-lg-4 col-md-3"></div>
-    <div class="col-lg-4 col-md-6">
-        <div class="well">
-            <h2 class="title">Log in to Niceway.to</h2>
-            <div class="row">
-                <div class="col-xs-12">
-                    <? if (!is_null($this->errorMessage)) { ?>
-                        <div class="alert alert-danger" role="alert">
-                            <i class="fa fa-exclamation-circle"></i>
-                            <?= $this->errorMessage; ?>
-                        </div>
-                    <? } ?>
-                    <? if (!is_null($this->infoMessage)) { ?>
-                        <div class="alert alert-warning" role="alert">
-                            <i class="fa fa-exclamation-circle"></i>
-                            <?= $this->infoMessage; ?>
-                        </div>
-                    <? } ?>
-                    <?= $this->loginForm; ?>
-                    <div class="orSignup">
-                        <p>or</p>
-                        <a href="/member/signup">
-                            <input type="button" class="btn btn-primary signupBtn" value="Sign Up">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="hidden" id="hiddenLoginForm">
+    <?= $this->loginForm; ?>
 </div>
+
+<input type="hidden" id="loginLaunch">

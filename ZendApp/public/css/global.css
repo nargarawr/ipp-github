@@ -69,14 +69,14 @@
 }
 
 .nav.navbar-nav.navbar-right a:hover {
-    color: inherit;
+    color: #666;
     text-decoration: none;
 }
 
 .nav.navbar-nav.navbar-right a:focus {
     outline: none;
     outline-offset: none;
-    color: #FFFFFF;
+    color: #666;
     text-decoration: none;
 }
 

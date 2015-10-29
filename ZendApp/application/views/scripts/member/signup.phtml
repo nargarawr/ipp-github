@@ -1,19 +1,5 @@
-<div class="row">
-    <div class="col-lg-4 col-md-3"></div>
-    <div class="col-lg-4 col-md-6">
-        <div class="well">
-            <h2 class="title">Sign up to Niceway.to</h2>
-            <div class="row">
-                <div class="col-xs-12">
-                    <? if (!is_null($this->errorMessage)) { ?>
-                        <div class="alert alert-danger" role="alert">
-                            <i class="fa fa-exclamation-circle"></i>
-                            <?= $this->errorMessage; ?>
-                        </div>
-                    <? } ?>
-                    <?= $this->signupForm ?>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="hidden" id="hiddenSignupForm">
+    <?= $this->signupForm ?>
 </div>
+
+<input type="hidden" id="signupLaunch">

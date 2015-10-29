@@ -1,0 +1,19 @@
+body {
+    background-image: url("/images/bg2.jpg");
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+dt {
+    padding-top: 10px;
+}
+
+.jconfirm-box .title,
+.jconfirm-box .buttons .btn:first-child {
+    color: #FFB347 !important;
+}
+
+.zend_form {
+    margin-bottom: 0;
+}
