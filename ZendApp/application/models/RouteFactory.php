@@ -2,7 +2,7 @@
 
 class RouteFactory extends ModelFactory {
 
-    public static function createRoute($name, $description, $isPrivate, $points, $userId) {
+    public static function createRoute($name, $description, $isPrivate, $userId) {
         $sql = "INSERT INTO tb_route (
                     created_by,
                     name,
@@ -28,13 +28,7 @@ class RouteFactory extends ModelFactory {
             ':description' => $description,
             ':isPrivate'   => $isPrivate
         );
-        $routeId = parent::execute($sql, $params, true);
-
-        foreach ($points as $point) {
-            RouteFactory::createRoutePoint((object)$point, $routeId);
-        }
-
-        return $routeId;
+        return parent::execute($sql, $params, true);
     }
 
     public static function createRoutePoint($point, $routeId) {
@@ -78,6 +72,75 @@ class RouteFactory extends ModelFactory {
             ':userId' => $userId
         );
         return parent::fetchAll($sql, $params);
+    }
+
+    public static function getRoute($routeId, $userId) {
+        $sql = "SELECT
+                  name,
+                  description,
+                  is_private
+                FROM tb_route
+                WHERE pk_route_id = :routeId
+                AND created_by = :userId";
+        $params = array(
+            ':routeId' => $routeId,
+            ':userId'  => $userId
+        );
+        return parent::fetchOne($sql, $params);
+    }
+
+    public static function getRoutePoints($routeId) {
+      $sql = "SELECT
+                name,
+                description,
+                latitude,
+                longitude
+              FROM tb_point
+              WHERE fk_route_id = :routeId";
+      $params = array (
+        ':routeId' => $routeId
+      );
+      return parent::fetchAll($sql, $params);
+    }
+
+    public static function updateRoute($routeId, $name, $description, $isPrivate) {
+      $sql = "UPDATE tb_route
+              SET name = :name,
+                description = :description,
+                is_private = :isPrivate,
+                cost = 0,
+                distance = 0,
+                datetime_updated = NOW()
+              WHERE pk_route_id = :routeId";
+      $params = array(
+          ':routeId'      => $routeId,
+          ':name'        => $name,
+          ':description' => $description,
+          ':isPrivate'   => $isPrivate
+      );
+      parent::execute($sql, $params);
+    }
+
+    public static function getHighestPointId($routeId) {
+        $sql = "SELECT
+                  max(pk_point_id) AS id
+                FROM tb_point
+                WHERE fk_route_id = :routeId";
+        $params = array(
+          ':routeId' => $routeId
+        );
+        return parent::fetchOne($sql, $params)->id;
+    }
+
+    public static function removeOldPoints($highestIdForRoute, $routeId) {
+      $sql = "DELETE FROM tb_point
+              WHERE pk_point_id <= :highestId
+              AND fk_route_id = :routeId";
+      $params = array (
+        ':highestId' => $highestIdForRoute,
+        ':routeId' => $routeId
+      );
+      parent::execute($sql, $params);
     }
 
 }

@@ -1,3 +1,6 @@
+<input type="hidden" value="<?= ($this->routeExists) ? $this->routeId : '' ?>" id="routeId">
+
+
 <div id="map"></div>
 <div id="left-hand-display">
     <div class="title">
@@ -18,12 +21,15 @@
     <h3>Save your route</h3>
 
     <label>Route Name</label> <span id="noNameError" class="errorMessage hidden">- Route name cannot be blank</span>
-    <input type="text" class="form-control" placeholder="Craig's River Adventure" id="routeName">
+    <input type="text" class="form-control" placeholder="Craig's River Adventure" id="routeName"
+        value='<?=$this->routeExists ? $this->route->name : ''?>'>
 
     <div class="textContainer">
         <label>Route Description (optional)</label>
         <textarea placeholder="This route has lots of rivers and is really beautiful around dusk"
-                  class="form-control" rows="3" id="routeDesc"></textarea>
+                  class="form-control" rows="3" id="routeDesc"><?=
+                  $this->routeExists ? $this->route->description : ''
+                  ?></textarea>
     </div>
 
     <div class="checkContainer">
