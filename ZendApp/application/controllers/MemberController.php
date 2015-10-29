@@ -175,6 +175,10 @@ class MemberController extends BaseController {
             ->setCredential($password);
         $auth = Zend_Auth::getInstance();
 
+        // User logs in for 2 hours before being disconnected
+        $namespace = new Zend_Session_Namespace('Zend_Auth');
+        $namespace->setExpirationSeconds(7200);
+
         // If there is a corresponding row in the database, get the user details
         $result = $auth->authenticate($authAdapter);
         if ($result->isValid()) {

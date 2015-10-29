@@ -1,17 +1,15 @@
-var navText = '';
-$(document).ready(function() {
-    navText = $('.navbar-right').find('.dropdown-toggle').html();
-});
+var navBar = $('.navbar-right').find('.dropdown-toggle');
+var navName = $('#nav-username').val();
+var caret = '<span class="caret"></span>';
 
-$(window).resize(function() {
-    var navBar = $('.navbar-right').find('.dropdown-toggle');
+$(window).resize(function () {
     if (window.innerWidth < 1066) {
-        if (navBar.html() != 'Logged in <span class="caret"></span>') {
-            navBar.html('Logged in <span class="caret"></span>');
+        if ($(navBar).html() != navName + caret) {
+            $(navBar).html(navName + caret);
         }
     } else {
-        if (navBar.html() != navText) {
-            navBar.html(navText);
+        if ($(navBar).html() != 'Logged in as ' + navName + caret) {
+            $(navBar).html('Logged in as ' + navName + caret)
         }
     }
 });

@@ -1,6 +1,11 @@
 var map;
 
 $(document).ready(function () {
+    if (window.innerWidth < 768) {
+        $('#left-hand-display').addClass('hidden');
+        $('#left-hand-display-mini').removeClass('hidden');
+    }
+
     var mm = new MapManager(52.95338, -1.18689, 13, $('#routeId').val());
 
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
@@ -18,15 +23,20 @@ $(document).ready(function () {
     });
 
     $('#submitRoute').click(function () {
-      submitRoute(mm);
+        submitRoute(mm);
+    });
+
+    $('.uploadButton').click(function(){
+        alert("UPLOAD FUNCTIONALITY NOT YET AVAILABLE")
     });
 });
 
 var MapManager = Class.extend({
-    init:           function (lat, long, zoom, routeId) {
+    init:               function (lat, long, zoom, routeId) {
         $('#map').css('height', window.innerHeight - 62);
 
-        map = L.map('map').setView([lat, long], zoom);
+        map = L.map('map', {zoomControl: false}).setView([lat, long], zoom);
+        new L.Control.Zoom({ position: 'topright' }).addTo(map);
         this.pointListManager = new PointListManager();
 
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -53,7 +63,7 @@ var MapManager = Class.extend({
 
         this.setupListeners();
     },
-    setupListeners: function () {
+    setupListeners:     function () {
         var _self = this;
         map.on('click', function (e) {
             // Only add a new point if popup is NOT showing
@@ -64,8 +74,8 @@ var MapManager = Class.extend({
             }
         });
     },
-    loadExistingPoints: function(routeId) {
-      var _self = this;
+    loadExistingPoints: function (routeId) {
+        var _self = this;
         $.ajax({
             type: 'GET',
             url:  '/route/getpoints',
@@ -73,28 +83,28 @@ var MapManager = Class.extend({
                 id: routeId
             }
         }).success(function (response) {
-           var data = JSON.parse(response);
-           for (var i = 0; i < data.length; i++) {
-             var p = data[i];
-             // Construct fake 'e' object with latlng information
-             var e = {
-               latlng : {
-                 lng: p.longitude,
-                 lat: p.latitude
-               }
-             };
+            var data = JSON.parse(response);
+            for (var i = 0; i < data.length; i++) {
+                var p = data[i];
+                // Construct fake 'e' object with latlng information
+                var e = {
+                    latlng: {
+                        lng: p.longitude,
+                        lat: p.latitude
+                    }
+                };
 
-             // Construct object with popup data
-             var popupData = {
-               name: p.name,
-               description: p.description
-             };
+                // Construct object with popup data
+                var popupData = {
+                    name:        p.name,
+                    description: p.description
+                };
 
-             _self.addPointToMap(e, popupData);
-           }
-       });
+                _self.addPointToMap(e, popupData);
+            }
+        });
     },
-    addPointToMap:  function (e, popupData) {
+    addPointToMap:      function (e, popupData) {
         var _self = this;
 
         _self.numPoints++;
@@ -105,9 +115,19 @@ var MapManager = Class.extend({
                 var tempMarker = this;
 
                 $(".marker-delete-button").click(function () {
-                    _self.isPopupOpen = false;
-                    map.removeLayer(tempMarker);
-                    _self.pointListManager.removePoint(tempMarker._leaflet_id);
+                    $.confirm({
+                        title: 'Delete point?',
+                        icon: 'fa fa-warning',
+                        content: 'Are you sure you wish to delete this point? This action is irreversible.',
+                        theme: 'black',
+                        confirmButton: 'Delete',
+                        keyboardEnabled: true,
+                        confirm: function(){
+                            _self.isPopupOpen = false;
+                            map.removeLayer(tempMarker);
+                            _self.pointListManager.removePoint(tempMarker._leaflet_id);
+                        }
+                    });
                 });
 
                 $(".marker-update-button").click(function () {
@@ -120,24 +140,24 @@ var MapManager = Class.extend({
 
         this.pointListManager.addPoint(marker, e);
     },
-    getPopupHTML:   function (e, data) {
+    getPopupHTML:       function (e, data) {
         var container = $('<div>').addClass('pointContainer');
         container.append($('<div>').addClass('coords right')
             .text(e.latlng.lat.toString().slice(0, 7) + ", " + e.latlng.lng.toString().slice(0, 7)));
         container.append(
-          $('<input>').addClass('form-control point_title')
-          .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
+            $('<input>').addClass('form-control point_title')
+                .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
         );
         container.append(
-          $('<textarea>').addClass('form-control')
-          .attr('placeholder', 'Enter a description')
-          .text((data === undefined) ? ('') : data.description)
+            $('<textarea>').addClass('form-control')
+                .attr('placeholder', 'Enter a description')
+                .text((data === undefined) ? ('') : data.description)
         );
         container.append(
-          $('<div>').addClass('hidden latHidden').text(e.latlng.lat.toString())
+            $('<div>').addClass('hidden latHidden').text(e.latlng.lat.toString())
         );
         container.append(
-          $('<div>').addClass('hidden lngHidden').text(e.latlng.lng.toString())
+            $('<div>').addClass('hidden lngHidden').text(e.latlng.lng.toString())
         );
 
         var buttons = $('<div>').addClass('buttons');
@@ -154,14 +174,29 @@ var PointListManager = Class.extend({
         this.container = $('#left-hand-display');
         this.pointsList = this.container.find('.pointsList');
         this.noPointsYet = this.container.find('.noPointsYet');
+        this.pointsYet = this.container.find('.pointsYet');
 
         $('.pointsList').sortable({
             handle: ".left-side"
         });
+
+        this.setupListeners();
+    },
+    setupListeners: function() {
+        $('#hide_lhd').click(function(){
+            $('#left-hand-display').addClass('hidden');
+            $('#left-hand-display-mini').removeClass('hidden');
+        });
+
+        $('#show_lhd').click(function(){
+            $('#left-hand-display').removeClass('hidden');
+            $('#left-hand-display-mini').addClass('hidden');
+        });
     },
     addPoint:      function (marker, e) {
         if (this.pointsList.children().length == 0) {
-            this.noPointsYet.hide();
+            this.noPointsYet.addClass('hidden');
+            this.pointsYet.removeClass('hidden');
         }
 
         var _self = this;
@@ -187,8 +222,18 @@ var PointListManager = Class.extend({
         var deleteButton = $('<button>').addClass('marker-delete-button-lhd btn btn-danger')
             .html("<i class='fa fa-trash'></i>");
         deleteButton.click(function () {
-            map.removeLayer(marker);
-            _self.removePoint(marker._leaflet_id);
+            $.confirm({
+                title: 'Delete point?',
+                icon: 'fa fa-warning',
+                content: 'Are you sure you wish to delete this point? This action is irreversible.',
+                theme: 'black',
+                confirmButton: 'Delete',
+                keyboardEnabled: true,
+                confirm: function(){
+                    map.removeLayer(marker);
+                    _self.removePoint(marker._leaflet_id);
+                }
+            });
         });
         right.append(editButton, deleteButton);
 
@@ -209,7 +254,8 @@ var PointListManager = Class.extend({
         }
 
         if (this.pointsList.children().length == 0) {
-            this.noPointsYet.show();
+            this.noPointsYet.removeClass('hidden');
+            this.pointsYet.addClass('hidden');
         }
     },
     findPointById: function (markerId) {
@@ -224,34 +270,34 @@ var PointListManager = Class.extend({
     }
 });
 
-function submitRoute (mm) {
-  if ($('#routeName').val() == "") {
-      $('#noNameError').removeClass('hidden');
-      $('#routeName').addClass('error');
-      return;
-  } else {
-      $('#noNameError').addClass('hidden');
-      $('#routeName').removeClass('error');
-  }
+function submitRoute(mm) {
+    if ($('#routeName').val() == "") {
+        $('#noNameError').removeClass('hidden');
+        $('#routeName').addClass('error');
+        return;
+    } else {
+        $('#noNameError').addClass('hidden');
+        $('#routeName').removeClass('error');
+    }
 
-  $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
+    $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
 
-  // Get all points
-  var pointsList = mm.pointListManager.pointsList.children();
-  var points = [];
-  for (var i = 0; i < pointsList.length; i++) {
-      var pointId = $(pointsList[i]).attr('data-point-id');
-      var pointPopup = $(map._layers[pointId]._popup._content);
+    // Get all points
+    var pointsList = mm.pointListManager.pointsList.children();
+    var points = [];
+    for (var i = 0; i < pointsList.length; i++) {
+        var pointId = $(pointsList[i]).attr('data-point-id');
+        var pointPopup = $(map._layers[pointId]._popup._content);
 
-      var point = {};
-      point.name = pointPopup.find('.point_title').val();
-      point.description = pointPopup.find('textarea').val();
-      point.lat = pointPopup.find('.latHidden').text();
-      point.lng = pointPopup.find('.lngHidden').text();
-      points.push(point);
-  }
+        var point = {};
+        point.name = pointPopup.find('.point_title').val();
+        point.description = pointPopup.find('textarea').val();
+        point.lat = pointPopup.find('.latHidden').text();
+        point.lng = pointPopup.find('.lngHidden').text();
+        points.push(point);
+    }
 
-  var url = ($('#routeId').val() == "") ? '/route/new' : '/route/update';
+    var url = ($('#routeId').val() == "") ? '/route/new' : '/route/update';
     $.ajax({
         type: 'POST',
         url:  url,

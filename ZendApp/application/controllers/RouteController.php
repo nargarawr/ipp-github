@@ -54,39 +54,39 @@ class RouteController extends BaseController {
     }
 
     public function updateAction() {
-      $this->_helper->layout()->disableLayout();
-      $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
 
-      $name = $this->getRequest()->getParam('name', null);
-      $desc = $this->getRequest()->getParam('description', null);
-      $isPrivate = $this->getRequest()->getParam('privacy', 0);
-      $points = $this->getRequest()->getParam('points', null);
-      $routeId = $this->getRequest()->getParam('routeId', null);
+        $name = $this->getRequest()->getParam('name', null);
+        $desc = $this->getRequest()->getParam('description', null);
+        $isPrivate = $this->getRequest()->getParam('privacy', 0);
+        $points = $this->getRequest()->getParam('points', null);
+        $routeId = $this->getRequest()->getParam('routeId', null);
 
-      RouteFactory::updateRoute($routeId, $name, $desc, $isPrivate);
+        RouteFactory::updateRoute($routeId, $name, $desc, $isPrivate);
 
-      $highestIdForRoute = (int) RouteFactory::getHighestPointId($routeId);
-      foreach ($points as $point) {
-          RouteFactory::createRoutePoint((object)$point, $routeId);
-      }
-      RouteFactory::removeOldPoints($highestIdForRoute, $routeId);
+        $highestIdForRoute = (int)RouteFactory::getHighestPointId($routeId);
+        foreach ($points as $point) {
+            RouteFactory::createRoutePoint((object)$point, $routeId);
+        }
+        RouteFactory::removeOldPoints($highestIdForRoute, $routeId);
 
-      echo Zend_Json::encode((int)$routeId);
-      exit;
+        echo Zend_Json::encode((int)$routeId);
+        exit;
     }
 
     public function getpointsAction() {
-      $this->_helper->layout()->disableLayout();
-      $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
 
-      $id = $this->getRequest()->getParam('id', null);
-      $result = null;
-      if (!is_null($id)) {
-        $result = RouteFactory::getRoutePoints($id);
-      }
+        $id = $this->getRequest()->getParam('id', null);
+        $result = null;
+        if (!is_null($id)) {
+            $result = RouteFactory::getRoutePoints($id);
+        }
 
-      echo Zend_Json::encode($result);
-      exit;
+        echo Zend_Json::encode($result);
+        exit;
     }
 
 }

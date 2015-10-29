@@ -13,6 +13,7 @@
     <? /* Create an array of css files and import them if they exist */
     $cssFiles = array(
         '/libs/JQuery/jquery-ui.css',
+        '/libs/JQuery/jquery-confirm.css',
         '/libs/Bootstrap/bootstrap.min.css',
         '/libs/magnific/magnific-popup.css',
         '/libs/font-awesome-4.3.0/css/font-awesome.min.css',
@@ -34,6 +35,7 @@
 <body>
 
 <? // Display the navigation bar ?>
+<input type="hidden" id="nav-username" value="<?= ((is_null($this->user->fname) || $this->user->fname === '') ? $this->user->username : $this->user->fname) ?>">
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -88,7 +90,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Logged in as
                             <?= ((is_null($this->user->fname) || $this->user->fname === '')
-                              ? $this->user->username : $this->user->fname) ?>
+                                ? $this->user->username : $this->user->fname) ?>
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
@@ -121,6 +123,7 @@ $jsFiles = array(
     '/libs/JQuery/jquery.js',
     '/libs/JQuery/jquery-extended.js',
     '/libs/JQuery/jquery-ui.js',
+    '/libs/JQuery/jquery-confirm.js',
     '/libs/Bootstrap/bootstrap.min.js',
     '/libs/magnific/magnific.js',
     '/libs/mapbox/mapbox.js',

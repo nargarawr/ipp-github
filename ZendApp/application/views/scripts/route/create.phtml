@@ -1,20 +1,39 @@
 <input type="hidden" value="<?= ($this->routeExists) ? $this->routeId : '' ?>" id="routeId">
 
-
 <div id="map"></div>
 <div id="left-hand-display">
+    <i class="fa fa-compress" id="hide_lhd"></i>
     <div class="title">
         <h3>Your Points</h3>
+        <? if ($this->routeExists) { ?>
+            <div class="subtitle"><?= $this->route->name ?></div>
+        <? } else { ?>
+            <div class="subtitle-buffer"></div>
+        <? } ?>
     </div>
     <div class="navbar-stripe"></div>
     <div class="noPointsYet">
         You haven't added any points yet, click the map to get started!
     </div>
-    <div class="pointsList">
-    </div>
-    <div href="#saveroute-popup" class="popup-trigger submit">
+    <div class="uploadButton noPointsYet">Or upload from a file</div>
+
+    <div class="pointsList"></div>
+    <div href="#saveroute-popup" class="popup-trigger submit pointsYet hidden">
         Save Route
     </div>
+</div>
+
+<div id="left-hand-display-mini" class="hidden">
+    <i class="fa fa-expand" id="show_lhd"></i>
+    <div class="title">
+        <h3>Your Points</h3>
+        <? if ($this->routeExists) { ?>
+            <div class="subtitle"><?= $this->route->name ?></div>
+        <? } else { ?>
+            <div class="subtitle-buffer"></div>
+        <? } ?>
+    </div>
+    <div class="navbar-stripe"></div>
 </div>
 
 <div id="saveroute-popup" class="white-popup-block zoom-anim-dialog mfp-hide">
@@ -22,21 +41,25 @@
 
     <label>Route Name</label> <span id="noNameError" class="errorMessage hidden">- Route name cannot be blank</span>
     <input type="text" class="form-control" placeholder="Craig's River Adventure" id="routeName"
-        value='<?=$this->routeExists ? $this->route->name : ''?>'>
+           value='<?= $this->routeExists ? $this->route->name : '' ?>'>
 
     <div class="textContainer">
         <label>Route Description (optional)</label>
         <textarea placeholder="This route has lots of rivers and is really beautiful around dusk"
                   class="form-control" rows="3" id="routeDesc"><?=
-                  $this->routeExists ? $this->route->description : ''
-                  ?></textarea>
+            $this->routeExists ? $this->route->description : ''
+            ?></textarea>
     </div>
 
     <div class="checkContainer">
-        <label>Select privacy setting:</label>
+        <label for="routePrivacy">Select privacy setting:</label>
         <select class="form-control" id="routePrivacy">
-            <option value="0">Public (visible to everyone)</option>
-            <option value="1">Private (only visible to you)</option>
+            <option value="0" <?= ($this->routeExists && $this->route->is_private) ? '' : 'selected' ?>>
+                Public (visible to everyone)
+            </option>
+            <option value="1" <?= ($this->routeExists && $this->route->is_private) ? 'selected' : '' ?>>
+                Private (only visible to you)
+            </option>
         </select>
     </div>
     <div class="btnContainer">
