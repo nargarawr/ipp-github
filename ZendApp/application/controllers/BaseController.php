@@ -9,9 +9,6 @@ class BaseController extends Zend_Controller_Action {
     }
 
     public function preDispatch() {
-        $isAjax = $this->getRequest()->isXmlHttpRequest();
-
-
         $controller = str_replace($this->_delimiters, '-', $this->getRequest()->getControllerName());
         $action = $this->getRequest()->getActionName();
 
@@ -26,7 +23,6 @@ class BaseController extends Zend_Controller_Action {
                 'fromRedirect' => 1
             ));
         }
-
 
         $this->view->shouldDisplayNav = ($controller != 'member');
         $this->view->navBar = $this->getNavBar($controller, $action);
