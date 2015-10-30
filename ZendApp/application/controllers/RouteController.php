@@ -24,6 +24,7 @@ class RouteController extends BaseController {
 
         if (!is_null($this->view->routeId)) {
             $this->view->route = RouteFactory::getRoute($this->view->routeId, $this->user->userId);
+            $this->view->latlng = RouteFactory::getFirstRoutePoint($this->view->routeId);
             $this->view->routeExists = ($this->view->route !== false);
         }
     }

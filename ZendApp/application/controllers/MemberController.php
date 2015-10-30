@@ -109,12 +109,17 @@ class MemberController extends BaseController {
             ->setLabel('Password:')
             ->setRequired(true);
 
+        $submit = new Zend_Form_Element_Submit('signup');
+        $submit->setLabel('Signup')
+            ->setAttrib('class', 'hidden');
+
         $signupForm = new Zend_Form();
         $signupForm->setAction('/member/signup')
             ->setMethod('post')
             ->addElement($username)
             ->addElement($email)
-            ->addElement($password);
+            ->addElement($password)
+            ->addElement($submit);
 
         return $signupForm;
     }
@@ -130,6 +135,10 @@ class MemberController extends BaseController {
             ->setAttrib('class', 'form-control')
             ->setRequired(true);
 
+        $submit = new Zend_Form_Element_Submit('login');
+        $submit->setLabel('Login')
+            ->setAttrib('class', 'hidden');
+
         if (!is_null($this->_request->getParam("redirect"))) {
             $redirect = '/member/login/redirect/' . $this->_request->getParam("redirect");
         } else {
@@ -140,7 +149,8 @@ class MemberController extends BaseController {
         $loginForm->setAction($this->_request->getBaseUrl() . $redirect)
             ->setMethod('post')
             ->addElement($username)
-            ->addElement($password);
+            ->addElement($password)
+            ->addElement($submit);
 
         return $loginForm;
     }
@@ -152,9 +162,9 @@ class MemberController extends BaseController {
             ->setCredential($password);
         $auth = Zend_Auth::getInstance();
 
-        // User logs in for 2 hours before being disconnected
+        // User logs in for 12 hours before being disconnected
         $namespace = new Zend_Session_Namespace('Zend_Auth');
-        $namespace->setExpirationSeconds(7200);
+        $namespace->setExpirationSeconds(12 * 60 * 60);
 
         // If there is a corresponding row in the database, get the user details
         $result = $auth->authenticate($authAdapter);

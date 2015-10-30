@@ -9,7 +9,9 @@ class BaseController extends Zend_Controller_Action {
     }
 
     public function preDispatch() {
-        $_redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+        $isAjax = $this->getRequest()->isXmlHttpRequest();
+
+
         $controller = str_replace($this->_delimiters, '-', $this->getRequest()->getControllerName());
         $action = $this->getRequest()->getActionName();
 
@@ -18,12 +20,13 @@ class BaseController extends Zend_Controller_Action {
             // Create the user object
             $this->view->user = $this->user = new User(Zend_Auth::getInstance()->getIdentity());
         } else if ($this->view->isExternal == false) {
-            // If the user is not logged in, redirect to the login page
+            // If the user session is no longer valid and they are navigating to a page
             $this->_helper->redirector('login', 'member', null, array(
                 'redirect'     => $controller . "-" . $action,
                 'fromRedirect' => 1
             ));
         }
+
 
         $this->view->shouldDisplayNav = ($controller != 'member');
         $this->view->navBar = $this->getNavBar($controller, $action);

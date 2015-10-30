@@ -6,7 +6,33 @@ $(document).ready(function () {
         $('#left-hand-display-mini').removeClass('hidden');
     }
 
-    var mm = new MapManager(52.95338, -1.18689, 13, $('#routeId').val());
+    // If user has location set, centre the map there
+    var mm;
+    var location = $('#userLocation').val();
+    $.ajax({
+        type: 'GET',
+        url:  "https://maps.googleapis.com/maps/api/geocode/json",
+        data: {
+            address: location,
+            key:     "AIzaSyCwkWD2VSfdZWqbc8GUSOe76SZju3bx460"
+        }
+    }).success(function (response) {
+        var routeId = $('#routeId').val();
+
+        if (routeId != "") {
+            // Center on route if we're editing a route
+            var lat = $('#center_map_lat').val();
+            var lng = $('#center_map_lng').val();
+            mm = new MapManager(lat, lng, 13, routeId);
+        } else if (response.status == "ZERO_RESULTS") {
+            // Center on Nottingham if user location not set
+            mm = new MapManager(52.95338, -1.18689, 13, routeId);
+        } else {
+            // Center on user location if set
+            var latlng = response.results[0].geometry.location;
+            mm = new MapManager(latlng.lat, latlng.lng, 13, routeId);
+        }
+    });
 
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
 
@@ -26,7 +52,7 @@ $(document).ready(function () {
         submitRoute(mm);
     });
 
-    $('.uploadButton').click(function(){
+    $('.uploadButton').click(function () {
         alert("UPLOAD FUNCTIONALITY NOT YET AVAILABLE")
     });
 });
@@ -36,7 +62,7 @@ var MapManager = Class.extend({
         $('#map').css('height', window.innerHeight - 62);
 
         map = L.map('map', {zoomControl: false}).setView([lat, long], zoom);
-        new L.Control.Zoom({ position: 'topright' }).addTo(map);
+        new L.Control.Zoom({position: 'topright'}).addTo(map);
         this.pointListManager = new PointListManager();
 
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -116,13 +142,13 @@ var MapManager = Class.extend({
 
                 $(".marker-delete-button").click(function () {
                     $.confirm({
-                        title: 'Delete point?',
-                        icon: 'fa fa-warning',
-                        content: 'Are you sure you wish to delete this point? This action is irreversible.',
-                        theme: 'black',
-                        confirmButton: 'Delete',
+                        title:           'Delete point?',
+                        icon:            'fa fa-warning',
+                        content:         'Are you sure you wish to delete this point? This action is irreversible.',
+                        theme:           'black',
+                        confirmButton:   'Delete',
                         keyboardEnabled: true,
-                        confirm: function(){
+                        confirm:         function () {
                             _self.isPopupOpen = false;
                             map.removeLayer(tempMarker);
                             _self.pointListManager.removePoint(tempMarker._leaflet_id);
@@ -170,7 +196,7 @@ var MapManager = Class.extend({
 });
 
 var PointListManager = Class.extend({
-    init:          function () {
+    init:           function () {
         this.container = $('#left-hand-display');
         this.pointsList = this.container.find('.pointsList');
         this.noPointsYet = this.container.find('.noPointsYet');
@@ -182,18 +208,18 @@ var PointListManager = Class.extend({
 
         this.setupListeners();
     },
-    setupListeners: function() {
-        $('#hide_lhd').click(function(){
+    setupListeners: function () {
+        $('#hide_lhd').click(function () {
             $('#left-hand-display').addClass('hidden');
             $('#left-hand-display-mini').removeClass('hidden');
         });
 
-        $('#show_lhd').click(function(){
+        $('#show_lhd').click(function () {
             $('#left-hand-display').removeClass('hidden');
             $('#left-hand-display-mini').addClass('hidden');
         });
     },
-    addPoint:      function (marker, e) {
+    addPoint:       function (marker, e) {
         if (this.pointsList.children().length == 0) {
             this.noPointsYet.addClass('hidden');
             this.pointsYet.removeClass('hidden');
@@ -223,13 +249,13 @@ var PointListManager = Class.extend({
             .html("<i class='fa fa-trash'></i>");
         deleteButton.click(function () {
             $.confirm({
-                title: 'Delete point?',
-                icon: 'fa fa-warning',
-                content: 'Are you sure you wish to delete this point? This action is irreversible.',
-                theme: 'black',
-                confirmButton: 'Delete',
+                title:           'Delete point?',
+                icon:            'fa fa-warning',
+                content:         'Are you sure you wish to delete this point? This action is irreversible.',
+                theme:           'black',
+                confirmButton:   'Delete',
                 keyboardEnabled: true,
-                confirm: function(){
+                confirm:         function () {
                     map.removeLayer(marker);
                     _self.removePoint(marker._leaflet_id);
                 }
@@ -243,11 +269,11 @@ var PointListManager = Class.extend({
 
 
     },
-    updatePoint:   function (markerId, newName) {
+    updatePoint:    function (markerId, newName) {
         var obj = this.findPointById(markerId);
         obj.find('.title').text(newName);
     },
-    removePoint:   function (markerId) {
+    removePoint:    function (markerId) {
         var obj = this.findPointById(markerId);
         if (obj != null) {
             obj.remove();
@@ -258,7 +284,7 @@ var PointListManager = Class.extend({
             this.pointsYet.addClass('hidden');
         }
     },
-    findPointById: function (markerId) {
+    findPointById:  function (markerId) {
         var objToReturn = null;
         this.pointsList.children().each(function (i, obj) {
             if ($(obj).attr('data-point-id') == markerId) {
@@ -271,7 +297,8 @@ var PointListManager = Class.extend({
 });
 
 function submitRoute(mm) {
-    if ($('#routeName').val() == "") {
+    var routeName = $('#routeName').val();
+    if (routeName == "") {
         $('#noNameError').removeClass('hidden');
         $('#routeName').addClass('error');
         return;
@@ -297,17 +324,19 @@ function submitRoute(mm) {
         points.push(point);
     }
 
-    var url = ($('#routeId').val() == "") ? '/route/new' : '/route/update';
+    var url = (routeName == "") ? '/route/new' : '/route/update';
     $.ajax({
         type: 'POST',
         url:  url,
         data: {
-            name:        $('#routeName').val(),
+            name:        routeName,
             description: $('#routeDesc').val(),
             privacy:     $('#routePrivacy').val(),
             points:      points,
             routeId:     $('#routeId').val()
         }
+    }).error(function () {
+        window.location.href = '/user/routes';
     }).success(function (response) {
         window.location.href = '/route/create/id/' + response;
     });
