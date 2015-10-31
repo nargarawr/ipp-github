@@ -1,13 +1,14 @@
 var map;
-
+var mm;
 $(document).ready(function () {
     if (window.innerWidth < 768) {
         $('#left-hand-display').addClass('hidden');
         $('#left-hand-display-mini').removeClass('hidden');
     }
 
+
+
     // If user has location set, centre the map there
-    var mm;
     var location = $('#userLocation').val();
     $.ajax({
         type: 'GET',
@@ -92,11 +93,21 @@ var MapManager = Class.extend({
     setupListeners:     function () {
         var _self = this;
         map.on('click', function (e) {
-            // Only add a new point if popup is NOT showing
-            if (_self.isPopupOpen) {
-                _self.isPopupOpen = false;
+            // We can only use 12 points on the mapbox free API
+            if (_self.pointListManager.pointsList.children().length < 12) {
+                // Only add a new point if popup is NOT showing
+                if (_self.isPopupOpen) {
+                    _self.isPopupOpen = false;
+                } else {
+                    _self.addPointToMap(e);
+                }
             } else {
-                _self.addPointToMap(e);
+                $.alert({
+                    title: 'Point Limit Reached',
+                    icon: 'fa fa-warning',
+                    content: 'Unfortunately, Niceway.to currently only supports a maximum of 12 points per route',
+                    theme: 'black'
+                });
             }
         });
     },
@@ -198,12 +209,7 @@ var MapManager = Class.extend({
 var PointListManager = Class.extend({
     init:           function () {
         this.container = $('#left-hand-display');
-        this.pointsList = this.container.find('.pointsList');
-        this.noPointsYet = this.container.find('.noPointsYet');
-        this.pointsYet = this.container.find('.pointsYet');
-
-        $('.pointsList').sortable({
-            handle: ".left-side"
+  ide"
         });
 
         this.setupListeners();
@@ -333,6 +339,15 @@ function submitRoute(mm) {
             description: $('#routeDesc').val(),
             privacy:     $('#routePrivacy').val(),
             points:      points,
+            routeId:     $('#routeId').val()
+        }
+    }).error(function () {
+        window.location.href = '/user/routes';
+    }).success(function (response) {
+        window.location.href = '/route/create/id/' + response;
+    });
+}
+ints,
             routeId:     $('#routeId').val()
         }
     }).error(function () {
