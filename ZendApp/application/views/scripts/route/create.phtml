@@ -18,7 +18,12 @@
     <div class="noPointsYet">
         You haven't added any points yet, click the map to get started!
     </div>
-    <div class="uploadButton noPointsYet">Or upload from a file</div>
+    <div class="fileUpload uploadButton noPointsYet">
+        <form id="uploadForm" action="/route/upload" method="POST" enctype="multipart/form-data">
+            <span>Or upload from a file</span>
+            <input type="file" name="file" class="upload" id="fileUploader"/>
+        </form>
+    </div>
 
     <div class="pointsList"></div>
     <div href="#saveroute-popup" class="popup-trigger submit pointsYet hidden">

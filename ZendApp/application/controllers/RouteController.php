@@ -90,4 +90,13 @@ class RouteController extends BaseController {
         exit;
     }
 
+    public function uploadAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $fileContent = file_get_contents($_FILES["file"]["tmp_name"]);
+        echo str_replace("\n", "", $fileContent);
+        exit;
+    }
+
 }

@@ -99,7 +99,6 @@
     overflow: auto;
 }
 
-
 #left-hand-display .pointsList .point .left-side {
     width: 25px;
     float: left;
@@ -173,7 +172,7 @@ textarea {
 }
 
 #saveroute-popup {
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
 }
 
@@ -223,4 +222,23 @@ textarea {
 
 .leaflet-top, .leaflet-bottom {
     z-index: 5;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }
