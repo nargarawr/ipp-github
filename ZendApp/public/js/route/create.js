@@ -7,7 +7,6 @@ $(document).ready(function () {
     }
 
 
-
     // If user has location set, centre the map there
     var location = $('#userLocation').val();
     $.ajax({
@@ -103,10 +102,10 @@ var MapManager = Class.extend({
                 }
             } else {
                 $.alert({
-                    title: 'Point Limit Reached',
-                    icon: 'fa fa-warning',
+                    title:   'Point Limit Reached',
+                    icon:    'fa fa-warning',
                     content: 'Unfortunately, Niceway.to currently only supports a maximum of 12 points per route',
-                    theme: 'black'
+                    theme:   'black'
                 });
             }
         });
@@ -209,7 +208,12 @@ var MapManager = Class.extend({
 var PointListManager = Class.extend({
     init:           function () {
         this.container = $('#left-hand-display');
-  ide"
+        this.pointsList = this.container.find('.pointsList');
+        this.noPointsYet = this.container.find('.noPointsYet');
+        this.pointsYet = this.container.find('.pointsYet');
+
+        $('.pointsList').sortable({
+            handle: ".left-side"
         });
 
         this.setupListeners();
@@ -339,15 +343,6 @@ function submitRoute(mm) {
             description: $('#routeDesc').val(),
             privacy:     $('#routePrivacy').val(),
             points:      points,
-            routeId:     $('#routeId').val()
-        }
-    }).error(function () {
-        window.location.href = '/user/routes';
-    }).success(function (response) {
-        window.location.href = '/route/create/id/' + response;
-    });
-}
-ints,
             routeId:     $('#routeId').val()
         }
     }).error(function () {
