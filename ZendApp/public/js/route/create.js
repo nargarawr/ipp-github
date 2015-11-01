@@ -221,14 +221,17 @@ var MapManager = Class.extend({
             return;
         }
 
+        console.log("this is where the routing would take place.. :(")
+
+        /*
         if (this.routingControl !== undefined) {
             this.routingControl.removeFrom(map);
         }
 
         var arrayOfPoints = [];
         for (var i = 0; i < points.length; i++) {
-            var marker = map._layers[$(points[i]).attr('data-point-id')]
-            arrayOfPoints.push(L.latLng(marker._latlng.lat, marker._latlng.lng))
+            var marker = map._layers[$(points[i]).attr('data-point-id')];
+            arrayOfPoints.push(L.latLng(marker._latlng.lat, marker._latlng.lng));
         }
 
         this.routingControl = L.Routing.control({
@@ -237,6 +240,7 @@ var MapManager = Class.extend({
 
         $('.leaflet-routing-container').addClass('hidden');
         $('.leaflet-marker-icon').removeClass('leaflet-marker-draggable');
+        */
     },
     getPopupHTML:       function (e, data) {
         var container = $('<div>').addClass('pointContainer');
@@ -266,8 +270,6 @@ var MapManager = Class.extend({
         return container[0];
     }
 });
-
-var test = {};
 
 var PointListManager = Class.extend({
     init:           function (mapManager) {
@@ -405,7 +407,7 @@ function submitRoute(mm) {
         points.push(point);
     }
 
-    var url = (routeName == "") ? '/route/new' : '/route/update';
+    var url = ($('#routeId').val() == "") ? '/route/new' : '/route/update';
     $.ajax({
         type: 'POST',
         url:  url,
