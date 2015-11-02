@@ -63,13 +63,15 @@
                         } ?>
                         <? if ($navElement->type == 'link') { ?>
                             <li class="<?= $navElement->isActive ? 'active' : '' ?>">
-                                <a href="<?= $navElement->link ?>"><?= $navElement->name ?></a>
+                                <a href="<?= $navElement->link ?>">
+                                    <?= $navElement->icon ?> <?= $navElement->name ?>
+                                </a>
                             </li>
                         <? } else if ($navElement->type == 'dropdown') { ?>
                             <li class="dropdown<?= $navElement->isActive ? ' active' : '' ?>">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                                    role="button" aria-haspopup="true" aria-expanded="false">
-                                    <?= $navElement->name ?>
+                                    <?= $navElement->icon ?> <?= $navElement->name ?>
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">

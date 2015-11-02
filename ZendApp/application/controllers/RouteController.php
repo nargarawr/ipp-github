@@ -33,7 +33,6 @@ class RouteController extends BaseController {
     }
 
     public function detailAction() {
-        //$routeId = $this->getRequest()->getParam('id', null);
     }
 
     public function newAction() {

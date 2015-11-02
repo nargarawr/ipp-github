@@ -8,6 +8,7 @@ class User {
     public $lname;
     public $email;
     public $location;
+    public $bio;
     public $loginCount;
     public $lastLogin;
     public $isAdmin;
@@ -31,6 +32,7 @@ class User {
         $this->lname = $userIdentity->lname;
         $this->email = $userIdentity->email;
         $this->location = $userIdentity->location;
+        $this->bio = $userIdentity->bio;
         $this->loginCount = $userIdentity->login_count;
         $this->lastLogin = $userIdentity->last_login;
         $this->isAdmin = $userIdentity->is_admin;

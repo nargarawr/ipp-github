@@ -35,6 +35,7 @@ class BaseController extends Zend_Controller_Action {
                 'name'          => 'Search Routes',
                 'link'          => '/route/index',
                 'type'          => 'link',
+                'icon'          => '<i class="fa fa-search"></i>',
                 'shouldDisplay' => true,
                 'isActive'      => false
             ),
@@ -42,6 +43,7 @@ class BaseController extends Zend_Controller_Action {
                 'name'          => 'Create a Route',
                 'link'          => '/route/create',
                 'type'          => 'link',
+                'icon'          => '<i class="fa fa-plus"></i>',
                 'shouldDisplay' => true,
                 'isActive'      => false
             ),
@@ -49,25 +51,26 @@ class BaseController extends Zend_Controller_Action {
                 'name'          => 'My Profile',
                 'type'          => 'dropdown',
                 'link'          => '/user/routes',
+                'icon'          => '<i class="fa fa-user"></i>',
                 'shouldDisplay' => true,
                 'isActive'      => false,
                 'children'      => array(
                     (object)array(
                         'name'          => 'My Routes',
                         'link'          => '/user/routes',
-                        'icon'         => '<i class="fa fa-map-marker"></i>',
+                        'icon'          => '<i class="fa fa-map-marker"></i>',
                         'shouldDisplay' => true
                     ),
                     (object)array(
                         'name'          => 'My Details',
                         'link'          => '/user/details',
-                        'icon'         => '<i class="fa fa-user"></i>',
+                        'icon'          => '<i class="fa fa-info-circle"></i>',
                         'shouldDisplay' => true
                     ),
                     (object)array(
                         'name'          => 'Administration',
                         'link'          => '/user/admin',
-                        'icon'         => '<i class="fa fa-cog"></i>',
+                        'icon'          => '<i class="fa fa-cog"></i>',
                         'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin)
                     ),
                 )

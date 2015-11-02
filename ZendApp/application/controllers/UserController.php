@@ -27,7 +27,7 @@ class UserController extends BaseController {
 
     public function routesAction() {
         $routes = RouteFactory::getRoutesForUser($this->user->userId);
-        var_dump($routes);
+        $this->view->routes = $routes;
     }
 
     public function adminAction() {
@@ -43,6 +43,7 @@ class UserController extends BaseController {
             $lastName = $this->getRequest()->getParam('lname');
             $email = $this->getRequest()->getParam('email');
             $location = $this->getRequest()->getParam('location');
+            $bio = $this->getRequest()->getParam('bio');
 
             $emailAllowed = UserFactory::checkEmailAllowed($this->user->userId, $email);
             if ($emailAllowed) {
@@ -51,7 +52,8 @@ class UserController extends BaseController {
                     $firstName,
                     $lastName,
                     $email,
-                    $location
+                    $location,
+                    $bio
                 );
 
                 // Update the user object to reflect these changes
@@ -59,6 +61,7 @@ class UserController extends BaseController {
                 Zend_Auth::getInstance()->getIdentity()->lname = $lastName;
                 Zend_Auth::getInstance()->getIdentity()->email = $email;
                 Zend_Auth::getInstance()->getIdentity()->location = $location;
+                Zend_Auth::getInstance()->getIdentity()->bio = $bio;
 
                 $this->_helper->redirector('details', 'user', null, array(
                     'success' => "details_updated",
@@ -108,6 +111,31 @@ class UserController extends BaseController {
                 'success' => 'password_updated',
             ));
         }
+    }
+
+    public function deleterouteAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('id', 0);
+        RouteFactory::deleteRoute($routeId, $this->user->userId);
+
+        $this->_helper->redirector('routes', 'user', null, array());
+    }
+
+    public function downloadrouteAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('id', 0);
+        $route = RouteFactory::getRoute($routeId, $this->user->userId);
+        $route->points = RouteFactory::getRoutePoints($routeId, true);
+
+        $fileName = $route->name . ".json";
+
+        header('Content-Type: application/json');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        echo Zend_Json::encode($route);
 
     }
 }

@@ -50,6 +50,12 @@
                                    placeholder="Your location" value="<?= $this->user->location ?>">
                         </div>
 
+                        <div class="col-md-12 margin_b_15">
+                            <label> Bio </label>
+                            <textarea class="form-control" placeholder="A little about yourself" name="bio"><?=
+                                $this->user->bio ?></textarea>
+                        </div>
+
                         <div class="col-md-12">
                             <input id="updateAccount" type="submit" class="btn btn-success right" value="Submit"/>
                         </div>
