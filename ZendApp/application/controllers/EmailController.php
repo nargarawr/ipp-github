@@ -12,7 +12,7 @@ class EmailController extends BaseController {
         $this->_helper->viewRenderer->setNoRender(true);
 
         $response = $this->sendEmail(
-            'cxk01u@gmail.com', 'abxow1@nottingham.ac.uk',
+            'abxow1@nottingham.ac.uk',
             'Confirm email address',
             'Test email from Niceway.to'
         );
