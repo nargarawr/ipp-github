@@ -55,7 +55,7 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
-    public static function getRoutesForUser($userId) {
+    public static function getRoutesForUser($userId, $withPoints = false) {
         $sql = "SELECT
                     pk_route_id AS routeId,
                     name,
@@ -63,24 +63,35 @@ class RouteFactory extends ModelFactory {
                     is_private,
                     cost,
                     distance,
-                    datetime_created,
+                    datetime_created AS created,
                     (SELECT count(1) FROM tb_point WHERE fk_route_id = pk_route_id) AS num_points
                 FROM tb_route
                 WHERE created_by = :userId
+                AND is_deleted = 0
                 ORDER BY datetime_created DESC";
         $params = array(
             ':userId' => $userId
         );
-        return parent::fetchAll($sql, $params);
+
+        $routes = parent::fetchAll($sql, $params);
+        if (!$withPoints) {
+            return $routes;
+        }
+
+        foreach ($routes as &$route) {
+            $route->points = RouteFactory::getRoutePoints($route->routeId);
+        }
+        return $routes;
     }
 
     public static function getRoute($routeId, $userId) {
         $sql = "SELECT
-                  name,
-                  description,
-                  is_private
+                    name,
+                    description,
+                    is_private
                 FROM tb_route
                 WHERE pk_route_id = :routeId
+                AND is_deleted = 0
                 AND created_by = :userId";
         $params = array(
             ':routeId' => $routeId,
@@ -89,14 +100,14 @@ class RouteFactory extends ModelFactory {
         return parent::fetchOne($sql, $params);
     }
 
-    public static function getRoutePoints($routeId) {
+    public static function getRoutePoints($routeId, $forJson = false) {
         $sql = "SELECT
-                name,
-                description,
-                latitude,
-                longitude
-              FROM tb_point
-              WHERE fk_route_id = :routeId";
+                    name,
+                    description,
+                    latitude" . ($forJson ? (" as lat") : "") . ",
+                    longitude" . ($forJson ? (" as lng") : "") . "
+                FROM tb_point
+                WHERE fk_route_id = :routeId";
         $params = array(
             ':routeId' => $routeId
         );
@@ -105,13 +116,13 @@ class RouteFactory extends ModelFactory {
 
     public static function updateRoute($routeId, $name, $description, $isPrivate) {
         $sql = "UPDATE tb_route
-              SET name = :name,
-                description = :description,
-                is_private = :isPrivate,
-                cost = 0,
-                distance = 0,
-                datetime_updated = NOW()
-              WHERE pk_route_id = :routeId";
+                SET name = :name,
+                    description = :description,
+                    is_private = :isPrivate,
+                    cost = 0,
+                    distance = 0,
+                    datetime_updated = NOW()
+                WHERE pk_route_id = :routeId";
         $params = array(
             ':routeId'     => $routeId,
             ':name'        => $name,
@@ -123,7 +134,7 @@ class RouteFactory extends ModelFactory {
 
     public static function getHighestPointId($routeId) {
         $sql = "SELECT
-                  max(pk_point_id) AS id
+                    max(pk_point_id) AS id
                 FROM tb_point
                 WHERE fk_route_id = :routeId";
         $params = array(
@@ -134,8 +145,8 @@ class RouteFactory extends ModelFactory {
 
     public static function removeOldPoints($highestIdForRoute, $routeId) {
         $sql = "DELETE FROM tb_point
-              WHERE pk_point_id <= :highestId
-              AND fk_route_id = :routeId";
+                WHERE pk_point_id <= :highestId
+                AND fk_route_id = :routeId";
         $params = array(
             ':highestId' => $highestIdForRoute,
             ':routeId'   => $routeId
@@ -149,6 +160,20 @@ class RouteFactory extends ModelFactory {
             'lat' => $points[0]->latitude,
             'lng' => $points[0]->longitude
         );
+    }
+
+    // use user id to prevent delete other users stuff
+    public static function deleteRoute($routeId, $userId) {
+        $sql = "UPDATE tb_route
+                SET is_deleted = 1,
+                    datetime_updated = NOW()
+                WHERE pk_route_id = :routeId
+                AND created_by = :userId";
+        $params = array(
+            ':routeId' => $routeId,
+            ':userId'  => $userId
+        );
+        parent::execute($sql, $params);
     }
 
 }

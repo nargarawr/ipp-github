@@ -1,7 +1,8 @@
 var map;
-var mm;
 
 $(document).ready(function () {
+    var mm;
+
     if (window.innerWidth < 768) {
         $('#left-hand-display').addClass('hidden');
         $('#left-hand-display-mini').removeClass('hidden');
@@ -34,25 +35,10 @@ $(document).ready(function () {
         }
 
         var uploadManager = new UploadManager(mm);
+        var popupManager = new PopupManager(mm);
     });
 
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
-
-    $('.popup-trigger').magnificPopup({
-        type:            'inline',
-        fixedContentPos: false,
-        fixedBgPos:      true,
-        overflowY:       'auto',
-        closeBtnInside:  true,
-        preloader:       false,
-        midClick:        true,
-        removalDelay:    300,
-        mainClass:       'my-mfp-zoom-in'
-    });
-
-    $('#submitRoute').click(function () {
-        submitRoute(mm);
-    });
 });
 
 var UploadManager = Class.extend({
@@ -379,48 +365,88 @@ var PointListManager = Class.extend({
     }
 });
 
-function submitRoute(mm) {
-    var routeName = $('#routeName').val();
-    if (routeName == "") {
-        $('#noNameError').removeClass('hidden');
-        $('#routeName').addClass('error');
-        return;
-    } else {
-        $('#noNameError').addClass('hidden');
-        $('#routeName').removeClass('error');
-    }
+var PopupManager = Class.extend({
+    init: function(mm) {
+        this.mm = mm;
 
-    $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
+        $('.popup-trigger').magnificPopup({
+            type:            'inline',
+            fixedContentPos: false,
+            fixedBgPos:      true,
+            overflowY:       'auto',
+            closeBtnInside:  true,
+            preloader:       false,
+            midClick:        true,
+            removalDelay:    300,
+            mainClass:       'my-mfp-zoom-in'
+        });
 
-    // Get all points
-    var pointsList = mm.pointListManager.pointsList.children();
-    var points = [];
-    for (var i = 0; i < pointsList.length; i++) {
-        var pointId = $(pointsList[i]).attr('data-point-id');
-        var pointPopup = $(map._layers[pointId]._popup._content);
+        this.submitButton = $('#submitRoute');
+        this.cancelSubmit = $('#cancelSubmit');
+        this.setupListeners();
+    },
+    setupListeners: function() {
+        var _self = this;
 
-        var point = {};
-        point.name = pointPopup.find('.point_title').val();
-        point.description = pointPopup.find('textarea').val();
-        point.lat = pointPopup.find('.latHidden').text();
-        point.lng = pointPopup.find('.lngHidden').text();
-        points.push(point);
-    }
+        this.cancelSubmit.click(function(){
+            $.magnificPopup.close()
+        });
 
-    var url = ($('#routeId').val() == "") ? '/route/new' : '/route/update';
-    $.ajax({
-        type: 'POST',
-        url:  url,
-        data: {
-            name:        routeName,
-            description: $('#routeDesc').val(),
-            privacy:     $('#routePrivacy').val(),
-            points:      points,
-            routeId:     $('#routeId').val()
+        this.submitButton.click(function() {
+            var valid = _self.checkValidInput();
+            if (valid) {
+                $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
+
+                points = _self.getAllPoints();
+                routeId = $('#routeId').val();
+                var url = (routeId == "") ? '/route/new' : '/route/update';
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        name:        $('#routeName').val(),
+                        description: $('#routeDesc').val(),
+                        privacy:     $('#routePrivacy').val(),
+                        points:      points,
+                        routeId:     routeId
+                    }
+                }).error(function () {
+                    window.location.href = '/user/routes';
+                }).success(function (response) {
+                    window.location.href = '/route/create/id/' + response;
+                });
+            }
+        });
+    },
+    checkValidInput: function() {
+        var routeName = $('#routeName');
+        if (routeName.val() == "") {
+            $('#noNameError').removeClass('hidden');
+            routeName.addClass('error');
+            return false;
+        } else {
+            $('#noNameError').addClass('hidden');
+            routeName.removeClass('error');
         }
-    }).error(function () {
-        window.location.href = '/user/routes';
-    }).success(function (response) {
-        window.location.href = '/route/create/id/' + response;
-    });
-}
+
+        return true;
+    },
+    getAllPoints: function() {
+        // Get all points
+        var pointsList = this.mm.pointListManager.pointsList.children();
+        var points = [];
+        for (var i = 0; i < pointsList.length; i++) {
+            var pointId = $(pointsList[i]).attr('data-point-id');
+            var pointPopup = $(map._layers[pointId]._popup._content);
+
+            var point = {};
+            point.name = pointPopup.find('.point_title').val();
+            point.description = pointPopup.find('textarea').val();
+            point.lat = pointPopup.find('.latHidden').text();
+            point.lng = pointPopup.find('.lngHidden').text();
+            points.push(point);
+        }
+
+        return points;
+    }
+});

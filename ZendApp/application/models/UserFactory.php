@@ -32,7 +32,7 @@ class UserFactory extends ModelFactory {
      * @param int    $userId   Id of user to check against
      * @param string $password Password to check if correct
      *
-     * @return array(int) Array of ids for users where this username/password combination is valid
+     * @return int, Id for user where this username/password combination is valid
      */
     public static function checkPassword($userId, $password) {
         $sql = "SELECT
@@ -49,7 +49,7 @@ class UserFactory extends ModelFactory {
 
     public static function checkEmailAllowed($userId, $email) {
         $sql = "SELECT
-                    pk_user_id as userId
+                    pk_user_id AS userId
                 FROM tb_user
                 WHERE email = :email";
         $params = array(
@@ -66,28 +66,31 @@ class UserFactory extends ModelFactory {
      *
      * @author Craig Knott
      *
-     * @param int    $userId Id of user to update
-     * @param string $fname  New account first name
-     * @param string $lname  New account last name
-     * @param string $email  New account email
+     * @param int    $userId   Id of user to update
+     * @param string $fname    New account first name
+     * @param string $lname    New account last name
+     * @param string $email    New account email
      * @param string $location New account location
+     * @param string $bio      New account bio
      *
      * @return void
      */
-    public static function updateUserDetails($userId, $fname, $lname, $email, $location) {
+    public static function updateUserDetails($userId, $fname, $lname, $email, $location, $bio) {
         $sql = "UPDATE tb_user
                 SET fname = :fname,
                     lname = :lname,
                     email = :email,
                     location = :location,
+                    bio = :bio,
                     datetime_updated = NOW()
                 WHERE pk_user_id = :userId";
         $params = array(
-            ':fname' => $fname,
-            ':lname' => $lname,
-            ':email' => $email,
+            ':fname'    => $fname,
+            ':lname'    => $lname,
+            ':email'    => $email,
             ':location' => $location,
-            ':userId' => $userId
+            ':bio'      => $bio,
+            ':userId'   => $userId
         );
         parent::execute($sql, $params);
     }

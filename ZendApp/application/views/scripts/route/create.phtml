@@ -45,11 +45,13 @@
 </div>
 
 <div id="saveroute-popup" class="white-popup-block zoom-anim-dialog mfp-hide">
-    <h3>Save your route</h3>
+    <h3>
+        <i class="fa fa-bookmark"></i> Save your route
+    </h3>
 
     <label>Route Name</label> <span id="noNameError" class="errorMessage hidden">- Route name cannot be blank</span>
     <input type="text" class="form-control" placeholder="Enter a descriptive name" id="routeName"
-           value='<?= $this->routeExists ? $this->route->name : '' ?>'>
+           value="<?= $this->routeExists ? $this->route->name : '' ?>">
 
     <div class="textContainer">
         <label>Route Description (optional)</label>
@@ -70,9 +72,14 @@
             </option>
         </select>
     </div>
-    <div class="btnContainer">
-        <button class="btn btn-success" id="submitRoute">
-            <i class="fa fa-check"></i> Save Route
+
+    <div class="buttons">
+        <button class="btn btn-default" id="submitRoute">
+            <i class="fa fa-check"></i> Save
+        </button>
+        <button class="btn btn-default" id="cancelSubmit">
+            Cancel
         </button>
     </div>
+    <div class="bottom-filler"></div>
 </div>
