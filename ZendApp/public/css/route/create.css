@@ -88,6 +88,7 @@
 #left-hand-display .pointsList .point {
     border-top: 1px solid #FFB347;
     overflow: hidden;
+    background-color: white;
 }
 
 #left-hand-display .pointsList .point:first-child {
@@ -133,6 +134,7 @@
 
 #left-hand-display .pointsList .point .right-side {
     width: 60px;
+    height: 46px;
     float: left;
     padding-left: 5px;
     background-color: #FEFEFE;
@@ -237,3 +239,4 @@ textarea {
     opacity: 0;
     filter: alpha(opacity=0);
 }
+

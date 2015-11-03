@@ -9,11 +9,6 @@ dt {
     padding-top: 10px;
 }
 
-.jconfirm-box .title,
-.jconfirm-box .buttons .btn:first-child {
-    color: #FFB347 !important;
-}
-
 .zend_form {
     margin-bottom: 0;
 }

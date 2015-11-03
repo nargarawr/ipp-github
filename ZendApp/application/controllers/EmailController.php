@@ -12,37 +12,42 @@ class EmailController extends BaseController {
         $this->_helper->viewRenderer->setNoRender(true);
 
         $response = $this->sendEmail(
-            'cxk01u@gmail.com', 
-            'Confirm email address', 
-            'Please confirm your email (although this text will come fromthe view hopefully)'
+            'cxk01u@gmail.com', 'abxow1@nottingham.ac.uk',
+            'Confirm email address',
+            'Test email from Niceway.to'
         );
+
         print_r($response);
     }
 
-    public function confirmemailAction() {}
-    public function forgotpasswordAction() {}
-    public function sendannouncementAction() {}
+    public function confirmemailAction() {
+    }
+
+    public function forgotpasswordAction() {
+    }
+
+    public function sendannouncementAction() {
+    }
 
     public function sendEmail($to, $subject, $body) {
         $url = 'https://api.sendgrid.com/';
         $user = 'nicewayto';
         $pass = '12QWASzx';
-
         $params = array(
-            'api_user'  => $user,
-            'api_key'   => $pass,
-            'to'        => $to,
-            'subject'   => $subject,
-            'html'      => $body,
-            'text'      => $body,
-            'from'      => 'noreply@niceway.to',
+            'api_user' => $user,
+            'api_key'  => $pass,
+            'to'       => $to,
+            'subject'  => $subject,
+            'html'     => $body,
+            'text'     => $body,
+            'from'     => 'noreply@niceway.to',
         );
 
-        $request =  $url.'api/mail.send.json';
-
+        $request = $url . 'api/mail.send.json';
         $session = curl_init($request);
-        curl_setopt ($session, CURLOPT_POST, true);
-        curl_setopt ($session, CURLOPT_POSTFIELDS, $params);
+
+        curl_setopt($session, CURLOPT_POST, true);
+        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
         curl_setopt($session, CURLOPT_HEADER, false);
         curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
         curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
@@ -52,5 +57,4 @@ class EmailController extends BaseController {
 
         return $response;
     }
-
 }
