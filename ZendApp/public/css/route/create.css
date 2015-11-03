@@ -88,7 +88,7 @@
 #left-hand-display .pointsList .point {
     border-top: 1px solid #FFB347;
     overflow: hidden;
-    background-color: white;
+    backgroudn-col
 }
 
 #left-hand-display .pointsList .point:first-child {
@@ -176,10 +176,52 @@ textarea {
 #saveroute-popup {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+    background: #444;
+    color: white;
 }
 
 #saveroute-popup h3 {
     margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: inherit;
+    padding: 10px 15px 5px 0;
+    color: #FFB347 !important;
+}
+
+#saveroute-popup .mfp-close {
+    display:none;
+}
+
+#saveroute-popup .buttons {
+    float: right;
+    padding: 10px 0;
+}
+
+#saveroute-popup .bottom-filler {
+    height: 40px;
+}
+
+#saveroute-popup .buttons .btn {
+    border: 0;
+    background-image: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: none;
+    -webkit-transition: background .1s;
+    transition: background .1s;
+    color: white;
+    box-shadow: none;
+    background: 0;
+}
+
+#saveroute-popup .buttons .btn:hover {
+    background: #666666;
+}
+
+#saveroute-popup .buttons .btn:first-child {
+    color: #FFB347 !important;
 }
 
 #saveroute-popup .textContainer {
