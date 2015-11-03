@@ -27,9 +27,7 @@ class UserController extends BaseController {
         $this->view->routes = $routes;
 
         foreach($routes as $route) {
-            echo "<pre style=\"border: 1px solid #000; margin: 0.5em;\">";
-            var_dump($route);
-            echo "</pre>\n";
+
         }
     }
 

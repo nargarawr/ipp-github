@@ -15,7 +15,7 @@
 
     <div class="col-md-10">
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="routeTable">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -29,11 +29,16 @@
                 </thead>
                 <tbody>
                 <? foreach ($this->routes as $route) { ?>
-                    <tr>
+                    <tr class="routeRow">
+                        <td class="hidden routeId"><?= $route->routeId ?></td>
                         <td><?= $route->name ?></td>
-                        <td><?= $route->num_points ?></td>
+                        <td>
+                            <?= $route->num_points ?>
+                            <i class="fa fa-chevron-circle-down"></i>
+                            <i class="fa fa-chevron-circle-up hidden"></i>
+                        </td>
                         <td><?= ($route->is_private) ? 'Private' : 'Public' ?></td>
-                        <td><?= date("d M y",strtotime($route->created)) ?></td>
+                        <td><?= date("d M y", strtotime($route->created)) ?></td>
                         <td>99</td>
                         <td>
                             <? for ($i = 0; $i < 5; $i++) { ?>
@@ -53,12 +58,31 @@
                             </a>
                         </td>
                     </tr>
+                    <tr class="routeRow hidden">
+                        <td colspan="4">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                </tr>
+                                </thead>
+                                <? foreach ($route->points as $point) { ?>
+                                    <tr>
+                                        <td> <?= $point->name ?> </td>
+                                        <td> <?= $point->latitude ?> </td>
+                                        <td> <?= $point->longitude ?> </td>
+                                    </tr>
+                                <? } ?>
+                            </table>
+                        </td>
+                    </tr>
                 <? } ?>
                 </tbody>
             </table>
         </div>
     </div>
-
 
     <div class="col-md-4">
         <a href="/route/create">
@@ -66,7 +90,6 @@
                 <i class="fa fa-plus"></i> New Route
             </button>
         </a>
-
     </div>
 </div>
 

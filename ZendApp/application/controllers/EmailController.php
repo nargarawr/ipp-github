@@ -1,5 +1,7 @@
 <?
 
+require('sendgrid-php/sendgrid-php/sendgrid-php.php');
+
 class EmailController extends BaseController {
 
     public function init() {
@@ -7,20 +9,18 @@ class EmailController extends BaseController {
         $this->view->isExternal = false;
     }
 
-    public function emailAction() {
+    public function confirmemailAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         $response = $this->sendEmail(
-            'abxow1@nottingham.ac.uk',
-            'Confirm email address',
-            'Test email from Niceway.to'
+            '95183a9d-042e-4e0f-a6e8-cafcbd501b5b',
+            array('cxk01u@gmail.com'),
+            'Please confirm your email address',
+            '<a href="http://www.google.com"> Click me to confirm your email address, with %DERP%</a>'
         );
 
         print_r($response);
-    }
-
-    public function confirmemailAction() {
     }
 
     public function forgotpasswordAction() {
@@ -29,32 +29,20 @@ class EmailController extends BaseController {
     public function sendannouncementAction() {
     }
 
-    public function sendEmail($to, $subject, $body) {
-        $url = 'https://api.sendgrid.com/';
-        $user = 'nicewayto';
-        $pass = '12QWASzx';
-        $params = array(
-            'api_user' => $user,
-            'api_key'  => $pass,
-            'to'       => $to,
-            'subject'  => $subject,
-            'html'     => $body,
-            'text'     => $body,
-            'from'     => 'noreply@niceway.to',
-        );
+    protected function sendEmail($template, $to, $subject, $body = ' ') {
+        $sendgrid = new SendGrid('nicewayto', '12QWASzx');
+        $email = new SendGrid\Email();
 
-        $request = $url . 'api/mail.send.json';
-        $session = curl_init($request);
+        $email->setTos($to);
+        $email->setFrom('noreply@niceway.to');
+        $email->setFromName('Niceway.to support');
+        $email->setSubject($subject);
+        $email->setHtml($body);
+        $email->setTemplateId($template);
+        $email->addSubstitution('%DERP%', array('FUCK'));
 
-        curl_setopt($session, CURLOPT_POST, true);
-        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
-        curl_setopt($session, CURLOPT_HEADER, false);
-        curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+        $res = $sendgrid->send($email);
 
-        $response = curl_exec($session);
-        curl_close($session);
-
-        return $response;
+        return $res;
     }
 }

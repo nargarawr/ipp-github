@@ -88,7 +88,7 @@
 #left-hand-display .pointsList .point {
     border-top: 1px solid #FFB347;
     overflow: hidden;
-    backgroudn-col
+    background-color: white;
 }
 
 #left-hand-display .pointsList .point:first-child {
