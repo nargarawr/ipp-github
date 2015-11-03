@@ -1,0 +1,7 @@
+<?
+
+class RatingFactory extends ModelFactory {
+
+}
+
+

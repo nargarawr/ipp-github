@@ -7,7 +7,6 @@ class UserController extends BaseController {
     public function init() {
         parent::init();
         $this->view->isExternal = false;
-        $this->messageManager = $this->_helper->getHelper('FlashMessenger');
     }
 
     public function detailsAction() {
@@ -24,8 +23,14 @@ class UserController extends BaseController {
     }
 
     public function routesAction() {
-        $routes = RouteFactory::getRoutesForUser($this->user->userId);
+        $routes = RouteFactory::getRoutesForUser($this->user->userId, true);
         $this->view->routes = $routes;
+
+        foreach($routes as $route) {
+            echo "<pre style=\"border: 1px solid #000; margin: 0.5em;\">";
+            var_dump($route);
+            echo "</pre>\n";
+        }
     }
 
     public function adminAction() {

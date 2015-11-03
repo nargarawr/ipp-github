@@ -55,7 +55,7 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
-    public static function getRoutesForUser($userId) {
+    public static function getRoutesForUser($userId, $withPoints = false) {
         $sql = "SELECT
                     pk_route_id AS routeId,
                     name,
@@ -72,7 +72,16 @@ class RouteFactory extends ModelFactory {
         $params = array(
             ':userId' => $userId
         );
-        return parent::fetchAll($sql, $params);
+
+        $routes = parent::fetchAll($sql, $params);
+        if (!$withPoints) {
+            return $routes;
+        }
+
+        foreach ($routes as &$route) {
+            $route->points = RouteFactory::getRoutePoints($route->routeId);
+        }
+        return $routes;
     }
 
     public static function getRoute($routeId, $userId) {

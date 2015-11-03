@@ -1,0 +1,7 @@
+<?
+
+class CommentFactory extends ModelFactory {
+
+}
+
+

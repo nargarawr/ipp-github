@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.delBtn').click(function(e){
+    $('.delBtn').click(function (e) {
         var url = this.href;
         e.preventDefault();
         $.confirm({

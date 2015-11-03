@@ -6,6 +6,8 @@ class BaseController extends Zend_Controller_Action {
         // Allow passing of Ajax content through the application
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
         $ajaxContext->addActionContext('getevents', array('json', 'html'))->initContext();
+
+        $this->messageManager = $this->_helper->getHelper('FlashMessenger');
     }
 
     public function preDispatch() {
