@@ -1,6 +1,8 @@
 var map;
 
 $(document).ready(function () {
+    var mm;
+
     if (window.innerWidth < 768) {
         $('#left-hand-display').addClass('hidden');
         $('#left-hand-display-mini').removeClass('hidden');
@@ -33,11 +35,10 @@ $(document).ready(function () {
         }
 
         var uploadManager = new UploadManager(mm);
+        var popupManager = new PopupManager(mm);
     });
 
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
-
-    var popupManager = new PopupManager(mm);
 });
 
 var UploadManager = Class.extend({
@@ -432,7 +433,7 @@ var PopupManager = Class.extend({
     },
     getAllPoints: function() {
         // Get all points
-        var pointsList = mm.pointListManager.pointsList.children();
+        var pointsList = this.mm.pointListManager.pointsList.children();
         var points = [];
         for (var i = 0; i < pointsList.length; i++) {
             var pointId = $(pointsList[i]).attr('data-point-id');
