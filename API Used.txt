@@ -1,0 +1,13 @@
+Libraries
+	JQuery
+	JQuery UI
+	JQuery Confirm
+	Magnific Popup
+	Font-Awesome
+	Bootstrap
+	Leaflet
+	Mapbox
+	Zend Framework
+
+APIs
+	Google Maps Geocoder
