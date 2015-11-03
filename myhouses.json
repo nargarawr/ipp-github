@@ -1,0 +1,31 @@
+{
+    "name":"My house's through the years",
+    "description":"All the houses I've lived in during my time at uni",
+    "is_private":"1",
+    "points":[{
+        "name":"Year 1 House",
+        "description":"",
+        "lat":"52.9552",
+        "lng":"-1.1804"
+    },{
+        "name":"Year 2 House",
+        "description":"",
+        "lat":"52.9475",
+        "lng":"-1.1826"
+    },{
+        "name":"Year 3 House",
+        "description":"",
+        "lat":"52.9506",
+        "lng":"-1.1883"
+    },{
+        "name":"Year 4 House",
+        "description":"",
+        "lat":"52.9454",
+        "lng":"-1.1790"
+    },{
+        "name":"CS Building",
+        "description":"",
+        "lat":"52.9534",
+        "lng":"-1.1868"
+    }]
+}
