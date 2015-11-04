@@ -67,6 +67,17 @@ class MemberController extends BaseController {
                         $postData["email"]
                     );
 
+                    EmailFactory::sendEmail(
+                        $postData["email"],
+                        'Please confirm your email address',
+                        $this->view->action(
+                            'confirmemail',
+                            'email',
+                            null,
+                            array('username' => $postData["username"])
+                        )
+                    );
+
                     $this->login($postData["username"], $postData["password"]);
                 } else {
                     $this->view->errorMessage = '<b>There was a problem creating your account:</b> That email or username is already registered';

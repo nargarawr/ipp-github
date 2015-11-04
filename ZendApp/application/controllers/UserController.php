@@ -25,10 +25,6 @@ class UserController extends BaseController {
     public function routesAction() {
         $routes = RouteFactory::getRoutesForUser($this->user->userId, true);
         $this->view->routes = $routes;
-
-        foreach($routes as $route) {
-
-        }
     }
 
     public function adminAction() {

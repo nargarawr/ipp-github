@@ -18,28 +18,30 @@ $(document).ready(function () {
     });
 
     tm = new TableManager($('#routeTable'));
+
+
+
 });
 
 
-
 var TableManager = Class.extend({
-    init: function (table) {
+    init:    function (table) {
         this.table = table;
         this.rows = this.getRows();
 
     },
-    getRows: function() {
+    getRows: function () {
         var rowClasses = this.table.find($('.routeRow'));
         var rows = [];
-        for (var i = 0; i < rowClasses.length; i+= 2) {
-            rows.push(new TableRow(rowClasses[i], rowClasses[i+1]));
+        for (var i = 0; i < rowClasses.length; i += 2) {
+            rows.push(new TableRow(rowClasses[i], rowClasses[i + 1]));
         }
         return rows;
     }
 });
 
 var TableRow = Class.extend({
-    init: function (row, pointsRow) {
+    init:           function (row, pointsRow) {
         this.row = $(row);
         this.pointsRow = $(pointsRow);
 
@@ -48,10 +50,10 @@ var TableRow = Class.extend({
 
         this.setupListeners();
     },
-    setupListeners: function() {
+    setupListeners: function () {
         var _self = this;
 
-        this.caretUp.click(function(){
+        this.caretUp.click(function () {
             _self.pointsRow.addClass("hidden");
             _self.caretUp.addClass("hidden");
             _self.caretDown.removeClass("hidden");
@@ -59,7 +61,7 @@ var TableRow = Class.extend({
             _self.row.find("td").removeClass("noBottomPad");
         });
 
-        this.caretDown.click(function(){
+        this.caretDown.click(function () {
             _self.pointsRow.removeClass("hidden");
             _self.caretDown.addClass("hidden");
             _self.caretUp.removeClass("hidden");
@@ -69,4 +71,5 @@ var TableRow = Class.extend({
     }
 
 });
+
 
