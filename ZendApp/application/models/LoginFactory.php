@@ -20,7 +20,7 @@ class LoginFactory extends ModelFactory {
      * @param string $firstName (optional) First name of the user
      * @param string $location  (optional) Location of the user
      *
-     * @return void
+     * @return int The id of the newly created user
      */
     public static function createNewUser($username, $password, $email, $firstName = null, $location = null) {
         $sql = "INSERT INTO tb_user (
@@ -59,7 +59,8 @@ class LoginFactory extends ModelFactory {
             ':location'  => $location,
             ':password'  => $password
         );
-        parent::execute($sql, $params);
+        $id = parent::execute($sql, $params, true);
+        return $id;
     }
 
     /**

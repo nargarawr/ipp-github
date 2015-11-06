@@ -31,9 +31,8 @@ $('#email').click(function () {
         url:     '/email',
         data:    {
             templateName: 'confirmemail',
-            name:         'RALPH',
-            to:           ['cxk01u@gmail.com'],
-            subject:      'Please consider confirming your email'
+            to:           ['psykc@nottingham.ac.uk'],
+            subject:      'Please confirm your email address'
         },
         success: function (response) {
             console.log(response);

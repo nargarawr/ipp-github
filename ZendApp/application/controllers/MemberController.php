@@ -88,7 +88,7 @@ class MemberController extends BaseController {
 
                 $uniqueUser = LoginFactory::checkUserUnique($postData["username"], $postData["email"]);
                 if ($uniqueUser) {
-                    LoginFactory::createNewUser(
+                    $userId = LoginFactory::createNewUser(
                         $postData["username"],
                         $postData["password"],
                         $postData["email"]
@@ -101,7 +101,10 @@ class MemberController extends BaseController {
                             'confirmemail',
                             'email',
                             null,
-                            array('username' => $postData["username"])
+                            array(
+                                'username' => $postData["username"],
+                                'userId' => $userId
+                            )
                         )
                     );
 
@@ -116,6 +119,24 @@ class MemberController extends BaseController {
 
         // Display the sign up form
         $this->view->signupForm = $signupForm;
+    }
+
+
+    /**
+     * Page that users are directed to when asked to confirm their email. Contains a url parameter with a unique hash
+     * of their user id and username (concatenated with nothing inbetween).
+     *
+     * @author Craig Knott
+     */
+    public function confirmemailAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $hash = $this->getRequest()->getParam('hash', '');
+
+        EmailFactory::confirmEmailAddress($hash);
+
+        $this->_redirect('/user/details/emailconfirmed/1');
     }
 
     /**

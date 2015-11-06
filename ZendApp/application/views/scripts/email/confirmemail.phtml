@@ -1,10 +1,23 @@
 <div>
     Hi, <?= $this->username ?>
 </div>
+<br>
 <div>
     Please take a moment to confirm your email address by clicking on the button below. This helps us to check you
     are a really person, and not a robot!
 </div>
+<br>
 <div>
-    <a href="test">BUTTON TO CLICK</a>
+    You won't be able to comment on routes, rate routes, or even create routes unless you confirm your email address.
+</div>
+<br>
+<div>
+    <a href="niceway.to/member/confirmemail/hash/<?= $this->hash ?>">
+        Click here to confirm your email
+    </a>
+</div>
+<br>
+<div>
+    If you cannot click on the link above, simply copy this into your browser url bar:
+    niceway.to/member/confirmemail/hash/<?= $this->hash ?>
 </div>

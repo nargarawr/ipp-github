@@ -32,8 +32,13 @@ class UserController extends BaseController {
                 $this->view->successMessage = $message["msg"];
             } else if ($message["type"] == "error") {
                 $this->view->errorMessage = $message["msg"];
-
             }
+        }
+
+        $this->view->emailConf = $this->getRequest()->getParam('emailconfirmed', 0);
+        if ($this->view->emailConf == 1) {
+            $this->user->isConfirmed = true;
+            Zend_Auth::getInstance()->getIdentity()->is_confirmed = true;
         }
     }
 

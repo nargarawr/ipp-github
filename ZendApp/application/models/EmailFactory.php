@@ -42,6 +42,24 @@ class EmailFactory extends ModelFactory {
         return $res;
     }
 
+    /**
+     * Function used to set the is_confirmed flag of a given user hash
+     *
+     * @author Craig Knott
+     *
+     * @param string $hash Hash of a user ID and username
+     */
+    public static function confirmEmailAddress($hash) {
+        $sql = "UPDATE tb_user
+                SET is_confirmed = 1
+                WHERE MD5(CONCAT(pk_user_id, username)) = :hash";
+        $params = array(
+            ':hash' => $hash
+        );
+
+        parent::execute($sql, $params);
+    }
+
 }
 
 

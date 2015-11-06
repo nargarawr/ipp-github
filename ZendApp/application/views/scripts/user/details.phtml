@@ -1,3 +1,5 @@
+<input type="hidden" id="emailConfirmed" value="<?= $this->emailConf ?>">
+
 <div class="row margin_t_15">
     <div class="col-md-8">
         <div class="panel panel-primary">
@@ -39,7 +41,13 @@
                         </div>
 
                         <div class="col-md-6 margin_b_15">
-                            <label> Email </label>
+                            <label>
+                                Email <?=
+                                ($this->user->isConfirmed)
+                                    ? '(<i class="fa fa-check"></i> Confirmed)'
+                                    : '(<i class="fa fa-exclamation-circle"></i> Not Confirmed)'
+                                ?>
+                            </label>
                             <input type="text" name="email" class="form-control"
                                    placeholder="Your email address" value="<?= $this->user->email ?>">
                         </div>

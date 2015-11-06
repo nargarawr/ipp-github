@@ -22,6 +22,7 @@ class User {
     public $isAdmin;
     public $isBanned;
     public $isShadowBanned;
+    public $isConfirmed;
     public $datetimeCreated;
     public $datetimeUpdated;
 
@@ -46,6 +47,7 @@ class User {
         $this->isAdmin = $userIdentity->is_admin;
         $this->isBanned = $userIdentity->is_banned;
         $this->isShadowBanned = $userIdentity->is_shadow_banned;
+        $this->isConfirmed = $userIdentity->is_confirmed;
         $this->datetimeCreated = $userIdentity->datetime_created;
         $this->datetimeUpdated = $userIdentity->datetime_updated;
     }
