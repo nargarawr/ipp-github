@@ -1,5 +1,13 @@
 <?
 
+/**
+ * Class UserFactory
+ *
+ * Manages the user, and their interaction with the database
+ *
+ * @author Craig Knott
+ *
+ */
 class UserFactory extends ModelFactory {
 
     /**
@@ -47,6 +55,17 @@ class UserFactory extends ModelFactory {
         return parent::fetchOne($sql, $params);
     }
 
+    /**
+     * Check that a given email address doesn't already exist in the system (or if it does, it belongs to the
+     * current user)
+     *
+     * @author Craig Knott
+     *
+     * @param int    $userId The Id of the user we are checking against
+     * @param string $email  The email address we are looking for
+     *
+     * @return bool Whether this email address can be used or not
+     */
     public static function checkEmailAllowed($userId, $email) {
         $sql = "SELECT
                     pk_user_id AS userId

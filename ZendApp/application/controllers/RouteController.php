@@ -1,15 +1,55 @@
 <?
 
+/**
+ * Class RouteController
+ *
+ * Details with the entire route flow, from creation to searching and displaying
+ *
+ * @author Craig Knott
+ */
 class RouteController extends BaseController {
 
+    /**
+     * Initialises the class
+     *
+     * @author Craig Knott
+     */
     public function init() {
         parent::init();
         $this->view->isExternal = true;
     }
 
+    /**
+     * The landing page for the website. Allows the user to search for a given route, as well as explaining what the
+     * website is about
+     *
+     * @author Craig Knott
+     */
     public function indexAction() {
     }
 
+    /**
+     * Lists the results of a given user search
+     *
+     * @author Craig Knott
+     */
+    public function listAction() {
+    }
+
+    /**
+     * Lists the details of a specific route
+     *
+     * @author Craig Knott
+     */
+    public function detailAction() {
+    }
+
+    /**
+     * Map based page that allows a user to create a route. If passed the /id/x url parameter, will draw the route
+     * with id x, and allow user to edit it
+     *
+     * @author Craig Knott
+     */
     public function createAction() {
         // User must be logged in to create a route
         if (!(Zend_Auth::getInstance()->hasIdentity())) {
@@ -29,12 +69,12 @@ class RouteController extends BaseController {
         }
     }
 
-    public function listAction() {
-    }
 
-    public function detailAction() {
-    }
-
+    /**
+     * Adds a new route to the database and returns a Json object with the id of that route
+     *
+     * @author Craig Knott
+     */
     public function newAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -53,6 +93,11 @@ class RouteController extends BaseController {
         exit;
     }
 
+    /**
+     * Updates a specified route, and returns a Json object with the id of that route
+     *
+     * @author Craig Knott
+     */
     public function updateAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -75,6 +120,11 @@ class RouteController extends BaseController {
         exit;
     }
 
+    /**
+     * Gets all points for a specific route, and returns them as a Json object
+     *
+     * @author Craig Knott
+     */
     public function getpointsAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -89,6 +139,12 @@ class RouteController extends BaseController {
         exit;
     }
 
+    /**
+     * Takes a file from the user, uploads this to a temporary directory and then returns a Json object with the
+     * contents of the file
+     *
+     * @author Craig Knott
+     */
     public function uploadAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

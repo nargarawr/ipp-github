@@ -1,12 +1,29 @@
 <?
 
+/**
+ * Class MemberController
+ *
+ * Uses to manage the logging in, signing up, and logging out of the system
+ *
+ * @author Craig Knott
+ */
 class MemberController extends BaseController {
 
+    /**
+     * Initialises the class
+     *
+     * @author Craig Knott
+     */
     public function init() {
         parent::init();
         $this->view->isExternal = true;
     }
 
+    /**
+     * Displays the log in page to the user, takes their details, and attempts to log them in
+     *
+     * @author Craig Knott
+     */
     public function loginAction() {
         // If the user is already logged in, redirect them to their detail page
         if (Zend_Auth::getInstance()->hasIdentity()) {
@@ -28,8 +45,8 @@ class MemberController extends BaseController {
                     $this->view->errorMessage = '<b>Could not login:</b> Username or password was wrong';
                 }
             } else {
-            $this->view->errorMessage = '<b>Could not log in:</b> Some required fields are missing or invalid';
-        }
+                $this->view->errorMessage = '<b>Could not log in:</b> Some required fields are missing or invalid';
+            }
         }
 
         // If the user was redirected here, explain the situation to them
@@ -41,11 +58,21 @@ class MemberController extends BaseController {
         $this->view->loginForm = $this->getLoginForm();
     }
 
+    /**
+     * Logs a user out and redirects them to the log in page
+     *
+     * @author Craig Knott
+     */
     public function logoutAction() {
         Zend_Auth::getInstance()->clearIdentity();
         $this->_redirect('member/login');
     }
 
+    /**
+     * Displays the sign up page to the user, takes their details, and attempts to create an account for them
+     *
+     * @author Craig Knott
+     */
     public function signupAction() {
         // If the user is already logged in, redirect them to their detail page
         if (Zend_Auth::getInstance()->hasIdentity()) {
@@ -91,6 +118,11 @@ class MemberController extends BaseController {
         $this->view->signupForm = $signupForm;
     }
 
+    /**
+     * Returns a connection to the database and authentication service
+     *
+     * @author Craig Knott
+     */
     protected function getAuthAdapter() {
         $dbAdapter = Zend_Db_Table::getDefaultAdapter();
         $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
@@ -103,6 +135,47 @@ class MemberController extends BaseController {
         return $authAdapter;
     }
 
+    /**
+     * Uses zend_form to generate the form used on the log in page
+     *
+     * @author Craig Knott
+     */
+    protected function getLoginForm() {
+        $username = new Zend_Form_Element_Text('username');
+        $username->setLabel('Username:')
+            ->setAttrib('class', 'form-control')
+            ->setRequired(true);
+
+        $password = new Zend_Form_Element_Password('password');
+        $password->setLabel('Password:')
+            ->setAttrib('class', 'form-control')
+            ->setRequired(true);
+
+        $submit = new Zend_Form_Element_Submit('login');
+        $submit->setLabel('Login')
+            ->setAttrib('class', 'hidden');
+
+        if (!is_null($this->_request->getParam("redirect"))) {
+            $redirect = '/member/login/redirect/' . $this->_request->getParam("redirect");
+        } else {
+            $redirect = "/member/login";
+        }
+
+        $loginForm = new Zend_Form();
+        $loginForm->setAction($this->_request->getBaseUrl() . $redirect)
+            ->setMethod('post')
+            ->addElement($username)
+            ->addElement($password)
+            ->addElement($submit);
+
+        return $loginForm;
+    }
+
+    /**
+     * Uses zend_form to generate the form used on the sign up page
+     *
+     * @author Craig Knott
+     */
     protected function getSignupForm() {
         $username = new Zend_Form_Element_Text('username');
         $username->setAttrib('class', 'form-control')
@@ -135,37 +208,20 @@ class MemberController extends BaseController {
         return $signupForm;
     }
 
-    protected function getLoginForm() {
-        $username = new Zend_Form_Element_Text('username');
-        $username->setLabel('Username:')
-            ->setAttrib('class', 'form-control')
-            ->setRequired(true);
-
-        $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Password:')
-            ->setAttrib('class', 'form-control')
-            ->setRequired(true);
-
-        $submit = new Zend_Form_Element_Submit('login');
-        $submit->setLabel('Login')
-            ->setAttrib('class', 'hidden');
-
-        if (!is_null($this->_request->getParam("redirect"))) {
-            $redirect = '/member/login/redirect/' . $this->_request->getParam("redirect");
-        } else {
-            $redirect = "/member/login";
-        }
-
-        $loginForm = new Zend_Form();
-        $loginForm->setAction($this->_request->getBaseUrl() . $redirect)
-            ->setMethod('post')
-            ->addElement($username)
-            ->addElement($password)
-            ->addElement($submit);
-
-        return $loginForm;
-    }
-
+    /**
+     * Attempts to log the user into the system with the given user name and password. If successful, the user's login
+     * status will be updated, a user object created, and they will be redirected to the page they tried to access
+     * originally (if any)
+     *
+     * @author Craig Knott
+     *
+     * @param string $username Username of user
+     * @param string $password Password of user
+     * @param string $redirect A string representing the page the user wished to visit originally, in the form
+     *                         'controller-action'
+     *
+     * @return bool Returns false is the user did not successfully log in
+     */
     protected function login($username, $password, $redirect = null) {
         // Check if the user exists and the password is correct
         $authAdapter = $this->getAuthAdapter();

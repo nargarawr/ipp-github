@@ -1,7 +1,19 @@
-<?php
+<?
 
+/**
+ * Class BaseController
+ *
+ * Base controller that all others inherit from
+ *
+ * @author Craig Knott
+ */
 class BaseController extends Zend_Controller_Action {
 
+    /**
+     * Initialisation function that allowed for JSON to be displayed on the page, and sets up the flash messenger
+     *
+     * @author Craig Knott
+     */
     public function init() {
         // Allow passing of Ajax content through the application
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
@@ -10,6 +22,12 @@ class BaseController extends Zend_Controller_Action {
         $this->messageManager = $this->_helper->getHelper('FlashMessenger');
     }
 
+    /**
+     * Called before any page is loaded. Makes sure that users are logged in if necessary, and determines whether to
+     * display the navigation bar.
+     *
+     * @author Craig Knott
+     */
     public function preDispatch() {
         $controller = str_replace($this->_delimiters, '-', $this->getRequest()->getControllerName());
         $action = $this->getRequest()->getActionName();
@@ -30,6 +48,16 @@ class BaseController extends Zend_Controller_Action {
         $this->view->navBar = $this->getNavBar($controller, $action);
     }
 
+    /**
+     * Constructs the navigation bar
+     *
+     * @author Craig Knott
+     *
+     * @param string $c The name of the current controller
+     * @param string $a The name of the current action
+     *
+     * @return array Array used to draw the navigation
+     */
     protected function getNavBar($c, $a) {
         $currentUrl = "/" . $c . "/" . $a;
         $navBar = array(

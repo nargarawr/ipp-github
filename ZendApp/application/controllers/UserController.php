@@ -1,14 +1,29 @@
 <?
 
+/**
+ * Class UserController
+ *
+ * Used for the 'My Profile' section of the website
+ *
+ * @author Craig Knott
+ */
 class UserController extends BaseController {
 
-    public $messageManager;
-
+    /**
+     * Initialises the class
+     *
+     * @author Craig Knott
+     */
     public function init() {
         parent::init();
         $this->view->isExternal = false;
     }
 
+    /**
+     * Page used to describe and update user details. Uses flash messenger to pass errors and messages to the UI
+     *
+     * @author Craig Knott
+     */
     public function detailsAction() {
         $messages = $this->messageManager->getMessages();
         if (count($messages) > 0) {
@@ -22,15 +37,31 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+     * Lists all routes for the user
+     *
+     * @author Craig Knott
+     */
     public function routesAction() {
         $routes = RouteFactory::getRoutesForUser($this->user->userId, true);
         $this->view->routes = $routes;
     }
 
+    /**
+     * Provides administrative tools to the user
+     *
+     * @author Craig Knott
+     */
     public function adminAction() {
 
     }
 
+    /**
+     * Updates the users account details in the database , including name, email, location and bio. Also updates the
+     * user object to reflect these changes
+     *
+     * @author Craig Knott
+     */
     public function updateaccountdetailsAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -77,6 +108,11 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+     * Updates the user's password in the database
+     *
+     * @author Craig Knott
+     */
     public function updatepasswordAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -125,6 +161,11 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+     * Deletes a given route from the system, takes a user Id to ensure no malicious intent
+     *
+     * @author Craig Knott
+     */
     public function deleterouteAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
@@ -135,6 +176,11 @@ class UserController extends BaseController {
         $this->_helper->redirector('routes', 'user', null, array());
     }
 
+    /**
+     * Gets a route and sends it to the browser as a Json file for downloading
+     *
+     * @author Craig Knott
+     */
     public function downloadrouteAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

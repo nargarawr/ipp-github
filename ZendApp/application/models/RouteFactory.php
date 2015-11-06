@@ -1,7 +1,27 @@
 <?
 
+/**
+ * Class RouteFactory
+ *
+ * Manages all routes, and their interaction with the database
+ *
+ * @author Craig Knott
+ *
+ */
 class RouteFactory extends ModelFactory {
 
+    /**
+     * Inserts a new route into the database
+     *
+     * @author Craig Knott
+     *
+     * @param string $name        Name of the route
+     * @param string $description Description of the route
+     * @param int    $isPrivate   Whether this route is private or not
+     * @param int    $userId      The id of the owner of this route
+     *
+     * @return int The Id of the newly created route
+     */
     public static function createRoute($name, $description, $isPrivate, $userId) {
         $sql = "INSERT INTO tb_route (
                     created_by,
@@ -31,6 +51,16 @@ class RouteFactory extends ModelFactory {
         return parent::execute($sql, $params, true);
     }
 
+    /**
+     * Creates a new point for a given route
+     *
+     * @author Craig Knott
+     *
+     * @param object $point   The point object to be added
+     * @param int    $routeId The id of the route to add this point to
+     *
+     * @return void
+     */
     public static function createRoutePoint($point, $routeId) {
         $sql = "INSERT INTO tb_point (
                     fk_route_id,
@@ -55,6 +85,16 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
+    /**
+     * Get all routes for a given user
+     *
+     * @author Craig Knott
+     *
+     * @param int  $userId     The user to get all routes for
+     * @param bool $withPoints Whether to return the routes with their points as well (stored in a $points array)
+     *
+     * @return array All routes for the given user
+     */
     public static function getRoutesForUser($userId, $withPoints = false) {
         $sql = "SELECT
                     pk_route_id AS routeId,
@@ -84,6 +124,16 @@ class RouteFactory extends ModelFactory {
         return $routes;
     }
 
+    /**
+     * Get a specific route for a user
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The id of the route to get
+     * @param int $userId  The id of the user this belongs to (to avoid unwarranted access)
+     *
+     * @return object The route object
+     */
     public static function getRoute($routeId, $userId) {
         $sql = "SELECT
                     name,
@@ -100,6 +150,16 @@ class RouteFactory extends ModelFactory {
         return parent::fetchOne($sql, $params);
     }
 
+    /**
+     *Get all points for a specified route
+     *
+     * @author Craig Knott
+     *
+     * @param int  $routeId The Id of the route to get the points for
+     * @param bool $forJson Whether this is in the Json format (short hand names for latitude and longitude)
+     *
+     * @return array Array of all points for the given route
+     */
     public static function getRoutePoints($routeId, $forJson = false) {
         $sql = "SELECT
                     name,
@@ -114,6 +174,19 @@ class RouteFactory extends ModelFactory {
         return parent::fetchAll($sql, $params);
     }
 
+
+    /**
+     * Update a route's details
+     *
+     * @author Craig Knott
+     *
+     * @param int    $routeId     The route's ID
+     * @param string $name        The route's new name
+     * @param string $description The route's new description
+     * @param int    $isPrivate   The route's new privacy setting
+     *
+     * @return void
+     */
     public static function updateRoute($routeId, $name, $description, $isPrivate) {
         $sql = "UPDATE tb_route
                 SET name = :name,
@@ -132,6 +205,15 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
+    /**
+     * Get the highest Id of any point for a given route
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The route in question
+     *
+     * @return int The Id of the highest point for the specified route
+     */
     public static function getHighestPointId($routeId) {
         $sql = "SELECT
                     max(pk_point_id) AS id
@@ -143,6 +225,16 @@ class RouteFactory extends ModelFactory {
         return parent::fetchOne($sql, $params)->id;
     }
 
+    /**
+     * Removes all points from a specified route (so new ones can be added)
+     *
+     * @author Craig Knott
+     *
+     * @param int $highestIdForRoute The highest Id of any point in this route
+     * @param int $routeId           The route in question
+     *
+     * @return void
+     */
     public static function removeOldPoints($highestIdForRoute, $routeId) {
         $sql = "DELETE FROM tb_point
                 WHERE pk_point_id <= :highestId
@@ -154,6 +246,15 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
+    /**
+     * Gets the first point in a given route
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The route to look at
+     *
+     * @return object(lat, lng) An object with the latitude and longitude of the first point in the route
+     */
     public static function getFirstRoutePoint($routeId) {
         $points = RouteFactory::getRoutePoints($routeId);
         return (object)array(
@@ -162,7 +263,16 @@ class RouteFactory extends ModelFactory {
         );
     }
 
-    // use user id to prevent delete other users stuff
+    /**
+     * Deletes a route (user id is necessary to prevent malicious actions)
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The route to delete
+     * @param int $userId  The user who this route belongs to
+     *
+     * @return void
+     */
     public static function deleteRoute($routeId, $userId) {
         $sql = "UPDATE tb_route
                 SET is_deleted = 1,

@@ -1,12 +1,29 @@
 <?php
 
+/**
+ * Class ErrorController
+ *
+ * Used to show errors to the user when something goes wrong with loading a page
+ *
+ * @author Craig Knott
+ */
 class ErrorController extends BaseController {
 
+    /**
+     * Initialises the class
+     *
+     * @author Craig Knott
+     */
     public function init() {
         parent::init();
         $this->view->isExternal = true;
     }
 
+    /**
+     * Page displayed when an error occurs.
+     *
+     * @author Craig Knott
+     */
     public function errorAction() {
         $showErrors = $this->getRequest()->getParam('forceShowErrors', 0);
         $this->view->showErrors = $showErrors;

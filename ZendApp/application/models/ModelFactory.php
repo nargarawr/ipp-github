@@ -1,5 +1,13 @@
 <?
 
+/**
+ * Class ModelFactory
+ *
+ * Base class for all models, which provides access to the database and the abilities to make database calls
+ *
+ * @author Craig Knott
+ *
+ */
 class ModelFactory {
 
     /**
@@ -46,28 +54,6 @@ class ModelFactory {
     }
 
     /**
-     * Execute a SQL query (update, insert, delete, etc)
-     *
-     * @author Craig Knott
-     *
-     * @param string       $sql      The SQL to run
-     * @param array(param) $params   Array of parameters to the query (':param' => val)
-     * @param bool         $returnId Whether to return the ID of the last inserted row
-     *
-     * @return int Id of the last row inserted (if returnId is true);
-     */
-    public static function execute($sql, $params = null, $returnId = false) {
-        $db = self::getDb();
-        $stmt = new Zend_Db_Statement_Pdo($db, $sql);
-        $stmt->execute($params);
-
-        if ($returnId) {
-            return (int)$db->lastInsertId();
-        }
-
-    }
-
-    /**
      * Get a single result row from a query
      *
      * @author Craig Knott
@@ -88,4 +74,26 @@ class ModelFactory {
         }
     }
 
+    /**
+     * Executes a SQL query (update, insert, delete, etc)
+     *
+     * @author Craig Knott
+     *
+     * @param string       $sql      The SQL to run
+     * @param array(param) $params   Array of parameters to the query (':param' => val)
+     * @param bool         $returnId Whether to return the ID of the last inserted row
+     *
+     * @return int Id of the last row inserted (if returnId is true);
+     */
+    public static function execute($sql, $params = null, $returnId = false) {
+        $db = self::getDb();
+        $stmt = new Zend_Db_Statement_Pdo($db, $sql);
+        $stmt->execute($params);
+
+        if ($returnId) {
+            return (int)$db->lastInsertId();
+        }
+
+        return null;
+    }
 }

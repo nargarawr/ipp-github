@@ -17,20 +17,20 @@ $(window).resize(function () {
 
 /*
 
-to send an email through AJAX
+ to send an email through AJAX
  */
-$('#email').click(function () {
+function sendEmail() {
     $.ajax({
-        type: 'POST',
-        url:  '/email',
-        data: {
+        type:    'POST',
+        url:     '/email',
+        data:    {
             templateName: 'confirmemail',
-            name: 'RALPH',
-            to: ['cxk01u@gmail.com'],
-            subject: 'Please consider confirming your email'
+            name:         'RALPH',
+            to:           ['cxk01u@gmail.com'],
+            subject:      'Please consider confirming your email'
         },
         success: function (response) {
             console.log(response);
         }
-    })
-});
+    });
+}

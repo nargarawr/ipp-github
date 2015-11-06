@@ -18,9 +18,6 @@ $(document).ready(function () {
     });
 
     tm = new TableManager($('#routeTable'));
-
-
-
 });
 
 

@@ -1,5 +1,13 @@
 <?
 
+/**
+ * Class User
+ *
+ * The user object, which contains all information on the currently logged in user
+ *
+ * @author Craig Knott
+ *
+ */
 class User {
 
     public $username;
