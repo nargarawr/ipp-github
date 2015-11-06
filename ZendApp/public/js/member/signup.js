@@ -1,7 +1,17 @@
+/**
+ * Document ready function, calls the login popup launch function
+ *
+ * @author Craig Knott
+ */
 $(document).ready(function(){
     $('#signupLaunch').trigger('click');
 });
 
+/**
+ * Function that launches the signup popup box, using Jquery.confirm.
+ *
+ * @author Craig Knott
+ */
 $("#signupLaunch").click(function () {
     var signupForm = $('#hiddenSignupForm').clone();
     signupForm.find('form').attr('id','signupForm');

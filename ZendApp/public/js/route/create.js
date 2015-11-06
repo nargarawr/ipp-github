@@ -1,5 +1,11 @@
 var map;
 
+/**
+ * Document ready function. Loads the route if a route id if given, and constructs the map manager, upload manager
+ * and popup manager objects. Also sets the left hand display to hidden if on a small screen
+ *
+ * @author Craig Knott
+ */
 $(document).ready(function () {
     var mm;
 
@@ -41,13 +47,30 @@ $(document).ready(function () {
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
 });
 
+/**
+ * Class UploadManager
+ *
+ * Class in charge of uploading a file, and importing the contents of the file
+ *
+ * @author Craig Knott
+ */
 var UploadManager = Class.extend({
+    /**
+     * Initialises the class, assigns a value to the private variables and calls the function to set up listeners
+     *
+     * @param mm The map manager object of this page
+     */
     init:                function (mm) {
         this.uploadForm = $("#uploadForm");
         this.fileUploadInput = $("#fileUploader");
         this.mapManager = mm;
         this.setupListeners();
     },
+    /**
+     * Assigns listeners to each of the interactive elements of the row
+     *
+     * @author Craig Knott
+     */
     setupListeners:      function () {
         var _self = this;
         this.fileUploadInput.on('change', function () {
@@ -60,6 +83,14 @@ var UploadManager = Class.extend({
             }
         });
     },
+    /**
+     * Callback function called when the upload of a file is succesful. Reads the contents of the file and shows
+     * them on the page
+     *
+     * @author Craig Knott
+     *
+     * @param data
+     */
     formUploadSuccesful: function (data) {
         var route = JSON.parse(data);
         $('#routeName').val(route.name);
@@ -88,7 +119,24 @@ var UploadManager = Class.extend({
     }
 });
 
+/**
+ * Class MapManager
+ *
+ * Manages the Leaflet/Mapbox map present on the pass
+ *
+ * @author Craig Knott
+ */
 var MapManager = Class.extend({
+    /**
+     * Initialises the map manager class, and draws the map
+     *
+     * @author Craig Knott
+     *
+     * @param lat     The default latitude of the map
+     * @param long    The default longitude of the map
+     * @param zoom    The default zoom level of the map
+     * @param routeId The Id of this route, if any
+     */
     init:               function (lat, long, zoom, routeId) {
         $('#map').css('height', window.innerHeight - 62);
 
@@ -121,6 +169,11 @@ var MapManager = Class.extend({
 
         this.setupListeners();
     },
+    /**
+     * Assigns listeners to each of the interactive elements of the row
+     *
+     * @author Craig Knott
+     */
     setupListeners:     function () {
         var _self = this;
         map.on('click', function (e) {
@@ -133,6 +186,13 @@ var MapManager = Class.extend({
 
         });
     },
+    /**
+     * Loads points for this route and displays them on the map
+     *
+     * @author Craig Knott
+     *
+     * @param routeId The id of the route to get the points for
+     */
     loadExistingPoints: function (routeId) {
         var _self = this;
         $.ajax({
@@ -163,6 +223,14 @@ var MapManager = Class.extend({
             }
         });
     },
+    /**
+     * Adds a point to the map
+     *
+     * @author Craig Knott
+     *
+     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
+     * @param popupData An HTML string of the contents of the popup of this point
+     */
     addPointToMap:      function (e, popupData) {
         var _self = this;
 
@@ -201,6 +269,11 @@ var MapManager = Class.extend({
         this.pointListManager.addPoint(marker, e);
         this.drawRoute();
     },
+    /**
+     * Draws a line between all the points on the map
+     *
+     * @author Craig Knott
+     */
     drawRoute:          function () {
         var points = this.pointListManager.pointsList.children();
         if (points.length < 2) {
@@ -210,24 +283,34 @@ var MapManager = Class.extend({
         console.log("this is where the routing would take place.. :(")
 
         /*
-        if (this.routingControl !== undefined) {
-            this.routingControl.removeFrom(map);
-        }
+         if (this.routingControl !== undefined) {
+         this.routingControl.removeFrom(map);
+         }
 
-        var arrayOfPoints = [];
-        for (var i = 0; i < points.length; i++) {
-            var marker = map._layers[$(points[i]).attr('data-point-id')];
-            arrayOfPoints.push(L.latLng(marker._latlng.lat, marker._latlng.lng));
-        }
+         var arrayOfPoints = [];
+         for (var i = 0; i < points.length; i++) {
+         var marker = map._layers[$(points[i]).attr('data-point-id')];
+         arrayOfPoints.push(L.latLng(marker._latlng.lat, marker._latlng.lng));
+         }
 
-        this.routingControl = L.Routing.control({
-            waypoints: arrayOfPoints
-        }).addTo(map);
+         this.routingControl = L.Routing.control({
+         waypoints: arrayOfPoints
+         }).addTo(map);
 
-        $('.leaflet-routing-container').addClass('hidden');
-        $('.leaflet-marker-icon').removeClass('leaflet-marker-draggable');
-        */
+         $('.leaflet-routing-container').addClass('hidden');
+         $('.leaflet-marker-icon').removeClass('leaflet-marker-draggable');
+         */
     },
+    /**
+     * Generate the HTML for a given popup
+     *
+     * @author Craig Knott
+     *
+     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
+     * @param data An object containing data about this point (name, desc)
+     *
+     * @returns {*} An HTML string for this popup
+     */
     getPopupHTML:       function (e, data) {
         var container = $('<div>').addClass('pointContainer');
         container.append($('<div>').addClass('coords right')
@@ -257,7 +340,21 @@ var MapManager = Class.extend({
     }
 });
 
+/**
+ * Class PointListManager
+ *
+ * Manages the points displayed in the left hand display
+ *
+ * @author Craig Knott
+ */
 var PointListManager = Class.extend({
+    /**
+     * Initialises the class, setting the values of private variables and setting up the sortable fucntion
+     *
+     * @author Craig Knott
+     *
+     * @param mapManager The MapManager class for this page
+     */
     init:           function (mapManager) {
         var _self = this;
 
@@ -269,13 +366,18 @@ var PointListManager = Class.extend({
 
         $('.pointsList').sortable({
             handle: ".left-side",
-            update: function() {
+            update: function () {
                 _self.mapManager.drawRoute();
             }
         });
 
         this.setupListeners();
     },
+    /**
+     * Assigns listeners to each of the interactive elements of the row
+     *
+     * @author Craig Knott
+     */
     setupListeners: function () {
         $('#hide_lhd').click(function () {
             $('#left-hand-display').addClass('hidden');
@@ -287,6 +389,14 @@ var PointListManager = Class.extend({
             $('#left-hand-display-mini').addClass('hidden');
         });
     },
+    /**
+     * Adds a point to the left hand display
+     *
+     * @author Craig Knott
+     *
+     * @param marker The marker object (as defined in the Leaflet API)
+     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
+     */
     addPoint:       function (marker, e) {
         if (this.pointsList.children().length == 0) {
             this.noPointsYet.addClass('hidden');
@@ -338,10 +448,25 @@ var PointListManager = Class.extend({
 
 
     },
+    /**
+     * Updates the name of a point on the left hand display
+     *
+     * @author Craig Knott
+     *
+     * @param markerId The id of this marker
+     * @param newName The new name of this marker
+     */
     updatePoint:    function (markerId, newName) {
         var obj = this.findPointById(markerId);
         obj.find('.title').text(newName);
     },
+    /**
+     * Removes a point from the left hand display
+     *
+     * @author Craig Knott
+     *
+     * @param markerId The id of the marker to remove
+     */
     removePoint:    function (markerId) {
         var obj = this.findPointById(markerId);
         if (obj != null) {
@@ -353,6 +478,13 @@ var PointListManager = Class.extend({
             this.pointsYet.addClass('hidden');
         }
     },
+    /**
+     * Finds adn returns a specific marker from the list, by it's Id
+     *
+     * @param markerId The id of the market
+     *
+     * @returns {*} The marker ojbect
+     */
     findPointById:  function (markerId) {
         var objToReturn = null;
         this.pointsList.children().each(function (i, obj) {
@@ -365,8 +497,22 @@ var PointListManager = Class.extend({
     }
 });
 
+/**
+ * Class PopupManager
+ *
+ * Deals with the "save route" popup
+ *
+ * @author Craig Knott
+ */
 var PopupManager = Class.extend({
-    init: function(mm) {
+    /**
+     * Initialises this class, as well as setting up the popup
+     *
+     * @author Craig Knott
+     *
+     * @param mm The map manager object for this page
+     */
+    init:            function (mm) {
         this.mm = mm;
 
         $('.popup-trigger').magnificPopup({
@@ -385,14 +531,19 @@ var PopupManager = Class.extend({
         this.cancelSubmit = $('#cancelSubmit');
         this.setupListeners();
     },
-    setupListeners: function() {
+    /**
+     * Assigns listeners to each of the interactive elements of the row
+     *
+     * @author Craig Knott
+     */
+    setupListeners:  function () {
         var _self = this;
 
-        this.cancelSubmit.click(function(){
+        this.cancelSubmit.click(function () {
             $.magnificPopup.close()
         });
 
-        this.submitButton.click(function() {
+        this.submitButton.click(function () {
             var valid = _self.checkValidInput();
             if (valid) {
                 $('#submitRoute').html('<i class="fa fa-spinner fa-spin"></i> Saving...');
@@ -418,7 +569,14 @@ var PopupManager = Class.extend({
             }
         });
     },
-    checkValidInput: function() {
+    /**
+     * Checks whether the user has entered a name for the route they are attempting to save
+     *
+     * @author Craig Knott
+     *
+     * @returns {boolean} Whether the user has entered a name for their route
+     */
+    checkValidInput: function () {
         var routeName = $('#routeName');
         if (routeName.val() == "") {
             $('#noNameError').removeClass('hidden');
@@ -431,7 +589,14 @@ var PopupManager = Class.extend({
 
         return true;
     },
-    getAllPoints: function() {
+    /**
+     * Gets all points from the map in an array
+     *
+     * @author Craig Knott
+     *
+     * @returns {Array} Of all points on the map
+     */
+    getAllPoints:    function () {
         // Get all points
         var pointsList = this.mm.pointListManager.pointsList.children();
         var points = [];
