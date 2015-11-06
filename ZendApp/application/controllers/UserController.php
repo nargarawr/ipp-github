@@ -40,6 +40,9 @@ class UserController extends BaseController {
             $this->user->isConfirmed = true;
             Zend_Auth::getInstance()->getIdentity()->is_confirmed = true;
         }
+
+        // Non confirmed email error
+        $this->view->nce = $this->getRequest()->getParam('nce', 0);
     }
 
     /**

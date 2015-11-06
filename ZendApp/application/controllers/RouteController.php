@@ -58,6 +58,9 @@ class RouteController extends BaseController {
                 'redirect'     => "route-create",
                 'fromRedirect' => 1
             ));
+        } else if ($this->user->isConfirmed == false) {
+            $this->_redirect("/user/details/nce/1");
+
         }
 
         $this->view->routeId = $this->getRequest()->getParam('id', null);
