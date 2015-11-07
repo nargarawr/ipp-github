@@ -17,8 +17,13 @@ function resize() {
     } else {
         $('#navbar-collapse').find('li').removeClass('smallerPadding');
     }
-}
 
+    if (window.innerWidth <= 308) {
+        $('.navbar-logo').addClass('hidden');
+    } else {
+        $('.navbar-logo').removeClass('hidden');
+    }
+}
 
 /**
  * Used to send emails through Ajax

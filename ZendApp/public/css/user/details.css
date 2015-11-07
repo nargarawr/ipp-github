@@ -1,0 +1,100 @@
+.border-container {
+    border-radius: 3px;
+    border: solid 1px #DDDDDD;
+    padding: 1.25em;
+    margin-top: 15px;
+}
+
+.border-container .title {
+    position: relative;
+    color: #667B8B;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #F6F6F6;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    top: -28px;
+}
+
+.border-container .yourDetailsTitle {
+    width: 185px;
+}
+
+.border-container .yourPasswordTitle {
+    width: 206px;
+}
+
+.border-container .yourStatsTitle {
+    width: 110px;
+}
+
+.alert.msg {
+    margin-top: 10px;
+}
+
+.alert {
+    margin-bottom: 0;
+}
+
+.form-control[name=lname] {
+    margin-top: 5px;
+}
+
+label {
+    padding-top: 10px;
+}
+
+.noPad {
+    padding-top: 0;
+}
+
+#updateAccount {
+    margin-top: 10px;
+}
+
+@media (max-width: 991px) {
+    .col-sm-push-0 {
+        margin-bottom: 10px;
+    }
+
+    .border-container img {
+        max-height: 250px;
+    }
+}
+
+.border-container img {
+    max-height: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+}
+
+.user-detail-list .username {
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #FFB347;
+}
+
+.user-detail-list .fa-map-marker {
+    margin-right: 6px;
+}
+
+.user-detail-list .border-container {
+    padding-bottom: 0;
+    margin-top: 25px;
+}
+
+.user-detail-list .user-stats {
+    position: relative;
+    top: -17px;
+}
+
+.user-detail-list .username {
+    margin-left: -15px;
+    margin-right: -15px;
+}
