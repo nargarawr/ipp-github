@@ -31,6 +31,11 @@
     width: 110px;
 }
 
+.border-container .routesTitle {
+    width: 77px;
+}
+
+
 .alert.msg {
     margin-top: 10px;
 }

@@ -32,67 +32,70 @@
                     <div class="user-detail-list">
                         <div class="row username">
                             <div class="col-sm-8">
-                                <?= $this->user->username ?>
+                                <?= $this->displayedUser->username ?>
                             </div>
                             <div class="col-sm-4">
                                 <?= $this->partial('user', 'stars', null, array(
-                                    'rating' => $this->user->stats->average_rating
+                                    'rating' => $this->displayedUser->stats->average_rating
                                 )) ?>
                             </div>
                         </div>
 
-                        <? if (!is_null($this->user->fname)) { ?>
-                            <div class="name"> <i class="fa fa-user"></i>
-                                <?= $this->user->fname ?> <?= $this->user->lname ?> </div>
+                        <? if (!is_null($this->displayedUser->fname)) { ?>
+                            <div class="name"><i class="fa fa-user"></i>
+                                <?= $this->displayedUser->fname ?> <?= $this->displayedUser->lname ?> </div>
                         <? } ?>
 
                         <div class="email">
                             <i class="fa fa-envelope"></i>
-                            <?= $this->user->email ?>
-                            <?= ($this->user->isConfirmed)
-                                ? '(<i class="fa fa-check"></i> Confirmed)'
-                                : '(<i class="fa fa-exclamation-circle"></i> Not Confirmed)'
-                            ?>
+                            <?= $this->displayedUser->email ?>
+                            <? if ($this->viewingOwnProfile) {
+                                if ($this->displayedUser->isConfirmed) { ?>
+                                    (<i class="fa fa-check"></i> Confirmed)
+                                <? } else { ?>
+                                    <i class="fa fa-exclamation-circle"></i> Not Confirmed)
+                                <? } ?>
+                            <? } ?>
                         </div>
 
-                        <? if (!is_null($this->user->location)) { ?>
+                        <? if (!is_null($this->displayedUser->location)) { ?>
                             <div class="location">
                                 <i class="fa fa-globe"></i>
-                                <?= $this->user->location ?>
+                                <?= $this->displayedUser->location ?>
                             </div>
                         <? } ?>
 
                         <div class="joined">
                             <i class="fa fa-clock-o"></i>
-                            <?= 'Joined ' . date("d/m/y", strtotime($this->user->datetimeCreated)) ?>
-                            (<?= $this->user->stats->account_age . ' days old' ?>)
+                            <?= 'Joined ' . date("d/m/y", strtotime($this->displayedUser->datetimeCreated)) ?>
+                            (<?= $this->displayedUser->stats->account_age . ' days old' ?>)
                         </div>
 
                         <br>
-                        <i>"<?= $this->user->bio ?>"</i>
+                        <i>"<?= $this->displayedUser->bio ?>"</i>
 
                         <div class="border-container">
                             <div class="title yourStatsTitle">
-                                 Your Stats
+                                <?= $this->viewingOwnProfile ? 'Your' : 'User' ?> Stats
                             </div>
                             <div class="user-stats">
                                 <div class="routes-stats">
                                     <i class="fa fa-map-marker"></i>
-                                    <?= $this->user->stats->route_count ?> routes submitted
+                                    <?= $this->displayedUser->stats->route_count ?> routes submitted
                                 </div>
                                 <div class="comments-stats">
                                     <i class="fa fa-comment"></i>
-                                    <?= $this->user->stats->comments_given ?> comments posted
+                                    <?= $this->displayedUser->stats->comments_given ?> comments posted
                                     <br>
                                     <i class="fa fa-comments"></i>
-                                    <?= $this->user->stats->comments_received ?> comments received
+                                    <?= $this->displayedUser->stats->comments_received ?> comments received
                                 </div>
                                 <div class="ratings-stats">
                                     <i class="fa fa-star"></i>
-                                    <?= $this->user->stats->ratings_given ?> ratings given
+                                    <?= $this->displayedUser->stats->ratings_given ?> ratings given
                                     <br>
                                     <i class="fa fa-star-o"></i>
-                                    <?= $this->user->stats->ratings_received ?> ratings received
+                                    <?= $this->displayedUser->stats->ratings_received ?> ratings received
                                 </div>
                             </div>
                         </div>
@@ -104,90 +107,108 @@
     <div class="col-md-2"></div>
 </div>
 
-<div class="row">
-    <div class="col-sm-1 col-md-2"></div>
-    <div class="col-sm-10 col-md-8">
-        <div class="border-container">
-            <div class="title yourDetailsTitle">
-                Update your details
-            </div>
-            <div class="row">
-                <form enctype="application/x-www-form-urlencoded" method="post" action="/user/updateaccountdetails">
-                    <div class="col-md-4 col-md-push-8 col-sm-push-0">
-                        <div class="alert alert-info" role="alert">
-                            <i class="fa fa-info-circle"></i> <b>Your details</b>
-                            <p>
-                                All of the information you enter here, excluding your email address, will be visible to
-                                other users of Niceway.to.
-                            </p>
+<? if ($this->viewingOwnProfile) { ?>
+    <div class="row">
+        <div class="col-sm-1 col-md-2"></div>
+        <div class="col-sm-10 col-md-8">
+            <div class="border-container">
+                <div class="title yourDetailsTitle">
+                    Update your details
+                </div>
+                <div class="row">
+                    <form enctype="application/x-www-form-urlencoded" method="post" action="/user/updateaccountdetails">
+                        <div class="col-md-4 col-md-push-8 col-sm-push-0">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa fa-info-circle"></i> <b>Your details</b>
+                                <p>
+                                    All of the information you enter here, excluding your email address, will be visible
+                                    to
+                                    other users of Niceway.to.
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-8 col-md-pull-4 col-sm-pull-0">
-                        <label class="noPad">Name</label>
-                        <input type="text" class="form-control" name="fname"
-                               placeholder="First Name" value="<?= $this->user->fname ?>">
-                        <input type="text" class="form-control" name="lname"
-                               placeholder="Last Name" value="<?= $this->user->lname ?>">
+                        <div class="col-md-8 col-md-pull-4 col-sm-pull-0">
+                            <label class="noPad">Name</label>
+                            <input type="text" class="form-control" name="fname"
+                                   placeholder="First Name" value="<?= $this->displayedUser->fname ?>">
+                            <input type="text" class="form-control" name="lname"
+                                   placeholder="Last Name" value="<?= $this->displayedUser->lname ?>">
 
-                        <label>
-                            Email <?=
-                            ($this->user->isConfirmed) ? "(<i class=\"fa fa-check\"></i> Confirmed)" : "(<i class=\"fa fa-exclamation-circle\"></i> Not Confirmed)"
-                            ?>
-                        </label>
-                        <input type="text" name="email" class="form-control"
-                               placeholder="Your email address" value="<?= $this->user->email ?>">
+                            <label>
+                                Email <?=
+                                ($this->displayedUser->isConfirmed) ? "(<i class=\"fa fa-check\"></i> Confirmed)" : "(<i class=\"fa fa-exclamation-circle\"></i> Not Confirmed)"
+                                ?>
+                            </label>
+                            <input type="text" name="email" class="form-control"
+                                   placeholder="Your email address" value="<?= $this->displayedUser->email ?>">
 
-                        <label> Location </label>
-                        <input type="text" name="location" class="form-control"
-                               placeholder="Your location" value="<?= $this->user->location ?>">
+                            <label> Location </label>
+                            <input type="text" name="location" class="form-control"
+                                   placeholder="Your location" value="<?= $this->displayedUser->location ?>">
 
-                        <label> Bio </label>
-                        <textarea class="form-control" placeholder="A little about yourself" name="bio"><?=
-                            $this->user->bio ?></textarea>
+                            <label> Bio </label>
+                            <textarea class="form-control" placeholder="A little about yourself" name="bio"><?=
+                                $this->displayedUser->bio ?></textarea>
 
-                        <input id="updateAccount" type="submit" class="btn btn-success" value="Update Details"/>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2"></div>
-</div>
-
-<div class="row margin_b_20">
-    <div class="col-sm-1 col-md-2"></div>
-    <div class="col-sm-10 col-md-8">
-        <div class="border-container">
-            <div class="title yourPasswordTitle">
-                Update your password
-            </div>
-            <div class="row">
-                <form enctype="application/x-www-form-urlencoded" method="post" action="/user/updatepassword">
-                    <div class="col-md-4 col-md-push-8 col-sm-push-0">
-                        <div class="alert alert-info" role="alert">
-                            <i class="fa fa-info-circle"></i> <b>Your password</b>
-                            <p>
-                                Your password should be at least 6 characters long, and it is recommended you use a
-                                combination of characters (upper and lower case), numbers and symbols
-                            </p>
+                            <input id="updateAccount" type="submit" class="btn btn-success" value="Update Details"/>
                         </div>
-                    </div>
-                    <div class="col-md-8 col-md-pull-4 col-sm-pull-0">
-                        <div class="form-group" id="in_curPassWrapper">
-                            <input type="password" class="form-control" name="currentPass" placeholder="Enter Current Password">
-                        </div>
-                        <div class="form-group" id="in_newPass1Wrapper">
-                            <input type="password" class="form-control" name="newPass1" placeholder="Enter New Password">
-                        </div>
-                        <div class="form-group" id="in_newPass2Wrapper">
-                            <input type="password" class="form-control" name="newPass2" placeholder="Confirm New Password">
-                        </div>
-                        <input id="updatePassword" type="submit" class="btn btn-success" value="Change Password"/>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
+        <div class="col-md-2"></div>
     </div>
-    <div class="col-md-2"></div>
-</div>
+
+    <div class="row margin_b_20">
+        <div class="col-sm-1 col-md-2"></div>
+        <div class="col-sm-10 col-md-8">
+            <div class="border-container">
+                <div class="title yourPasswordTitle">
+                    Update your password
+                </div>
+                <div class="row">
+                    <form enctype="application/x-www-form-urlencoded" method="post" action="/user/updatepassword">
+                        <div class="col-md-4 col-md-push-8 col-sm-push-0">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa fa-info-circle"></i> <b>Your password</b>
+                                <p>
+                                    Your password should be at least 6 characters long, and it is recommended you use a
+                                    combination of characters (upper and lower case), numbers and symbols
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-md-pull-4 col-sm-pull-0">
+                            <div class="form-group" id="in_curPassWrapper">
+                                <input type="password" class="form-control" name="currentPass" placeholder="Enter Current Password">
+                            </div>
+                            <div class="form-group" id="in_newPass1Wrapper">
+                                <input type="password" class="form-control" name="newPass1" placeholder="Enter New Password">
+                            </div>
+                            <div class="form-group" id="in_newPass2Wrapper">
+                                <input type="password" class="form-control" name="newPass2" placeholder="Confirm New Password">
+                            </div>
+                            <input id="updatePassword" type="submit" class="btn btn-success" value="Change Password"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+<? } else { ?>
+    <div class="row margin_b_20">
+        <div class="col-sm-1 col-md-2"></div>
+        <div class="col-sm-10 col-md-8">
+            <div class="border-container">
+                <div class="title routesTitle">
+                    Routes
+                </div>
+                <div class="row">
+                    list user routes here
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+<? } ?>

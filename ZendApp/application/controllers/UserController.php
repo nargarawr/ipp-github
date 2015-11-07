@@ -44,16 +44,27 @@ class UserController extends BaseController {
         // Non confirmed email error
         $this->view->nce = $this->getRequest()->getParam('nce', 0);
 
+
+        // Used to display this page externally to other users
+        $displayedUser = $this->user;
+        $customUserId = $this->getRequest()->getParam('id', null);
+        if (!is_null($customUserId)) {
+            $displayedUser = UserFactory::getUser($customUserId);
+        }
+
         // Get usage statistics for the user
-        $this->view->user->stats = (object)array(
-            'average_rating'    => RatingFactory::getAverageRatingForUser($this->user->userId),
-            'ratings_given'     => RatingFactory::getAllRatingsFromUser($this->user->userId, true),
-            'ratings_received'  => RatingFactory::getAllRatingsForUser($this->user->userId, true),
-            'comments_given'    => CommentFactory::getCommentsFromUser($this->user->userId, true),
-            'comments_received' => CommentFactory::getCommentsForUser($this->user->userId, true),
-            'route_count'       => count(RouteFactory::getRoutesForUser($this->user->userId, false)),
-            'account_age'       => abs(floor((strtotime('now') - strtotime($this->user->datetimeCreated)) / 60 / 60 / 24))
+        $displayedUser->stats = (object)array(
+            'average_rating'    => RatingFactory::getAverageRatingForUser($displayedUser->userId),
+            'ratings_given'     => RatingFactory::getAllRatingsFromUser($displayedUser->userId, true),
+            'ratings_received'  => RatingFactory::getAllRatingsForUser($displayedUser->userId, true),
+            'comments_given'    => CommentFactory::getCommentsFromUser($displayedUser->userId, true),
+            'comments_received' => CommentFactory::getCommentsForUser($displayedUser->userId, true),
+            'route_count'       => count(RouteFactory::getRoutesForUser($displayedUser->userId, false)),
+            'account_age'       => abs(floor((strtotime('now') - strtotime($displayedUser->datetimeCreated)) / 60 / 60 / 24))
         );
+
+        $this->view->displayedUser = $displayedUser;
+        $this->view->viewingOwnProfile = $displayedUser->userId == $this->user->userId;
     }
 
     /**

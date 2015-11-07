@@ -3,7 +3,8 @@
 /**
  * Class MemberController
  *
- * Uses to manage the logging in, signing up, and logging out of the system
+ * Used to manage the all these to do with accessing the system (logging in and out, signing up, forgotten passwords,
+ * confirming email address, etc)
  *
  * @author Craig Knott
  */

@@ -60,7 +60,6 @@ class RouteController extends BaseController {
             ));
         } else if ($this->user->isConfirmed == false) {
             $this->_redirect("/user/details/nce/1");
-
         }
 
         $this->view->routeId = $this->getRequest()->getParam('id', null);
@@ -71,7 +70,6 @@ class RouteController extends BaseController {
             $this->view->routeExists = ($this->view->route !== false);
         }
     }
-
 
     /**
      * Adds a new route to the database and returns a Json object with the id of that route

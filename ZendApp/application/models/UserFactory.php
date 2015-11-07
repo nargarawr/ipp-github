@@ -114,4 +114,57 @@ class UserFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
+    /**
+     * Gets all information for the user represented by the given user ID
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId Id of the user to get the data for
+     *
+     * @return User The user object of this user
+     */
+    public static function getUser($userId) {
+        $sql = "SELECT
+                    pk_user_id as id,
+                    username,
+                    fname,
+                    lname,
+                    email,
+                    location,
+                    bio,
+                    login_count,
+                    last_login,
+                    is_admin,
+                    is_banned,
+                    is_shadow_banned,
+                    datetime_created,
+                    datetime_updated,
+                    is_confirmed
+                FROM tb_user
+                WHERE pk_user_id = :userId";
+        $params = array(
+            ':userId' => $userId
+        );
+        $user = parent::fetchOne($sql, $params);
+
+        $userObject = new User(
+            $user->username,
+            $user->id,
+            $user->fname,
+            $user->lname,
+            $user->email,
+            $user->location,
+            $user->bio,
+            $user->login_count,
+            $user->last_login,
+            $user->is_admin,
+            $user->is_banned,
+            $user->is_shadow_banned,
+            $user->datetime_created,
+            $user->datetime_updated,
+            $user->is_confirmed
+        );
+        return $userObject;
+    }
+
 }

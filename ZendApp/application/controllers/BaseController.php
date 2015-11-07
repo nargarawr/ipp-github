@@ -35,7 +35,24 @@ class BaseController extends Zend_Controller_Action {
         // If the user needs to be logged in to access this page, redirect them to the login page
         if (Zend_Auth::getInstance()->hasIdentity()) {
             // Create the user object
-            $this->view->user = $this->user = new User(Zend_Auth::getInstance()->getIdentity());
+            $userIdentity = Zend_Auth::getInstance()->getIdentity();
+            $this->view->user = $this->user = new User(
+                $userIdentity->username,
+                $userIdentity->pk_user_id,
+                $userIdentity->fname,
+                $userIdentity->lname,
+                $userIdentity->email,
+                $userIdentity->location,
+                $userIdentity->bio,
+                $userIdentity->login_count,
+                $userIdentity->last_login,
+                $userIdentity->is_admin,
+                $userIdentity->is_banned,
+                $userIdentity->is_shadow_banned,
+                $userIdentity->is_confirmed,
+                $userIdentity->datetime_created,
+                $userIdentity->datetime_updated
+            );
         } else if ($this->view->isExternal == false) {
             // If the user session is no longer valid and they are navigating to a page
             $this->_helper->redirector('login', 'member', null, array(
