@@ -1,24 +1,24 @@
-var navBar = $('.navbar-right').find('.dropdown-toggle');
-var navName = $('#nav-username').val();
-var caret = '<span class="caret"></span>';
+$(document).ready(function () {
+    resize();
+});
+
+$(window).resize(function () {
+    resize();
+});
 
 /**
- * Changed the navigation bar based on the screen size. If the screen is too small, the message 'Logged in as
- * username, will be replaced with just 'Username'
+ * Used to resize the navigation bar for between 768 and 811, which starts the overlay
  *
  * @author Craig Knott
  */
-$(window).resize(function () {
-    if (window.innerWidth < 1066) {
-        if ($(navBar).html() != navName + caret) {
-            $(navBar).html(navName + caret);
-        }
+function resize() {
+    if (window.innerWidth >= 768 && window.innerWidth < 811) {
+        $('#navbar-collapse').find('li').addClass('smallerPadding');
     } else {
-        if ($(navBar).html() != 'Logged in as ' + navName + caret) {
-            $(navBar).html('Logged in as ' + navName + caret)
-        }
+        $('#navbar-collapse').find('li').removeClass('smallerPadding');
     }
-});
+}
+
 
 /**
  * Used to send emails through Ajax
