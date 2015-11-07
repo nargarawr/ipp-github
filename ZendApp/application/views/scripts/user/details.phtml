@@ -26,7 +26,11 @@
         <div class="border-container">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="/images/user_icons/default.png" alt="User Icon" class="img-thumbnail">
+                    <? if ($this->displayedUser->stats->average_rating > 2) { ?>
+                        <img src="/images/user_icons/veteran.png" alt="User Icon" class="img-thumbnail">
+                    <? } else { ?>
+                        <img src="/images/user_icons/default.png" alt="User Icon" class="img-thumbnail">
+                    <? } ?>
                 </div>
                 <div class="col-md-8">
                     <div class="user-detail-list">
@@ -205,7 +209,49 @@
                     Routes
                 </div>
                 <div class="row">
-                    list user routes here
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Points</th>
+                                <th>Created</th>
+                                <th>Comments</th>
+                                <th>Rating</th>
+                                <th>View/Fork</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <? foreach ($this->routes as $route) { ?>
+                                <tr class="routeRow">
+                                    <td>
+                                        <?= $route->name ?>
+                                    </td>
+                                    <td><?= $route->num_points ?></td>
+                                    <td><?= date("d M y", strtotime($route->created)) ?></td>
+                                    <td><?= $route->comments ?></td>
+                                    <td>
+                                        <?= $this->partial('user', 'stars', null, array(
+                                            'rating' => $route->rating
+                                        )) ?>
+                                    </td>
+                                    <td>
+                                        <a class="btnLink" href="/route/detail/id/<?= $route->routeId ?>">
+                                            <button class="btn btn-primary btn-nopad">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </a>
+                                        <a class="btnLink" href="/route/fork/id/<?= $route->routeId ?>">
+                                            <button class="btn btn-warning btn-nopad">
+                                                <i class="fa fa-code-fork"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <? } ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

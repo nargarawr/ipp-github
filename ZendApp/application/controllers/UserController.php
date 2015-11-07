@@ -65,6 +65,11 @@ class UserController extends BaseController {
 
         $this->view->displayedUser = $displayedUser;
         $this->view->viewingOwnProfile = $displayedUser->userId == $this->user->userId;
+
+        if (!$this->view->viewingOwnProfile) {
+            $routes = RouteFactory::getRoutesForUser($displayedUser->userId, false);
+            $this->view->routes = $routes;
+        }
     }
 
     /**
@@ -73,7 +78,7 @@ class UserController extends BaseController {
      * @author Craig Knott
      */
     public function routesAction() {
-        $routes = RouteFactory::getRoutesForUser($this->user->userId, true);
+        $routes = RouteFactory::getRoutesForUser($this->user->userId, true, true);
         $this->view->routes = $routes;
     }
 
