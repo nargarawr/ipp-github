@@ -33,9 +33,10 @@ class CommentFactory extends ModelFactory {
                 )";
         $params = array(
             ':routeId'  => $routeId,
-            ':postedBy' => $text,
-            ':text'     => $postedBy,
+            ':postedBy' => $postedBy,
+            ':text'     => $text,
         );
+
         $commentId = parent::execute($sql, $params, true);
         return $commentId;
     }
@@ -73,7 +74,7 @@ class CommentFactory extends ModelFactory {
         $params = array(
             ':commentId' => $commentId
         );
-        parent::fetchAll($sql, $params);
+        parent::execute($sql, $params);
     }
 
     /**

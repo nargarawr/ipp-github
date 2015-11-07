@@ -27,7 +27,7 @@ class CommentController extends BaseController {
      * @author Craig Knott
      */
     public function addAction() {
-        $routeId = $this->getRequest()->getParam('routeId', null);
+        $routeId = $this->getRequest()->getParam('id', null);
         $text = $this->getRequest()->getParam('text', null);
 
         $id = CommentFactory::addComment($routeId, $text, $this->user->userId);
@@ -42,7 +42,7 @@ class CommentController extends BaseController {
      * @author Craig Knott
      */
     public function updateAction() {
-        $commentId = $this->getRequest()->getParam('commentId', null);
+        $commentId = $this->getRequest()->getParam('id', null);
         $newText = $this->getRequest()->getParam('newText', null);
 
         CommentFactory::updateComment($commentId, $newText);
@@ -56,7 +56,7 @@ class CommentController extends BaseController {
      * @author Craig Knott
      */
     public function deleteAction() {
-        $commentId = $this->getRequest()->getParam('commentId', null);
+        $commentId = $this->getRequest()->getParam('id', null);
 
         CommentFactory::deleteComment($commentId);
 
