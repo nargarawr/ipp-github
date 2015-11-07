@@ -43,6 +43,16 @@ class UserController extends BaseController {
 
         // Non confirmed email error
         $this->view->nce = $this->getRequest()->getParam('nce', 0);
+
+        // Get usage statistics for the user
+        $this->view->user->stats = (object)array(
+            'average_rating'   => RatingFactory::getAverageRatingForUser($this->user->userId),
+            'ratings_given'    => RatingFactory::getAllRatingsFromUser($this->user->userId, true),
+            'ratings_received' => RatingFactory::getAllRatingsForUser($this->user->userId, true),
+            'comments_given'   => CommentFactory::getCommentsFromUser($this->user->userId, true),
+            'comments_received'   => CommentFactory::getCommentsForUser($this->user->userId, true),
+            'route_count'      => count(RouteFactory::getRoutesForUser($this->user->userId, false))
+        );
     }
 
     /**

@@ -86,15 +86,15 @@ class BaseController extends Zend_Controller_Action {
                 'isActive'      => false,
                 'children'      => array(
                     (object)array(
-                        'name'          => 'My Routes',
-                        'link'          => '/user/routes',
-                        'icon'          => '<i class="fa fa-map-marker"></i>',
-                        'shouldDisplay' => true
-                    ),
-                    (object)array(
                         'name'          => 'My Details',
                         'link'          => '/user/details',
                         'icon'          => '<i class="fa fa-info-circle"></i>',
+                        'shouldDisplay' => true
+                    ),
+                    (object)array(
+                        'name'          => 'My Routes',
+                        'link'          => '/user/routes',
+                        'icon'          => '<i class="fa fa-map-marker"></i>',
                         'shouldDisplay' => true
                     ),
                     (object)array(

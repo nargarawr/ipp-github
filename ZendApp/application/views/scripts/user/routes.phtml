@@ -39,11 +39,13 @@
                         </td>
                         <td><?= ($route->is_private) ? 'Private' : 'Public' ?></td>
                         <td><?= date("d M y", strtotime($route->created)) ?></td>
-                        <td>99</td>
                         <td>
-                            <? for ($i = 0; $i < 5; $i++) { ?>
-                                <i class="fa fa-star"></i>
-                            <? } ?>
+                            <?= $route->comments ?>
+                        </td>
+                        <td>
+                            <?= $this->partial('user', 'stars', null, array(
+                                'rating' => $route->rating
+                            )) ?>
                         </td>
                         <td>
                             <a class="btnLink" href="/route/create/id/<?= $route->routeId ?>">

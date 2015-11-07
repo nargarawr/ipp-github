@@ -13,18 +13,58 @@
 class RatingFactory extends ModelFactory {
 
     /**
-     * Adds a rating to the given route
+     * Adds a rating to the given route. Due to the on duplicate key update, this can also be used to update ratings
+     * - one method for everything!
      *
      * @author Craig Knott
      *
      * @param int   $routeId The Id of the route being rating
      * @param float $rating  The rating being given (rounded to a multiple of 0.5, between 1 and 5)
+     * @param int   $ratedBy The user Id of the user giving this rating
      *
      * @return int The rating Id
      */
-    public static function addRating($routeId, $rating) {
+    public static function addRating($routeId, $rating, $ratedBy) {
+        $sql = "INSERT INTO tb_rating (
+                    fk_route_id,
+                    created_by,
+                    value,
+                    is_deleted
+                ) VALUES (
+                    :routeId,
+                    :ratedBy,
+                    :rating,
+                    0
+                )
+                ON DUPLICATE KEY
+                UPDATE value = :rating,
+                       is_deleted = 0;";
+        $params = array(
+            ':routeId' => $routeId,
+            ':ratedBy' => $ratedBy,
+            ':rating'  => $rating
+        );
 
-        return 1;
+        $id = parent::execute($sql, $params, true);
+        return $id;
+    }
+
+    /**
+     * "Clears" a rating from a route, as if the user never rated it
+     *
+     * @author Craig Knott
+     *
+     * @param int $ratingId The Id of rating to clear
+     */
+    public static function removeRating($ratingId) {
+        $sql = "UPDATE tb_rating
+                SET is_deleted = 1
+                WHERE pk_rating_id = :ratingId";
+        $params = array(
+            ':ratingId' => $ratingId
+        );
+
+        parent::execute($sql, $params);
     }
 
     /**
@@ -37,7 +77,17 @@ class RatingFactory extends ModelFactory {
      * @return float The average rating for the route (rounded to a multiple of 0.5, between 1 and 5)
      */
     public static function getAverageRatingForRoute($routeId) {
-        return 1;
+        $sql = "SELECT
+                    FLOOR(avg(value) * 2) / 2 AS average
+                FROM tb_rating
+                WHERE fk_route_id = 1
+                AND is_deleted = 0";
+        $params = array(
+            ':routeId' => $routeId
+        );
+
+        $rating = parent::fetchOne($sql, $params)->average;
+        return $rating;
     }
 
     /**
@@ -50,30 +100,21 @@ class RatingFactory extends ModelFactory {
      * @return float The average rating for the user (rounded to a multiple of 0.5, between 1 and 5)
      */
     public static function getAverageRatingForUser($userId) {
+        $sql = "SELECT
+                    FLOOR(avg(value) * 2) / 2 AS average
+                FROM tb_rating rating
+                JOIN tb_route route
+                ON rating.fk_route_id = route.pk_route_id
+                JOIN tb_user user
+                ON route.created_by = user.pk_user_id
+                WHERE user.pk_user_id = :userId
+                AND rating.is_deleted = 0";
+        $params = array(
+            ':userId' => $userId
+        );
 
-    }
-
-    /**
-     * "Clears" a rating from a route, as if the user never rated it
-     *
-     * @author Craig Knott
-     *
-     * @param int $ratingId The Id of rating to clear
-     */
-    public static function removeRating($ratingId) {
-
-    }
-
-    /**
-     * Changes the rating a user left for a route
-     *
-     * @author Craig Knott
-     *
-     * @param int   $ratingId The rating to update
-     * @param float $newValue The new rating value (rounded to a multiple of 0.5, between 1 and 5)
-     */
-    public static function updateRating($ratingId, $newValue) {
-
+        $rating = parent::fetchOne($sql, $params)->average;
+        return $rating;
     }
 
     /**
@@ -81,12 +122,58 @@ class RatingFactory extends ModelFactory {
      *
      * @author Craig Knott
      *
-     * @param int $userId Id of the user to get the data for
+     * @param int     $userId        Id of the user to get the data for
+     * @param boolean $getNumberOnly Return the number of ratings instead of the ratings themselves
      *
-     * @return array(int, int) Routed Ids and ratings from this user
+     * @return array(int, int) | int, Route Ids and ratings from this user or the number of ratings
      */
-    public static function getAllRatingsFromUser($userId) {
+    public static function getAllRatingsFromUser($userId, $getNumberOnly = false) {
+        $sql = "SELECT
+                    fk_route_id,
+                    value
+                FROM tb_rating
+                WHERE created_by = :userId
+                AND is_deleted = 0;";
+        $params = array(
+            ':userId' => $userId
+        );
 
+        $ratings = parent::fetchAll($sql, $params);
+        if ($getNumberOnly) {
+            return count($ratings);
+        }
+        return $ratings;
+    }
+
+    /**
+     * Gets all ratings that the user has been given, for statistics
+     *
+     * @author Craig Knott
+     *
+     * @param int     $userId        Id of the user to get the data for
+     * @param boolean $getNumberOnly Return the number of ratings instead of the ratings themselves
+     *
+     * @return array(int, int) | int, Route Ids and ratings from this user or the number of ratings
+     */
+    public static function getAllRatingsForUser($userId, $getNumberOnly = false) {
+        $sql = "SELECT
+                    fk_route_id,
+                    value
+                FROM tb_rating rating
+                JOIN tb_route route
+                ON rating.fk_route_id = route.pk_route_id
+                WHERE rating.is_deleted = 0
+                AND route.is_deleted = 0
+                AND route.created_by = :userId";
+        $params = array(
+            ':userId' => $userId
+        );
+
+        $ratings = parent::fetchAll($sql, $params);
+        if ($getNumberOnly) {
+            return count($ratings);
+        }
+        return $ratings;
     }
 
 }

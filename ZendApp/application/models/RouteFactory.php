@@ -104,7 +104,13 @@ class RouteFactory extends ModelFactory {
                     cost,
                     distance,
                     datetime_created AS created,
-                    (SELECT count(1) FROM tb_point WHERE fk_route_id = pk_route_id) AS num_points
+                    (SELECT count(1) FROM tb_point WHERE fk_route_id = pk_route_id) AS num_points,
+                    IFNULL(
+                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = tb_route.pk_route_id), 0
+                    ) AS rating,
+                    IFNULL (
+                        (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
+                    ) AS comments
                 FROM tb_route
                 WHERE created_by = :userId
                 AND is_deleted = 0

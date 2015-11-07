@@ -116,7 +116,7 @@ class CommentFactory extends ModelFactory {
      *
      * @return array(comments) | int, Array of comments for this user or single int representing the count
      */
-    public static function getCommentsForUser($userId, $count) {
+    public static function getCommentsFromUser($userId, $count) {
         $sql = "SELECT
                     c.pk_comment_id AS commentId,
                     c.comment,
@@ -130,6 +130,43 @@ class CommentFactory extends ModelFactory {
                 JOIN tb_user u
                 ON r.created_by = u.pk_user_id
                 WHERE c.created_by = :userId
+                AND c.is_deleted = 0";
+        $params = array(
+            ':userId' => $userId
+        );
+
+        $results = parent::fetchAll($sql, $params);
+        if ($count) {
+            return count($results);
+        } else {
+            return $results;
+        }
+    }
+
+    /**
+     * Gets all comments made by other users, on routes for the specified user
+     *
+     * @author Craig Knott
+     *
+     * @param int     $userId Id of the user to get the comments for
+     * @param boolean $count  Whether or not to return just the number of comments
+     *
+     * @return array(comments) | int, Array of comments for this user or single int representing the count
+     */
+    public static function getCommentsForUser($userId, $count) {
+        $sql = "SELECT
+                    c.pk_comment_id AS commentId,
+                    c.comment,
+                    r.name AS routeName,
+                    u.fname AS route_creator_fname,
+                    u.lname AS route_creator_lname,
+                    u.username AS route_creator_uname
+                FROM tb_comment c
+                JOIN tb_route r
+                ON c.fk_route_id = r.pk_route_id
+                JOIN tb_user u
+                ON r.created_by = u.pk_user_id
+                WHERE r.created_by = :userId
                 AND c.is_deleted = 0";
         $params = array(
             ':userId' => $userId
