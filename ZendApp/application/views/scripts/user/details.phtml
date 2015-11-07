@@ -107,19 +107,18 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <p>#Comments written: <?= $this->user->stats->comments_given?></p>
+                    <p>#Comments written: <?= $this->user->stats->comments_given ?></p>
                     <p>#Comments rcvd: <?= $this->user->stats->comments_received ?></p>
-                    <p>#Ratings given: <?= $this->user->stats->ratings_given?></p>
-                    <p>#Ratings received: <?= $this->user->stats->ratings_received?></p>
+                    <p>#Ratings given: <?= $this->user->stats->ratings_given ?></p>
+                    <p>#Ratings received: <?= $this->user->stats->ratings_received ?></p>
                     <p>
                         User Rating:
                         <?= $this->partial('user', 'stars', null, array(
                             'rating' => $this->user->stats->average_rating
                         )) ?>
                     </p>
-                    <p>#Routes made: <?= $this->user->stats->route_count?> </p>
-                    <p>Account age (in days):
-                        <?= floor((strtotime('now') - strtotime($this->user->datetimeCreated)) / 60 / 60 / 24) ?>
+                    <p>#Routes made: <?= $this->user->stats->route_count ?> </p>
+                    <p>Account age (in days): <?= $this->user->stats->account_age ?>
                     </p>
                 </div>
             </div>

@@ -4,6 +4,7 @@
  * @author Craig Knott
  */
 $(document).ready(function () {
+    $('#signup-label').remove();
     $('#signupLaunch').trigger('click');
 });
 

@@ -4,6 +4,7 @@
  * @author Craig Knott
  */
 $(document).ready(function () {
+    $('#login-label').remove();
     $('#loginLaunch').trigger('click');
 });
 

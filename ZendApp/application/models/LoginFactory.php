@@ -108,6 +108,62 @@ class LoginFactory extends ModelFactory {
 
         return (count($result) == 0);
     }
+
+    /**
+     * Checks whether the provided email address is registered to any account in the system
+     *
+     * @author Craig Knott
+     *
+     * @param string $email     The email address to check
+     * @param bool   $getUserId Whether or not to return the user Id of the user that owns this email
+     *
+     * @return bool Whether or not the email exists in the system
+     */
+    public static function checkEmailExists($email, $getUserId = false) {
+        $sql = "SELECT
+                    pk_user_id AS id
+                FROM tb_user
+                WHERE email = :email";
+        $params = array(
+            ':email' => $email
+        );
+
+        if ($getUserId) {
+            return parent::fetchOne($sql, $params);
+        }
+
+        $result = parent::fetchAll($sql, $params);
+        return (count($result) > 0);
+    }
+
+    /**
+     * Checks whether or not a given hash string is the correct hash string for the provided email address
+     *
+     * @author Craig Knott
+     *
+     * @param string $email
+     * @param string $hashString
+     *
+     * @return int The user id of the user this combination belongs to, or false if no one
+     */
+    public static function checkEmailHash($email, $hashString) {
+        $sql = "SELECT
+                    pk_user_id AS id
+                FROM tb_user
+                WHERE email = :email
+                AND md5(concat(pk_user_id, email)) = :hash";
+        $params = array(
+            ':email' => $email,
+            ':hash' => $hashString
+        );
+
+        $result = parent::fetchOne($sql, $params);
+
+        if ($result !== false) {
+            return $result->id;
+        }
+        return false;
+    }
 }
 
 

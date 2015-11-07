@@ -41,6 +41,12 @@ class EmailController extends BaseController {
      * @author Craig Knott
      */
     public function forgotpasswordAction() {
+        $this->_helper->layout()->disableLayout();
+
+        $userId = $this->getRequest()->getParam('userId', null);
+        $email = $this->getRequest()->getParam('email', null);
+
+        $this->view->hash = md5($userId . $email);
     }
 
     /**

@@ -12,3 +12,13 @@ dt {
 .zend_form {
     margin-bottom: 0;
 }
+
+.forgotPassword {
+    text-align: right;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.forgotPassword a {
+    color: white;
+}

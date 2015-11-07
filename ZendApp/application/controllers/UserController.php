@@ -46,12 +46,13 @@ class UserController extends BaseController {
 
         // Get usage statistics for the user
         $this->view->user->stats = (object)array(
-            'average_rating'   => RatingFactory::getAverageRatingForUser($this->user->userId),
-            'ratings_given'    => RatingFactory::getAllRatingsFromUser($this->user->userId, true),
-            'ratings_received' => RatingFactory::getAllRatingsForUser($this->user->userId, true),
-            'comments_given'   => CommentFactory::getCommentsFromUser($this->user->userId, true),
-            'comments_received'   => CommentFactory::getCommentsForUser($this->user->userId, true),
-            'route_count'      => count(RouteFactory::getRoutesForUser($this->user->userId, false))
+            'average_rating'    => RatingFactory::getAverageRatingForUser($this->user->userId),
+            'ratings_given'     => RatingFactory::getAllRatingsFromUser($this->user->userId, true),
+            'ratings_received'  => RatingFactory::getAllRatingsForUser($this->user->userId, true),
+            'comments_given'    => CommentFactory::getCommentsFromUser($this->user->userId, true),
+            'comments_received' => CommentFactory::getCommentsForUser($this->user->userId, true),
+            'route_count'       => count(RouteFactory::getRoutesForUser($this->user->userId, false)),
+            'account_age'       => abs(floor((strtotime('now') - strtotime($this->user->datetimeCreated)) / 60 / 60 / 24))
         );
     }
 

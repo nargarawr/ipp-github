@@ -103,7 +103,7 @@ class MemberController extends BaseController {
                             null,
                             array(
                                 'username' => $postData["username"],
-                                'userId' => $userId
+                                'userId'   => $userId
                             )
                         )
                     );
@@ -140,6 +140,90 @@ class MemberController extends BaseController {
     }
 
     /**
+     * Page that allows users to send a reset password link to their email address
+     *
+     * @author Craig Knott
+     */
+    public function forgottenpasswordAction() {
+        // If the user is already logged in, redirect them to their detail page
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $this->_redirect('user/details');
+        }
+
+        $request = $this->getRequest();
+        $passwordForm = $this->getSendPasswordResetForm();
+        if ($request->isPost()) {
+            if ($passwordForm->isValid($request->getPost())) {
+                $postData = $request->getPost();
+
+                // Check email exists in the system
+                $emailExists = LoginFactory::checkEmailExists($postData["email"], true);
+                if ($emailExists !== false) {
+                    EmailFactory::sendEmail(
+                        $postData["email"],
+                        'Niceway.to password reset',
+                        $this->view->action(
+                            'forgotpassword',
+                            'email',
+                            null,
+                            array(
+                                'email'  => $postData["email"],
+                                'userId' => $emailExists->id
+                            )
+                        )
+                    );
+
+                    // Re-enable layout after sending email
+                    $this->_helper->layout()->enableLayout();
+
+                    $this->view->successMessage = '<b>An email has been sent to the provided address:</b> You can use this to reset your password';
+                } else {
+                    $this->view->errorMessage = '<b>There was a problem sending the email:</b> That email is not registered';
+                }
+            }
+        }
+
+        $this->view->passwordForm = $passwordForm;
+    }
+
+    /**
+     * Page used to change the user's password, without knowing the original password. Cannot be access unless by
+     * email (thus the hash)
+     *
+     * @author Craig Knott
+     */
+    public function changepasswordAction() {
+        $hash = $this->getRequest()->getParam('hash', '');
+
+        $request = $this->getRequest();
+        $passwordForm = $this->getPasswordChangeForm($hash);
+        if ($request->isPost()) {
+            if ($passwordForm->isValid($request->getPost())) {
+                $postData = $request->getPost();
+
+                // Check entered passwords match
+                if ($postData["pwd1"] === $postData["pwd2"]) {
+                    // Check the hash is correct
+                    $idOfUser = LoginFactory::checkEmailHash($postData["email"], $postData["hash"]);
+                    if ($idOfUser !== false) {
+                        UserFactory::updatePassword($idOfUser, $postData["pwd1"]);
+
+                        $this->view->successMessage = '<b>Your password was successfully reset:</b> You can now log in';
+                    } else {
+                        $this->view->errorMessage = '<b>There was a problem changing your password:</b> The email you entered was not correct';
+                    }
+
+
+                } else {
+                    $this->view->errorMessage = '<b>There was a problem changing your password:</b> The entered passwords did not match';
+                }
+            }
+        }
+
+        $this->view->passwordForm = $passwordForm;
+    }
+
+    /**
      * Returns a connection to the database and authentication service
      *
      * @author Craig Knott
@@ -160,6 +244,8 @@ class MemberController extends BaseController {
      * Uses zend_form to generate the form used on the log in page
      *
      * @author Craig Knott
+     *
+     * @return Zend_Form login form
      */
     protected function getLoginForm() {
         $username = new Zend_Form_Element_Text('username');
@@ -173,8 +259,7 @@ class MemberController extends BaseController {
             ->setRequired(true);
 
         $submit = new Zend_Form_Element_Submit('login');
-        $submit->setLabel('Login')
-            ->setAttrib('class', 'hidden');
+        $submit->setAttrib('class', 'hidden');
 
         if (!is_null($this->_request->getParam("redirect"))) {
             $redirect = '/member/login/redirect/' . $this->_request->getParam("redirect");
@@ -196,6 +281,8 @@ class MemberController extends BaseController {
      * Uses zend_form to generate the form used on the sign up page
      *
      * @author Craig Knott
+     *
+     * @return Zend_Form signup form
      */
     protected function getSignupForm() {
         $username = new Zend_Form_Element_Text('username');
@@ -227,6 +314,82 @@ class MemberController extends BaseController {
             ->addElement($submit);
 
         return $signupForm;
+    }
+
+
+    /**
+     * Uses Zend_form to generate the form used on the 'resetpassword' page
+     *
+     * @author Craig Knott
+     *
+     * @return Zend_Form password reset form
+     */
+    protected function getSendPasswordResetForm() {
+        $email = new Zend_Form_Element_Text('email');
+        $email->setLabel('Email:')
+            ->setAttrib('class', 'form-control')
+            ->setRequired(true);
+
+        $submit = new Zend_Form_Element_Submit('pword');
+        $submit->setLabel('Password')
+            ->setAttrib('class', 'hidden');
+
+        $passwordForm = new Zend_Form();
+        $passwordForm->setAction('/member/forgottenpassword')
+            ->setMethod('post')
+            ->addElement($email)
+            ->addElement($submit);
+
+        return $passwordForm;
+    }
+
+    /**
+     * Uses Zend_form to generate the form used on the 'changepassword' page
+     *
+     * @author Craig Knott
+     *
+     * @param string $hashString The hash of this users id and their email address
+     *
+     * @return Zend_Form password change form
+     */
+    protected function getPasswordChangeForm($hashString) {
+        $hash = new Zend_Form_Element_Text('hash');
+        $hash->setLabel(' ')
+            ->setValue($hashString)
+            ->setAttrib('class', 'hidden')
+            ->setRequired(true);
+
+        $email = new Zend_Form_Element_Text('email');
+        $email->setLabel('Your Email:')
+            ->setAttrib('class', 'form-control')
+            ->setRequired(true);
+
+        $pwd1 = new Zend_Form_Element_Password('pwd1');
+        $pwd1->setLabel('Your New Password:')
+            ->setAttrib('class', 'form-control')
+            ->addValidator('stringLength', false, array(6))
+            ->setRequired(true);
+
+        $pwd2 = new Zend_Form_Element_Password('pwd2');
+        $pwd2->setLabel('Your New Password (Again):')
+            ->setAttrib('class', 'form-control')
+            ->addValidator('stringLength', false, array(6))
+            ->setRequired(true);
+
+        $submit = new Zend_Form_Element_Submit('pwordChange');
+        $submit->setLabel(' ')
+            ->setAttrib('class', 'hidden');
+
+        $passwordForm = new Zend_Form();
+        $passwordForm->setAction('/member/changepassword')
+            ->setMethod('post')
+            ->addElement($email)
+            ->addElement($pwd1)
+            ->addElement($pwd2)
+            ->addElement($hash)
+            ->addElement($submit);
+
+        return $passwordForm;
     }
 
     /**
