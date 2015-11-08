@@ -91,13 +91,12 @@ class RouteFactory extends ModelFactory {
      * @author Craig Knott
      *
      * @param int  $userId               The user to get all routes for
-     * @param bool $displayPrivateRoutes Whether or not to return routes that are private
      * @param bool $withPoints           Whether to return the routes with their points as well (stored in a $points
      *                                   array)
      *
      * @return array All routes for the given user
      */
-    public static function getRoutesForUser($userId, $displayPrivateRoutes = true, $withPoints = false) {
+    public static function getRoutesForUser($userId, $withPoints = false) {
         $sql = "SELECT
                     pk_route_id AS routeId,
                     name,
@@ -115,7 +114,7 @@ class RouteFactory extends ModelFactory {
                     ) AS comments
                 FROM tb_route
                 WHERE created_by = :userId
-                AND is_deleted = 0" . ((!$displayPrivateRoutes) ? ' AND is_private = 0 ' : '') . "
+                AND is_deleted = 0
                 ORDER BY datetime_created DESC";
         $params = array(
             ':userId' => $userId

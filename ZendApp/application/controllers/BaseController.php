@@ -96,37 +96,18 @@ class BaseController extends Zend_Controller_Action {
             ),
             'profile' => (object)array(
                 'name'          => 'My Profile',
-                'type'          => 'dropdown',
-                'link'          => '/user/routes',
+                'type'          => 'link',
+                'link'          => '/user/details',
                 'icon'          => '<i class="fa fa-user"></i>',
                 'shouldDisplay' => true,
-                'isActive'      => false,
-                'children'      => array(
-                    (object)array(
-                        'name'          => 'My Details',
-                        'link'          => '/user/details',
-                        'icon'          => '<i class="fa fa-info-circle"></i>',
-                        'shouldDisplay' => true
-                    ),
-                    (object)array(
-                        'name'          => 'My Routes',
-                        'link'          => '/user/routes',
-                        'icon'          => '<i class="fa fa-map-marker"></i>',
-                        'shouldDisplay' => true
-                    ),
-                    (object)array(
-                        'name'          => 'Administration',
-                        'link'          => '/user/admin',
-                        'icon'          => '<i class="fa fa-cog"></i>',
-                        'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin)
-                    ),
-                )
+                'isActive'      => false
             )
         );
 
         $activeSelected = false;
         foreach ($navBar as &$nav) {
-            if ($nav->link === $currentUrl) {
+            if ($nav->link === $currentUrl ||
+                $nav->link === "/route/index" && ($currentUrl == "/route/list" || $currentUrl == "/route/detail")) {
                 $nav->isActive = true;
                 $activeSelected = true;
                 break;
@@ -138,5 +119,21 @@ class BaseController extends Zend_Controller_Action {
         }
 
         return $navBar;
+
+    }
+
+    /**
+     * Debug function used to make the output of var_dump a little easier to read
+     *
+     * @author Craig Knott
+     *
+     * @param mixed $variable The variable to display
+     *
+     * @return void
+     */
+    function dump($variable) {
+        echo "<pre style=\"border: 1px solid #000; margin: 0.5em;\">";
+        var_dump($variable);
+        echo "</pre>\n";
     }
 }

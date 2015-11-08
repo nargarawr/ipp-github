@@ -66,19 +66,7 @@ class UserController extends BaseController {
         $this->view->displayedUser = $displayedUser;
         $this->view->viewingOwnProfile = $displayedUser->userId == $this->user->userId;
 
-        if (!$this->view->viewingOwnProfile) {
-            $routes = RouteFactory::getRoutesForUser($displayedUser->userId, false);
-            $this->view->routes = $routes;
-        }
-    }
-
-    /**
-     * Lists all routes for the user
-     *
-     * @author Craig Knott
-     */
-    public function routesAction() {
-        $routes = RouteFactory::getRoutesForUser($this->user->userId, true, true);
+        $routes = RouteFactory::getRoutesForUser($displayedUser->userId);
         $this->view->routes = $routes;
     }
 
@@ -194,41 +182,5 @@ class UserController extends BaseController {
             ));
             $this->_helper->redirector('details', 'user', null, array());
         }
-    }
-
-    /**
-     * Deletes a given route from the system, takes a user Id to ensure no malicious intent
-     *
-     * @author Craig Knott
-     */
-    public function deleterouteAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $routeId = $this->getRequest()->getParam('id', 0);
-        RouteFactory::deleteRoute($routeId, $this->user->userId);
-
-        $this->_helper->redirector('routes', 'user', null, array());
-    }
-
-    /**
-     * Gets a route and sends it to the browser as a Json file for downloading
-     *
-     * @author Craig Knott
-     */
-    public function downloadrouteAction() {
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-
-        $routeId = $this->getRequest()->getParam('id', 0);
-        $route = RouteFactory::getRoute($routeId, $this->user->userId);
-        $route->points = RouteFactory::getRoutePoints($routeId, true);
-
-        $fileName = $route->name . ".json";
-
-        header('Content-Type: application/json');
-        header('Content-Disposition: attachment; filename="' . $fileName . '"');
-        echo Zend_Json::encode($route);
-
     }
 }

@@ -155,4 +155,40 @@ class RouteController extends BaseController {
         exit;
     }
 
+    /**
+     * Deletes a given route from the system, takes a user Id to ensure no malicious intent
+     *
+     * @author Craig Knott
+     */
+    public function deleteAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('id', 0);
+        RouteFactory::deleteRoute($routeId, $this->user->userId);
+
+        $this->_helper->redirector('details', 'user', null, array());
+    }
+
+    /**
+     * Gets a route and sends it to the browser as a Json file for downloading
+     *
+     * @author Craig Knott
+     */
+    public function downloadAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('id', 0);
+        $route = RouteFactory::getRoute($routeId, $this->user->userId);
+        $route->points = RouteFactory::getRoutePoints($routeId, true);
+
+        $fileName = $route->name . ".json";
+
+        header('Content-Type: application/json');
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        echo Zend_Json::encode($route);
+
+    }
+
 }

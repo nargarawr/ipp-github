@@ -38,7 +38,7 @@
                             <div class="col-sm-8">
                                 <?= $this->displayedUser->username ?>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4 text-right">
                                 <?= $this->partial('user', 'stars', null, array(
                                     'rating' => $this->displayedUser->stats->average_rating
                                 )) ?>
@@ -111,6 +111,87 @@
     </div>
     <div class="col-md-2"></div>
 </div>
+
+<div class="row margin_b_20">
+    <div class="col-sm-1 col-md-2"></div>
+    <div class="col-sm-10 col-md-8">
+        <div class="border-container">
+            <div class="title routesTitle">
+                Routes
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Points</th>
+                            <? if ($this->viewingOwnProfile) { ?>
+                                <th>Privacy</th>
+                            <? } ?>
+                            <th>Created</th>
+                            <th>Comments</th>
+                            <th>Rating</th>
+                            <? if ($this->viewingOwnProfile) { ?>
+                                <th>Manage</th>
+                            <? } else { ?>
+                                <th>View/Fork</th>
+                            <? } ?>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <? foreach ($this->routes as $route) { ?>
+                            <tr class="routeRow">
+                                <td>
+                                    <?= $route->name ?>
+                                </td>
+                                <td><?= $route->num_points ?></td>
+                                <? if ($this->viewingOwnProfile) { ?>
+                                    <td><?= ($route->is_private) ? 'Private' : 'Public' ?></td>
+                                <? } ?>
+                                <td><?= date("d M y", strtotime($route->created)) ?></td>
+                                <td><?= $route->comments ?></td>
+                                <td>
+                                    <?= $this->partial('user', 'stars', null, array(
+                                        'rating' => $route->rating
+                                    )) ?>
+                                </td>
+                                <td>
+                                    <a class="btnLink" href="/route/detail/id/<?= $route->routeId ?>">
+                                        <button class="btn btn-success btn-nopad">
+                                            <i class="fa fa-info-circle"></i>
+                                        </button>
+                                    </a>
+                                    <? if ($this->viewingOwnProfile) { ?>
+                                        <a class="btnLink" href="/route/create/id/<?= $route->routeId ?>">
+                                            <button class="btn btn-primary btn-nopad"><i class="fa fa-pencil"></i></button>
+                                        </a>
+                                        <a class="btnLink" target="_blank" href="/route/download/id/<?= $route->routeId ?>">
+                                            <button class="btn btn-warning btn-nopad"><i class="fa fa-download"></i></button>
+                                        </a>
+
+                                        <a class="delBtn btnLink" href="/route/delete/id/<?= $route->routeId ?>">
+                                            <button class="btn btn-danger btn-nopad"><i class="fa fa-trash"></i></button>
+                                        </a>
+                                    <? } else { ?>
+                                        <a class="btnLink" href="/route/fork/id/<?= $route->routeId ?>">
+                                            <button class="btn btn-warning btn-nopad">
+                                                <i class="fa fa-code-fork"></i>
+                                            </button>
+                                        </a>
+                                    <? } ?>
+                                </td>
+                            </tr>
+                        <? } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
 
 <? if ($this->viewingOwnProfile) { ?>
     <div class="row">
@@ -196,63 +277,6 @@
                             <input id="updatePassword" type="submit" class="btn btn-success" value="Change Password"/>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2"></div>
-    </div>
-<? } else { ?>
-    <div class="row margin_b_20">
-        <div class="col-sm-1 col-md-2"></div>
-        <div class="col-sm-10 col-md-8">
-            <div class="border-container">
-                <div class="title routesTitle">
-                    Routes
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Points</th>
-                                <th>Created</th>
-                                <th>Comments</th>
-                                <th>Rating</th>
-                                <th>View/Fork</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <? foreach ($this->routes as $route) { ?>
-                                <tr class="routeRow">
-                                    <td>
-                                        <?= $route->name ?>
-                                    </td>
-                                    <td><?= $route->num_points ?></td>
-                                    <td><?= date("d M y", strtotime($route->created)) ?></td>
-                                    <td><?= $route->comments ?></td>
-                                    <td>
-                                        <?= $this->partial('user', 'stars', null, array(
-                                            'rating' => $route->rating
-                                        )) ?>
-                                    </td>
-                                    <td>
-                                        <a class="btnLink" href="/route/detail/id/<?= $route->routeId ?>">
-                                            <button class="btn btn-primary btn-nopad">
-                                                <i class="fa fa-eye"></i>
-                                            </button>
-                                        </a>
-                                        <a class="btnLink" href="/route/fork/id/<?= $route->routeId ?>">
-                                            <button class="btn btn-warning btn-nopad">
-                                                <i class="fa fa-code-fork"></i>
-                                            </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            <? } ?>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>
