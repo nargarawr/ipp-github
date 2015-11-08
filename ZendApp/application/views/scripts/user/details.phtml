@@ -50,17 +50,18 @@
                                 <?= $this->displayedUser->fname ?> <?= $this->displayedUser->lname ?> </div>
                         <? } ?>
 
-                        <div class="email">
-                            <i class="fa fa-envelope"></i>
-                            <?= $this->displayedUser->email ?>
-                            <? if ($this->viewingOwnProfile) {
-                                if ($this->displayedUser->isConfirmed) { ?>
+                        <? if ($this->viewingOwnProfile) { ?>
+                            <div class="email">
+                                <i class="fa fa-envelope"></i>
+                                <?= $this->displayedUser->email ?>
+
+                                <? if ($this->displayedUser->isConfirmed) { ?>
                                     (<i class="fa fa-check"></i> Confirmed)
                                 <? } else { ?>
                                     <i class="fa fa-exclamation-circle"></i> Not Confirmed)
                                 <? } ?>
-                            <? } ?>
-                        </div>
+                            </div>
+                        <? } ?>
 
                         <? if (!is_null($this->displayedUser->location)) { ?>
                             <div class="location">
