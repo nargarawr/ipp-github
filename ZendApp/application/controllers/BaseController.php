@@ -101,13 +101,22 @@ class BaseController extends Zend_Controller_Action {
                 'icon'          => '<i class="fa fa-user"></i>',
                 'shouldDisplay' => true,
                 'isActive'      => false
-            )
+            ),
+            'admin'   => (object)array(
+                'name'          => 'Administration',
+                'type'          => 'link',
+                'link'          => '/user/admin',
+                'icon'          => '<i class="fa fa-cogs"></i>',
+                'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin),
+                'isActive'      => false
+            ),
         );
 
         $activeSelected = false;
         foreach ($navBar as &$nav) {
             if ($nav->link === $currentUrl ||
-                $nav->link === "/route/index" && ($currentUrl == "/route/list" || $currentUrl == "/route/detail")) {
+                $nav->link === "/route/index" && ($currentUrl == "/route/list" || $currentUrl == "/route/detail")
+            ) {
                 $nav->isActive = true;
                 $activeSelected = true;
                 break;

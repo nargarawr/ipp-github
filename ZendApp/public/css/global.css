@@ -167,8 +167,3 @@ a.btnLink:hover {
 .jconfirm-box .buttons .btn:first-child {
     color: #FFB347 !important;
 }
-
-#navbar-collapse li.navLink.smallerPadding a {
-    padding-left: 7px;
-    padding-right: 7px;
-}

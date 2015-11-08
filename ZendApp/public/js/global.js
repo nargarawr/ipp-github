@@ -12,10 +12,11 @@ $(window).resize(function () {
  * @author Craig Knott
  */
 function resize() {
-    if (window.innerWidth >= 768 && window.innerWidth < 811) {
-        $('#navbar-collapse').find('li').addClass('smallerPadding');
+    var nav = $('#navbar-collapse');
+    if (window.innerWidth >= 768 && window.innerWidth < 936) {
+        nav.find('li a .text').addClass('hidden');
     } else {
-        $('#navbar-collapse').find('li').removeClass('smallerPadding');
+        nav.find('li a .text').removeClass('hidden');
     }
 
     if (window.innerWidth <= 308) {
