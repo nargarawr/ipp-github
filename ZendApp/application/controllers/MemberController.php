@@ -288,11 +288,13 @@ class MemberController extends BaseController {
     protected function getSignupForm() {
         $username = new Zend_Form_Element_Text('username');
         $username->setAttrib('class', 'form-control')
+            ->addValidator('stringLength', false, array(0, 16))
             ->setLabel('Username:')
             ->setRequired(true);
 
         $email = new Zend_Form_Element_Text('email');
         $email->setAttrib('class', 'form-control')
+            ->addValidator('stringLength', false, array(0, 128))
             ->setLabel('Email:')
             ->setRequired(true);
 

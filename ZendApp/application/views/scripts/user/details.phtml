@@ -77,7 +77,10 @@
                         </div>
 
                         <br>
-                        <i>"<?= $this->displayedUser->bio ?>"</i>
+                        <i>
+                            <?= (!is_null($this->displayedUser->bio))
+                                ? "\"" . $this->displayedUser->bio . "\"" : "No bio" ?>
+                        </i>
 
                         <div class="border-container">
                             <div class="title yourStatsTitle">
@@ -191,7 +194,6 @@
     </div>
     <div class="col-md-2"></div>
 </div>
-
 
 <? if ($this->viewingOwnProfile) { ?>
     <div class="row">

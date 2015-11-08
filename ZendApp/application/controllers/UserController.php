@@ -96,33 +96,44 @@ class UserController extends BaseController {
             $location = $this->getRequest()->getParam('location');
             $bio = $this->getRequest()->getParam('bio');
 
-            $emailAllowed = UserFactory::checkEmailAllowed($this->user->userId, $email);
-            if ($emailAllowed) {
-                UserFactory::updateUserDetails(
-                    $this->user->userId,
-                    $firstName,
-                    $lastName,
-                    $email,
-                    $location,
-                    $bio
-                );
+            // Check the fields entered are not too long
+            $invalid = $this->getInvalidDetailFields($firstName, $lastName, $email, $location, $bio);
+            if (count($invalid) == 0) {
+                $emailAllowed = UserFactory::checkEmailAllowed($this->user->userId, $email);
+                if ($emailAllowed) {
+                    UserFactory::updateUserDetails(
+                        $this->user->userId,
+                        $firstName,
+                        $lastName,
+                        $email,
+                        $location,
+                        $bio
+                    );
 
-                // Update the user object to reflect these changes
-                Zend_Auth::getInstance()->getIdentity()->fname = $firstName;
-                Zend_Auth::getInstance()->getIdentity()->lname = $lastName;
-                Zend_Auth::getInstance()->getIdentity()->email = $email;
-                Zend_Auth::getInstance()->getIdentity()->location = $location;
-                Zend_Auth::getInstance()->getIdentity()->bio = $bio;
+                    // Update the user object to reflect these changes
+                    Zend_Auth::getInstance()->getIdentity()->fname = $firstName;
+                    Zend_Auth::getInstance()->getIdentity()->lname = $lastName;
+                    Zend_Auth::getInstance()->getIdentity()->email = $email;
+                    Zend_Auth::getInstance()->getIdentity()->location = $location;
+                    Zend_Auth::getInstance()->getIdentity()->bio = $bio;
 
-                $this->messageManager->addMessage(array(
-                    'msg'  => 'Successfully updated your details',
-                    'type' => 'success'
-                ));
+                    $this->messageManager->addMessage(array(
+                        'msg'  => 'Successfully updated your details',
+                        'type' => 'success'
+                    ));
 
-                $this->_helper->redirector('details', 'user', null, array());
+                    $this->_helper->redirector('details', 'user', null, array());
+                } else {
+                    $this->messageManager->addMessage(array(
+                        'msg'  => 'The email you entered is already registered to another account',
+                        'type' => 'error'
+                    ));
+
+                    $this->_helper->redirector('details', 'user', null, array());
+                }
             } else {
                 $this->messageManager->addMessage(array(
-                    'msg'  => 'The email you entered is already registered to another account',
+                    'msg'  => 'The entered ' . $invalid[0]->name .  ' was too long. The maximum size is ' . $invalid[0]->size,
                     'type' => 'error'
                 ));
 
@@ -182,5 +193,43 @@ class UserController extends BaseController {
             ));
             $this->_helper->redirector('details', 'user', null, array());
         }
+    }
+
+    /**
+     * Check that the input into the update account details action is valid
+     *
+     * @author Craig Knott
+     *
+     * @param string $firstName The first name to check
+     * @param string $lastName  The last name to check
+     * @param string $email     The email to check
+     * @param string $location  The location to check
+     * @param string $bio       The bio to check
+     *
+     * @return array(object(string, string)) Array of invalid fields, along with their max size
+     */
+    protected function getInvalidDetailFields($firstName, $lastName, $email, $location, $bio) {
+        $invalidFields = array();
+        if (strlen($firstName) > 32) {
+            $invalidFields[] = (object)array('name' => 'first name', 'size' => '32');
+        }
+
+        if (strlen($lastName) > 32) {
+            $invalidFields[] = (object)array('name' => 'last name', 'size' => '32');
+        }
+
+        if (strlen($email) > 128) {
+            $invalidFields[] = (object)array('name' => 'email', 'size' => '128');
+        }
+
+        if (strlen($location) > 64) {
+            $invalidFields[] = (object)array('name' => 'location', 'size' => '64');
+        }
+
+        if (strlen($bio) > 1024) {
+            $invalidFields[] = (object)array('name' => 'bio', 'size' => '1024');
+        }
+
+        return $invalidFields;
     }
 }
