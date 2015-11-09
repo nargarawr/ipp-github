@@ -294,4 +294,71 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
+    /**
+     * Creates a copy of a route, from a route Id. Copies the route to the account of the user Id provided
+     *
+     * @author Craig Knott
+     *
+     * @param int $oldRouteId Id of the route to copy
+     * @param int $userId     Id of the user to copy this route to
+     *
+     * @return int The newly create route's Id
+     */
+    public static function forkRoute($oldRouteId, $userId) {
+        // Copy route first
+        $sql = "INSERT INTO tb_route (
+                    created_by,
+                    name,
+                    description,
+                    is_private,
+                    cost,
+                    distance,
+                    is_deleted,
+                    datetime_created,
+                    datetime_updated
+                )
+                SELECT
+                    :userId,
+                    name,
+                    description,
+                    0,
+                    cost,
+                    distance,
+                    0,
+                    NOW(),
+                    NOW()
+                FROM tb_route
+                WHERE pk_route_id = :routeId";
+        $params = array(
+            ':routeId' => $oldRouteId,
+            ':userId'  => $userId
+        );
+
+        $routeId = parent::execute($sql, $params, true);
+
+        // Copy points second
+        $sql = "INSERT INTO tb_point (
+                    fk_route_id,
+                    name,
+                    description,
+                    latitude,
+                    longitude
+                )
+                SELECT
+                    :routeId,
+                    name,
+                    description,
+                    latitude,
+                    longitude
+                FROM tb_point
+                WHERE fk_route_id = :oldRouteId;";
+        $params = array(
+            ':routeId'    => $routeId,
+            ':oldRouteId' => $oldRouteId
+        );
+        parent::execute($sql, $params);
+
+        return $routeId;
+    }
+
 }

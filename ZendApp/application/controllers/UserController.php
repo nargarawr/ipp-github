@@ -107,7 +107,7 @@ class UserController extends BaseController {
             );
 
             $this->messageManager->addMessage(array(
-                'msg'  => 'Successfully updated your details',
+                'msg'  => 'Successfully updated your email preferences',
                 'type' => 'success'
             ));
 

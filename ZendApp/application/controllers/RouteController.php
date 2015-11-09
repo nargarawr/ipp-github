@@ -188,7 +188,23 @@ class RouteController extends BaseController {
         header('Content-Type: application/json');
         header('Content-Disposition: attachment; filename="' . $fileName . '"');
         echo Zend_Json::encode($route);
+    }
 
+    /**
+     * Creates a copy of a route and adds it to the current user's account
+     *
+     * @author Craig Knott
+     */
+    public function forkAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $idToFork = $this->getRequest()->getParam('id', 0);
+        $id = RouteFactory::forkRoute($idToFork, $this->user->userId);
+
+        $this->_helper->redirector('create', 'route', null, array(
+            'id' => $id
+        ));
     }
 
 }
