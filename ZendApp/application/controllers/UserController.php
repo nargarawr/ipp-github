@@ -83,6 +83,39 @@ class UserController extends BaseController {
     }
 
     /**
+     * Updates the user account preferences. At the moment this only includes emails, but can be expanded later. User
+     * preferences can be found in tb_user_preference
+     *
+     * @author Craig Knott
+     */
+    public function updatepreferencesAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        if ($this->getRequest()->isPost()) {
+            $emailOnRouteComment = $this->getRequest()->getParam('email_route_comment', 0) === "on" ? 1 : 0;
+            $emailOnRouteFork = $this->getRequest()->getParam('email_route_fork', 0) === "on" ? 1 : 0;
+            $emailOnRouteRate = $this->getRequest()->getParam('email_route_rate', 0) === "on" ? 1 : 0;
+            $emailOnAnnouncement = $this->getRequest()->getParam('email_announcement', 0) === "on" ? 1 : 0;
+
+            UserFactory::updateUserPreferences(
+                $this->user->userId,
+                $emailOnRouteComment,
+                $emailOnRouteFork,
+                $emailOnRouteRate,
+                $emailOnAnnouncement
+            );
+
+            $this->messageManager->addMessage(array(
+                'msg'  => 'Successfully updated your details',
+                'type' => 'success'
+            ));
+
+            $this->_helper->redirector('details', 'user', null, array());
+        }
+    }
+
+    /**
      * Updates the users account details in the database , including name, email, location and bio. Also updates the
      * user object to reflect these changes
      *
@@ -129,7 +162,7 @@ class UserController extends BaseController {
                 }
             } else {
                 $this->messageManager->addMessage(array(
-                    'msg'  => 'The entered ' . $invalid[0]->name .  ' was too long. The maximum size is ' . $invalid[0]->size,
+                    'msg'  => 'The entered ' . $invalid[0]->name . ' was too long. The maximum size is ' . $invalid[0]->size,
                     'type' => 'error'
                 ));
 

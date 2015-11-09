@@ -91,8 +91,6 @@ class UserFactory extends ModelFactory {
      * @param string $email    New account email
      * @param string $location New account location
      * @param string $bio      New account bio
-     *
-     * @return void
      */
     public static function updateUserDetails($userId, $fname, $lname, $email, $location, $bio) {
         $sql = "UPDATE tb_user
@@ -115,6 +113,37 @@ class UserFactory extends ModelFactory {
     }
 
     /**
+     * Update user preferences
+     *
+     * @author Craig Knott
+     *
+     * @param int     $userId              The id of the user to update the preferences for
+     * @param boolean $emailOnRouteComment The email_on_route_comment setting value
+     * @param boolean $emailOnRouteFork    The email_on_route_fork setting value
+     * @param boolean $emailOnRouteRating  The email_on_route_rating setting value
+     * @param boolean $emailOnAnnouncement The email_on_announcement setting value
+     *
+     * @return void
+     */
+    public static function updateUserPreferences($userId, $emailOnRouteComment, $emailOnRouteFork, $emailOnRouteRating,
+                                                 $emailOnAnnouncement) {
+        $sql = "UPDATE tb_user_preference
+                SET email_on_route_comment = :emailOnRouteComment,
+                    email_on_route_fork = :emailOnRouteFork,
+                    email_on_route_rating = :emailOnRouteRating,
+                    email_on_announcement = :emailOnAnnouncement
+                WHERE fk_pk_user_id = :userId";
+        $params = array(
+            ':emailOnRouteComment' => $emailOnRouteComment,
+            ':emailOnRouteFork'    => $emailOnRouteFork,
+            ':emailOnRouteRating'  => $emailOnRouteRating,
+            ':emailOnAnnouncement' => $emailOnAnnouncement,
+            ':userId'              => $userId
+        );
+        parent::execute($sql, $params);
+    }
+
+    /**
      * Constructs a user from a user Id
      *
      * @author Craig Knott
@@ -124,9 +153,10 @@ class UserFactory extends ModelFactory {
      *
      * @return User | Object The user object of this user, or the returned SQL query
      */
-    public static function getUser($userId, $asObject = true) {
+    public
+    static function getUser($userId, $asObject = true) {
         $sql = "SELECT
-                    pk_user_id as id,
+                    pk_user_id AS id,
                     username,
                     fname,
                     lname,

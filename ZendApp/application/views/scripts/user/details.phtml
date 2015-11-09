@@ -167,14 +167,17 @@
                                     </a>
                                     <? if ($this->viewingOwnProfile) { ?>
                                         <a class="btnLink" href="/route/create/id/<?= $route->routeId ?>">
-                                            <button class="btn btn-primary btn-nopad"><i class="fa fa-pencil"></i></button>
+                                            <button class="btn btn-primary btn-nopad"><i class="fa fa-pencil"></i>
+                                            </button>
                                         </a>
                                         <a class="btnLink" target="_blank" href="/route/download/id/<?= $route->routeId ?>">
-                                            <button class="btn btn-warning btn-nopad"><i class="fa fa-download"></i></button>
+                                            <button class="btn btn-warning btn-nopad"><i class="fa fa-download"></i>
+                                            </button>
                                         </a>
 
                                         <a class="delBtn btnLink" href="/route/delete/id/<?= $route->routeId ?>">
-                                            <button class="btn btn-danger btn-nopad"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-danger btn-nopad"><i class="fa fa-trash"></i>
+                                            </button>
                                         </a>
                                     <? } else { ?>
                                         <a class="btnLink" href="/route/fork/id/<?= $route->routeId ?>">
@@ -200,6 +203,63 @@
         <div class="col-sm-1 col-md-2"></div>
         <div class="col-sm-10 col-md-8">
             <div class="border-container">
+                <div class="title prefTitle">
+                    Your email preferences
+                </div>
+                <div class="row">
+                    <form enctype="application/x-www-form-urlencoded" method="post" action="/user/updatepreferences">
+                        <div class="col-md-4 col-md-push-8 col-sm-push-0">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa fa-info-circle"></i> <b>Email Preferences</b>
+                                <p>
+                                    These settings determine what actions will trigger an email to be sent to you. If
+                                    you uncheck all of them, you will never receive an email from Niceway.to.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-md-pull-4 col-sm-pull-0">
+                            <div>
+                                <b>Receive emails when...</b>
+                            </div>
+
+                            <label class="check">
+                                <input type="checkbox" name="email_route_comment"<?=
+                                ($this->user->preferences->emailOnRouteComment) ? 'checked' : '' ?>>
+                                <span>Someone comments on your routes</span>
+                            </label>
+
+                            <label class="check">
+                                <input type="checkbox" name="email_route_fork"<?=
+                                ($this->user->preferences->emailOnRouteFork) ? 'checked' : '' ?>>
+                                <span>Someone forks your routes</span>
+                            </label>
+
+                            <label class="check">
+                                <input type="checkbox" name="email_route_rate"<?=
+                                ($this->user->preferences->emailOnRouteRating) ? 'checked' : '' ?>>
+                                <span>Someone rates your routes</span>
+                            </label>
+
+                            <label class="check">
+                                <input type="checkbox" name="email_announcement"<?=
+                                ($this->user->preferences->emailOnAnnouncement) ? 'checked' : '' ?>>
+                                <span>Announcements are posted</span>
+                            </label>
+                            <br>
+                            <input id="updateEmails" type="submit" class="btn btn-success" value="Update Preferences"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1 col-md-2"></div>
+        <div class="col-sm-10 col-md-8">
+            <div class="border-container">
                 <div class="title yourDetailsTitle">
                     Update your details
                 </div>
@@ -210,8 +270,7 @@
                                 <i class="fa fa-info-circle"></i> <b>Your details</b>
                                 <p>
                                     All of the information you enter here, excluding your email address, will be visible
-                                    to
-                                    other users of Niceway.to.
+                                    to other users of Niceway.to.
                                 </p>
                             </div>
                         </div>
