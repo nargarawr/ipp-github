@@ -7,11 +7,9 @@
         <div class="border-container">
             <div class="row">
                 <div class="col-md-4">
-                    <? if ($this->displayedUser->stats->average_rating > 2) { ?>
-                        <img src="/images/user_icons/veteran.png" alt="User Icon" class="img-thumbnail">
-                    <? } else { ?>
-                        <img src="/images/user_icons/default.png" alt="User Icon" class="img-thumbnail">
-                    <? } ?>
+                    <?= $this->partial('user', 'profile_picture', null, array(
+                        'skins' => $this->userSkins
+                    )); ?>
                 </div>
                 <div class="col-md-8">
                     <div class="user-detail-list">

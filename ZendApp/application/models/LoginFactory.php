@@ -63,7 +63,7 @@ class LoginFactory extends ModelFactory {
 
         // Add row in preferences table
         $sql = "INSERT INTO tb_user_preference (
-                    fk_pk_user_id
+                    fk_user_id
                 ) VALUES (
                     :userId
                 )";

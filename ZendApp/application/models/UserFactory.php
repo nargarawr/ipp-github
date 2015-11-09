@@ -132,7 +132,7 @@ class UserFactory extends ModelFactory {
                     email_on_route_fork = :emailOnRouteFork,
                     email_on_route_rating = :emailOnRouteRating,
                     email_on_announcement = :emailOnAnnouncement
-                WHERE fk_pk_user_id = :userId";
+                WHERE fk_user_id = :userId";
         $params = array(
             ':emailOnRouteComment' => $emailOnRouteComment,
             ':emailOnRouteFork'    => $emailOnRouteFork,
@@ -153,8 +153,7 @@ class UserFactory extends ModelFactory {
      *
      * @return User | Object The user object of this user, or the returned SQL query
      */
-    public
-    static function getUser($userId, $asObject = true) {
+    public static function getUser($userId, $asObject = true) {
         $sql = "SELECT
                     pk_user_id AS id,
                     username,
@@ -177,7 +176,7 @@ class UserFactory extends ModelFactory {
                     email_on_announcement
                 FROM tb_user u
                 JOIN tb_user_preference up
-                ON u.pk_user_id = up.fk_pk_user_id
+                ON u.pk_user_id = up.fk_user_id
                 WHERE pk_user_id = :userId";
         $params = array(
             ':userId' => $userId

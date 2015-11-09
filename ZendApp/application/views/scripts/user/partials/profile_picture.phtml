@@ -1,0 +1,28 @@
+<style>
+    .dp_container {
+        position: relative;
+        left: 0;
+        top: 0;
+    }
+
+    .dp_person {
+        position: relative;
+        top: 0;
+        left: 0;
+        background-color: white;
+    }
+
+    .dp_skin {
+        position: absolute;
+        top: 0;
+        left: 0
+    }
+</style>
+
+<div class="dp_container">
+    <img src="/images/user_icons/default.png" class="img-thumbnail dp_person" />
+
+    <? foreach ($this->skins as $skin) { ?>
+        <img src="/images/user_icons/<?= $skin->img ?>" class="img-thumbnail dp_skin"/>
+    <? } ?>
+</div>

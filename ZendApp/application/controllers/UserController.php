@@ -42,6 +42,8 @@ class UserController extends BaseController {
             $displayedUser = UserFactory::getUser($customUserId);
         }
 
+        $this->view->userSkins = SkinFactory::getUserEquippedSkins($displayedUser->userId, true);
+
         // Get usage statistics for the user
         $displayedUser->stats = (object)array(
             'average_rating'    => RatingFactory::getAverageRatingForUser($displayedUser->userId),
