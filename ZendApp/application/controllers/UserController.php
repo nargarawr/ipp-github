@@ -20,21 +20,11 @@ class UserController extends BaseController {
     }
 
     /**
-     * Page used to describe and update user details. Uses flash messenger to pass errors and messages to the UI
+     * Displays user details and route (user /id/x to show public profile for user x)
      *
      * @author Craig Knott
      */
     public function detailsAction() {
-        $messages = $this->messageManager->getMessages();
-        if (count($messages) > 0) {
-            $message = $messages[0];
-            if ($message["type"] == "success") {
-                $this->view->successMessage = $message["msg"];
-            } else if ($message["type"] == "error") {
-                $this->view->errorMessage = $message["msg"];
-            }
-        }
-
         $this->view->emailConf = $this->getRequest()->getParam('emailconfirmed', 0);
         if ($this->view->emailConf == 1) {
             $this->user->isConfirmed = true;
@@ -69,6 +59,24 @@ class UserController extends BaseController {
         $routes = RouteFactory::getRoutesForUser($displayedUser->userId);
         $this->view->routes = $routes;
     }
+
+    /**
+     * Page used to update user details
+     *
+     * @author Craig Knott
+     */
+    public function settingsAction() {
+        $messages = $this->messageManager->getMessages();
+        if (count($messages) > 0) {
+            $message = $messages[0];
+            if ($message["type"] == "success") {
+                $this->view->successMessage = $message["msg"];
+            } else if ($message["type"] == "error") {
+                $this->view->errorMessage = $message["msg"];
+            }
+        }
+    }
+
 
     /**
      * Provides administrative tools to the user
@@ -111,7 +119,7 @@ class UserController extends BaseController {
                 'type' => 'success'
             ));
 
-            $this->_helper->redirector('details', 'user', null, array());
+            $this->_helper->redirector('settings', 'user', null, array());
         }
     }
 
@@ -151,14 +159,14 @@ class UserController extends BaseController {
                         'type' => 'success'
                     ));
 
-                    $this->_helper->redirector('details', 'user', null, array());
+                    $this->_helper->redirector('settings', 'user', null, array());
                 } else {
                     $this->messageManager->addMessage(array(
                         'msg'  => 'The email you entered is already registered to another account',
                         'type' => 'error'
                     ));
 
-                    $this->_helper->redirector('details', 'user', null, array());
+                    $this->_helper->redirector('settings', 'user', null, array());
                 }
             } else {
                 $this->messageManager->addMessage(array(
@@ -166,7 +174,7 @@ class UserController extends BaseController {
                     'type' => 'error'
                 ));
 
-                $this->_helper->redirector('details', 'user', null, array());
+                $this->_helper->redirector('settings', 'user', null, array());
             }
         }
     }
@@ -191,7 +199,7 @@ class UserController extends BaseController {
                     'msg'  => 'Password length must be at least 6',
                     'type' => 'error'
                 ));
-                $this->_helper->redirector('details', 'user', null, array());
+                $this->_helper->redirector('settings', 'user', null, array());
             }
 
             // Check new passwords entered match
@@ -200,7 +208,7 @@ class UserController extends BaseController {
                     'msg'  => 'The entered new passwords did not match',
                     'type' => 'error'
                 ));
-                $this->_helper->redirector('details', 'user', null, array());
+                $this->_helper->redirector('settings', 'user', null, array());
             }
 
             // Check user entered their current password correctly
@@ -210,7 +218,7 @@ class UserController extends BaseController {
                     'msg'  => 'You did not enter your current password correctly',
                     'type' => 'error'
                 ));
-                $this->_helper->redirector('details', 'user', null, array());
+                $this->_helper->redirector('settings', 'user', null, array());
             }
 
             // Update user password
@@ -220,7 +228,7 @@ class UserController extends BaseController {
                 'msg'  => 'Successfully updated your password',
                 'type' => 'success'
             ));
-            $this->_helper->redirector('details', 'user', null, array());
+            $this->_helper->redirector('settings', 'user', null, array());
         }
     }
 

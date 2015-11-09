@@ -1,0 +1,36 @@
+.border-container .yourDetailsTitle {
+    width: 185px;
+}
+
+.border-container .yourPasswordTitle {
+    width: 206px;
+}
+
+.border-container .prefTitle {
+    width: 215px;
+}
+
+label.check {
+    font-weight: normal;
+    margin-bottom: 5px;
+    display: block;
+    padding-top: 5px;
+}
+
+label.check span {
+    position: relative;
+    top: -2px;
+    margin-left: 3px;
+}
+
+.form-control[name=lname] {
+    margin-top: 5px;
+}
+
+#updateAccount {
+    margin-top: 10px;
+}
+
+.row:nth-of-type(1) {
+    padding-top: 15px;
+}

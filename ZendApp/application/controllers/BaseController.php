@@ -79,12 +79,26 @@ class BaseController extends Zend_Controller_Action {
                 'isActive'      => false
             ),
             'profile' => (object)array(
-                'name'          => 'My Profile',
-                'type'          => 'link',
+                'name'          => 'Profile',
+                'type'          => 'dropdown',
                 'link'          => '/user/details',
                 'icon'          => '<i class="fa fa-user"></i>',
                 'shouldDisplay' => true,
-                'isActive'      => false
+                'isActive'      => false,
+                'children'      => array(
+                    (object)array(
+                        'name'          => 'My Profile',
+                        'link'          => '/user/details',
+                        'icon'          => '<i class="fa fa-list-alt"></i>',
+                        'shouldDisplay' => true
+                    ),
+                    (object)array(
+                        'name'          => 'Settings',
+                        'link'          => '/user/settings',
+                        'icon'          => '<i class="fa fa-cog"></i>',
+                        'shouldDisplay' => true
+                    )
+                )
             ),
             'admin'   => (object)array(
                 'name'          => 'Administration',
@@ -93,7 +107,7 @@ class BaseController extends Zend_Controller_Action {
                 'icon'          => '<i class="fa fa-cogs"></i>',
                 'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin),
                 'isActive'      => false
-            ),
+            )
         );
 
         $activeSelected = false;

@@ -18,3 +18,25 @@
     padding-right: 10px;
     top: -28px;
 }
+
+label {
+    padding-top: 10px;
+}
+
+.noPad {
+    padding-top: 0;
+}
+
+.alert.msg {
+    margin-top: 10px;
+}
+
+.alert {
+    margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+    .col-sm-push-0 {
+        margin-bottom: 10px;
+    }
+}
