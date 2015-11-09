@@ -7,22 +7,32 @@
 
     .dp_person {
         position: relative;
-        top: 0;
-        left: 0;
         background-color: white;
     }
 
     .dp_skin {
         position: absolute;
+    }
+
+    .dp_person, .dp_skin {
+        max-height: 350px;
         top: 0;
-        left: 0
+        left: 0;
+    }
+
+    .img-thumbnail.dp_person,
+    .img-thumbnail.dp_skin {
+        -webkit-transition: none;
+        transition: none;
     }
 </style>
 
 <div class="dp_container">
     <img src="/images/user_icons/default.png" class="img-thumbnail dp_person" />
-
     <? foreach ($this->skins as $skin) { ?>
         <img src="/images/user_icons/<?= $skin->img ?>" class="img-thumbnail dp_skin"/>
     <? } ?>
 </div>
+
+
+

@@ -29,6 +29,12 @@ $(document).ready(function () {
             }
         });
     });
+
+    centreProfilePicture();
+});
+
+$(window).resize(function(){
+    centreProfilePicture();
 });
 
 /**
@@ -63,3 +69,27 @@ $("#notConfirmedEmail").click(function () {
         keyboardEnabled: true
     });
 });
+
+
+/**
+ * To get the profile picture skins stacking on each other, I had to use absolute positioning for some. This means the
+ * image will not automatically centre itself, and looks silly. This code will use the size of the screen at any time
+ * to dynamically reposition the profile picture so that it centres
+ */
+function centreProfilePicture() {
+    var imgs = $('.dp_container img');
+    var screenSize = window.innerWidth;
+
+    if (screenSize > 1636 || (screenSize > 334 && screenSize < 991)) {
+        var dpContainer = $('.dp_container');
+
+        var dpw = dpContainer.width();
+        var iw = $(imgs[0]).width();
+        var lw = (dpw - iw) / 2;
+
+        imgs.css('left', lw + 'px');
+    } else {
+        // Reset
+        imgs.css('left', '0px');
+    }
+}
