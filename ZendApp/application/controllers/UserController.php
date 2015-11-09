@@ -113,13 +113,6 @@ class UserController extends BaseController {
                         $bio
                     );
 
-                    // Update the user object to reflect these changes
-                    Zend_Auth::getInstance()->getIdentity()->fname = $firstName;
-                    Zend_Auth::getInstance()->getIdentity()->lname = $lastName;
-                    Zend_Auth::getInstance()->getIdentity()->email = $email;
-                    Zend_Auth::getInstance()->getIdentity()->location = $location;
-                    Zend_Auth::getInstance()->getIdentity()->bio = $bio;
-
                     $this->messageManager->addMessage(array(
                         'msg'  => 'Successfully updated your details',
                         'type' => 'success'

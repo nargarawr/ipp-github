@@ -25,33 +25,38 @@ class User {
     public $isConfirmed;
     public $datetimeCreated;
     public $datetimeUpdated;
+    public $preferences;
 
     /**
-     * Constructs user class from user identity object from Zend Login
+     * Constructs user class to represent the user. Accessed with $this->user
      *
      * @author Craig Knott
      *
-     * @param object $userIdentity Object with user details
-     *
+     * @param int $userId The id of the user to construct
      */
-    public function __construct(
-        $username, $userId, $fname, $lname, $email, $location, $bio, $loginCount, $lastLogin, $isAdmin,
-        $isBanned, $isShadowBanned, $isConfirmed, $datetimeCreated, $datetimeUpdated
-    ) {
-        $this->username = $username;
-        $this->userId = $userId;
-        $this->fname = $fname;
-        $this->lname = $lname;
-        $this->email = $email;
-        $this->location = $location;
-        $this->bio = $bio;
-        $this->loginCount = $loginCount;
-        $this->lastLogin = $lastLogin;
-        $this->isAdmin = $isAdmin;
-        $this->isBanned = $isBanned;
-        $this->isShadowBanned = $isShadowBanned;
-        $this->isConfirmed = $isConfirmed;
-        $this->datetimeCreated = $datetimeCreated;
-        $this->datetimeUpdated = $datetimeUpdated;
+    public function __construct($userId) {
+        $dbUser = UserFactory::getUser($userId, false);
+
+        $this->userId = $dbUser->id;
+        $this->username = $dbUser->username;
+        $this->fname = $dbUser->fname;
+        $this->lname = $dbUser->lname;
+        $this->email = $dbUser->email;
+        $this->location = $dbUser->location;
+        $this->bio = $dbUser->bio;
+        $this->loginCount = $dbUser->login_count;
+        $this->lastLogin = $dbUser->last_login;
+        $this->isAdmin = $dbUser->is_admin;
+        $this->isBanned = $dbUser->is_banned;
+        $this->isShadowBanned = $dbUser->is_shadow_banned;
+        $this->isConfirmed = $dbUser->is_confirmed;
+        $this->datetimeCreated = $dbUser->datetime_created;
+        $this->datetimeUpdated = $dbUser->datetime_updated;
+        $this->preferences = (object)array(
+            'emailOnRouteComment' => $dbUser->email_on_route_comment,
+            'emailOnRouteFork'    => $dbUser->email_on_route_fork,
+            'emailOnRouteRating'  => $dbUser->email_on_route_rating,
+            'emailOnAnnouncement' => $dbUser->email_on_announcement
+        );
     }
 }

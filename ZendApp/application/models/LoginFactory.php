@@ -60,6 +60,18 @@ class LoginFactory extends ModelFactory {
             ':password'  => $password
         );
         $id = parent::execute($sql, $params, true);
+
+        // Add row in preferences table
+        $sql = "INSERT INTO tb_user_preference (
+                    fk_pk_user_id
+                ) VALUES (
+                    :userId
+                )";
+        $params = array(
+            ':userId' => $id
+        );
+        parent::execute($sql, $params);
+
         return $id;
     }
 

@@ -115,15 +115,16 @@ class UserFactory extends ModelFactory {
     }
 
     /**
-     * Gets all information for the user represented by the given user ID
+     * Constructs a user from a user Id
      *
      * @author Craig Knott
      *
-     * @param int $userId Id of the user to get the data for
+     * @param int     $userId   Id of the user to get the data for
+     * @param boolean $asObject Whether to return the query results, or the full user object
      *
-     * @return User The user object of this user
+     * @return User | Object The user object of this user, or the returned SQL query
      */
-    public static function getUser($userId) {
+    public static function getUser($userId, $asObject = true) {
         $sql = "SELECT
                     pk_user_id as id,
                     username,
@@ -139,32 +140,26 @@ class UserFactory extends ModelFactory {
                     is_shadow_banned,
                     datetime_created,
                     datetime_updated,
-                    is_confirmed
-                FROM tb_user
+                    is_confirmed,
+                    email_on_route_comment,
+                    email_on_route_fork,
+                    email_on_route_rating,
+                    email_on_announcement
+                FROM tb_user u
+                JOIN tb_user_preference up
+                ON u.pk_user_id = up.fk_pk_user_id
                 WHERE pk_user_id = :userId";
         $params = array(
             ':userId' => $userId
         );
         $user = parent::fetchOne($sql, $params);
 
-        $userObject = new User(
-            $user->username,
-            $user->id,
-            $user->fname,
-            $user->lname,
-            $user->email,
-            $user->location,
-            $user->bio,
-            $user->login_count,
-            $user->last_login,
-            $user->is_admin,
-            $user->is_banned,
-            $user->is_shadow_banned,
-            $user->datetime_created,
-            $user->datetime_updated,
-            $user->is_confirmed
-        );
-        return $userObject;
+        if ($asObject) {
+            $userObject = new User($user->id);
+            return $userObject;
+        }
+
+        return $user;
     }
 
 }
