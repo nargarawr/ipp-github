@@ -76,6 +76,9 @@ class UserController extends BaseController {
      * @author Craig Knott
      */
     public function adminAction() {
+        if ($this->user->isAdmin != 1) {
+            $this->_helper->redirector('details', 'user', null, array());
+        }
 
     }
 
