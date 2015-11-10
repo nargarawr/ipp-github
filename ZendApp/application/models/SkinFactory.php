@@ -40,10 +40,37 @@ class SkinFactory extends ModelFactory {
         $results = parent::fetchAll($sql, $params);
 
         $skins = array();
+
         foreach ($results as $skin) {
             $skins[$skin->slot_name] = $skin;
         }
+
         return $skins;
+    }
+
+    /**
+     * Gives the default skins to all new users
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId Id of the user to assign the skins to
+     */
+    public static function assignStartingSkins($userId) {
+        $sql = "INSERT INTO tb_skin_owner (
+                    fk_skin_id,
+                    fk_user_id,
+                    equipped
+                ) VALUES (
+                    1,
+                    :userId,
+                    1
+                )";
+
+        $params = array(
+            ':userId' => $userId
+        );
+
+        parent::execute($sql, $params);
     }
 
 }

@@ -1,0 +1,7 @@
+.jconfirm-box .title, .jconfirm-box .buttons .btn:first-child {
+    color: #FFFFFF !important;
+}
+
+.jconfirm-box .title, .jconfirm-box .buttons .btn:not(first-child) {
+    color: #FFB347 !important;
+}

@@ -109,6 +109,8 @@ class MemberController extends BaseController {
                         )
                     );
 
+                    SkinFactory::assignStartingSkins($userId);
+
                     $this->login($postData["username"], $postData["password"]);
                 } else {
                     $this->view->errorMessage = '<b>There was a problem creating your account:</b> That email or username is already registered';

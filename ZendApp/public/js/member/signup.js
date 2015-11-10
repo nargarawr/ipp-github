@@ -22,15 +22,15 @@ $("#signupLaunch").click(function () {
         icon:              'fa fa-sign-in',
         content:           signupForm.html(),
         theme:             'black',
-        confirmButton:     'Sign Up',
-        cancelButton:      'Login',
+        confirmButton:     'Login',
+        cancelButton:      'Sign Up',
         backgroundDismiss: false,
         keyboardEnabled:   true,
         confirm:           function () {
-            $('#signupForm').submit()
+            window.location = "/member/login";
         },
         cancel:            function () {
-            window.location = "/member/login";
+            $('#signupForm').submit()
         }
     });
 });

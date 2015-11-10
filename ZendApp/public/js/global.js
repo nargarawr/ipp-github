@@ -25,23 +25,3 @@ function resize() {
         $('.navbar-logo').removeClass('hidden');
     }
 }
-
-/**
- * Used to send emails through Ajax
- *
- * @author Craig Knott
- */
-$('#email').click(function () {
-    $.ajax({
-        type:    'POST',
-        url:     '/email',
-        data:    {
-            templateName: 'confirmemail',
-            to:           ['psyck@nottingham.ac.uk'],
-            subject:      'Please confirm your email address'
-        },
-        success: function (response) {
-            console.log(response);
-        }
-    })
-});

@@ -30,7 +30,9 @@ $(document).ready(function () {
         });
     });
 
+    // Centre the profile once, and then again on a timer because sometimes the first one doesn't work
     centreProfilePicture();
+    setTimeout(centreProfilePicture, 750);
 });
 
 $(window).resize(function(){
