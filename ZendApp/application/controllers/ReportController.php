@@ -31,6 +31,8 @@ class ReportController extends BaseController {
         $type = $this->getRequest()->getParam('type', null);
         $reason = $this->getRequest()->getParam('reason', null);
 
+
+
         if (!is_null($this->user)) {
             $id = ReportFactory::addReport($this->user->userId, $type, $id, $reason);
             echo Zend_Json::encode($id);

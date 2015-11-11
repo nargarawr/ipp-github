@@ -1,6 +1,7 @@
-<input type="hidden" id="email-confirmed" value="<?= $this->user->isConfirmed ?>">
+<input type="hidden" id="email-confirmed" value="<?= ((!is_null($this->user)) && $this->user->isConfirmed) ? 1 : 0 ?>">
 <input type="hidden" id="routeId" value="<?= $this->route->routeId ?>">
 <input type="hidden" id="ratingId" value="<?= $this->userRouteRating->ratingId ?>">
+
 
 <div class="row containingRow">
     <div class="col-md-7">
@@ -8,6 +9,9 @@
             <div class="col-md-8">
                 <h3 class="title">
                     <?= $this->route->name ?>
+                    <span id="reportRoute">
+                        (<i class="fa fa-flag"></i> Report?)
+                    </span>
                 </h3>
                 <div class="owner">
                     By <?= $this->route->owner ?>
@@ -43,6 +47,12 @@
                 <div class="thumbnail">
                     <img src="<?= $this->gmapUrl ?>">
                 </div>
+
+                <? if (count($this->points) > 25) { ?>
+                    <div class="omitted">
+                        Some points have been omitted from the image above
+                    </div>
+                <? } ?>
 
                 <a class="btnLink" target="_blank" href="/route/openingooglemaps/id/<?= $this->route->routeId ?>">
                     <button class="btn btn-success btn-nopad">
@@ -171,7 +181,11 @@
                         </div>
                     <? } ?>
                 <? } else { ?>
-                    No one has said anything yet! Why not kick off the discussion?
+                    <? if ((!is_null($this->user)) && ($this->user->username == $this->route->owner)) { ?>
+                        No one has said anything yet! Perhaps you should share your route with your friends?
+                    <? } else { ?>
+                        No one has said anything yet! Why not kick off the discussion?
+                    <? } ?>
                 <? } ?>
             </div>
         </div>

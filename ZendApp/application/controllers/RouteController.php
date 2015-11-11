@@ -44,6 +44,11 @@ class RouteController extends BaseController {
     public function detailAction() {
         $routeId = $this->getRequest()->getParam('id', 0);
         $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
+
+        if ($routeId == 0 ||$this->view->route === false) {
+            $this->_redirect("/route/index/");
+        }
+
         $this->view->socialStream = RouteFactory::getSocialStream(
             $routeId,
             (is_null($this->user)) ? null : $this->user->userId
@@ -83,10 +88,12 @@ class RouteController extends BaseController {
 
         $maxLen = 8;
         foreach ($points as $i => $point) {
-            $markers .= "markers=color:blue%7Clabel:" . ($i + 1) . "%7C" .
-                substr($point->latitude, 0, $maxLen) . "," . substr($point->longitude, 0, $maxLen) . "&";
+            if ($i < 25) {
+                $markers .= "markers=color:blue%7Clabel:" . ($i + 1) . "%7C" .
+                    substr($point->latitude, 0, $maxLen) . "," . substr($point->longitude, 0, $maxLen) . "&";
 
-            $path .= substr($point->latitude, 0, $maxLen) . "," . substr($point->longitude, 0, $maxLen) . "%7C";
+                $path .= substr($point->latitude, 0, $maxLen) . "," . substr($point->longitude, 0, $maxLen) . "%7C";
+            }
         }
         $markers = rtrim($markers, "&");
         $path = rtrim($path, "%7C");

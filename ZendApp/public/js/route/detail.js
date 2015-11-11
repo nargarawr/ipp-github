@@ -32,7 +32,77 @@ $(document).ready(function () {
 
     var cm = new CommentManager();
     var rm = new RatingManager();
+
+    $('#reportRoute').click(function () {
+        $.confirm({
+            title:           'Report route?',
+            icon:            'fa fa-flag',
+            content:         'Please explain your reason for reporting this route' +
+            '<textarea class="form-control" id="routeReportMessage"></textarea>',
+            theme:           'black',
+            confirmButton:   'Submit',
+            keyboardEnabled: true,
+            confirm:         function () {
+                $.ajax({
+                    type: 'POST',
+                    url:  '/report/add',
+                    data: {
+                        id:     $('#routeId').val(),
+                        type:   'route',
+                        reason: $('#routeReportMessage').val()
+                    }
+                }).success(function (response) {
+                    $.alert({
+                        title:   'Thank you!',
+                        icon:    'fa fa-smile-o',
+                        content: 'Thank you for helping to make the Niceway.to community a better place!',
+                        theme:   'black'
+                    });
+                });
+            }
+        });
+    });
+
+    //resizeSocialStream();
 });
+
+
+/**
+ * Window resize function. Resizes the social steram
+ *
+ * @author Craig Knott
+ */
+$(window).resize(function () {
+    //resizeSocialStream();
+});
+
+/**
+ * Used to resize the social stream height based on space available
+ *
+ * @author Craig Knott
+ */
+function resizeSocialStream() {
+    var socialStream = $('#socialStream');
+    var streamElements = socialStream.find('.streamElements');
+
+    var wiHeight = window.innerHeight - 80; // Minus padding/nav at the top of the page
+    var tiHeight = socialStream.find('.title').outerHeight(true);
+    var strHeight = socialStream.find('.shareThisRoute').outerHeight(true);
+    var cbHeight = socialStream.find('.commentBox').outerHeight(true);
+    if (cbHeight == null) {
+        cbHeight = 0;
+    }
+
+    var availableSpace = wiHeight - tiHeight - strHeight - cbHeight;
+
+    if (window.innerWidth < 991) {
+        streamElements.css("max-height", "none");
+    } else {
+        streamElements.css("max-height", availableSpace + "px");
+        streamElements.css("overflow", "auto");
+    }
+}
+
 
 /**
  * Class RatingManager
@@ -48,7 +118,7 @@ var RatingManager = Class.extend({
      *
      * @author Craig Knott
      */
-    init:               function () {
+    init: function () {
         this.stars = $('.yourRating').find('.starDisplay');
         this.starStates = [];
         this.emailConfirmed = $('#email-confirmed').val() == 1;
@@ -70,7 +140,7 @@ var RatingManager = Class.extend({
      *
      * @author Craig Knott
      */
-    setupListeners:     function () {
+    setupListeners: function () {
         var _self = this;
 
         this.stars.mouseenter(function () {
@@ -154,7 +224,7 @@ var RatingManager = Class.extend({
      * @param star The star object to fill
      * @param index The index of this star object
      */
-    fillStar:           function (star, index) {
+    fillStar: function (star, index) {
         star.addClass('starSelected');
         star.removeClass(this.starStates[index]);
         star.addClass('fa-star');
@@ -168,7 +238,7 @@ var RatingManager = Class.extend({
      * @param star The star object to fill
      * @param index The index of this star object
      */
-    resetStar:          function (star, index) {
+    resetStar: function (star, index) {
         star.removeClass('starSelected');
         star.removeClass('fa-star');
         star.addClass(this.starStates[index]);
@@ -182,7 +252,7 @@ var RatingManager = Class.extend({
      * @param star The star object to fill
      * @param index The index of this star object
      */
-    selectStar:         function (star, index) {
+    selectStar: function (star, index) {
         star.removeClass('starSelected');
         star.removeClass(this.starStates[index]);
         this.starStates[index] = 'fa-star';
@@ -197,7 +267,7 @@ var RatingManager = Class.extend({
      * @param star The star object to fill
      * @param index The index of this star object
      */
-    deselectStar:       function (star, index) {
+    deselectStar: function (star, index) {
         star.removeClass('starSelected');
         star.removeClass(this.starStates[index]);
         this.starStates[index] = 'fa-star-o';
@@ -294,6 +364,17 @@ var CommentManager = Class.extend({
      */
     addComment:     function (comment) {
         var _self = this;
+        if (_self.comment.val() == "") {
+            $.alert({
+                title:           'Blank Comment!',
+                icon:            'fa fa-comment-o',
+                content:         'Your comment cannot be blank!',
+                theme:           'black',
+                confirmButton:   'Okay',
+                keyboardEnabled: true
+            });
+        }
+
         _self.comment.val("");
 
         $.ajax({

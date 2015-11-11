@@ -35,6 +35,13 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 5px;
+}
+
+.omitted {
+    margin-bottom: 15px;
+    font-size: 11px;
+    text-align: center;
 }
 
 .routeDetailsTable {
@@ -88,7 +95,8 @@ tr td:first-child {
     cursor: pointer;
 }
 
-#commentReportMessage {
+#commentReportMessage,
+#routeReportMessage {
     margin-top: 10px;
 }
 
@@ -114,4 +122,13 @@ tr td:first-child {
 
 .clearBtn:hover .fa {
     color: #FF6961;
+}
+
+#reportRoute:hover .fa {
+    color: #FF6961;
+}
+
+#reportRoute {
+    cursor: pointer;
+    font-size: 14px;
 }
