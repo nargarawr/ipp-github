@@ -111,7 +111,16 @@ class RouteFactory extends ModelFactory {
                     ) AS rating,
                     IFNULL (
                         (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
-                    ) AS comments
+                    ) AS comments,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'download'), 0
+                    ) AS downloads,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'fork'), 0
+                    ) AS forks,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'share'), 0
+                    ) AS shares
                 FROM tb_route
                 WHERE created_by = :userId
                 AND is_deleted = 0
