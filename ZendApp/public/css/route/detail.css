@@ -1,0 +1,81 @@
+.containingRow {
+    margin-top: 10px;
+}
+
+.row.topBar {
+    border-bottom: 1px solid #CCCCCC;
+    margin-bottom: 10px;
+}
+
+.topBar .title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.topBar .owner {
+    font-size: 16px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.topBar .yourRating {
+    font-size: 14px;
+    float: right;
+}
+
+.topBar .rating {
+    font-size: 28px;
+    float: right;
+}
+
+.thumbnail {
+    padding: 5px;
+    max-height: 660px;
+    max-width: 654px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.routeDetailsTable {
+    margin-bottom: 0;
+}
+
+#socialStream {
+    border-left: 1px solid #CCCCCC;
+}
+
+#socialStream .title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.shareThisRoute {
+    margin-top: 10px;
+}
+
+.shareIcons {
+    font-size: 28px;
+}
+
+tr td:first-child {
+    font-weight: bold;
+}
+
+.commentBox {
+    margin-top: 10px;
+}
+
+.streamElements {
+    margin-top: 20px;
+}
+
+.streamElements .elements {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+}
+
+.streamElement {
+    margin-bottom: 10px;
+}

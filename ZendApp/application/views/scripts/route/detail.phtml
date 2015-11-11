@@ -1,194 +1,102 @@
-<div class="row">
+<input type="hidden" id="email-confirmed" value="<?= $this->user->isConfirmed ?>">
+
+<div class="row containingRow">
     <div class="col-md-7">
-        <div class="row" style="border-bottom:1px solid #ccc; ">
+        <div class="row topBar">
             <div class="col-md-8">
-                <h3 style="margin-top: 5px; margin-bottom:5px">
-                  <?= $this->route->name ?>
+                <h3 class="title">
+                    <?= $this->route->name ?>
                 </h3>
-                <div style="font-size:16px; padding-bottom:5px; margin-bottom:10px">
+                <div class="owner">
                     By <?= $this->route->owner ?>
                 </div>
             </div>
+
             <div class="col-md-4">
-                <div style="font-size:28px; float:right">
-                  <?= $this->partial('user', 'stars', null, array('rating' => $this->route->rating)); ?>
+                <div class="rating">
+                    <?= $this->partial('user', 'stars', null, array(
+                        'rating' => $this->route->rating
+                    )); ?>
                 </div>
-                <div style="font-size:14px; float:right">
-                  Your rating
-                  <span style="font-size:14px">
-                    <?= $this->partial('user', 'stars', null, array('rating' => $this->route->rating)); ?>
-                  </span>
-
+                <div class="yourRating">
+                    Your rating
+                    <?= $this->partial('user', 'stars', null, array(
+                        'rating' => 0
+                    )); ?>
                 </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-                <div class="thumbnail" style="padding:5px">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?center=52.954785,-1.193291%7C52.955664&zoom=14&size=640x640&maptype=roadmap&markers=color:blue%7Clabel:A%7C52.944468, -1.190073&markers=color:blue%7Clabel:B%7C52.954785, -1.193291&markers=color:blue%7Clabel:C%7C52.955664, -1.175653&path=color:blue%7Cweight:5%7C52.944468,-1.190073%7C52.954785,-1.193291%7C52.955664,-1.175653&key=AIzaSyBdGDXYIc0fK_SGoImxqOozcXkNwyPqofI">
-                </div>
-                <div class="actions" style="padding-left:10px">
-                    <div class="cPointer" style="font-size:16px">
-                        <i class="fa fa-street-view"></i>
-                        <span style="margin-left:1px">Open In Google Maps</span>
-                    </div>
-                    <div class="cPointer" style="font-size:16px">
-                        <i class="fa fa-download"></i>
-                        <span style="margin-left:0px">Download</span>
-                    </div>
-                    <div class="cPointer" style="font-size:16px">
-                        <i class="fa fa-code-fork"></i>
-                        <span style="margin-left:6px">Fork This route</span>
-                    </div>
-                </div>
-
-
-
-
-            </div>
-            <div class="col-md-6">
-                <h3> Route Details </h3>
-                <table class="table" style="margin-bottom:0px">
-                    <tbody>
-                <tr>    <td><b>Start</b></td><td>NYI</td></tr>
-                <tr>    <td><b>End</b></td><td>NYI</td></tr>
-                <tr>    <td><b>Distance</b></td><td>NYI</td></tr>
-                <tr>    <td><b>Petrol Cost</b></td><td>NYI</td></tr>
-                <tr>    <td></td><td></td></tr>
-                </tbody>
-                </table>
-                <div >
-                    <i >
-                        <?= $this->route->description ?>
-                    </i>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-5" style="border-left:1px solid #ccc" id="socialStream">
-        <h3 style="margin-top: 5px; margin-bottom:5px"> Social Stream</h3>
-
-
-        <div class="shareThisRoute" style="margin-top:10px">
-            <div><b>Like this route? Why not share it?</b></div>
-            <div class="shareIcons" style="font-size:28px">
-                <i class="fa fa-facebook-square"></i>
-                <i class="fa fa-twitter-square"></i>
-                <i class="fa fa-reddit-square"></i>
-                <i class="fa fa-tumblr-square"></i>
-                <i class="fa fa-envelope-square"></i>
             </div>
         </div>
 
-      <div class="commentBox" style="margin-top:10px">
-          <span><b>Got something to say?</b></span>
-        <div class="hys row">
-            <div class="input-group">
-                <textarea class="form-control custom-control" rows="2"></textarea>
-                <span class="input-group-addon btn btn-success">Comment</span>
-            </div>
-        </div>
-      </div>
-
-
-
-
-
-        <div style="margin-bottom:20px"></div>
-        <b>See what others have said:</b>
-        <div class="streamElements" style="padding-left:10px; padding-right:10px; padding-top:10px">
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-
-<div class="row">
-    <div class="col-md-7">
         <div class="row">
-            <div class="col-md-8">
-                <h3 style="margin-top: 5px; margin-bottom:5px">
-                  <?= $this->route->name ?>
-                </h3>
-            </div>
-            <div class="col-md-4">
-                <div style="font-size:28px; float:right">
-                  <?= $this->partial('user', 'stars', null, array('rating' => $this->route->rating)); ?>
-                </div>
-            </div>
-            <div class="col-md-12" style="font-size:16px; border-bottom:1px solid #ccc; padding-bottom:5px; margin-bottom:10px">
-                By <?= $this->route->owner ?>
-            </div>
             <div class="col-md-6">
-                <div class="thumbnail" style="padding:5px">
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?center=52.954785,-1.193291%7C52.955664&zoom=14&size=640x640&maptype=roadmap&markers=color:blue%7Clabel:A%7C52.944468, -1.190073&markers=color:blue%7Clabel:B%7C52.954785, -1.193291&markers=color:blue%7Clabel:C%7C52.955664, -1.175653&path=color:blue%7Cweight:5%7C52.944468,-1.190073%7C52.954785,-1.193291%7C52.955664,-1.175653&key=AIzaSyBdGDXYIc0fK_SGoImxqOozcXkNwyPqofI">
-                </div>
-                <div class="actions" style="padding-left:10px">
-                    <div class="cPointer" style="font-size:16px">
-                        <i class="fa fa-street-view"></i>
-                        <span style="margin-left:1px">Open In Google Maps</span>
-                    </div>
-                    <div class="cPointer" style="font-size:16px">
-                        <i class="fa fa-download"></i>
-                        <span style="margin-left:0px">Download</span>
-                    </div>
-                    <div class="cPointer" style="font-size:16px">
-                        <i class="fa fa-code-fork"></i>
-                        <span style="margin-left:6px">Fork This route</span>
-                    </div>
+                <div class="thumbnail">
+                    <img src="<?= $this->gmapUrl ?>">
                 </div>
 
-
-
+                <a class="btnLink" target="_blank" href="/route/openingooglemaps/id/<?= $this->route->routeId ?>">
+                    <button class="btn btn-success btn-nopad">
+                        <i class="fa fa-street-view"></i> Open in GMaps
+                    </button>
+                </a>
+                <br>
+                <a class="btnLink" target="_blank" href="/route/download/id/<?= $this->route->routeId ?>">
+                    <button class="btn btn-primary btn-nopad">
+                        <i class="fa fa-download"></i> Download
+                    </button>
+                </a>
+                <br>
+                <a class="btnLink" href="/route/fork/id/<?= $this->route->routeId ?>">
+                    <button class="btn btn-warning btn-nopad">
+                        <i class="fa fa-code-fork"></i> Fork Route
+                    </button>
+                </a>
 
             </div>
             <div class="col-md-6">
                 <h3> Route Details </h3>
-                <table class="table" style="margin-bottom:0px">
+                <table class="table routeDetailsTable">
                     <tbody>
-                <tr>    <td><b>Start</b></td><td>NYI</td></tr>
-                <tr>    <td><b>End</b></td><td>NYI</td></tr>
-                <tr>    <td><b>Distance</b></td><td>NYI</td></tr>
-                <tr>    <td><b>Petrol Cost</b></td><td>NYI</td></tr>
-                <tr>    <td></td><td></td></tr>
-                </tbody>
+                    <tr>
+                        <td>Start
+                        </td>
+                        <td><span id="start_point" data-latlng="<?= $this->firstPoint ?>"></span></td>
+                    </tr>
+                    <tr>
+                        <td>End</td>
+                        <td><span id="end_point" data-latlng="<?= $this->lastPoint ?>"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Distance</td>
+                        <td>NYI</td>
+                    </tr>
+                    <tr>
+                        <td>Petrol Cost</td>
+                        <td>NYI</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
                 </table>
-                <div >
-                    <i >
+
+                <div>
+                    <i>
                         <?= $this->route->description ?>
                     </i>
                 </div>
-
-
             </div>
         </div>
     </div>
 
-    <div class="col-md-5" style="border-left:1px solid #ccc" id="socialStream">
-        <h3 style="margin-top: 5px; margin-bottom:5px"> Social Stream</h3>
+    <div class="col-md-5" id="socialStream">
+        <h3 class="title"> Social Stream</h3>
 
-
-        <div class="shareThisRoute" style="margin-top:10px">
-            <div><b>Like this route? Why not share it?</b></div>
-            <div class="shareIcons" style="font-size:28px">
+        <div class="shareThisRoute">
+            <div class="bold">
+                Like this route? Why not share it?
+            </div>
+            <div class="shareIcons">
                 <i class="fa fa-facebook-square"></i>
                 <i class="fa fa-twitter-square"></i>
                 <i class="fa fa-reddit-square"></i>
@@ -197,58 +105,45 @@
             </div>
         </div>
 
-      <div class="commentBox" style="margin-top:10px">
-          <span><b>Got something to say?</b></span>
-        <div class="hys row">
-            <div class="input-group">
-                <textarea class="form-control custom-control" rows="2"></textarea>
-                <span class="input-group-addon btn btn-success">Comment</span>
+        <div class="commentBox">
+            <span class="bold">
+                Got something to say?
+            </span>
+            <div class="row">
+                <div class="input-group">
+                    <textarea class="form-control custom-control" rows="2"></textarea>
+                    <span class="input-group-addon btn btn-success" id="comment-btn">Comment</span>
+                </div>
             </div>
         </div>
-      </div>
 
+        <div class="streamElements" style="">
+            <div class="bold">See what others thought:</div>
+            <div class="elements">
+                <? if (count($this->socialStream) > 0) {?>
+                    <? foreach ($this->socialStream as $element) { ?>
+                        <div class="streamElement <?= $element->type ?>">
+                            <i class="<?= $element->icon ?>"></i>
+                            <? if ($element->type == 'share') { ?>
+                                <i class="fa fa-<?= $element->valueString ?>-square"></i>
+                            <? } ?>
+                            <span class="bold"> <?= $element->username ?> </span>
 
+                            <? if ($element->type === 'comment') { ?>
+                                says: <p> <?= $element->comment ?> </p>
+                            <? } else if ($element->type === 'rate') { ?>
+                                gave this route a rating of <?= $element->rating ?><i class="fa fa-star"></i>
+                            <? } else { ?>
+                                <?= rtrim($element->type, 'e') ?>ed this route
+                                <?= ($element->type == 'share' ? ' to ' . ucfirst($element->valueString) : '') ?>
+                            <? } ?>
 
+                        </div>
+                    <? } ?>
+                <? } else { ?>
+                    No one has said anything yet! Why not kick off the discussion?
+                <? } ?>
 
-
-        <div style="margin-bottom:20px"></div>
-        <b>See what others have said:</b>
-        <div class="streamElements" style="padding-left:10px; padding-right:10px; padding-top:10px">
-
-            <div class="comment">
-                <i class="fa fa-comment"></i>
-                <b> ralph </b> says:
-                <p> This route is amazing! Probably the best crafted collection of points that I have every experienced. The care and detail woven into the route are just... incredible</p>
-            </div>
-            <div class="share">
-                <i class="fa fa-share"></i> <i class="fa fa-facebook-square"></i>
-                <b> ralph </b> shared this route on Facebook!
-                <p></p>
-            </div>
-           <div class="share">
-                <i class="fa fa-share"></i> <i class="fa fa-twitter-square"></i>
-                <b> ralph </b> shared this route on Twitter!
-                <p></p>
-            </div>
-            <div class="fork">
-                <i class="fa fa-code-fork"></i>
-                <b> ralph </b> forked this route!
-                <p></p>
-            </div>
-            <div class="comment">
-                <i class="fa fa-comment"></i>
-                <b> jerry </b> says:
-                <p> This route is amazing! </p>
-            </div>
-            <div class="comment">
-                <i class="fa fa-comment"></i>
-                <b> olivia </b> says:
-                <p> This route is amazing! </p>
-            </div>
-            <div class="fork">
-                <i class="fa fa-code-fork"></i>
-                <b> olivia </b> forked this route!
-                <p></p>
             </div>
         </div>
     </div>

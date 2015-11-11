@@ -127,7 +127,6 @@ body, .bg {
         margin-left: 0;
         margin-bottom: 0;
     }
-
     .nav.navbar-nav.navbar-right {
         margin-bottom: 5px;
     }
@@ -166,4 +165,8 @@ a.btnLink:hover {
 .jconfirm-box .title,
 .jconfirm-box .buttons .btn:first-child {
     color: #FFB347 !important;
+}
+
+.bold {
+    font-weight: bold;
 }

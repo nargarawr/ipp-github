@@ -42,9 +42,55 @@ class RouteController extends BaseController {
      * @author Craig Knott
      */
     public function detailAction() {
-      $routeId = $this->getRequest()->getParam('id', 0);
-      $this->view->route = RouteFactory::getRoute($routeId, null, true);
-      $this->view->points = RouteFactory::getRoutePoints($routeId);
+        $routeId = $this->getRequest()->getParam('id', 0);
+        $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
+        $this->view->socialStream = RouteFactory::getSocialStream($routeId, $this->user->userId);
+
+        $points = RouteFactory::getRoutePoints($routeId);
+        $this->view->points = $points;
+
+        $this->view->gmapUrl = $this->getGmapStaticUrlForRoute($points);
+
+        $this->view->firstPoint = $points[0]->latitude . "," . $points[0]->longitude;
+        $this->view->lastPoint = $points[count($points) - 1]->latitude . "," . $points[count($points) - 1]->longitude;
+    }
+
+    /**
+     * Given a set of points, returns a Google Maps Static map URL which can be queried to retrieve a map
+     * representing those points
+     *
+     * @author Craig Knott
+     *
+     * @param array(points) $points The points to be included on the map
+     *
+     * @return string The URL to query
+     */
+    protected function getGmapStaticUrlForRoute($points) {
+        $baseUrl = "https://maps.googleapis.com/maps/api/staticmap?";
+        $size = "size=640x640";
+        $type = "maptype=roadmap";
+        $markers = "";
+        $path = "path=color:0x0000ff80%7Cweight:3%7C";
+        $key = "key=AIzaSyBdGDXYIc0fK_SGoImxqOozcXkNwyPqofI";
+
+        $maxLen = 8;
+        foreach ($points as $i => $point) {
+            $markers .= "markers=color:blue%7Clabel:" . ($i + 1) . "%7C" .
+                substr($point->latitude, 0, $maxLen) . "," . substr($point->longitude, 0, $maxLen) . "&";
+
+            $path .= substr($point->latitude, 0, $maxLen) . "," . substr($point->longitude, 0, $maxLen) . "%7C";
+        }
+        $markers = rtrim($markers, "&");
+        $path = rtrim($path, "%7C");
+
+        $params = implode('&', array(
+            $size,
+            $type,
+            $markers,
+            $path,
+            $key
+        ));
+        return $baseUrl . $params;
     }
 
     /**
@@ -186,6 +232,8 @@ class RouteController extends BaseController {
         $route = RouteFactory::getRoute($routeId, $this->user->userId);
         $route->points = RouteFactory::getRoutePoints($routeId, true);
 
+        RouteFactory::updateRouteLog($routeId, $this->user->userId, "download");
+
         $fileName = $route->name . ".json";
 
         header('Content-Type: application/json');
@@ -204,6 +252,8 @@ class RouteController extends BaseController {
 
         $idToFork = $this->getRequest()->getParam('id', 0);
         $id = RouteFactory::forkRoute($idToFork, $this->user->userId);
+
+        RouteFactory::updateRouteLog($idToFork, $this->user->userId, 'fork');
 
         $this->_helper->redirector('create', 'route', null, array(
             'id' => $id

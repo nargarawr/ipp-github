@@ -107,7 +107,7 @@ class RouteFactory extends ModelFactory {
                     datetime_created AS created,
                     (SELECT count(1) FROM tb_point WHERE fk_route_id = pk_route_id) AS num_points,
                     IFNULL(
-                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = tb_route.pk_route_id), 0
+                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = tb_route.pk_route_id AND is_deleted = 0), 0
                     ) AS rating,
                     IFNULL (
                         (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
@@ -136,38 +136,60 @@ class RouteFactory extends ModelFactory {
      *
      * @author Craig Knott
      *
-     * @param int  $routeId         The id of the route to get
-     * @param int  $userId          The id of the user this belongs to (to avoid unwarranted access)
-     * @param bool $showUserDetails Whether or not to show information about the creator too
+     * @param int $routeId The id of the route to get
+     * @param int $userId  The id of the user this belongs to (to avoid unwarranted access)
      *
      * @return object The route object
      */
-    public
-    static function getRoute($routeId, $userId = null, $showUserDetails = false) {
+    public static function getRoute($routeId, $userId) {
+        $sql = "SELECT
+                    name,
+                    description,
+                    is_private
+                FROM tb_route
+                WHERE pk_route_id = :routeId
+                AND is_deleted = 0
+                AND created_by = :userId";
+        $params = array(
+            ':routeId' => $routeId,
+            ':userId'  => $userId
+        );
+        return parent::fetchOne($sql, $params);
+    }
+
+    /**
+     * Get a specific route for display on the route detail page
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The id of the route to get
+     *
+     * @return object The route object
+     */
+    public static function getRouteForDetailPage($routeId) {
         $sql = "SELECT
                     r.name,
                     r.description,
                     r.is_private,
+                    r.pk_route_id AS routeId,
                     IFNULL(
                         (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = r.pk_route_id), 0
-                    ) AS rating" .
-                    ", u.username as owner, u.pk_user_id as owner_id" . "
-                FROM tb_route r" .
-                (($showUserDetails) ? " JOIN tb_user u ON r.created_by = u.pk_user_id " : "") . "
+                    ) AS rating,
+                    u.username AS owner,
+                    u.pk_user_id AS owner_id
+                FROM tb_route r
+                JOIN tb_user u
+                ON r.created_by = u.pk_user_id
                 WHERE pk_route_id = :routeId
                 AND r.is_deleted = 0
-                AND r.is_private " . (!is_null($userId) ? "= 0" : ">= 0") .
-                ((!is_null($userId)) ? " AND r.created_by = :userId" : "");
+                AND r.is_private = 0";
         $params = array(
             ':routeId' => $routeId
         );
-        if (!is_null($userId)) {
-            $params[':userId'] = $userId;
-        }
-
         $result = parent::fetchOne($sql, $params);
         return $result;
     }
+
 
     /**
      * Get all points for a specified route
@@ -305,22 +327,6 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
-
-      /**
-       * Returns the entire social stream for a route. Including shares, routes and comments
-       *
-       * @author Craig Knott
-       *
-       * @param int $routeId Id of the route to get the stream from
-       *
-       * @return array All social interactions with this route
-       */
-    public static function getSocialStream($routeId) {
-        $sql = "";
-        $params = array();
-        return parent::fetchAll($sql, $params);
-    }
-
     /**
      * Creates a copy of a route, from a route Id. Copies the route to the account of the user Id provided
      *
@@ -386,6 +392,83 @@ class RouteFactory extends ModelFactory {
         parent::execute($sql, $params);
 
         return $routeId;
+    }
+
+    /**
+     * Whenever a user performs an action on a route,
+     *
+     * @param      $routeId
+     * @param      $userId
+     * @param      $action
+     * @param null $action_id
+     */
+    public static function updateRouteLog($routeId, $userId, $action, $action_id = null) {
+        $sql = "INSERT INTO tb_route_log (
+                    fk_route_id,
+                    fk_user_id,
+                    action,
+                    action_value_id,
+                    datetime
+                ) VALUES (
+                    :routeId,
+                    :userId,
+                    :action,
+                    :action_id,
+                    NOW()
+                )";
+        $params = array(
+            ':routeId'   => $routeId,
+            ':userId'    => $userId,
+            ':action'    => $action,
+            ':action_id' => $action_id
+        );
+        parent::execute($sql, $params);
+    }
+
+    /**
+     * Returns the entire social stream for a route. Including shares, routes and comments
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId Id of the route to get the stream from
+     * @param int $viewer  User Id of the person looking at the page (to deal with shadow bans)
+     *
+     * @return array All social interactions with this route
+     */
+    public static function getSocialStream($routeId, $viewer) {
+        $sql = "SELECT
+                    rl.fk_route_id,
+                    rl.action AS type,
+                    rl.action_value_id AS valueId,
+                    rl.action_value_string AS valueString,
+                    u.username,
+                    c.comment,
+                    r.value AS rating,
+                    CASE
+                        WHEN rl.action='comment' THEN 'fa fa-comment'
+                        WHEN rl.action='rate' THEN 'fa fa-star'
+                        WHEN rl.action='download' THEN 'fa fa-download'
+                        WHEN rl.action='share' THEN 'fa fa-share'
+                        WHEN rl.action='fork' THEN 'fa fa-code-fork'
+                    END AS icon
+                FROM tb_route_log rl
+                JOIN tb_user u
+                ON u.pk_user_id = rl.fk_user_id
+                LEFT JOIN tb_comment c
+                ON c.pk_comment_id = rl.action_value_id
+                LEFT JOIN tb_rating r
+                ON r.pk_rating_id = rl.action_value_id
+                WHERE rl.fk_route_id = :routeId
+                AND (u.is_shadow_banned = 0 OR u.pk_user_id = :viewer)
+                AND u.is_banned = 0
+                AND (c.is_deleted = 0 OR c.is_deleted IS NULL)
+                AND (r.is_deleted = 0 OR r.is_deleted IS NULL)
+                ORDER BY datetime DESC";
+        $params = array(
+            ':routeId' => $routeId,
+            ':viewer'  => $viewer
+        );
+        return parent::fetchAll($sql, $params);
     }
 
 }
