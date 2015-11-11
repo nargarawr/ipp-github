@@ -42,6 +42,9 @@ class RouteController extends BaseController {
      * @author Craig Knott
      */
     public function detailAction() {
+      $routeId = $this->getRequest()->getParam('id', 0);
+      $this->view->route = RouteFactory::getRoute($routeId, null, true);
+      $this->view->points = RouteFactory::getRoutePoints($routeId);
     }
 
     /**

@@ -136,30 +136,41 @@ class RouteFactory extends ModelFactory {
      *
      * @author Craig Knott
      *
-     * @param int $routeId The id of the route to get
-     * @param int $userId  The id of the user this belongs to (to avoid unwarranted access)
+     * @param int  $routeId         The id of the route to get
+     * @param int  $userId          The id of the user this belongs to (to avoid unwarranted access)
+     * @param bool $showUserDetails Whether or not to show information about the creator too
      *
      * @return object The route object
      */
     public
-    static function getRoute($routeId, $userId) {
+    static function getRoute($routeId, $userId = null, $showUserDetails = false) {
         $sql = "SELECT
-                    name,
-                    description,
-                    is_private
-                FROM tb_route
+                    r.name,
+                    r.description,
+                    r.is_private,
+                    IFNULL(
+                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = r.pk_route_id), 0
+                    ) AS rating" .
+                    ", u.username as owner, u.pk_user_id as owner_id" . "
+                FROM tb_route r" .
+                (($showUserDetails) ? " JOIN tb_user u ON r.created_by = u.pk_user_id " : "") . "
                 WHERE pk_route_id = :routeId
-                AND is_deleted = 0
-                AND created_by = :userId";
+                AND r.is_deleted = 0
+                AND r.is_private " . (!is_null($userId) ? "= 0" : ">= 0") .
+                ((!is_null($userId)) ? " AND r.created_by = :userId" : "");
         $params = array(
-            ':routeId' => $routeId,
-            ':userId'  => $userId
+            ':routeId' => $routeId
         );
-        return parent::fetchOne($sql, $params);
+        if (!is_null($userId)) {
+            $params[':userId'] = $userId;
+        }
+
+        $result = parent::fetchOne($sql, $params);
+        return $result;
     }
 
     /**
-     *Get all points for a specified route
+     * Get all points for a specified route
      *
      * @author Craig Knott
      *
@@ -292,6 +303,22 @@ class RouteFactory extends ModelFactory {
             ':userId'  => $userId
         );
         parent::execute($sql, $params);
+    }
+
+
+      /**
+       * Returns the entire social stream for a route. Including shares, routes and comments
+       *
+       * @author Craig Knott
+       *
+       * @param int $routeId Id of the route to get the stream from
+       *
+       * @return array All social interactions with this route
+       */
+    public static function getSocialStream($routeId) {
+        $sql = "";
+        $params = array();
+        return parent::fetchAll($sql, $params);
     }
 
     /**
