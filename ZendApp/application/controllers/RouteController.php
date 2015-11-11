@@ -274,4 +274,24 @@ class RouteController extends BaseController {
         ));
     }
 
+    /**
+     * Used to open a route in a different mapping software
+     *
+     * @author Craig Knott
+     */
+    public function openingooglemapsAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('id', 0);
+
+        $points = RouteFactory::getRoutePoints($routeId);
+
+        $url = "https://www.google.com/maps/dir/";
+        foreach ($points as $point) {
+            $url .= $point->latitude . ',' . $point->longitude . '/';
+        }
+
+        $this->_helper->redirector->gotoUrlAndExit($url);
+    }
 }
