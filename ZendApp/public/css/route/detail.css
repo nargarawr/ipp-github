@@ -79,3 +79,30 @@ tr td:first-child {
 .streamElement {
     margin-bottom: 10px;
 }
+
+.btnLink button {
+    margin-bottom: 5px;
+}
+
+.commentAction .fa {
+    cursor: pointer;
+}
+
+#commentReportMessage {
+    margin-top: 10px;
+}
+
+.starSelected {
+    color: #FFB347;
+}
+
+.reportSelected,
+.deleteSelected {
+    color: #FF6961 ;
+}
+
+.yourRating .fa-star-o,
+.yourRating .fa-star {
+    font-size: 18px;
+    cursor: pointer;
+}

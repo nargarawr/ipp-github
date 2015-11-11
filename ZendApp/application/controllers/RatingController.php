@@ -30,7 +30,9 @@ class RatingController extends BaseController {
         $routeId = $this->getRequest()->getParam('id', null);
         $rating = $this->getRequest()->getParam('rating', null);
 
+
         $id = RatingFactory::addRating($routeId, $rating, $this->user->userId);
+        RouteFactory::updateRouteLog($routeId, $this->user->userId, 'rate', $id);
 
         echo Zend_Json::encode($id);
         exit;

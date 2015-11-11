@@ -44,7 +44,10 @@ class RouteController extends BaseController {
     public function detailAction() {
         $routeId = $this->getRequest()->getParam('id', 0);
         $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
-        $this->view->socialStream = RouteFactory::getSocialStream($routeId, $this->user->userId);
+        $this->view->socialStream = RouteFactory::getSocialStream(
+            $routeId,
+            (is_null($this->user)) ? null : $this->user->userId
+        );
 
         $points = RouteFactory::getRoutePoints($routeId);
         $this->view->points = $points;
@@ -53,6 +56,8 @@ class RouteController extends BaseController {
 
         $this->view->firstPoint = $points[0]->latitude . "," . $points[0]->longitude;
         $this->view->lastPoint = $points[count($points) - 1]->latitude . "," . $points[count($points) - 1]->longitude;
+
+        $this->view->userRouteRating = 0;
     }
 
     /**
@@ -232,7 +237,13 @@ class RouteController extends BaseController {
         $route = RouteFactory::getRoute($routeId, $this->user->userId);
         $route->points = RouteFactory::getRoutePoints($routeId, true);
 
-        RouteFactory::updateRouteLog($routeId, $this->user->userId, "download");
+
+        RouteFactory::updateRouteLog(
+            $routeId,
+            is_null($this->user) ? 0 : $this->user->userId,
+            "download"
+        );
+
 
         $fileName = $route->name . ".json";
 

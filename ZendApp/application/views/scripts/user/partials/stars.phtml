@@ -1,9 +1,21 @@
+<style>
+    .starDisplay {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+</style>
+
+<? if (is_null($this->showId)) {
+    $this->showId = false;
+} ?>
+<!-- Funky comments to get the icons to align next to each other perfectly
 <? for ($i = 0; $i < 5; $i += 1) { ?>
     <? if ($i + 0.5 == $this->rating) { ?>
-        <i class="fa fa-star-half-o"></i>
+        --><i class="starDisplay fa fa-star-half-o"></i><!--
     <? } else if ($i < $this->rating) { ?>
-        <i class="fa fa-star"></i>
+        --><i class="starDisplay fa fa-star" <?= ($this->showId) ? ('data-index="' . $i . '"') : '' ?>></i><!--
     <? } else if ($i >= $this->rating) { ?>
-        <i class="fa fa-star-o"></i>
+        --><i class="starDisplay fa fa-star-o" <?= ($this->showId) ? ('data-index="' . $i . '"') : '' ?>></i><!--
     <? } ?>
 <? } ?>
+-->

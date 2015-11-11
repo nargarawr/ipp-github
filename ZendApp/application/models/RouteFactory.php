@@ -395,32 +395,84 @@ class RouteFactory extends ModelFactory {
     }
 
     /**
-     * Whenever a user performs an action on a route,
+     * Determines whether a rating for the given user/route combination already exists.
      *
-     * @param      $routeId
-     * @param      $userId
-     * @param      $action
-     * @param null $action_id
+     * @author Craig Knott
+     *
+     * @param int $routeId Id of the route the rating was given to
+     * @param int $userId  Id of the user performing the action
+     *
+     * @return bool Whether a rating for this user/route combination exists
      */
-    public static function updateRouteLog($routeId, $userId, $action, $action_id = null) {
+    public static function checkIfRatingExists($routeId, $userId) {
+        $sql = "SELECT
+                    pk_route_log_id
+                FROM tb_route_log
+                WHERE action = 'rate'
+                AND fk_user_id = :userId
+                AND fk_route_id = :routeId";
+        $params = array(
+            ':routeId' => $routeId,
+            ':userId'  => $userId
+        );
+
+        $exists = parent::fetchOne($sql, $params);
+        return ($exists !== false);
+    }
+
+    /**
+     * Logs a row in tb_route_log whenever an action is taken on a route. This is so we can display them all in the
+     * social stream
+     *
+     * @author Craig Knott
+     *
+     * @param int    $routeId       Id of the route the action was performed on
+     * @param int    $userId        Id of the user performing the action - if 0, it is a user not logged in
+     * @param string $action        The action performed ("rate", "comment", "fork", "download", or "share")
+     * @param int    $action_id     If rating or commenting, the Id of the rating or comment
+     * @param string $action_string If sharing a route, what website it was shared to
+     */
+    public static function updateRouteLog($routeId, $userId, $action, $action_id = null, $action_string = null) {
+        // Check this user hasn't already left a rating for this route. If they have, we update that entry instead of
+        // adding another.
+        if ($action === 'rate') {
+            $exists = RouteFactory::checkIfRatingExists($routeId, $userId);
+            if ($exists) {
+                $sql = "UPDATE tb_route_log
+                        SET datetime = NOW()
+                        WHERE fk_route_id = :routeId
+                        AND fk_user_id = :userId
+                        AND action = 'rate'";
+                $params = array(
+                    ':routeId' => $routeId,
+                    ':userId'  => $userId
+                );
+                parent::execute($sql, $params);
+                return;
+            }
+        }
+
         $sql = "INSERT INTO tb_route_log (
                     fk_route_id,
                     fk_user_id,
                     action,
                     action_value_id,
+                    action_value_string,
                     datetime
                 ) VALUES (
                     :routeId,
                     :userId,
                     :action,
                     :action_id,
+                    :action_string,
                     NOW()
                 )";
         $params = array(
-            ':routeId'   => $routeId,
-            ':userId'    => $userId,
-            ':action'    => $action,
-            ':action_id' => $action_id
+            ':routeId'       => $routeId,
+            ':userId'        => $userId,
+            ':action'        => $action,
+            ':action_id'     => $action_id,
+            ':action_string' => $action_string
         );
         parent::execute($sql, $params);
     }

@@ -1,4 +1,5 @@
 <input type="hidden" id="email-confirmed" value="<?= $this->user->isConfirmed ?>">
+<input type="hidden" id="routeId" value="<?= $this->route->routeId?>" >
 
 <div class="row containingRow">
     <div class="col-md-7">
@@ -18,12 +19,15 @@
                         'rating' => $this->route->rating
                     )); ?>
                 </div>
-                <div class="yourRating">
-                    Your rating
-                    <?= $this->partial('user', 'stars', null, array(
-                        'rating' => 0
-                    )); ?>
-                </div>
+                <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
+                    <div class="yourRating">
+                        Your rating
+                        <?= $this->partial('user', 'stars', null, array(
+                            'rating' => $this->userRouteRating,
+                            'showId' => true
+                        )); ?>
+                    </div>
+                <? } ?>
             </div>
         </div>
 
@@ -39,15 +43,17 @@
                     </button>
                 </a>
                 <br>
+                <? if (!(is_null($this->user))) { ?>
+                    <a class="btnLink" href="/route/fork/id/<?= $this->route->routeId ?>">
+                        <button class="btn btn-warning btn-nopad">
+                            <i class="fa fa-code-fork"></i> Fork Route
+                        </button>
+                    </a>
+                    <br>
+                <? } ?>
                 <a class="btnLink" target="_blank" href="/route/download/id/<?= $this->route->routeId ?>">
                     <button class="btn btn-primary btn-nopad">
                         <i class="fa fa-download"></i> Download
-                    </button>
-                </a>
-                <br>
-                <a class="btnLink" href="/route/fork/id/<?= $this->route->routeId ?>">
-                    <button class="btn btn-warning btn-nopad">
-                        <i class="fa fa-code-fork"></i> Fork Route
                     </button>
                 </a>
 
@@ -105,17 +111,19 @@
             </div>
         </div>
 
-        <div class="commentBox">
+        <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
+            <div class="commentBox">
             <span class="bold">
                 Got something to say?
             </span>
-            <div class="row">
-                <div class="input-group">
-                    <textarea class="form-control custom-control" rows="2"></textarea>
-                    <span class="input-group-addon btn btn-success" id="comment-btn">Comment</span>
+                <div class="row">
+                    <div class="input-group">
+                        <textarea class="form-control custom-control" id="comment-input" rows="2"></textarea>
+                        <span class="input-group-addon btn btn-success" id="comment-btn">Comment</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        <? } ?>
 
         <div class="streamElements" style="">
             <div class="bold">See what others thought:</div>
@@ -130,20 +138,28 @@
                             <span class="bold"> <?= $element->username ?> </span>
 
                             <? if ($element->type === 'comment') { ?>
+                                <span class="right commentAction">
+                                    <? if (!(is_null($this->user))) { ?>
+                                        <? if ($element->username == $this->user->username) { ?>
+                                            <i class="fa fa-times"></i>
+                                        <? } else { ?>
+                                            <i class="fa fa-flag"></i>
+                                        <? }
+                                    } ?>
+                                </span>
                                 says: <p> <?= $element->comment ?> </p>
+                                <input type="hidden" class="commentId" value="<?= $element->valueId ?>">
                             <? } else if ($element->type === 'rate') { ?>
                                 gave this route a rating of <?= $element->rating ?><i class="fa fa-star"></i>
                             <? } else { ?>
                                 <?= rtrim($element->type, 'e') ?>ed this route
                                 <?= ($element->type == 'share' ? ' to ' . ucfirst($element->valueString) : '') ?>
                             <? } ?>
-
                         </div>
                     <? } ?>
                 <? } else { ?>
                     No one has said anything yet! Why not kick off the discussion?
                 <? } ?>
-
             </div>
         </div>
     </div>

@@ -46,7 +46,35 @@ class RatingFactory extends ModelFactory {
         );
 
         $id = parent::execute($sql, $params, true);
+        if ($id == 0 || is_null($id)) {
+            $id = RatingFactory::getRatingId($routeId, $ratedBy);
+        }
         return $id;
+    }
+
+    /**
+     * Get the id of rating based on the unique routeId/userId combination. Necessary because the addRating function
+     * will return a ratingId of 0 if the value is updated instead of added anew.
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The route the rating was made on
+     * @param int $ratedBy The user that made the rating
+     *
+     * @return int The id of this rating
+     */
+    public static function getRatingId($routeId, $ratedBy) {
+        $sql = "SELECT
+                    pk_rating_id as id
+                FROM tb_rating
+                WHERE fk_route_id = :routeId
+                AND created_by = :ratedBy";
+        $params = array(
+            ':routeId' => $routeId,
+            ':ratedBy' => $ratedBy
+        );
+        $result = parent::fetchOne($sql, $params);
+        return $result->id;
     }
 
     /**

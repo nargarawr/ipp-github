@@ -31,8 +31,12 @@ class CommentController extends BaseController {
         $text = $this->getRequest()->getParam('text', null);
 
         $id = CommentFactory::addComment($routeId, $text, $this->user->userId);
+        RouteFactory::updateRouteLog($routeId, $this->user->userId, 'comment', $id);
 
-        echo Zend_Json::encode($id);
+        echo Zend_Json::encode(array(
+            'commentId' => $id,
+            'username'  => $this->user->username
+        ));
         exit;
     }
 
