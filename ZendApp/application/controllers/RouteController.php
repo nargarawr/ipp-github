@@ -57,7 +57,10 @@ class RouteController extends BaseController {
         $this->view->firstPoint = $points[0]->latitude . "," . $points[0]->longitude;
         $this->view->lastPoint = $points[count($points) - 1]->latitude . "," . $points[count($points) - 1]->longitude;
 
-        $this->view->userRouteRating = 0;
+        $this->view->userRouteRating = RouteFactory::getUserRatingForRoute(
+            (is_null($this->user)) ? 0 : $this->user->userId,
+            $routeId
+        );
     }
 
     /**

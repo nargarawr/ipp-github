@@ -35,17 +35,26 @@ $(document).ready(function () {
 });
 
 /**
+ * Class RatingManager
  *
+ * Class in charge of the rating system on the routes page
+ *
+ * @author Craig Knott
  */
 var RatingManager = Class.extend({
+
     /**
+     * Initialises this class and assigns member variables
      *
+     * @author Craig Knott
      */
-    init:           function () {
-        this.stars = $('.yourRating').find('.fa');
+    init:               function () {
+        this.stars = $('.yourRating').find('.starDisplay');
         this.starStates = [];
         this.emailConfirmed = $('#email-confirmed').val() == 1;
         this.routeId = $('#routeId').val();
+        this.socialStream = $('#socialStream').find('.streamElements').find('.elements');
+        this.clearBtn = $('.clearBtn');
 
         for (var i = 0; i < this.stars.length; i++) {
             this.starStates.push(
@@ -55,10 +64,13 @@ var RatingManager = Class.extend({
 
         this.setupListeners();
     },
+
     /**
+     * Set up the listeners for the stars
      *
+     * @author Craig Knott
      */
-    setupListeners: function () {
+    setupListeners:     function () {
         var _self = this;
 
         this.stars.mouseenter(function () {
@@ -72,10 +84,10 @@ var RatingManager = Class.extend({
 
         this.stars.mouseleave(function () {
             var index = $(this).attr('data-index');
-            _self.emptyStar($(this), index);
+            _self.resetStar($(this), index);
 
             for (var i = 0; i < index; i++) {
-                _self.emptyStar($(_self.stars[i]), i);
+                _self.resetStar($(_self.stars[i]), i);
             }
         });
 
@@ -104,59 +116,121 @@ var RatingManager = Class.extend({
                 }
             }
 
+            var rating = parseInt(index) + 1;
             $.ajax({
                 type: 'POST',
                 url:  '/rating/add',
                 data: {
                     id:     _self.routeId,
-                    rating: parseInt(index) + 1
+                    rating: rating
                 }
             }).success(function (response) {
-                console.log(response);
+                response = JSON.parse(response);
+                _self.updateSocialStream(rating, response.username);
+            });
+        });
+
+        this.clearBtn.click(function () {
+            $.ajax({
+                type: 'POST',
+                url:  '/rating/remove',
+                data: {
+                    id: $('#ratingId').val()
+                }
+            }).success(function () {
+                $('#userRating').parent().remove();
+                for (var i = 0; i < _self.stars.length; i++) {
+                    _self.deselectStar($(_self.stars[i]), i);
+                }
             });
         });
     },
+
     /**
+     * Sets a star as hovered
      *
-     * @param star
-     * @param index
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
      */
-    fillStar:       function (star, index) {
+    fillStar:           function (star, index) {
         star.addClass('starSelected');
         star.removeClass(this.starStates[index]);
         star.addClass('fa-star');
     },
-    /*
+
+    /**
+     * Sets a star as non-hovered
      *
-     * @param star
-     * @param index
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
      */
-    emptyStar:      function (star, index) {
+    resetStar:          function (star, index) {
         star.removeClass('starSelected');
         star.removeClass('fa-star');
         star.addClass(this.starStates[index]);
     },
+
     /**
+     * Sets a star as selected but non-hovered
      *
-     * @param star
-     * @param index
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
      */
-    selectStar:     function (star, index) {
+    selectStar:         function (star, index) {
         star.removeClass('starSelected');
         star.removeClass(this.starStates[index]);
         this.starStates[index] = 'fa-star';
         star.addClass('fa-star');
     },
+
     /**
+     * Sets a star as non-selected and non-hovered
      *
-     * @param star
-     * @param index
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
      */
-    deselectStar:   function (star, index) {
+    deselectStar:       function (star, index) {
         star.removeClass('starSelected');
         star.removeClass(this.starStates[index]);
         this.starStates[index] = 'fa-star-o';
         star.addClass('fa-star-o');
+    },
+
+    /**
+     * Includes a message in the social stream about this user rating the route
+     *
+     * @author Craig Knott
+     *
+     * @param rating The rating the user gave
+     * @param username The username of the current user
+     */
+    updateSocialStream: function (rating, username) {
+        var userRating = $('#userRating').parent();
+
+        // If the user rating already exists, we should delete it so we can add a new one at the top
+        if (userRating !== undefined) {
+            userRating.remove();
+        }
+
+        var ratingForStream = $('<div>').addClass('streamElement rate');
+        ratingForStream.html(
+            '<i class="fa fa-star"></i>' +
+            '<span class="bold"> ' + username + '</span> gave this route a rating of ' +
+            '<span class="userRatingValue">' + rating + '</span> ' +
+            '<i class="fa fa-star"></i>' +
+            '<div class="hidden" id="userRating"></div>'
+        );
+
+        this.socialStream.prepend(ratingForStream);
+
     }
 });
 

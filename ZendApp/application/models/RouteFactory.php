@@ -513,14 +513,50 @@ class RouteFactory extends ModelFactory {
                 WHERE rl.fk_route_id = :routeId
                 AND (u.is_shadow_banned = 0 OR u.pk_user_id = :viewer)
                 AND u.is_banned = 0
-                AND (c.is_deleted = 0 OR c.is_deleted IS NULL)
-                AND (r.is_deleted = 0 OR r.is_deleted IS NULL)
+                AND (c.is_deleted = 0 OR c.is_deleted IS NULL OR (c.is_deleted = 1 AND rl.action = 'rate'))
+                AND (r.is_deleted = 0 OR r.is_deleted IS NULL OR (r.is_deleted = 1 AND rl.action = 'comment'))
                 ORDER BY datetime DESC";
         $params = array(
             ':routeId' => $routeId,
             ':viewer'  => $viewer
         );
         return parent::fetchAll($sql, $params);
+    }
+
+    /**
+     * Returns the rating that a particular user gave for a particular route
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId  The user to look for
+     * @param int $routeId The route to look for
+     *
+     * @return array The rating given to this route from this user
+     */
+    public static function getUserRatingForRoute($userId, $routeId) {
+        $sql = "SELECT
+                    pk_rating_id AS id,
+                    value
+                FROM tb_rating
+                WHERE fk_route_id = :routeId
+                AND created_by = :userId";
+        $params = array(
+            ':userId'  => $userId,
+            ':routeId' => $routeId
+        );
+
+        $result = parent::fetchOne($sql, $params);
+        if ($result === false) {
+            return (object)array(
+                'ratingId' => 0,
+                'value'    => 0
+            );
+        }
+
+        return (object)array(
+            'ratingId' => $result->id,
+            'value'    => $result->value
+        );
     }
 
 }

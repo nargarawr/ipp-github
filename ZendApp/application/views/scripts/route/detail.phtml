@@ -1,5 +1,6 @@
 <input type="hidden" id="email-confirmed" value="<?= $this->user->isConfirmed ?>">
-<input type="hidden" id="routeId" value="<?= $this->route->routeId?>" >
+<input type="hidden" id="routeId" value="<?= $this->route->routeId ?>">
+<input type="hidden" id="ratingId" value="<?= $this->userRouteRating->ratingId ?>">
 
 <div class="row containingRow">
     <div class="col-md-7">
@@ -22,8 +23,14 @@
                 <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
                     <div class="yourRating">
                         Your rating
+                        <? if ($this->userRouteRating->value > 0) { ?>
+                            <span class="clearBtn">
+                                (<i class="fa fa-times"></i>)
+                            </span>
+                        <? } ?>
+
                         <?= $this->partial('user', 'stars', null, array(
-                            'rating' => $this->userRouteRating,
+                            'rating' => $this->userRouteRating->value,
                             'showId' => true
                         )); ?>
                     </div>
@@ -128,7 +135,7 @@
         <div class="streamElements" style="">
             <div class="bold">See what others thought:</div>
             <div class="elements">
-                <? if (count($this->socialStream) > 0) {?>
+                <? if (count($this->socialStream) > 0) { ?>
                     <? foreach ($this->socialStream as $element) { ?>
                         <div class="streamElement <?= $element->type ?>">
                             <i class="<?= $element->icon ?>"></i>
@@ -150,7 +157,13 @@
                                 says: <p> <?= $element->comment ?> </p>
                                 <input type="hidden" class="commentId" value="<?= $element->valueId ?>">
                             <? } else if ($element->type === 'rate') { ?>
-                                gave this route a rating of <?= $element->rating ?><i class="fa fa-star"></i>
+                                gave this route a rating of
+                                <span class="userRatingValue"><?= $element->rating ?></span>
+                                <i class="fa fa-star"></i>
+                                <? if (!is_null($this->user) && $element->username == $this->user->username) { ?>
+                                    <div class="hidden" id="userRating"></div>
+                                <? } ?>
+
                             <? } else { ?>
                                 <?= rtrim($element->type, 'e') ?>ed this route
                                 <?= ($element->type == 'share' ? ' to ' . ucfirst($element->valueString) : '') ?>
