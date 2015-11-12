@@ -44,19 +44,6 @@
     text-align: center;
 }
 
-.routeDetailsTable {
-    margin-bottom: 0;
-}
-
-#socialStream {
-    border-left: 1px solid #CCCCCC;
-}
-
-#socialStream .title {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
 .shareThisRoute {
     margin-top: 10px;
 }
@@ -135,4 +122,36 @@ tr td:first-child {
 
 #filterComments {
     font-weight: normal;
+}
+
+.border-container .routestatsTitle {
+    width: 119px;
+}
+
+.border-container .routedetailTitle {
+     width: 133px;
+ }
+
+.border-container .routessTitle {
+    width: 136px;
+}
+
+.border-container {
+    padding-top: 0;
+}
+
+.border-container .title {
+    top: -10px;
+}
+
+.stats .fa-code-fork {
+    margin-right: 5px;
+}
+
+.shareThisRoute .bold {
+    padding-bottom: 10px;
+}
+
+.shareThisRoute {
+    padding-bottom: 5px;
 }

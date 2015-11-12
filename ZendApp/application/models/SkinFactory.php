@@ -217,11 +217,11 @@ class SkinFactory extends ModelFactory {
                     (
                     SELECT
                         'c' AS chain,
-                        GROUP_CONCAT(IF(action='download',cnt,NULL)) AS downloadsGiven,
-                        GROUP_CONCAT(IF(action='share' ,cnt,NULL)) AS sharesGiven,
-                        GROUP_CONCAT(IF(action='fork',cnt,NULL)) AS forksGiven,
-                        GROUP_CONCAT(IF(action='rate',cnt,NULL)) AS ratingsGiven,
-                        GROUP_CONCAT(IF(action='comment',cnt,NULL)) AS commentsGiven
+                        IFNULL(GROUP_CONCAT(IF(action='download',cnt,NULL)),0) AS downloadsGiven,
+                        IFNULL(GROUP_CONCAT(IF(action='share' ,cnt,NULL)),0) AS sharesGiven,
+                        IFNULL(GROUP_CONCAT(IF(action='fork',cnt,NULL)),0) AS forksGiven,
+                        IFNULL(GROUP_CONCAT(IF(action='rate',cnt,NULL)),0) AS ratingsGiven,
+                        IFNULL(GROUP_CONCAT(IF(action='comment',cnt,NULL)),0) AS commentsGiven
                     FROM
                     (
                         SELECT
@@ -239,11 +239,11 @@ class SkinFactory extends ModelFactory {
                 (
                     SELECT
                         'c' AS chain,
-                        GROUP_CONCAT(IF(action='download',cnt,NULL)) AS downloadsReceived,
-                        GROUP_CONCAT(IF(action='share' ,cnt,NULL)) AS sharesReceived,
-                        GROUP_CONCAT(IF(action='fork',cnt,NULL)) AS forksReceived,
-                        GROUP_CONCAT(IF(action='rate',cnt,NULL)) AS ratingsReceived,
-                        GROUP_CONCAT(IF(action='comment',cnt,NULL)) AS commentsReceived
+                        IFNULL(GROUP_CONCAT(IF(action='download',cnt,NULL)),0) AS downloadsReceived,
+                        IFNULL(GROUP_CONCAT(IF(action='share' ,cnt,NULL)),0) AS sharesReceived,
+                        IFNULL(GROUP_CONCAT(IF(action='fork',cnt,NULL)),0) AS forksReceived,
+                        IFNULL(GROUP_CONCAT(IF(action='rate',cnt,NULL)),0) AS ratingsReceived,
+                        IFNULL(GROUP_CONCAT(IF(action='comment',cnt,NULL)),0) AS commentsReceived
                     FROM (
                              SELECT
                                  COUNT(action) AS cnt,

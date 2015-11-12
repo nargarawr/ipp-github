@@ -34,7 +34,6 @@ class UserController extends BaseController {
         // Non confirmed email error
         $this->view->nce = $this->getRequest()->getParam('nce', 0);
 
-
         // Used to display this page externally to other users
         $displayedUser = $this->user;
         $customUserId = $this->getRequest()->getParam('id', null);

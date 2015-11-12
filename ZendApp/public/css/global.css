@@ -176,3 +176,24 @@ a.btnLink:hover {
     padding-left: 0;
     padding-right: 0;
 }
+
+.border-container {
+    border-radius: 3px;
+    border: solid 1px #DDDDDD;
+    padding: 1.25em;
+    margin-top: 15px;
+}
+
+.border-container .title {
+    position: relative;
+    color: #667B8B;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #F6F6F6;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    top: -28px;
+}

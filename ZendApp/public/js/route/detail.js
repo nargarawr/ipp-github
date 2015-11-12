@@ -1,3 +1,12 @@
+/*
+ * Set up callbacks for the share buttons
+ */
+var a2a_config = a2a_config || {};
+a2a_config.callbacks = a2a_config.callbacks || [];
+a2a_config.callbacks.push({
+    share: my_addtoany_onshare
+});
+
 /**
  * Document ready function. Gets the start an end locations for the route
  *
@@ -536,3 +545,31 @@ var Comment = Class.extend({
     }
 });
 
+
+/**
+ * Callback function for when a route is shared
+ *
+ * @author Craig Knott
+ *
+ * @param data Information about the share
+ */
+function my_addtoany_onshare(data) {
+    console.log(data);
+    $.ajax({
+        type: 'POST',
+        url:  '/route/share',
+        data: {
+            id:       $('#routeId').val(),
+            sharedTo: (data.service).toLowerCase()
+        }
+    }).success(function (response) {
+        response = JSON.parse(response);
+        var ele = $('<div>').addClass('streamElement share').html(
+            '<i class="fa fa-share"></i> ' +
+            '<i class="fa fa-facebook-square"></i>' +
+            '<span class="bold"> ' + response.username +  '</span> shared this route to ' + data.service
+        );
+        $('#socialStream').find('.elements').prepend(ele);
+    });
+
+}

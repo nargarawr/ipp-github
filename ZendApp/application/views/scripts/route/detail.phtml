@@ -2,7 +2,6 @@
 <input type="hidden" id="routeId" value="<?= $this->route->routeId ?>">
 <input type="hidden" id="ratingId" value="<?= $this->userRouteRating->ratingId ?>">
 
-
 <div class="row containingRow">
     <div class="col-md-7">
         <div class="row topBar">
@@ -76,91 +75,107 @@
 
             </div>
             <div class="col-md-6">
-                <h3> Route Details </h3>
-                <table class="table routeDetailsTable">
-                    <tbody>
-                    <tr>
-                        <td>Start
-                        </td>
-                        <td><span id="start_point" data-latlng="<?= $this->firstPoint ?>"></span></td>
-                    </tr>
-                    <tr>
-                        <td>End</td>
-                        <td><span id="end_point" data-latlng="<?= $this->lastPoint ?>"></span></td>
-                    </tr>
-                    <tr>
-                        <td>Distance</td>
-                        <td>NYI</td>
-                    </tr>
-                    <tr>
-                        <td>Petrol Cost</td>
-                        <td>NYI</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="border-container">
+                    <div class="title routedetailTitle">
+                        Route Details
+                    </div>
+                    <div>
+                        <b>Start</b><br>
+                        <span id="start_point" data-latlng="<?= $this->firstPoint ?>"></span>
+                    </div>
+                    <br>
+                    <div>
+                        <b>End</b><br>
+                        <span id="end_point" data-latlng="<?= $this->lastPoint ?>"></span>
+                    </div>
+                    <br>
+                    <div>
+                        <b>Author Description</b><br>
+                        <i><?= $this->route->description ?></i>
+                    </div>
+                </div>
 
-                <div>
-                    <i>
-                        <?= $this->route->description ?>
-                    </i>
+                <div class="border-container">
+                    <div class="title routestatsTitle">
+                        Route Stats
+                    </div>
+                    <div class="stats">
+                        <i class="fa fa-comment"></i> <?= $this->route->comments ?> comments
+                        <br>
+                        <i class="fa fa-star"></i> <?= $this->route->ratings ?> ratings
+                        <br>
+                        <i class="fa fa-share"></i> <?= $this->route->shares ?> shares
+                        <br>
+                        <i class="fa fa-download"></i> <?= $this->route->downloads ?> downloads
+                        <br>
+                        <i class="fa fa-code-fork"></i> <?= $this->route->forks ?> forks
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="col-md-5" id="socialStream">
-        <h3 class="title"> Social Stream</h3>
-
-        <div class="shareThisRoute">
-            <div class="bold">
-                Like this route? Why not share it?
+        <div class="border-container">
+            <div class="title routessTitle">
+                Social Stream
             </div>
-            <div class="shareIcons">
-                <i class="fa fa-facebook-square"></i>
-                <i class="fa fa-twitter-square"></i>
-                <i class="fa fa-reddit-square"></i>
-                <i class="fa fa-tumblr-square"></i>
-                <i class="fa fa-envelope-square"></i>
-            </div>
-        </div>
 
-        <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
-            <div class="commentBox">
+            <div class="shareThisRoute">
+                <div class="bold">
+                    Like this route? Why not share it?
+                </div>
+                <div class="shareButtons">
+                    <div class="a2a_kit a2a_default_style">
+                        <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+                        <span class="a2a_divider"></span>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                        <a class="a2a_button_google_plus"></a>
+                        <a class="a2a_button_pinterest"></a>
+                        <a class="a2a_button_email"></a>
+                        <a class="a2a_button_reddit"></a>
+                        <a class="a2a_button_tumblr"></a>
+                    </div>
+                    <script type="text/javascript" src="/libs/addtoany/buttons.js"></script>
+                    <script type="text/javascript">
+
+                    </script>
+                </div>
+            </div>
+
+            <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
+                <div class="commentBox">
             <span class="bold">
                 Got something to say?
             </span>
-                <div class="row">
-                    <div class="input-group">
-                        <textarea class="form-control custom-control" id="comment-input" rows="2"></textarea>
-                        <span class="input-group-addon btn btn-success" id="comment-btn">Comment</span>
+                    <div class="row">
+                        <div class="input-group">
+                            <textarea class="form-control custom-control" id="comment-input" rows="2"></textarea>
+                            <span class="input-group-addon btn btn-success" id="comment-btn">Comment</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <? } ?>
+            <? } ?>
 
-        <div class="streamElements">
-            <label id="filterComments" class="right">
-                <input type="checkbox"> Only show comments?
-            </label>
-            <div class="bold">See what others thought:</div>
+            <div class="streamElements">
+                <label id="filterComments" class="right">
+                    <input type="checkbox"> Only show comments?
+                </label>
+                <div class="bold">See what others thought:</div>
 
+                <div class="elements">
+                    <? if (count($this->socialStream) > 0) { ?>
+                        <? foreach ($this->socialStream as $element) { ?>
+                            <div class="streamElement <?= $element->type ?>">
+                                <i class="<?= $element->icon ?>"></i>
+                                <? if ($element->type == 'share') { ?>
+                                    <i class="fa fa-<?= $element->valueString ?>-square"></i>
+                                <? } ?>
+                                <span class="bold"> <?= $element->username ?> </span>
 
-            <div class="elements">
-                <? if (count($this->socialStream) > 0) { ?>
-                    <? foreach ($this->socialStream as $element) { ?>
-                        <div class="streamElement <?= $element->type ?>">
-                            <i class="<?= $element->icon ?>"></i>
-                            <? if ($element->type == 'share') { ?>
-                                <i class="fa fa-<?= $element->valueString ?>-square"></i>
-                            <? } ?>
-                            <span class="bold"> <?= $element->username ?> </span>
-
-                            <? if ($element->type === 'comment') { ?>
-                                <span class="right commentAction">
+                                <? if ($element->type === 'comment') { ?>
+                                    <span class="right commentAction">
                                     <? if (!(is_null($this->user))) { ?>
                                         <? if ($element->username == $this->user->username) { ?>
                                             <i class="fa fa-times"></i>
@@ -169,29 +184,30 @@
                                         <? }
                                     } ?>
                                 </span>
-                                says: <p> <?= $element->comment ?> </p>
-                                <input type="hidden" class="commentId" value="<?= $element->valueId ?>">
-                            <? } else if ($element->type === 'rate') { ?>
-                                gave this route a rating of
-                                <span class="userRatingValue"><?= $element->rating ?></span>
-                                <i class="fa fa-star"></i>
-                                <? if (!is_null($this->user) && $element->username == $this->user->username) { ?>
-                                    <div class="hidden" id="userRating"></div>
-                                <? } ?>
+                                    says: <p> <?= $element->comment ?> </p>
+                                    <input type="hidden" class="commentId" value="<?= $element->valueId ?>">
+                                <? } else if ($element->type === 'rate') { ?>
+                                    gave this route a rating of
+                                    <span class="userRatingValue"><?= $element->rating ?></span>
+                                    <i class="fa fa-star"></i>
+                                    <? if (!is_null($this->user) && $element->username == $this->user->username) { ?>
+                                        <div class="hidden" id="userRating"></div>
+                                    <? } ?>
 
-                            <? } else { ?>
-                                <?= rtrim($element->type, 'e') ?>ed this route
-                                <?= ($element->type == 'share' ? ' to ' . ucfirst($element->valueString) : '') ?>
-                            <? } ?>
-                        </div>
-                    <? } ?>
-                <? } else { ?>
-                    <? if ((!is_null($this->user)) && ($this->user->username == $this->route->owner)) { ?>
-                        No one has said anything yet! Perhaps you should share your route with your friends?
+                                <? } else { ?>
+                                    <?= rtrim($element->type, 'e') ?>ed this route
+                                    <?= ($element->type == 'share' ? ' to ' . ucfirst($element->valueString) : '') ?>
+                                <? } ?>
+                            </div>
+                        <? } ?>
                     <? } else { ?>
-                        No one has said anything yet! Why not kick off the discussion?
+                        <? if ((!is_null($this->user)) && ($this->user->username == $this->route->owner)) { ?>
+                            No one has said anything yet! Perhaps you should share your route with your friends?
+                        <? } else { ?>
+                            No one has said anything yet! Why not kick off the discussion?
+                        <? } ?>
                     <? } ?>
-                <? } ?>
+                </div>
             </div>
         </div>
     </div>

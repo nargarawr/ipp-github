@@ -49,10 +49,20 @@ class RouteController extends BaseController {
             $this->_redirect("/route/index/");
         }
 
-        $this->view->socialStream = RouteFactory::getSocialStream(
+        $ss = RouteFactory::getSocialStream(
             $routeId,
             (is_null($this->user)) ? null : $this->user->userId
         );
+
+        $socialCount = array ();
+        foreach ($ss as $s) {
+            if(!(array_key_exists($s->type, $socialCount))) {
+                $socialCount[$s->type] = 1;
+            } else {
+                $socialCount[$s->type]++;
+            }
+        }
+        $this->view->socialStream = $ss;
 
         $points = RouteFactory::getRoutePoints($routeId);
         $this->view->points = $points;
@@ -254,7 +264,6 @@ class RouteController extends BaseController {
             "download"
         );
 
-
         $fileName = $route->name . ".json";
 
         header('Content-Type: application/json');
@@ -300,5 +309,25 @@ class RouteController extends BaseController {
         }
 
         $this->_helper->redirector->gotoUrlAndExit($url);
+    }
+
+    /**
+     * Logs when a route is shared
+     *
+     * @author Craig Knott
+     */
+    public function shareAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $sharedRoute = $this->getRequest()->getParam('id', 0);
+        $sharedTo = $this->getRequest()->getParam('sharedTo', null);
+
+        RouteFactory::updateRouteLog($sharedRoute, $this->user->userId, 'share', null, $sharedTo);
+
+        echo Zend_Json::encode(array(
+            'username' => $this->user->username
+        ));
+        exit;
     }
 }

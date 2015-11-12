@@ -182,8 +182,23 @@ class RouteFactory extends ModelFactory {
                     r.is_private,
                     r.pk_route_id AS routeId,
                     IFNULL(
-                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = r.pk_route_id), 0
+                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = :routeId AND is_deleted = 0), 0
                     ) AS rating,
+                    IFNULL (
+                        (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = :routeId AND is_deleted = 0), 0
+                    ) AS comments,
+                    IFNULL (
+                        (SELECT count(pk_rating_id) AS comments FROM tb_rating r WHERE fk_route_id = :routeId AND is_deleted = 0), 0
+                    ) AS ratings,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = :routeId AND action = 'download'), 0
+                    ) AS downloads,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = :routeId AND action = 'fork'), 0
+                    ) AS forks,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = :routeId AND action = 'share'), 0
+                    ) AS shares,
                     u.username AS owner,
                     u.pk_user_id AS owner_id
                 FROM tb_route r
