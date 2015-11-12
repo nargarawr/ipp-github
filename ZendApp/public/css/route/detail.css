@@ -132,3 +132,7 @@ tr td:first-child {
     cursor: pointer;
     font-size: 14px;
 }
+
+#filterComments {
+    font-weight: normal;
+}

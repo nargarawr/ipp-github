@@ -323,6 +323,8 @@ var CommentManager = Class.extend({
         this.emailConfirmed = $('#email-confirmed').val() == 1;
         this.routeId = $('#routeId').val();
         this.socialStream = $('#socialStream').find('.streamElements').find('.elements');
+        this.filterComments = $('#filterComments');
+        this.filterCheckBox = $(filterComments).find('input');
         this.comments = [];
 
         this.setupListeners();
@@ -353,6 +355,21 @@ var CommentManager = Class.extend({
 
             _self.addComment(_self.comment.val());
             _self.getAllComments();
+        });
+
+        this.filterComments.unbind("click");
+        this.filterComments.click(function(){
+            $('.elements').children().each(function(){
+                var checked = _self.filterCheckBox.prop('checked');
+
+                if (!($(this).hasClass('comment'))) {
+                    if (checked) {
+                        $(this).addClass('hidden');
+                    } else {
+                        $(this).removeClass('hidden');
+                    }
+                }
+            });
         });
     },
     /**

@@ -32,6 +32,8 @@ class BaseController extends Zend_Controller_Action {
         $controller = str_replace($this->_delimiters, '-', $this->getRequest()->getControllerName());
         $action = $this->getRequest()->getActionName();
 
+        $isLocked = AdminFactory::getSiteAdmin()->is_locked;
+
         // If the user needs to be logged in to access this page, redirect them to the login page
         if (Zend_Auth::getInstance()->hasIdentity()) {
             // Create the user object
@@ -97,13 +99,19 @@ class BaseController extends Zend_Controller_Action {
                         'link'          => '/user/settings',
                         'icon'          => '<i class="fa fa-cog"></i>',
                         'shouldDisplay' => true
-                    )
+                    ),
+                    (object)array(
+                        'name'          => 'Skins',
+                        'link'          => '/user/skins',
+                        'icon'          => '<i class="fa fa-paint-brush"></i>',
+                        'shouldDisplay' => true
+                    ),
                 )
             ),
             'admin'   => (object)array(
                 'name'          => 'Administration',
                 'type'          => 'link',
-                'link'          => '/user/admin',
+                'link'          => '/admin/index',
                 'icon'          => '<i class="fa fa-cogs"></i>',
                 'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin),
                 'isActive'      => false

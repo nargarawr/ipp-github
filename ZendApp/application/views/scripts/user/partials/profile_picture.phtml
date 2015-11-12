@@ -5,32 +5,39 @@
         top: 0;
     }
 
-    .dp_person {
+    .dp_container .dp_person {
         position: relative;
         background-color: white;
     }
 
-    .dp_skin {
+    .dp_container .dp_skin {
         position: absolute;
     }
 
-    .dp_person, .dp_skin {
-        max-height: 350px;
+    .dp_container .dp_person, .dp_skin {
+        max-height: 350px !important;
         top: 0;
         left: 0;
     }
 
-    .img-thumbnail.dp_person,
-    .img-thumbnail.dp_skin {
+    .dp_container .img-thumbnail.dp_person,
+    .dp_container .img-thumbnail.dp_skin {
         -webkit-transition: none;
         transition: none;
     }
+
+    .dp_container .img-thumbnail {
+        background-color:transparent;
+    }
 </style>
 
+<input type="hidden" id="max_size" value="<?= $this->maxScreenSize ?>">
+
 <div class="dp_container">
-    <img src="/images/user_icons/default.png" class="img-thumbnail dp_person" />
+    <img src="/images/user_icons/default.png" class="img-thumbnail dp_person"/>
     <? foreach ($this->skins as $skin) { ?>
-        <img src="/images/user_icons/<?= $skin->img ?>" class="img-thumbnail dp_skin"/>
+        <img id="skin_<?= $skin->slot_name ?>" src="/images/user_icons/<?= $skin->img ?>"
+             class="img-thumbnail dp_skin"/>
     <? } ?>
 </div>
 

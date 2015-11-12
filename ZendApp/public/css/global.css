@@ -127,6 +127,7 @@ body, .bg {
         margin-left: 0;
         margin-bottom: 0;
     }
+
     .nav.navbar-nav.navbar-right {
         margin-bottom: 5px;
     }
@@ -169,4 +170,9 @@ a.btnLink:hover {
 
 .bold {
     font-weight: bold;
+}
+
+.row.norowpad {
+    padding-left: 0;
+    padding-right: 0;
 }

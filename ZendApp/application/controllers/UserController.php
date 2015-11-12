@@ -42,18 +42,15 @@ class UserController extends BaseController {
             $displayedUser = UserFactory::getUser($customUserId);
         }
 
-        $this->view->userSkins = SkinFactory::getUserEquippedSkins($displayedUser->userId, true);
-
         // Get usage statistics for the user
-        $displayedUser->stats = (object)array(
-            'average_rating'    => RatingFactory::getAverageRatingForUser($displayedUser->userId),
-            'ratings_given'     => RatingFactory::getAllRatingsFromUser($displayedUser->userId, true),
-            'ratings_received'  => RatingFactory::getAllRatingsForUser($displayedUser->userId, true),
-            'comments_given'    => CommentFactory::getCommentsFromUser($displayedUser->userId, true),
-            'comments_received' => CommentFactory::getCommentsForUser($displayedUser->userId, true),
-            'route_count'       => count(RouteFactory::getRoutesForUser($displayedUser->userId, false)),
-            'account_age'       => abs(floor((strtotime('now') - strtotime($displayedUser->datetimeCreated)) / 60 / 60 / 24))
-        );
+        $userStats = SkinFactory::getUserStats($displayedUser->userId);
+        $displayedUser->stats = $userStats;
+
+        // Check if the user has any new skins
+        SkinFactory::allocateSkins($userStats);
+
+        // Display user skins
+        $this->view->userSkins = SkinFactory::getUserEquippedSkins($displayedUser->userId);
 
         $this->view->displayedUser = $displayedUser;
         $this->view->viewingOwnProfile = $displayedUser->userId == $this->user->userId;
@@ -79,17 +76,53 @@ class UserController extends BaseController {
         }
     }
 
-
     /**
-     * Provides administrative tools to the user
+     * Provides a way for users to see all skins available, and select the ones they wish to have on
      *
      * @author Craig Knott
      */
-    public function adminAction() {
-        if ($this->user->isAdmin != 1) {
-            $this->_helper->redirector('details', 'user', null, array());
+    public function skinsAction(){
+        $allUserSkins = SkinFactory::getAllUserSkins($this->user->userId);
+        $allSkins = SkinFactory::getAllSkins();
+
+        $equippedUserSkins = array();
+        foreach ($allUserSkins as $skinType) {
+            foreach ($skinType as $skin) {
+                if ($skin->equipped) {
+                    $equippedUserSkins[] = $skin;
+                }
+            }
         }
 
+        $this->view->allSkins = $allSkins;
+        $this->view->allUserSkins = $allUserSkins;
+        $this->view->equippedSkins = $equippedUserSkins;
+    }
+
+    /**
+     * Changes the currently equipped skins for a given user
+     *
+     * @author Craig Knott
+     */
+    public function updateskinsAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $requestParams = $this->getRequest()->getParams();
+        $skins = array();
+        $userId = null;
+        foreach ($requestParams as $key => $value) {
+            if ($key == "controller" || $key == "action" || $key == "module") {
+            } else if ($key == "userId") {
+                $userId = $value;
+            } else {
+                $skins[$key] = $value;
+            }
+        }
+
+        SkinFactory::updateUserSkins($userId, $skins);
+
+        $this->_helper->redirector('skins', 'user', null, array());
     }
 
     /**

@@ -142,8 +142,13 @@
             </div>
         <? } ?>
 
-        <div class="streamElements" style="">
+        <div class="streamElements">
+            <label id="filterComments" class="right">
+                <input type="checkbox"> Only show comments?
+            </label>
             <div class="bold">See what others thought:</div>
+
+
             <div class="elements">
                 <? if (count($this->socialStream) > 0) { ?>
                     <? foreach ($this->socialStream as $element) { ?>

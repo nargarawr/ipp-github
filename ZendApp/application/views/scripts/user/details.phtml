@@ -8,7 +8,8 @@
             <div class="row">
                 <div class="col-md-4">
                     <?= $this->partial('user', 'profile_picture', null, array(
-                        'skins' => $this->userSkins
+                        'skins'         => $this->userSkins,
+                        'maxScreenSize' => 1636
                     )); ?>
                 </div>
                 <div class="col-md-8">
@@ -19,7 +20,7 @@
                             </div>
                             <div class="col-sm-4 text-right">
                                 <?= $this->partial('user', 'stars', null, array(
-                                    'rating' => $this->displayedUser->stats->average_rating
+                                    'rating' => $this->displayedUser->stats->ratingAverage
                                 )) ?>
                             </div>
                         </div>
@@ -52,7 +53,7 @@
                         <div class="joined">
                             <i class="fa fa-clock-o"></i>
                             <?= 'Joined ' . date("d/m/y", strtotime($this->displayedUser->datetimeCreated)) ?>
-                            (<?= $this->displayedUser->stats->account_age . ' days old' ?>)
+                            (<?= $this->displayedUser->stats->accountAge . ' days old' ?>)
                         </div>
 
                         <br>
@@ -68,21 +69,21 @@
                             <div class="user-stats">
                                 <div class="routes-stats">
                                     <i class="fa fa-map-marker"></i>
-                                    <?= $this->displayedUser->stats->route_count ?> routes submitted
+                                    <?= $this->displayedUser->stats->routeCount ?> routes submitted
                                 </div>
                                 <div class="comments-stats">
                                     <i class="fa fa-comment"></i>
-                                    <?= $this->displayedUser->stats->comments_given ?> comments posted
+                                    <?= $this->displayedUser->stats->commentsGiven ?> comments posted
                                     <br>
                                     <i class="fa fa-comments"></i>
-                                    <?= $this->displayedUser->stats->comments_received ?> comments received
+                                    <?= $this->displayedUser->stats->commentsReceived ?> comments received
                                 </div>
                                 <div class="ratings-stats">
                                     <i class="fa fa-star"></i>
-                                    <?= $this->displayedUser->stats->ratings_given ?> ratings given
+                                    <?= $this->displayedUser->stats->ratingsGiven ?> ratings given
                                     <br>
                                     <i class="fa fa-star-o"></i>
-                                    <?= $this->displayedUser->stats->ratings_received ?> ratings received
+                                    <?= $this->displayedUser->stats->ratingsReceived ?> ratings received
                                 </div>
                             </div>
                         </div>
@@ -137,7 +138,7 @@
                                     <? } ?>
                                     <td><?= date("d M y", strtotime($route->created)) ?></td>
                                     <td><?= $route->comments ?></td>
-                                    <td> <?= $route->forks ?></td>
+                                    <td><?= $route->forks ?></td>
                                     <td><?= $route->shares ?></td>
                                     <td><?= $route->downloads ?></td>
                                     <td>

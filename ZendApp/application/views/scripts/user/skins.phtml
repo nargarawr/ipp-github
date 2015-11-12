@@ -1,0 +1,116 @@
+<input type="hidden" id="userId" value="<?= $this->user->userId ?>">
+
+<div class="row">
+    <div class="col-sm-1 col-md-2"></div>
+    <div class="col-sm-10 col-md-8">
+        <div class="border-container ">
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <?= $this->partial('user', 'profile_picture', null, array(
+                        'skins'         => $this->equippedSkins,
+                        'maxScreenSize' => 1146
+                    )); ?>
+
+                    <div class="btnContainer">
+                        <button class="btn btn-success" id="saveChanges">
+                            <i class="fa fa-check"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-8">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="alert alert-info" role="alert">
+                                <i class="fa fa-info-circle"></i> <b>Your Avatar</b>
+                                <p>
+                                    Your avatar is displayed on your profile and you can edit how it looks on this
+                                    page. You can select different skins to apply to your avatar to change it's
+                                    appearance.
+                                </p>
+                            </div>
+                        </div>
+
+                        <? foreach ($this->allUserSkins as $skinType => $skins) { ?>
+                            <div class="col-lg-6">
+                                <label for="<?= $skinType ?>_select">
+                                    <?= $skinType ?>
+                                </label>
+                                <select id="<?= $skinType ?>_select">
+                                    <? foreach ($skins as $skin) { ?>
+                                        <option data-imagesrc="/images/user_icons/<?= $skin->thumb ?>"
+                                                data-description="<?= $skin->reason ?>"
+                                                data-img="/images/user_icons/<?= $skin->img ?>"
+                                                data-skinId=<?= $skin->id ?>>
+                                            <?= $skin->name ?>
+                                        </option>
+                                    <? } ?>
+                                </select>
+                            </div>
+                        <? } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<div class="row margin_b_20">
+    <div class="col-sm-1 col-md-2"></div>
+    <div class="col-sm-10 col-md-8">
+        <div class="border-container allSkinsList">
+            <div class="title skinsTitle">
+                All Skins
+            </div>
+            <div class="row norowpad">
+                <div class="col-xs-12">
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-info-circle"></i> <b>Skins</b>
+                        <p>
+                            All skins available are listed below, as well as whether or not you own them, and how
+                            they are unlocked. Look out for the super rare ones!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <? foreach ($this->allSkins as $skinType => $skins) { ?>
+                    <div class="skinlist">
+                        <div class="skinlistSkins">
+                            <div class="border-container">
+                                <div class="title skinsTitle">
+                                    <?= $skinType ?>
+                                </div>
+
+                                <div class="row">
+                                    <? foreach ($skins as $skin) { ?>
+                                        <? if ($skin->name == "None") { ?>
+                                            <? continue; ?>
+                                        <? } ?>
+                                        <div class="col-sm-12 col-md-6 col-lg-4">
+                                            <a class="dd-selected">
+                                                <img class="dd-selected-image<?= ($skin->owned) ? ' skinowned' : '' ?>"
+                                                     src="/images/user_icons/<?= $skin->thumb ?>">
+
+                                                <span class="dd-selected-text">
+                                                    <?= $skin->name ?>
+                                                    <? if ($skin->owned) { ?>
+                                                        <i class="fa fa-check skinowned"></i>
+                                                    <? } ?>
+                                                </span>
+                                                <small class="dd-selected-description dd-desc">
+                                                    <?= $skin->reason ?>
+                                                </small>
+                                            </a>
+                                        </div>
+                                    <? } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <? } ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>

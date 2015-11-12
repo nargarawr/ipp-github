@@ -1,0 +1,79 @@
+.border-container .skinsTitle {
+    width: 94px;
+}
+
+.dd-select, .dd-container, .dd-options {
+    width: 100% !important;
+}
+
+.dd-selected-image,
+.dd-option-image {
+    border: #666666 solid 1px;
+    background-color: #FDFDFD;
+    border-radius: 3px;
+    max-width: 48px !important;
+}
+
+.dd-selected,
+.dd-option {
+    padding: 5px !important;
+}
+
+.dd-selected .dd-selected-text,
+.dd-option .dd-option-text {
+    padding-top: 5px;
+}
+
+.dd-selected-text,
+.dd-option-text,
+.skinlistSkins .dd-selected {
+    color: #333333;
+}
+
+.skinlistSkins .dd-selected-text {
+    top: 3px;
+    position: relative;
+}
+
+.skinlistSkins .dd-selected-description {
+    top: 4px;
+    position: relative;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.btnContainer {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dd-selected-image.skinowned {
+    border: #FFB347 solid 1px;
+}
+
+.fa-check.skinowned {
+    color: #FFB347;
+}
+
+.alert-info {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.skinlistSkins .border-container .title {
+    top: -11px;
+}
+
+.skinlistSkins .border-container {
+    padding-top: 0;
+}
+
+.allSkinsList {
+    padding-top: 0;
+}
+
+.allSkinsList.border-container .title {
+    top: -10px;
+}
