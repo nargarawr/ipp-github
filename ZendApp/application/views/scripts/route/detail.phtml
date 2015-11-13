@@ -8,9 +8,11 @@
             <div class="col-md-8">
                 <h3 class="title">
                     <?= $this->route->name ?>
-                    <span id="reportRoute">
-                        (<i class="fa fa-flag"></i> Report?)
-                    </span>
+                    <? if ($this->user->username != $this->route->owner) { ?>
+                        <span id="reportRoute">
+                            (<i class="fa fa-flag"></i> Report?)
+                        </span>
+                    <? } ?>
                 </h3>
                 <div class="owner">
                     By <?= $this->route->owner ?>
@@ -55,7 +57,7 @@
 
                 <a class="btnLink" target="_blank" href="/route/openingooglemaps/id/<?= $this->route->routeId ?>">
                     <button class="btn btn-success btn-nopad">
-                        <i class="fa fa-street-view"></i> Open in GMaps
+                        <i class="fa fa-street-view"></i> Open in Google Maps
                     </button>
                 </a>
                 <br>

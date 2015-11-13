@@ -131,11 +131,12 @@ class BaseController extends Zend_Controller_Action {
                 )
             )
         );
-
+        
         $activeSelected = false;
         foreach ($navBar as &$nav) {
             if ($nav->link === $currentUrl ||
-                $nav->link === "/route/index" && ($currentUrl == "/route/list" || $currentUrl == "/route/detail")
+                $nav->link === "/route/index" && ($currentUrl == "/route/list" || $currentUrl == "/route/detail") ||
+                $nav->link === "/admin/index" && $currentUrl === "/admin/reports"
             ) {
                 $nav->isActive = true;
                 $activeSelected = true;

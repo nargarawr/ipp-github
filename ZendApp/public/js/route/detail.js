@@ -75,7 +75,6 @@ $(document).ready(function () {
     //resizeSocialStream();
 });
 
-
 /**
  * Window resize function. Resizes the social steram
  *
@@ -112,7 +111,6 @@ function resizeSocialStream() {
     }
 }
 
-
 /**
  * Class RatingManager
  *
@@ -121,7 +119,6 @@ function resizeSocialStream() {
  * @author Craig Knott
  */
 var RatingManager = Class.extend({
-
     /**
      * Initialises this class and assigns member variables
      *
@@ -554,7 +551,6 @@ var Comment = Class.extend({
  * @param data Information about the share
  */
 function my_addtoany_onshare(data) {
-    console.log(data);
     $.ajax({
         type: 'POST',
         url:  '/route/share',
@@ -564,9 +560,10 @@ function my_addtoany_onshare(data) {
         }
     }).success(function (response) {
         response = JSON.parse(response);
+
         var ele = $('<div>').addClass('streamElement share').html(
             '<i class="fa fa-share"></i> ' +
-            '<i class="fa fa-facebook-square"></i>' +
+            '<i class="fa fa-' + (data.service).toLowerCase() + '-square"></i>' +
             '<span class="bold"> ' + response.username +  '</span> shared this route to ' + data.service
         );
         $('#socialStream').find('.elements').prepend(ele);

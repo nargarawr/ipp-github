@@ -254,9 +254,8 @@ class RouteController extends BaseController {
         $this->_helper->viewRenderer->setNoRender(true);
 
         $routeId = $this->getRequest()->getParam('id', 0);
-        $route = RouteFactory::getRoute($routeId, $this->user->userId);
+        $route = RouteFactory::getRoute($routeId);
         $route->points = RouteFactory::getRoutePoints($routeId, true);
-
 
         RouteFactory::updateRouteLog(
             $routeId,

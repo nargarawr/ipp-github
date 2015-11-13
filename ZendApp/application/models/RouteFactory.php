@@ -146,22 +146,19 @@ class RouteFactory extends ModelFactory {
      * @author Craig Knott
      *
      * @param int $routeId The id of the route to get
-     * @param int $userId  The id of the user this belongs to (to avoid unwarranted access)
      *
      * @return object The route object
      */
-    public static function getRoute($routeId, $userId) {
+    public static function getRoute($routeId) {
         $sql = "SELECT
                     name,
                     description,
                     is_private
                 FROM tb_route
                 WHERE pk_route_id = :routeId
-                AND is_deleted = 0
-                AND created_by = :userId";
+                AND is_deleted = 0";
         $params = array(
-            ':routeId' => $routeId,
-            ':userId'  => $userId
+            ':routeId' => $routeId
         );
         return parent::fetchOne($sql, $params);
     }
