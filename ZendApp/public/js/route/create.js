@@ -97,8 +97,12 @@ var UploadManager = Class.extend({
         $('#routeDesc').val(route.description);
         $('#routePrivacy').val(route.is_private);
 
+        var middlePoint;
         var points = route.points;
         for (var i = 0; i < points.length; i++) {
+            if (i == Math.floor(points.length/2)) {
+                middlePoint = points[i];
+            }
             var p = points[i];
             // Construct fake 'e' object with latlng information
             var e = {
@@ -116,6 +120,8 @@ var UploadManager = Class.extend({
 
             this.mapManager.addPointToMap(e, popupData);
         }
+
+        this.mapManager.centreMap(middlePoint.lat, middlePoint.lng);
     }
 });
 
@@ -183,7 +189,20 @@ var MapManager = Class.extend({
             } else {
                 _self.addPointToMap(e);
             }
-
+        });
+    },
+    /**
+     * Centres the map at a certain point
+     *
+     * @author Craig Knott
+     *
+     * @param lat Latitude to centre at
+     * @param lng Longitude to centre at
+     */
+    centreMap: function(lat, lng) {
+        map.setView({
+          lat: lat,
+          lng: lng
         });
     },
     /**
