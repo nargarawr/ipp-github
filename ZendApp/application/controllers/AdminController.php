@@ -70,7 +70,6 @@ class AdminController extends BaseController {
         $this->_helper->redirector('index', 'admin', null, array());
     }
 
-
     /**
      * Creates a new user
      *
@@ -121,4 +120,6 @@ class AdminController extends BaseController {
         $this->_helper->redirector('index', 'admin', null, array());
 
     }
+
+
 }

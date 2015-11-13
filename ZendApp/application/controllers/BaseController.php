@@ -62,6 +62,12 @@ class BaseController extends Zend_Controller_Action {
      * @return array Array used to draw the navigation
      */
     protected function getNavBar($c, $a) {
+        // If the user is an admin, get the number of unresolved reports and display it on the navbar
+        $unresolvedReports = 0;
+        if ((!is_null($this->user) && $this->user->isAdmin)) {
+            $unresolvedReports = ReportFactory::getUnresolvedReportCount();
+        }
+
         $currentUrl = "/" . $c . "/" . $a;
         $navBar = array(
             'search'  => (object)array(
@@ -123,7 +129,7 @@ class BaseController extends Zend_Controller_Action {
                         'shouldDisplay' => true
                     ),
                     (object)array(
-                        'name'          => 'Reports',
+                        'name'          => 'Reports <span class="badge">' . $unresolvedReports .  '</span>',
                         'link'          => '/admin/reports',
                         'icon'          => '<i class="fa fa-flag"></i>',
                         'shouldDisplay' => true
@@ -131,7 +137,7 @@ class BaseController extends Zend_Controller_Action {
                 )
             )
         );
-        
+
         $activeSelected = false;
         foreach ($navBar as &$nav) {
             if ($nav->link === $currentUrl ||

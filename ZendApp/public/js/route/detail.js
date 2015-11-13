@@ -306,7 +306,6 @@ var RatingManager = Class.extend({
         );
 
         this.socialStream.prepend(ratingForStream);
-
     }
 });
 
@@ -541,7 +540,6 @@ var Comment = Class.extend({
         });
     }
 });
-
 
 /**
  * Callback function for when a route is shared

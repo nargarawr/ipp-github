@@ -1,0 +1,30 @@
+.unresolvedTitle {
+    width: 187px;
+}
+
+.border-container .title {
+    top: -10px;
+}
+
+.border-container {
+    padding-top: 0;
+}
+
+.mw50 {
+    max-width: 50px;
+}
+
+.mw100 {
+    max-width: 100px;
+}
+
+.form-control-smaller {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.form-group {
+    margin-bottom: 0 !important;
+}

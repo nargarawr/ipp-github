@@ -331,7 +331,7 @@ class RouteFactory extends ModelFactory {
      * @author Craig Knott
      *
      * @param int $routeId The route to delete
-     * @param int $userId  The user who this route belongs to
+     * @param int $userId  The user who this route belongs to (use 0 to override check)
      *
      * @return void
      */
@@ -340,7 +340,7 @@ class RouteFactory extends ModelFactory {
                 SET is_deleted = 1,
                     datetime_updated = NOW()
                 WHERE pk_route_id = :routeId
-                AND created_by = :userId";
+                AND (created_by = :userId OR :userId = 0)";
         $params = array(
             ':routeId' => $routeId,
             ':userId'  => $userId

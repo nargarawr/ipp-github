@@ -41,4 +41,46 @@ class ReportController extends BaseController {
         exit;
     }
 
+    /**
+     * Returns a JSON array of all non-resolved reports in the system
+     *
+     * @author Craig Knott
+     */
+    public function getAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $results = ReportFactory::getAll();
+
+        echo Zend_Json::encode($results);
+        exit;
+    }
+
+    /**
+     * Marks the given report as resolve, with the resolution reason
+     *
+     * @author Craig Knott
+     */
+    public function resolveAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $reportId = $this->getRequest()->getParam('id', null);
+        $resolution = $this->getRequest()->getParam('resolution', null);
+        $type = $this->getRequest()->getParam('type', null);
+        $reportedItemId = $this->getRequest()->getParam('reportedItemId', null);
+
+        ReportFactory::resolveReport($reportId, $resolution, $this->user->userId, $type, $reportedItemId);
+
+        // If we deleted something, we to actually delete it now
+        if ($resolution == 'deleted') {
+            if ($type == 'comment') {
+                CommentFactory::deleteComment($reportedItemId);
+            } else if ($type == 'route') {
+                RouteFactory::deleteRoute($reportedItemId, 0);
+            }
+        }
+
+        exit;
+    }
 }
