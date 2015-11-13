@@ -105,16 +105,30 @@ class BaseController extends Zend_Controller_Action {
                         'link'          => '/user/skins',
                         'icon'          => '<i class="fa fa-paint-brush"></i>',
                         'shouldDisplay' => true
-                    ),
+                    )
                 )
             ),
             'admin'   => (object)array(
                 'name'          => 'Administration',
-                'type'          => 'link',
+                'type'          => 'dropdown',
                 'link'          => '/admin/index',
                 'icon'          => '<i class="fa fa-cogs"></i>',
                 'shouldDisplay' => (!is_null($this->user) && $this->user->isAdmin),
-                'isActive'      => false
+                'isActive'      => false,
+                'children'      => array(
+                    (object)array(
+                        'name'          => 'Tools',
+                        'link'          => '/admin/index',
+                        'icon'          => '<i class="fa fa-cog"></i>',
+                        'shouldDisplay' => true
+                    ),
+                    (object)array(
+                        'name'          => 'Reports',
+                        'link'          => '/admin/reports',
+                        'icon'          => '<i class="fa fa-flag"></i>',
+                        'shouldDisplay' => true
+                    )
+                )
             )
         );
 

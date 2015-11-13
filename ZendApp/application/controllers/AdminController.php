@@ -51,6 +51,15 @@ class AdminController extends BaseController {
     }
 
     /**
+     * Allows administrators to manage user reports
+     *
+     * @author Craig Knott
+     */
+    public function reportsAction(){
+
+    }
+
+    /**
      * Locks, or unlocks the site, preventing users from logging in
      *
      * @author Craig Knott
