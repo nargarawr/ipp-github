@@ -89,17 +89,18 @@
                                         <? } ?>
                                         <div class="col-sm-12 col-md-6 col-lg-4">
                                             <a class="dd-selected">
-                                                <img class="dd-selected-image<?= ($skin->owned) ? ' skinowned' : '' ?>"
+                                                <img class="dd-selected-image<?= ($skin->owned > 0) ? ' skinowned' : '' ?>"
                                                      src="/images/user_icons/<?= $skin->thumb ?>">
-
                                                 <span class="dd-selected-text">
                                                     <?= $skin->name ?>
-                                                    <? if ($skin->owned) { ?>
+                                                    <? if ($skin->owned > 0) { ?>
                                                         <i class="fa fa-check skinowned"></i>
                                                     <? } ?>
                                                 </span>
                                                 <small class="dd-selected-description dd-desc">
-                                                    <?= $skin->reason ?>
+                                                    <?= $skin->reason ?> (<?=
+                                                    number_format($skin->ownerPercentage, 0)
+                                                    ?>% of users have this)
                                                 </small>
                                             </a>
                                         </div>

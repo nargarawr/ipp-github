@@ -82,7 +82,7 @@ class UserController extends BaseController {
      */
     public function skinsAction(){
         $allUserSkins = SkinFactory::getAllUserSkins($this->user->userId);
-        $allSkins = SkinFactory::getAllSkins();
+        $allSkins = SkinFactory::getAllSkins($this->user->userId);
 
         $equippedUserSkins = array();
         foreach ($allUserSkins as $skinType) {
@@ -94,6 +94,7 @@ class UserController extends BaseController {
         }
 
         $this->view->allSkins = $allSkins;
+
         $this->view->allUserSkins = $allUserSkins;
         $this->view->equippedSkins = $equippedUserSkins;
     }

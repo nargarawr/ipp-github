@@ -108,7 +108,13 @@ class SkinFactory extends ModelFactory {
                     REPLACE(s.img, '.', '_thumb.') AS thumb,
                     ss.name AS slot_name,
                     s.reason AS reason,
-                    IFNULL(o.fk_user_id, 0) AS owned
+                    IFNULL(o.fk_user_id, 0) AS owned,
+                    (
+                        SELECT
+                            100 * (count(fk_skin_id) / (SELECT count(1) FROM tb_user))
+                        FROM tb_skin_owner
+                        WHERE fk_skin_id = s.pk_skin_id
+                    ) as ownerPercentage
                 FROM tb_skin s
                 JOIN tb_skin_slot ss
                 ON ss.pk_skin_slot_id = s.fk_slot_id
@@ -116,10 +122,12 @@ class SkinFactory extends ModelFactory {
                     SELECT
                         *
                     FROM tb_skin_owner
-                    WHERE fk_user_id = 1
+                    WHERE fk_user_id = :userId
                 ) AS o
                 ON o.fk_skin_id = s.pk_skin_id;";
-        $params = array();
+        $params = array(
+            ':userId' => $userId
+        );
         $results = parent::fetchAll($sql, $params);
 
         $skins = array();
