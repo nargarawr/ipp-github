@@ -60,13 +60,22 @@ class MemberController extends BaseController {
     }
 
     /**
-     * Logs a user out and redirects them to the log in page
+     * Logs a user out and redirects them to the log in page, or another page if specified
      *
      * @author Craig Knott
      */
     public function logoutAction() {
         Zend_Auth::getInstance()->clearIdentity();
-        $this->_redirect('member/login');
+        $redirTo = $this->getRequest()->getParam('redirTo', 'login');
+        $this->_redirect('member/' . $redirTo);
+    }
+
+    /**
+     * Displays a message to the user and prevents them from logging in. Used when is_locked is set to 1
+     *
+     * @author Craig Knott
+     */
+    public function lockedAction() {
     }
 
     /**
@@ -123,7 +132,6 @@ class MemberController extends BaseController {
         // Display the sign up form
         $this->view->signupForm = $signupForm;
     }
-
 
     /**
      * Page that users are directed to when asked to confirm their email. Contains a url parameter with a unique hash
@@ -320,7 +328,6 @@ class MemberController extends BaseController {
 
         return $signupForm;
     }
-
 
     /**
      * Uses Zend_form to generate the form used on the 'resetpassword' page

@@ -51,4 +51,6 @@ class ErrorController extends BaseController {
         }
         $this->view->request = $errors->request;
     }
+
+
 }
