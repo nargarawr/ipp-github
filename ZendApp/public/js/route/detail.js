@@ -76,7 +76,7 @@ $(document).ready(function () {
 });
 
 /**
- * Window resize function. Resizes the social steram
+ * Window resize function. Resizes the social stream
  *
  * @author Craig Knott
  */
@@ -203,6 +203,7 @@ var RatingManager = Class.extend({
             }).success(function (response) {
                 response = JSON.parse(response);
                 _self.updateSocialStream(rating, response.username);
+                _self.redrawStars();
             });
         });
 
@@ -218,6 +219,7 @@ var RatingManager = Class.extend({
                 for (var i = 0; i < _self.stars.length; i++) {
                     _self.deselectStar($(_self.stars[i]), i);
                 }
+                _self.redrawStars();
             });
         });
     },
@@ -306,6 +308,36 @@ var RatingManager = Class.extend({
         );
 
         this.socialStream.prepend(ratingForStream);
+    },
+
+    /**
+     * TODO
+     */
+    redrawStars: function () {
+        $.ajax({
+            url:     '/rating/getrouteaverage/',
+            type:    'post',
+            data:    {
+                id: $('#routeId').val()
+            },
+            success: function (response) {
+                var container = $('#ratingContainer');
+                container.empty();
+
+                var rating = parseFloat(JSON.parse(response));
+
+                for (var i = 0; i < 5; i++) {
+                    if ((i + 0.5) == rating) {
+                        container.append($('<i>').addClass("starDisplay fa fa-star-half-o"));
+                    } else if (i < rating) {
+                        container.append($('<i>').addClass("starDisplay fa fa-star"));
+                    } else if (i >= rating) {
+                        container.append($('<i>').addClass("starDisplay fa fa-star-o"));
+                    }
+                }
+            }
+
+        })
     }
 });
 
@@ -363,8 +395,8 @@ var CommentManager = Class.extend({
         });
 
         this.filterComments.unbind("click");
-        this.filterComments.click(function(){
-            $('.elements').children().each(function(){
+        this.filterComments.click(function () {
+            $('.elements').children().each(function () {
                 var checked = _self.filterCheckBox.prop('checked');
 
                 if (!($(this).hasClass('comment'))) {
@@ -562,7 +594,7 @@ function my_addtoany_onshare(data) {
         var ele = $('<div>').addClass('streamElement share').html(
             '<i class="fa fa-share"></i> ' +
             '<i class="fa fa-' + (data.service).toLowerCase() + '-square"></i>' +
-            '<span class="bold"> ' + response.username +  '</span> shared this route to ' + data.service
+            '<span class="bold"> ' + response.username + '</span> shared this route to ' + data.service
         );
         $('#socialStream').find('.elements').prepend(ele);
     });

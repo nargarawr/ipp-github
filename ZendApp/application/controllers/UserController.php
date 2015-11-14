@@ -37,6 +37,11 @@ class UserController extends BaseController {
         // Used to display this page externally to other users
         $displayedUser = $this->user;
         $customUserId = $this->getRequest()->getParam('id', null);
+
+        if ($customUserId === "0" || $customUserId < 0) {
+            $this->_helper->redirector('details', 'user', null, array());
+        }
+
         if (!is_null($customUserId)) {
             $displayedUser = UserFactory::getUser($customUserId);
         }

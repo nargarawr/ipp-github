@@ -108,7 +108,7 @@ class RatingFactory extends ModelFactory {
         $sql = "SELECT
                     FLOOR(avg(value) * 2) / 2 AS average
                 FROM tb_rating
-                WHERE fk_route_id = 1
+                WHERE fk_route_id = :routeId
                 AND is_deleted = 0";
         $params = array(
             ':routeId' => $routeId

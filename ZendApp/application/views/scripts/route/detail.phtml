@@ -8,7 +8,7 @@
             <div class="col-md-8">
                 <h3 class="title">
                     <?= $this->route->name ?>
-                    <? if ($this->user->username != $this->route->owner) { ?>
+                    <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
                         <span id="reportRoute">
                             (<i class="fa fa-flag"></i> Report?)
                         </span>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="rating">
+                <div class="rating" id="ratingContainer">
                     <?= $this->partial('user', 'stars', null, array(
                         'rating' => $this->route->rating
                     )); ?>
