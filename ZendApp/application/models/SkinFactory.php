@@ -173,7 +173,10 @@ class SkinFactory extends ModelFactory {
      * Given, User Ratings Received, User Comments Given, User Comments Received, User forks, Users routes forked,
      * User shares, User shares received, User downloads, User downloads received, max comments on a route, max
      * ratings on a route, max shares on a route, max downloads on a route, max forks on a route, account age, number
-     * of routes, and number of points
+     * of routes, and number of points.
+     *
+     * The query is really long, but it's quite simple. Each section gets a certain sets of statistics, and then they
+     * all join together using the fake 'chain' field, so they can be displayed as a single row
      *
      * @author Craig Knott
      *
@@ -182,22 +185,6 @@ class SkinFactory extends ModelFactory {
      * @return object Object of user statistics
      */
     public static function getUserStats($userId) {
-        /*
-         * TODO
-         *
-         * Comments on a particular route
-         * Ratings on a particular route
-         * Shares on a particular route
-         * Downloads on a particular route
-         * Forks on a particular route
-         *
-         * Account age
-         *
-         * Number of routes
-         * Number of points
-         *
-         */
-
         $sql = "SELECT
                     ratingAverage,
                     ratingsReceived,
@@ -209,18 +196,27 @@ class SkinFactory extends ModelFactory {
                     sharesGiven,
                     sharesReceived,
                     forksGiven,
-                    forksReceived
-                FROM
-                (SELECT
-                    'c' AS chain,
-                    FLOOR(avg(value) * 2) / 2 AS ratingAverage
-                FROM tb_rating rating
-                JOIN tb_route route
-                ON rating.fk_route_id = route.pk_route_id
-                JOIN tb_user user
-                ON route.created_by = user.pk_user_id
-                WHERE user.pk_user_id = :userId
-                AND rating.is_deleted = 0) AS ratings
+                    forksReceived,
+                    accountAge,
+                    routeCount.cnt as routeCount,
+                    pointCount.cnt as pointCount,
+                    mostDownloadsForOne,
+                    mostCommentsForOne,
+                    mostForksForOne,
+                    mostRatingsForOne,
+                    mostSharesForOne
+                FROM (
+                    SELECT
+                        'c' AS chain,
+                        FLOOR(avg(value) * 2) / 2 AS ratingAverage,
+                        datediff(NOW(), user.datetime_created) as accountAge
+                    FROM tb_rating rating
+                    JOIN tb_route route
+                    ON rating.fk_route_id = route.pk_route_id
+                    JOIN tb_user user
+                    ON route.created_by = user.pk_user_id
+                    WHERE user.pk_user_id = :userId
+                    AND rating.is_deleted = 0) AS ratings
                 JOIN
                     (
                     SELECT
@@ -265,7 +261,60 @@ class SkinFactory extends ModelFactory {
                              GROUP BY action
                          ) AS innerCount
                 ) AS receivedSocial
-                ON receivedSocial.chain = givenSocial.chain";
+                ON receivedSocial.chain = givenSocial.chain
+                JOIN (
+                    SELECT
+                        'c' AS chain,
+                        count(pk_route_id) as cnt
+                    FROM tb_route
+                    WHERE created_by = :userId
+                    AND is_deleted = 0
+                ) AS routeCount
+                ON routeCount.chain = receivedSocial.chain
+                JOIN (
+                    SELECT
+                        'c' AS chain,
+                        count(pk_point_id) as cnt
+                    FROM tb_point p
+                    JOIN tb_route r
+                    ON r.pk_route_id = p.fk_route_id
+                    WHERE created_by = :userId
+                    AND is_deleted = 0
+                ) AS pointCount
+                ON pointCount.chain = routeCount.chain
+                JOIN (
+                    SELECT
+                        'c' as chain,
+                        substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='download',raw.cnt,NULL)),0),',', 1) AS mostDownloadsForOne,
+                        substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='comment',raw.cnt,NULL)),0),',', 1) AS mostCommentsForOne,
+                        substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='fork',raw.cnt,NULL)),0),',', 1) AS mostForksForOne,
+                        substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='rate',raw.cnt,NULL)),0),',', 1) AS mostRatingsForOne,
+                        substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='share',raw.cnt,NULL)),0),',', 1) AS mostSharesForOne
+                    FROM (
+                        SELECT
+                            count(action) AS cnt,
+                            action,
+                            rl.fk_route_id
+                        FROM tb_route_log rl
+                        JOIN tb_route r
+                        ON r.pk_route_id = rl.fk_route_id
+                        JOIN tb_user u
+                        ON u.pk_user_id = rl.fk_user_id
+                        LEFT JOIN tb_comment c
+                        ON c.pk_comment_id = rl.action_value_id
+                        LEFT JOIN tb_rating rating
+                        ON rating.pk_rating_id = rl.action_value_id
+                        WHERE r.created_by = :userId
+                        AND r.is_deleted = 0
+                        AND u.is_shadow_banned = 0
+                        AND u.is_banned = 0
+                        AND (c.is_deleted = 0 OR c.is_deleted IS NULL OR (c.is_deleted = 1 AND rl.action = 'rate'))
+                        AND (rating.is_deleted = 0 OR rating.is_deleted IS NULL OR (rating.is_deleted = 1 AND rl.action = 'comment'))
+                        GROUP BY action, rl.fk_route_id
+                        ORDER BY action, count(action) DESC
+                    ) as raw
+                ) as mostSocialForOneRoute
+                ON mostSocialForOneRoute.chain = pointCount.chain";
         $params = array(
             ":userId" => $userId
         );
@@ -283,8 +332,9 @@ class SkinFactory extends ModelFactory {
             'sharesReceived'    => $stats->sharesReceived,
             'forksGiven'        => $stats->forksGiven,
             'forksReceived'     => $stats->forksReceived,
-            'accountAge'        => 10,
-            'routeCount'        => 1
+            'accountAge'        => $stats->accountAge,
+            'routeCount'        => $stats->routeCount,
+            'pointCount'        => $stats->pointCount
         );
 
         return $statsObj;
@@ -298,7 +348,7 @@ class SkinFactory extends ModelFactory {
      * @param array $stats An array of different stats for the user
      */
     public static function allocateSkins($stats) {
-
+        // TODO
     }
 
     /**

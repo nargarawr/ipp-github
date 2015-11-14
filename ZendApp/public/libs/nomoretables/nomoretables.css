@@ -66,6 +66,9 @@
         content: attr(data-title);
     }
 
+    #no-more-tables .nmt-large {
+        max-width: 100% !important;
+    }
 }
 
 /**
@@ -77,3 +80,7 @@
     display: none;
 }
 
+#no-more-tables .nmt-large {
+    max-width: 150px;
+    word-wrap: break-word;
+}
