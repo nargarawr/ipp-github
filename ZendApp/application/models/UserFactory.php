@@ -191,4 +191,33 @@ class UserFactory extends ModelFactory {
         return $user;
     }
 
+    /**
+     * Returns information about the owner of a specified route
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId Id of the route whose owners we want details own
+     *
+     * @return object Details about the owner of this route
+     */
+    public static function getRouteOwnerDetails($routeId) {
+        $sql = "SELECT
+                    pk_user_id AS id,
+                    username,
+                    email,
+                    email_on_announcement as emailOnRouteComment,
+                    email_on_route_rating as emailOnRouteRating,
+                    email_on_route_fork as emailOnRouteFork
+                FROM tb_user u
+                JOIN tb_route r
+                ON u.pk_user_id = r.created_by
+                JOIN tb_user_preference up
+                ON u.pk_user_id = up.fk_user_id
+                WHERE pk_route_id = :routeId";
+        $params = array(
+            ':routeId' => $routeId
+        );
+        return parent::fetchOne($sql, $params);
+    }
+
 }

@@ -1,0 +1,40 @@
+<div>
+    Hey, there <?= $this->routeOwner ?>!
+</div>
+<br>
+<div>
+    <? if ($this->type == "comment") { ?>
+        A new comment has been posted on
+    <? } else if ($this->type == "rate") { ?>
+        A new rating has been left on
+    <? } else if ($this->type == "fork") { ?>
+        A new route has been forked from
+    <? } ?>
+    your route "<?= $this->routeName ?>"
+</div>
+<br>
+<? if ($this->type == "comment") { ?>
+    <div>
+        <i> "<?= $this->comment ?>" </i>
+    </div>
+    <br>
+<? } else if ($this->type == "rate") { ?>
+    <div>
+        Your route received a rating of <?= $this->rating ?> star<?= ($this->rating == 1) ? '' : 's' ?>!
+    </div>
+    <br>
+<? } ?>
+<div>
+    See your route here:
+    <a href="http://niceway.to/route/detail/id/<?= $this->routeId ?>">http://niceway.to/route/detail/id/<?= $this->routeId ?></a>
+
+    <? if ($this->type == "fork") { ?>
+        and see the newly created route here:
+        <a href="http://niceway.to/route/detail/id/<?= $this->forkedRouteId ?>">http://niceway.to/route/detail/id/<?= $this->forkedRouteId ?></a>
+    <? } ?>
+</div>
+<br>
+<div>
+    If you wish to stop receiving these emails, you can disable them in your email settings, found
+    <a href="http://niceway.to/user/settings">http://niceway.to/user/settings</a>
+</div>

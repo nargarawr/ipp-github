@@ -10,6 +10,8 @@
 .topBar .title {
     margin-top: 5px;
     margin-bottom: 5px;
+    word-wrap: break-word;
+    max-width: 100%;
 }
 
 .topBar .owner {

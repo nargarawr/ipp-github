@@ -15,10 +15,10 @@
                 <div class="col-md-8">
                     <div class="user-detail-list">
                         <div class="row username">
-                            <div class="col-sm-8">
+                            <div class="col-sm-12">
                                 <?= $this->displayedUser->username ?>
                             </div>
-                            <div class="col-sm-4 text-right">
+                            <div class="col-sm-12 text-left stars-align">
                                 <?= $this->partial('user', 'stars', null, array(
                                     'rating' => $this->displayedUser->stats->ratingAverage
                                 )) ?>
@@ -104,20 +104,21 @@
             </div>
             <div class="row">
                 <? if (count($this->routes) > 0) { ?>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
+                    <div id="no-more-tables">
+                        <table class="col-md-12 table table-striped table-condensed cf">
+                            <thead class="cf">
                             <tr>
                                 <th>Name</th>
-                                <th>Points</th>
+                                <th class="numeric">Points</th>
                                 <? if ($this->viewingOwnProfile) { ?>
                                     <th>Privacy</th>
                                 <? } ?>
                                 <th>Created</th>
-                                <th><i class="fa fa-comment"></i></th>
-                                <th><i class="fa fa-code-fork"></i></th>
-                                <th><i class="fa fa-share"></i></th>
-                                <th><i class="fa fa-download"></i></th>
+                                <th class="numeric nmth-after"><i class="fa fa-comment"></i></th>
+                                <th class="numeric nmth-after"><i class="fa fa-code-fork"></i></th>
+                                <th class="numeric nmth-after"><i class="fa fa-share"></i></th>
+                                <th class="numeric nmth-after"><i class="fa fa-download"></i></th>
+                                <th class="nmth-init">Social</th>
                                 <th>Rating</th>
                                 <? if ($this->viewingOwnProfile) { ?>
                                     <th>Manage</th>
@@ -129,24 +130,45 @@
                             <tbody>
                             <? foreach ($this->routes as $route) { ?>
                                 <tr class="routeRow">
-                                    <td>
+                                    <td data-title="Name">
                                         <?= $route->name ?>
                                     </td>
-                                    <td><?= $route->num_points ?></td>
+                                    <td data-title="Points" class="numeric">
+                                        <?= $route->num_points ?>
+                                    </td>
                                     <? if ($this->viewingOwnProfile) { ?>
-                                        <td><?= ($route->is_private) ? 'Private' : 'Public' ?></td>
+                                        <td data-title="Privacy"><?= ($route->is_private) ? 'Private' : 'Public' ?></td>
                                     <? } ?>
-                                    <td><?= date("d M y", strtotime($route->created)) ?></td>
-                                    <td><?= $route->comments ?></td>
-                                    <td><?= $route->forks ?></td>
-                                    <td><?= $route->shares ?></td>
-                                    <td><?= $route->downloads ?></td>
-                                    <td>
+
+                                    <td data-title="Created">
+                                        <?= date("d M y", strtotime($route->created)) ?>
+                                    </td>
+                                    <td data-title="Comments" class="numeric nmth-after">
+                                        <?= $route->comments ?>
+                                    </td>
+                                    <td data-title="Forks" class="numeric nmth-after">
+                                        <?= $route->forks ?>
+                                    </td>
+                                    <td data-title="Shares" class="numeric nmth-after">
+                                        <?= $route->shares ?>
+                                    </td>
+                                    <td data-title="Downloads" class="numeric nmth-after">
+                                        <?= $route->downloads ?>
+                                    </td>
+
+                                    <td data-title="Social" class="nmth-init">
+                                        <i class="fa fa-comment"></i> <?= $route->comments ?>
+                                        <i class="fa fa-code-fork"></i> <?= $route->forks ?>
+                                        <i class="fa fa-share"></i> <?= $route->shares ?>
+                                        <i class="fa fa-download"></i> <?= $route->downloads ?>
+                                    </td>
+
+                                    <td data-title="Rating">
                                         <?= $this->partial('user', 'stars', null, array(
                                             'rating' => $route->rating
                                         )) ?>
                                     </td>
-                                    <td>
+                                    <td data-title="<?= ($this->viewingOwnProfile) ? 'Manage' : 'View/Fork' ?>">
                                         <a class="btnLink" href="/route/detail/id/<?= $route->routeId ?>">
                                             <button class="btn btn-success btn-nopad">
                                                 <i class="fa fa-info-circle"></i>
@@ -192,8 +214,14 @@
                         This user has not submitted any routes!
                     <? } ?>
                 <? } ?>
+
             </div>
         </div>
     </div>
     <div class="col-md-2"></div>
 </div>
+
+
+
+
+

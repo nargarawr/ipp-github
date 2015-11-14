@@ -54,7 +54,28 @@ class EmailController extends BaseController {
      *
      * @author Craig Knott
      */
-    public function sendannouncementAction() {
+    public function newannouncementAction() {
+        $this->_helper->layout()->disableLayout();
+
+        $this->view->message= $this->getRequest()->getParam('message', null);
+    }
+
+    /**
+     * Draws the email template for new social interactions on your route
+     *
+     * @author Craig Knott
+     */
+    public function newsocialinteractionAction() {
+        $this->_helper->layout()->disableLayout();
+
+        $this->view->type = $this->getRequest()->getParam('type', null);
+        $this->view->routeId = $this->getRequest()->getParam('routeId', null);
+        $this->view->routeName = RouteFactory::getRouteName($this->view->routeId);
+        $this->view->forkedRouteId = $this->getRequest()->getParam('forkedRouteId', null);
+        $this->view->routeOwner = $this->getRequest()->getParam('routeOwner', null);
+
+        $this->view->comment = $this->getRequest()->getParam('comment', null);
+        $this->view->rating = $this->getRequest()->getParam('rating', null);
     }
 
     /**

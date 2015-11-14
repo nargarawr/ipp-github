@@ -13,7 +13,7 @@ $(window).resize(function () {
  */
 function resize() {
     var nav = $('#navbar-collapse');
-    if (window.innerWidth >= 768 && window.innerWidth < 936) {
+    if (window.innerWidth >= 768 && window.innerWidth < 942) {
         nav.find('li a .text').addClass('hidden');
     } else {
         nav.find('li a .text').removeClass('hidden');

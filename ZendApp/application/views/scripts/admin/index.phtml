@@ -17,33 +17,55 @@
     <div class="col-md-2"></div>
 </div>
 
-<div class="border-container">
-    <a href="/admin/locksite/lock/<?= !($this->siteAdmin->is_locked) ?>">
-        <? if ($this->siteAdmin->is_locked) { ?>
-            <button class="btn btn-success btn-nopad">
-                <i class="fa fa-unlock"></i> Unlock Site
-            </button>
-        <? } else { ?>
-            <button class="btn btn-danger btn-nopad">
-                <i class="fa fa-lock"></i> Lock Site
-            </button>
-        <? } ?>
-    </a>
+<div class="row">
+    <div class="border-container">
+        <a href="/admin/locksite/lock/<?= !($this->siteAdmin->is_locked) ?>">
+            <? if ($this->siteAdmin->is_locked) { ?>
+                <button class="btn btn-success btn-nopad">
+                    <i class="fa fa-unlock"></i> Unlock Site
+                </button>
+            <? } else { ?>
+                <button class="btn btn-danger btn-nopad">
+                    <i class="fa fa-lock"></i> Lock Site
+                </button>
+            <? } ?>
+        </a>
+    </div>
 </div>
 
-<div class="border-container">
-    <form enctype="application/x-www-form-urlencoded" action="/admin/createuser" method="post">
-        <label> User Name </label>
-        <input type="text" class="form-control" name="username">
+<div class="row">
+    <div class="border-container">
+        <form enctype="application/x-www-form-urlencoded" action="/admin/createuser" method="post">
+            <label> User Name </label>
+            <input type="text" class="form-control" name="username">
 
-        <label> Email</label>
-        <input type="text" class="form-control" name="email">
+            <label> Email</label>
+            <input type="text" class="form-control" name="email">
 
-        <label> Password </label>
-        <input type="text" class="form-control" name="password">
+            <label> Password </label>
+            <input type="text" class="form-control" name="password">
 
-        <button type="submit" class="btn btn-success btn-nopad">
-            <i class="fa fa-user-plus"></i> Create User
-        </button>
-    </form>
+            <button type="submit" class="btn btn-success btn-nopad">
+                <i class="fa fa-user-plus"></i> Create User
+            </button>
+        </form>
+    </div>
 </div>
+
+<div class="row">
+    <div class="border-container">
+        <form enctype="application/x-www-form-urlencoded" action="/admin/postannouncement" method="post" id="ancmtForm">
+            <label> Announcement </label>
+            <input type="text" class="form-control" name="message">
+
+            <label>
+                <input type="checkbox" name="shouldEmail"> Sent Email Too?
+            </label>
+
+            <button type="submit" class="btn btn-success btn-nopad" id="postAnnouncement">
+                <i class="fa fa-bell-o"></i> Post Announcement
+            </button>
+        </form>
+    </div>
+</div>
+

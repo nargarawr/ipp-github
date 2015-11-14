@@ -45,7 +45,7 @@ class RouteController extends BaseController {
         $routeId = $this->getRequest()->getParam('id', 0);
         $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
 
-        if ($routeId == 0 ||$this->view->route === false) {
+        if ($routeId == 0 || $this->view->route === false) {
             $this->_redirect("/route/index/");
         }
 
@@ -54,9 +54,9 @@ class RouteController extends BaseController {
             (is_null($this->user)) ? null : $this->user->userId
         );
 
-        $socialCount = array ();
+        $socialCount = array();
         foreach ($ss as $s) {
-            if(!(array_key_exists($s->type, $socialCount))) {
+            if (!(array_key_exists($s->type, $socialCount))) {
                 $socialCount[$s->type] = 1;
             } else {
                 $socialCount[$s->type]++;
@@ -283,6 +283,25 @@ class RouteController extends BaseController {
         $id = RouteFactory::forkRoute($idToFork, $this->user->userId);
 
         RouteFactory::updateRouteLog($idToFork, $this->user->userId, 'fork');
+
+        $routeOwner = UserFactory::getRouteOwnerDetails($idToFork);
+        if (!is_null($routeOwner->email) && $routeOwner->emailOnRouteFork) {
+            EmailFactory::sendEmail(
+                $routeOwner->email,
+                $this->user->username . ' has forked your route!',
+                $this->view->action(
+                    'newsocialinteraction',
+                    'email',
+                    null,
+                    array(
+                        'type'          => 'fork',
+                        'routeId'       => $idToFork,
+                        'forkedRouteId' => $id,
+                        'routeOwner'    => $routeOwner->username
+                    )
+                )
+            );
+        }
 
         $this->_helper->redirector('create', 'route', null, array(
             'id' => $id

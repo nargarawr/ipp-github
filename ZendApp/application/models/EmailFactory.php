@@ -60,6 +60,33 @@ class EmailFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
+    /**
+     * Returns a list of all users that can be emailed, based on the action that occured
+     *
+     * @author Craig Knott
+     *
+     * @param string $restriction Which email preference in tb_user_preference to check against
+     *
+     * @return array(string) Array of email addresses we can email
+     */
+    public static function getAllEmails($restriction){
+        $sql = "SELECT
+                    email
+                FROM tb_user u
+                JOIN tb_user_preference p
+                ON u.pk_user_id = p.fk_user_id
+                WHERE p." . $restriction . " = 1";
+        $params = array ();
+
+        $results = parent::fetchAll($sql, $params);
+        $emails = array();
+        foreach ($results as $result) {
+            $emails[] = $result->email;
+        }
+
+        return $emails;
+    }
+
 }
 
 

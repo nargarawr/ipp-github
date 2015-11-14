@@ -33,6 +33,25 @@ class RatingController extends BaseController {
         $id = RatingFactory::addRating($routeId, $rating, $this->user->userId);
         RouteFactory::updateRouteLog($routeId, $this->user->userId, 'rate', $id);
 
+        $routeOwner = UserFactory::getRouteOwnerDetails($routeId);
+        if (!is_null($routeOwner->email) && $routeOwner->emailOnRouteRating) {
+            EmailFactory::sendEmail(
+                $routeOwner->email,
+                $this->user->username . ' has left a rating on your route!',
+                $this->view->action(
+                    'newsocialinteraction',
+                    'email',
+                    null,
+                    array(
+                        'type'       => 'rate',
+                        'routeId'    => $routeId,
+                        'rating'     => $rating,
+                        'routeOwner' => $routeOwner->username
+                    )
+                )
+            );
+        }
+
         echo Zend_Json::encode(array(
             'ratingId' => $id,
             'username' => $this->user->username

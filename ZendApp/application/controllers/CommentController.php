@@ -33,6 +33,26 @@ class CommentController extends BaseController {
         $id = CommentFactory::addComment($routeId, $text, $this->user->userId);
         RouteFactory::updateRouteLog($routeId, $this->user->userId, 'comment', $id);
 
+        $routeOwner = UserFactory::getRouteOwnerDetails($routeId);
+
+        if (!is_null($routeOwner->email) && $routeOwner->emailOnRouteComment) {
+            EmailFactory::sendEmail(
+                $routeOwner->email,
+                $this->user->username . ' has posted a comment on your route!',
+                $this->view->action(
+                    'newsocialinteraction',
+                    'email',
+                    null,
+                    array(
+                        'type'       => 'comment',
+                        'routeId'    => $routeId,
+                        'comment'    => $text,
+                        'routeOwner' => $routeOwner->username
+                    )
+                )
+            );
+        }
+
         echo Zend_Json::encode(array(
             'commentId' => $id,
             'username'  => $this->user->username

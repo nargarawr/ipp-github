@@ -197,3 +197,7 @@ a.btnLink:hover {
     padding-right: 10px;
     top: -28px;
 }
+
+.redBorder {
+    border: 1px solid red;
+}

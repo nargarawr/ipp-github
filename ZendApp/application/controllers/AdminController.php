@@ -121,5 +121,43 @@ class AdminController extends BaseController {
 
     }
 
+    /**
+     * Posts an announcement and, optionally, emails it too
+     *
+     * @author Craig Knott
+     */
+    public function postannouncementAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $email = $this->getRequest()->getParam('shouldEmail', 0);
+        $message = $this->getRequest()->getParam('message', '');
+
+        AdminFactory::postAnnouncement($message, $email, $this->user->userId);
+
+        if ($email) {
+            // Get all users we can email
+            $emailAddresses = EmailFactory::getAllEmails('email_on_announcement');
+
+            EmailFactory::sendEmail(
+                $emailAddresses,
+                'An announcement was posted on Niceway.to!',
+                $this->view->action(
+                    'newannouncement',
+                    'email',
+                    null,
+                    array(
+                        'message' => $message
+                    )
+                )
+            );
+        }
+
+        $this->messageManager->addMessage(array(
+            'msg'  => 'Announcement posted' . ($email ? ' and email sent' : '') . '!',
+            'type' => 'success'
+        ));
+        $this->_helper->redirector('index', 'admin', null, array());
+    }
 
 }

@@ -40,6 +40,39 @@ class AdminFactory extends ModelFactory {
         parent::execute($sql, $params);
     }
 
+    /**
+     * Displays a new announcement
+     *
+     * @author Craig Knott
+     *
+     * @param string $message   The announcement to be posted
+     * @param bool   $emailed   Whether the announcement will be emailed out
+     * @param int    $createdBy Who posted the announcement
+     */
+    public static function postAnnouncement($message, $emailed, $createdBy) {
+        $sql = "UPDATE tb_announcement
+                SET is_active = 0";
+        $params = array();
+        parent::execute($sql, $params);
 
-
+        $sql = "INSERT INTO tb_announcement (
+                    message,
+                    created_by,
+                    datetime_created,
+                    is_active,
+                    was_emailed
+                ) VALUES (
+                    :message,
+                        :created_by,
+                        NOW(),
+                        1,
+                        :emailed
+                )";
+        $params = array(
+            ':message'    => $message,
+            ':created_by' => $createdBy,
+            ':emailed'    => $emailed
+        );
+        parent::execute($sql, $params);
+    }
 }

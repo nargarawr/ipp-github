@@ -580,4 +580,23 @@ class RouteFactory extends ModelFactory {
         );
     }
 
+    /**
+     * Returns the name of a route, from it's ID
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The id of a route
+     *
+     * @return string The name of the route
+     */
+    public static function getRouteName($routeId) {
+        $sql = "SELECT
+                    name
+                FROM tb_route
+                WHERE pk_route_id = :routeId";
+        $params = array(
+            ':routeId' => $routeId
+        );
+        return parent::fetchOne($sql, $params)->name;
+    }
 }
