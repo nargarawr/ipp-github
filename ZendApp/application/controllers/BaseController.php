@@ -33,38 +33,46 @@ class BaseController extends Zend_Controller_Action {
         $action = $this->getRequest()->getActionName();
 
         $isLocked = AdminFactory::getSiteAdmin()->is_locked;
-        $this->user = new StdClass();
-        $this->user->isAdmin = 0;
+
+        if ($isLocked) {
+            if (Zend_Auth::getInstance()->hasIdentity()) {
+                // Create the user object
+                $userIdentity = Zend_Auth::getInstance()->getIdentity();
+                $this->view->user = $this->user = new User($userIdentity->pk_user_id);
+
+                if (!($this->user->isAdmin)) {
+                    // if logged in and not admin, log out
+                    if (!($action == 'locked' || $action == 'login' || $action == 'logout')) {
+                        $this->_helper->redirector('logout', 'member', null, array(
+                            'redirTo' => 'locked'
+                        ));
+                    }
+                }
+            } else {
+                // If not logged in, and not on locked or login, redirect to locked
+                if (!($action == 'locked' || $action == 'login' || $action == 'logout')) {
+                    $this->_helper->redirector('logout', 'member', null, array(
+                        'redirTo' => 'locked'
+                    ));
+                }
+            }
+        } else {
+            // If the user needs to be logged in to access this page, redirect them to the login page
+            if (Zend_Auth::getInstance()->hasIdentity()) {
+                // Create the user object
+                $userIdentity = Zend_Auth::getInstance()->getIdentity();
+                $this->view->user = $this->user = new User($userIdentity->pk_user_id);
+            } else if ($this->view->isExternal == false) {
+                // If the user session is no longer valid and they are navigating to a page
+                $this->_helper->redirector('login', 'member', null, array(
+                    'redirect'     => $controller . "-" . $action,
+                    'fromRedirect' => 1
+                ));
+            }
+        }
 
         $this->view->shouldDisplayNav = ($controller != 'member');
         $this->view->navBar = $this->getNavBar($controller, $action);
-
-        if (Zend_Auth::getInstance()->hasIdentity()) {
-            // Create the user object
-            $userIdentity = Zend_Auth::getInstance()->getIdentity();
-            $this->view->user = $this->user = new User($userIdentity->pk_user_id);
-
-            // If the site is locked, log out any non-admin users
-            if ($this->user->isAdmin != 1 && $isLocked && $action != "logout") {
-                $this->_helper->redirector('logout', 'member', null, array(
-                    'redirTo' => 'locked'
-                ));
-            }
-            return;
-        }
-
-        // If the user session is no longer valid and they are navigating to a page
-        if ($this->view->isExternal == false && !$isLocked) {
-            $this->_helper->redirector('login', 'member', null, array(
-                'redirect'     => $controller . "-" . $action,
-                'fromRedirect' => 1
-            ));
-        } else {
-            // If site is locked, redirect to locked page
-            if ($isLocked && !(($action == "locked" || $action == "login"))) {
-                $this->_helper->redirector('locked', 'member', null, array());
-            }
-        }
     }
 
     /**
