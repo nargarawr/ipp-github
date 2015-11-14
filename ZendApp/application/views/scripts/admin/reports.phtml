@@ -6,19 +6,31 @@
                 Unresolved Reports
             </div>
             <div class="row">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="col-md-1"> By </th>
-                            <th class="col-md-1"> When? </th>
-                            <th class="col-md-4"> Reason </th>
-                            <th class="col-md-4"> Reported Content </th>
-                            <th class="col-md-2"> Actions </th>
-                        </tr>
-                    </thead>
-                    <tbody id="reportsTable">
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead id="reportsTableHeader">
+                            <tr>
+                                <th class="col-md-1" data-sortby="username">
+                                    By <i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i>
+                                </th>
+                                <th class="col-md-2" data-sortby="datetime">
+                                    When? <i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i>
+                                </th>
+                                <th class="col-md-4">
+                                    Reason
+                                </th>
+                                <th class="col-md-4" data-sortby="type">
+                                    Reported Content <i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i>
+                                </th>
+                                <th class="col-md-2">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsTable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

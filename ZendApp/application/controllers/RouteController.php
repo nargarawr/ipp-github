@@ -139,7 +139,7 @@ class RouteController extends BaseController {
         $this->view->routeId = $this->getRequest()->getParam('id', null);
 
         if (!is_null($this->view->routeId)) {
-            $this->view->route = RouteFactory::getRoute($this->view->routeId, $this->user->userId);
+            $this->view->route = RouteFactory::getRoute($this->view->routeId);
             $this->view->latlng = RouteFactory::getFirstRoutePoint($this->view->routeId);
             $this->view->routeExists = ($this->view->route !== false);
         }

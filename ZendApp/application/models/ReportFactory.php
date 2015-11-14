@@ -55,9 +55,12 @@ class ReportFactory extends ModelFactory {
      *
      * @author Craig Knotts
      *
+     * @param string $sortBy    Which column to sort on
+     * @param string $direction The direction to sort by (ASC or DESC)
+     *
      * @return array Of reports
      */
-    public static function getAll() {
+    public static function getAll($sortBy, $direction) {
         $sql = "SELECT
                     pk_report_id AS id,
                     type,
@@ -65,19 +68,15 @@ class ReportFactory extends ModelFactory {
                     report_message,
                     IF (type = 'comment',
                         (SELECT comment FROM tb_comment WHERE pk_comment_id = reported_item_id),
-                        NULL
-                    ) AS reported_comment,
-                    IF (type = 'route',
-                        CONCAT('/route/detail/id/',reported_item_id),
-                        NULL
-                    ) AS reported_route,
+                        (CONCAT('/route/detail/id/',reported_item_id))
+                    ) AS reported_content,
                     datetime,
                     username
                 FROM tb_report
                 JOIN tb_user
                 ON tb_user.pk_user_id = tb_report.reporter_id
                 WHERE is_resolved = 0
-                ORDER BY datetime ASC";
+                ORDER BY " . $sortBy . " " . $direction;
         $params = array();
         return parent::fetchAll($sql, $params);
     }

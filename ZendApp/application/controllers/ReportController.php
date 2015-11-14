@@ -32,7 +32,6 @@ class ReportController extends BaseController {
         $reason = $this->getRequest()->getParam('reason', null);
 
 
-
         if (!is_null($this->user)) {
             $id = ReportFactory::addReport($this->user->userId, $type, $id, $reason);
             echo Zend_Json::encode($id);
@@ -50,7 +49,10 @@ class ReportController extends BaseController {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $results = ReportFactory::getAll();
+        $sortBy = $this->getRequest()->getParam('sortBy', 'datetime');
+        $direction = $this->getRequest()->getParam('direction', 'ASC');
+
+        $results = ReportFactory::getAll($sortBy, $direction);
 
         echo Zend_Json::encode($results);
         exit;
@@ -61,7 +63,7 @@ class ReportController extends BaseController {
      *
      * @author Craig Knott
      */
-    public function resolveAction(){
+    public function resolveAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 

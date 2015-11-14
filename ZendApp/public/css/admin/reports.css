@@ -28,3 +28,25 @@
 .form-group {
     margin-bottom: 0 !important;
 }
+
+.fa-caret-down {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.fa-caret-up {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.selectedCaret {
+    color: #FFB347;
+}
+
+
+@media (max-width: 514px) {
+    .fa-caret-up,
+    .fa-caret-down {
+        display: none;
+    }
+}
