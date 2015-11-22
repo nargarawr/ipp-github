@@ -42,8 +42,10 @@ class MemberController extends BaseController {
 
                 // If we can't login, display an error
                 $loginSuccesful = $this->login($username, $password, $redir);
-                if (!$loginSuccesful) {
+                if ($loginSuccesful == 0) {
                     $this->view->errorMessage = '<b>Could not login:</b> Username or password was wrong';
+                } else if ($loginSuccesful == 1) {
+                    $this->view->errorMessage = '<b>Could not login:</b> This account is banned';
                 }
             } else {
                 $this->view->errorMessage = '<b>Could not log in:</b> Some required fields are missing or invalid';
@@ -416,9 +418,16 @@ class MemberController extends BaseController {
      * @param string $redirect A string representing the page the user wished to visit originally, in the form
      *                         'controller-action'
      *
-     * @return bool Returns false is the user did not successfully log in
+     * @return int Returns 1 if user is banned, and 0 if user details were incorrect
      */
     protected function login($username, $password, $redirect = null) {
+        // Check user is not banned
+        $isBanned = LoginFactory::checkUserBanned($username);
+
+        if ($isBanned) {
+            return 1;
+        }
+
         // Check if the user exists and the password is correct
         $authAdapter = $this->getAuthAdapter();
         $authAdapter->setIdentity($username)
@@ -451,7 +460,7 @@ class MemberController extends BaseController {
             }
         }
 
-        return false;
+        return 0;
     }
 
 }

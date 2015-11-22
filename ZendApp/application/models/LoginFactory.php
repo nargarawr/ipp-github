@@ -176,6 +176,26 @@ class LoginFactory extends ModelFactory {
         }
         return false;
     }
+
+    /**
+     * Checks whether or not the given username is for a banned account
+     *
+     * @author Craig Knott
+     *
+     * @param string $username The user to check
+     *
+     * @return boolean, whether this user is banned or not
+     */
+    public static function checkUserBanned($username) {
+        $sql = "SELECT
+                    is_banned
+                FROM tb_user
+                WHERE username = :username";
+        $params = array(
+            ':username' => $username
+        );
+        return parent::fetchOne($sql, $params)->is_banned;
+    }
 }
 
 

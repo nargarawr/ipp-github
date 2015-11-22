@@ -75,4 +75,31 @@ class AdminFactory extends ModelFactory {
         );
         parent::execute($sql, $params);
     }
+
+
+    /**
+     * Inserts a row into tb_admin_log whenever an admin action is performed
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId The admin who performed this action
+     * @param string $action The action that was performed
+     */
+    public static function updateAdminLog($userId, $action) {
+        $sql = "INSERT INTO tb_admin_log (
+                    fk_user_id,
+                    datetime,
+                    action
+                ) VALUES (
+                    :userId,
+                    NOW(),
+                    :action
+                )";
+        $params = array(
+            ':userId' => $userId,
+            ':action' => $action
+        );
+
+        parent::execute($sql, $params);
+    }
 }

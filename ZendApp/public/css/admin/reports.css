@@ -50,3 +50,7 @@
         display: none;
     }
 }
+
+.mw130 {
+    min-width: 130px;
+}

@@ -67,6 +67,7 @@ class AdminController extends BaseController {
     public function locksiteAction() {
         $shouldLock = $this->getRequest()->getParam('lock', 0);
         AdminFactory::setSiteLocked($shouldLock);
+        AdminFactory::updateAdminLog($this->user->userId, $shouldLock ? "Site Locked" : "Site Unlocked");
         $this->_helper->redirector('index', 'admin', null, array());
     }
 
@@ -76,6 +77,7 @@ class AdminController extends BaseController {
      * @author Craig Knott
      */
     public function createuserAction(){
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -105,6 +107,7 @@ class AdminController extends BaseController {
             );
 
             SkinFactory::assignStartingSkins($userId);
+            AdminFactory::updateAdminLog($this->user->userId, "Create User");
 
             $this->messageManager->addMessage(array(
                 'msg'  => 'The account was successfully created and an email has been sent',
@@ -134,6 +137,7 @@ class AdminController extends BaseController {
         $message = $this->getRequest()->getParam('message', '');
 
         AdminFactory::postAnnouncement($message, $email, $this->user->userId);
+        AdminFactory::updateAdminLog($this->user->userId, "Announcement Posted");
 
         if ($email) {
             // Get all users we can email

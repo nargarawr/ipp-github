@@ -311,7 +311,9 @@ var RatingManager = Class.extend({
     },
 
     /**
-     * TODO
+     * Redraws the route rating display
+     *
+     * @author Craig Knott
      */
     redrawStars: function () {
         $.ajax({
@@ -336,8 +338,7 @@ var RatingManager = Class.extend({
                     }
                 }
             }
-
-        })
+        });
     }
 });
 

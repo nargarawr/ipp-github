@@ -3,11 +3,30 @@
         padding-left: 2px;
         padding-right: 2px;
     }
+
+    #starBreak {
+        display: none;
+    }
+
+    @media (max-width:1250px) and (min-width: 991px)  {
+        #starBreak {
+            display: block !important;
+        }
+    }
+
 </style>
 
 <? if (is_null($this->showId)) {
     $this->showId = false;
 } ?>
+
+<? if (is_null($this->addBreak)) {
+    $this->addBreak = false;
+} ?>
+<? if ($this->addBreak) { ?>
+    <div id="starBreak"></div>
+<? } ?>
+
 <!-- Funky comments to get the icons to align next to each other perfectly
 <? for ($i = 0; $i < 5; $i += 1) { ?>
     <? if ($i + 0.5 == $this->rating) { ?>

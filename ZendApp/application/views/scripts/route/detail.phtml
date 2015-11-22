@@ -20,24 +20,30 @@
             </div>
 
             <div class="col-md-4">
-                <div class="rating" id="ratingContainer">
-                    <?= $this->partial('user', 'stars', null, array(
-                        'rating' => $this->route->rating
-                    )); ?>
-                </div>
-                <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
-                    <div class="yourRating">
-                        Your rating
-                        <? if ($this->userRouteRating->value > 0) { ?>
-                            <span class="clearBtn">
-                                (<i class="fa fa-times"></i>)
-                            </span>
-                        <? } ?>
-
+                <div class="row">
+                    <div class="rating" id="ratingContainer">
                         <?= $this->partial('user', 'stars', null, array(
-                            'rating' => $this->userRouteRating->value,
-                            'showId' => true
+                            'rating' => $this->route->rating
                         )); ?>
+                    </div>
+                </div>
+
+                <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
+                    <div class="row">
+                            <div class="yourRating">
+                                Your rating
+                                <? if ($this->userRouteRating->value > 0) { ?>
+                                    <span class="clearBtn">
+                                        (<i class="fa fa-times"></i>)
+                                    </span>
+                                <? } ?>
+
+                                <?= $this->partial('user', 'stars', null, array(
+                                    'rating'   => $this->userRouteRating->value,
+                                    'showId'   => true,
+                                    'addBreak' => true,
+                                )); ?>
+                            </div>
                     </div>
                 <? } ?>
             </div>
