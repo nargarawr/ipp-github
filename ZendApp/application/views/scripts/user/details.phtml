@@ -30,6 +30,12 @@
                                 <?= $this->displayedUser->fname ?> <?= $this->displayedUser->lname ?> </div>
                         <? } ?>
 
+                        <? if (!is_null($this->displayedUser->age)) { ?>
+                            <div class="age"><i class="fa fa-calendar"></i>
+                                <?= $this->displayedUser->age ?> years old
+                            </div>
+                        <? } ?>
+
                         <? if ($this->viewingOwnProfile) { ?>
                             <div class="email">
                                 <i class="fa fa-envelope"></i>

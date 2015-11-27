@@ -91,14 +91,16 @@ class UserFactory extends ModelFactory {
      * @param string $email    New account email
      * @param string $location New account location
      * @param string $bio      New account bio
+     * @param int    $age      New user age
      */
-    public static function updateUserDetails($userId, $fname, $lname, $email, $location, $bio) {
+    public static function updateUserDetails($userId, $fname, $lname, $email, $location, $bio, $age) {
         $sql = "UPDATE tb_user
                 SET fname = :fname,
                     lname = :lname,
                     email = :email,
                     location = :location,
                     bio = :bio,
+                    age = :age,
                     datetime_updated = NOW()
                 WHERE pk_user_id = :userId";
         $params = array(
@@ -107,6 +109,7 @@ class UserFactory extends ModelFactory {
             ':email'    => $email,
             ':location' => $location,
             ':bio'      => $bio,
+            ':age'      => $age,
             ':userId'   => $userId
         );
         parent::execute($sql, $params);
@@ -161,6 +164,7 @@ class UserFactory extends ModelFactory {
                     lname,
                     email,
                     location,
+                    age,
                     bio,
                     login_count,
                     last_login,
@@ -205,9 +209,9 @@ class UserFactory extends ModelFactory {
                     pk_user_id AS id,
                     username,
                     email,
-                    email_on_announcement as emailOnRouteComment,
-                    email_on_route_rating as emailOnRouteRating,
-                    email_on_route_fork as emailOnRouteFork
+                    email_on_announcement AS emailOnRouteComment,
+                    email_on_route_rating AS emailOnRouteRating,
+                    email_on_route_fork AS emailOnRouteFork
                 FROM tb_user u
                 JOIN tb_route r
                 ON u.pk_user_id = r.created_by

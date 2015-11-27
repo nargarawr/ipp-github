@@ -177,6 +177,7 @@ class UserController extends BaseController {
             $firstName = $this->getRequest()->getParam('fname');
             $lastName = $this->getRequest()->getParam('lname');
             $email = $this->getRequest()->getParam('email');
+            $age = $this->getRequest()->getParam('age');
             $location = $this->getRequest()->getParam('location');
             $bio = $this->getRequest()->getParam('bio');
 
@@ -191,7 +192,8 @@ class UserController extends BaseController {
                         $lastName,
                         $email,
                         $location,
-                        $bio
+                        $bio,
+                        $age
                     );
 
                     $this->messageManager->addMessage(array(

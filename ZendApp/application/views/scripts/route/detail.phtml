@@ -80,6 +80,12 @@
                         <i class="fa fa-download"></i> Download
                     </button>
                 </a>
+                <br>
+                <? if ($this->route->owner == $this->user->username || $this->user->isAdmin) { ?>
+                    <button class="btn btn-danger btn-nopad" id="deleteRoute">
+                        <i class="fa fa-street-view"></i> Delete Route
+                    </button>
+                <? } ?>
 
             </div>
             <div class="col-md-6">
@@ -185,7 +191,7 @@
                                 <? if ($element->type === 'comment') { ?>
                                     <span class="right commentAction">
                                     <? if (!(is_null($this->user))) { ?>
-                                        <? if ($element->username == $this->user->username) { ?>
+                                        <? if ($element->username == $this->user->username || $this->user->isAdmin) { ?>
                                             <i class="fa fa-times"></i>
                                         <? } else { ?>
                                             <i class="fa fa-flag"></i>

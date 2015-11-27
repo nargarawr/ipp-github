@@ -72,6 +72,28 @@ $(document).ready(function () {
         });
     });
 
+    $('#deleteRoute').click(function(){
+        $.confirm({
+            title:           'Delete comment?',
+            icon:            'fa fa-warning',
+            content:         'Are you sure you wish to delete this route? This action is irreversible.',
+            theme:           'black',
+            confirmButton:   'Delete',
+            keyboardEnabled: true,
+            confirm:         function () {
+                $.ajax({
+                    type: 'POST',
+                    url:  '/route/delete',
+                    data: {
+                        id: $('#routeId').val()
+                    }
+                }).success(function () {
+                    window.location = "/user/details/";
+                });
+            }
+        });
+    });
+
     $(".elements").css("height", window.innerHeight - 350);
 });
 

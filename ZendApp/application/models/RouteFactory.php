@@ -153,8 +153,9 @@ class RouteFactory extends ModelFactory {
         $sql = "SELECT
                     name,
                     description,
-                    is_private
-                FROM tb_route
+                    is_private,
+                    r.created_by as owner
+                FROM tb_route r
                 WHERE pk_route_id = :routeId
                 AND is_deleted = 0";
         $params = array(
@@ -669,7 +670,8 @@ class RouteFactory extends ModelFactory {
                 ON end.fk_route_id = r.pk_route_id
                 JOIN tb_user u
                 ON r.created_by = u.pk_user_id
-                WHERE r.is_private = 0";
+                WHERE r.is_private = 0
+                AND r.is_deleted = 0";
         $params = array();
 
         $routes = parent::fetchAll($sql, $params);

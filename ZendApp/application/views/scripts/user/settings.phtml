@@ -87,8 +87,8 @@
                         <div class="alert alert-info" role="alert">
                             <i class="fa fa-info-circle"></i> <b>Your details</b>
                             <p>
-                                All of the information you enter here, excluding your email address, will be visible
-                                to other users of Niceway.to.
+                                All of the information you enter here, excluding your email address, will be
+                                visible to other users of Niceway.to.
                             </p>
                         </div>
                     </div>
@@ -111,6 +111,10 @@
                         <label> Location </label>
                         <input type="text" name="location" class="form-control"
                                placeholder="Your location" value="<?= $this->user->location ?>">
+
+                        <label> Age </label>
+                        <input type="text" name="age" class="form-control"
+                               placeholder="Your age" value="<?= $this->user->age ?>">
 
                         <label> Bio </label>
                             <textarea class="form-control" placeholder="A little about yourself" name="bio"><?=

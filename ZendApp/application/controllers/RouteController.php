@@ -165,7 +165,8 @@ class RouteController extends BaseController {
         if (!is_null($this->view->routeId)) {
             $this->view->route = RouteFactory::getRoute($this->view->routeId);
             $this->view->latlng = RouteFactory::getFirstRoutePoint($this->view->routeId);
-            $this->view->routeExists = ($this->view->route !== false);
+            $this->view->routeExists = ($this->view->route !== false)
+                && ($this->user->userId == $this->view->route->owner || $this->user->isAdmin);
         }
     }
 
@@ -254,7 +255,7 @@ class RouteController extends BaseController {
     }
 
     /**
-     * Deletes a given route from the system, takes a user Id to ensure no malicious intent
+     * Deletes a given route from the system
      *
      * @author Craig Knott
      */

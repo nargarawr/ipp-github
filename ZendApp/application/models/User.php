@@ -16,6 +16,7 @@ class User {
     public $lname;
     public $email;
     public $location;
+    public $age;
     public $bio;
     public $loginCount;
     public $lastLogin;
@@ -42,6 +43,7 @@ class User {
         $this->fname = $dbUser->fname;
         $this->lname = $dbUser->lname;
         $this->email = $dbUser->email;
+        $this->age = $dbUser->age;
         $this->location = $dbUser->location;
         $this->bio = $dbUser->bio;
         $this->loginCount = $dbUser->login_count;
