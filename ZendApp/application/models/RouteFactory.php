@@ -600,47 +600,141 @@ class RouteFactory extends ModelFactory {
         return parent::fetchOne($sql, $params)->name;
     }
 
-    public static function getNearbyRoutes($lat, $long) {
-      // Currently gets the start and end points for all routes
-      // Need to compare them to the lat and long passed in
-         $sql = "select
-                   start.latitude,
-                   start.longitude,
-                   end.latitude,
-                   end.longitude,
-                   pk_route_id,
-                   1 + 1 as some_calculation
-                 from tb_route r
-                 join (
-                   select latitude, longitude, fk_route_id
-                   from tb_point group by fk_route_id
-                 ) as start
-                 on start.fk_route_id = r.pk_route_id
-                 join (
-                   select latitude, longitude, fk_route_id
-                   from (
-                     select latitude, longitude, fk_route_id
-                     from tb_point
-                     order by pk_point_id desc
-                   ) as inner_select group by inner_select.fk_route_id
-                 ) as end
-                 on end.fk_route_id = r.pk_route_id
-                 where r.is_private = 0";
-         $params = array (
+    /**
+     * Returns and array of routes up to 25KM away from the entered start and end locations. The "distance" between
+     * two routes is the distance from their start points plus the distance from their end points, divided by two. Or
+     * just the distance to the start point, if no end point is given
+     *
+     * @param float $startLat    The start point latitude
+     * @param float $startLng    The start point longitude
+     * @param float $endLat      The end point latitude
+     * @param float $endLng      The end point longitude
+     * @param int   $maxDistance What constitutes as "nearby" (in m)
+     *
+     * @return array List of routes within 25KM, ordered by distance ascending
+     */
+    public static function getNearbyRoutes($startLat, $startLng, $endLat = null, $endLng = null, $maxDistance = 25000) {
+        $sql = "SELECT
+                    start.latitude AS start_lat,
+                    start.longitude AS start_lng,
+                    end.latitude AS end_lat,
+                    end.longitude AS end_lng,
+                    pk_route_id as id,
+                    r.description,
+                    r.name,
+                    IFNULL(
+                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
+                    ) AS rating,
+                    IFNULL (
+                        (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
+                    ) AS comments,
+                    IFNULL (
+                        (SELECT count(pk_rating_id) AS comments FROM tb_rating r WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
+                    ) AS ratings,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = pk_route_id AND action = 'download'), 0
+                    ) AS downloads,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = pk_route_id AND action = 'fork'), 0
+                    ) AS forks,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = pk_route_id AND action = 'share'), 0
+                    ) AS shares,
+                    u.username AS owner
+                FROM tb_route r
+                JOIN (
+                     SELECT
+                        latitude,
+                        longitude,
+                        fk_route_id
+                     FROM tb_point
+                     GROUP BY fk_route_id
+                ) AS start
+                ON start.fk_route_id = r.pk_route_id
+                JOIN (
+                     SELECT
+                         latitude,
+                         longitude,
+                         fk_route_id
+                     FROM (
+                          SELECT
+                              latitude,
+                              longitude,
+                              fk_route_id
+                          FROM tb_point
+                          ORDER BY pk_point_id DESC
+                      ) AS inner_select
+                      GROUP BY inner_select.fk_route_id
+                ) AS end
+                ON end.fk_route_id = r.pk_route_id
+                JOIN tb_user u
+                ON r.created_by = u.pk_user_id
+                WHERE r.is_private = 0";
+        $params = array();
 
-        );
+        $routes = parent::fetchAll($sql, $params);
 
+        // Calculate distance for each distance from the start/end locations
+        foreach ($routes as &$route) {
+            $startDistance = RouteFactory::distanceBetweenPoints($route->start_lat, $route->start_lng, $startLat, $startLng);
+            $route->startDist = $startDistance;
 
+            if ($endLat != null && $endLng != null) {
+                $endDistance = RouteFactory::distanceBetweenPoints($route->end_lat, $route->end_lng, $endLat, $endLng);
+                $route->endDist = $endDistance;
+                $route->distanceFromEnteredPoint = ($startDistance + $endDistance) / 2;
+            } else {
+                $route->distanceFromEnteredPoint = $startDistance;
+            }
+        }
 
-        // Get first point for a route
-        // select latitude, longitude from tb_point group by fk_route_id;
+        // Only display routes within the maxDistance parameter
+        $routes = array_filter($routes, function ($route) use ($maxDistance) {
+            return $route->distanceFromEnteredPoint <= $maxDistance;
+        });
 
-        // Get last pooint for a route
-        // select latitude, longitude from (select latitude, longitude, fk_route_id from tb_point order by pk_point_id desc) as inner_select group by inner_select.fk_route_id;
+        // Sort routes by distance
+        usort($routes, function ($a, $b) {
+            return $a->distanceFromEnteredPoint > $b->distanceFromEnteredPoint;
+        });
 
+        // Add points to the routes
+        foreach ($routes as &$route) {
+            $route->points = RouteFactory::getRoutePoints($route->id);
+        }
 
+        return $routes;
+    }
 
-        return parent::fetchAll($sql, $params);
+    /**
+     * This formula was not written by me, it was taken from this stackoverflow question:
+     * http://stackoverflow.com/questions/10053358/measuring-the-distance-between-two-coordinates-in-php
+     *
+     * Calculates the great-circle distance between two points, with the Vincenty formula.
+     *
+     * @author martinstoeckli of stackoverflow
+     *
+     * @param float $latitudeFrom  Latitude of start point in [deg decimal]
+     * @param float $longitudeFrom Longitude of start point in [deg decimal]
+     * @param float $latitudeTo    Latitude of target point in [deg decimal]
+     * @param float $longitudeTo   Longitude of target point in [deg decimal]
+     * @param float $earthRadius   Mean earth radius in [m]
+     *
+     * @return float Distance between points in [m] (same as earthRadius)
+     */
+    public static function distanceBetweenPoints($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo,
+                                                 $earthRadius = 6371000) {
+        // convert from degrees to radians
+        $latFrom = deg2rad($latitudeFrom);
+        $lonFrom = deg2rad($longitudeFrom);
+        $latTo = deg2rad($latitudeTo);
+        $lonTo = deg2rad($longitudeTo);
+
+        $lonDelta = $lonTo - $lonFrom;
+        $a = pow(cos($latTo) * sin($lonDelta), 2) + pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+        $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+
+        $angle = atan2(sqrt($a), $b);
+        return $angle * $earthRadius;
     }
 }
-// SELECT id, ( 3959 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM markers HAVING distance < 25 ORDER BY distance LIMIT

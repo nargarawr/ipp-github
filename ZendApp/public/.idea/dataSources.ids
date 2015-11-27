@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - nicewayto@178.62.46.222" uuid="2aeb39b0-a943-494d-8232-25706dc1f96e">
+    <database-info product="MySQL" version="5.5.44-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="nicewayto"/>
+    <table name="tb_admin_log" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_admin_log_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="datetime" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="action" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="pk_admin_log_id"/>
+      <foreign-key name="tb_admin_log_ibfk_1" columns="fk_user_id" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="tb_announcement" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_announcement_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="message" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_by" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="datetime_created" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="is_active" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="was_emailed" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="pk_announcement_id"/>
+      <foreign-key name="tb_announcement_ibfk_1" columns="created_by" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="tb_comment" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_comment_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_route_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_by" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="comment" sqlType="VARCHAR" precision="1024" scale="0" nullable="true" jdbcType="12"/>
+      <column name="is_deleted" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="pk_comment_id"/>
+      <foreign-key name="tb_comment_ibfk_1" columns="created_by" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="tb_comment_ibfk_2" columns="fk_route_id" ref-table="tb_route" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_route_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="tb_point" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_point_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_route_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="latitude" sqlType="VARCHAR" precision="16" scale="0" nullable="true" jdbcType="12"/>
+      <column name="longitude" sqlType="VARCHAR" precision="16" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="pk_point_id"/>
+      <foreign-key name="tb_point_ibfk_1" columns="fk_route_id" ref-table="tb_route" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_route_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="tb_rating" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_rating_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_route_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="created_by" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="value" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="is_deleted" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="pk_rating_id"/>
+      <foreign-key name="tb_rating_ibfk_1" columns="created_by" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="tb_rating_ibfk_2" columns="fk_route_id" ref-table="tb_route" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_route_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_route_id" unique="true" columns="created_by"/>
+    </table>
+    <table name="tb_report" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_report_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="reporter_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="type" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="reported_item_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="report_message" sqlType="VARCHAR" precision="1024" scale="0" nullable="false" jdbcType="12"/>
+      <column name="is_resolved" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="datetime" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="resolution" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="resolved_by" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="pk_report_id"/>
+      <foreign-key name="tb_report_ibfk_1" columns="reporter_id" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="tb_route" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_route_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="created_by" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="1024" scale="0" nullable="true" jdbcType="12"/>
+      <column name="is_private" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="cost" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="distance" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="is_deleted" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="datetime_created" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="datetime_updated" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="pk_route_id"/>
+      <foreign-key name="tb_route_ibfk_1" columns="created_by" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="tb_comment_ibfk_2" table="tb_comment" schema="" catalog="nicewayto" columns="fk_route_id"/>
+      <exported-key name="tb_point_ibfk_1" table="tb_point" schema="" catalog="nicewayto" columns="fk_route_id"/>
+      <exported-key name="tb_rating_ibfk_2" table="tb_rating" schema="" catalog="nicewayto" columns="fk_route_id"/>
+      <exported-key name="tb_route_log_ibfk_1" table="tb_route_log" schema="" catalog="nicewayto" columns="fk_route_id"/>
+    </table>
+    <table name="tb_route_log" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_route_log_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_route_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fk_user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="action" sqlType="VARCHAR" precision="16" scale="0" nullable="false" jdbcType="12"/>
+      <column name="action_value_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="datetime" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="action_value_string" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="pk_route_log_id"/>
+      <foreign-key name="tb_route_log_ibfk_1" columns="fk_route_id" ref-table="tb_route" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_route_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="tb_route_log_ibfk_2" columns="fk_user_id" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="tb_site_admin" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_site_admin_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="is_locked" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="pk_site_admin_id"/>
+    </table>
+    <table name="tb_skin" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_skin_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_slot_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="reason" sqlType="VARCHAR" precision="1024" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="pk_skin_id"/>
+      <foreign-key name="tb_skin_ibfk_1" columns="fk_slot_id" ref-table="tb_skin_slot" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_skin_slot_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="tb_skin_owner_ibfk_1" table="tb_skin_owner" schema="" catalog="nicewayto" columns="fk_skin_id"/>
+    </table>
+    <table name="tb_skin_owner" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_skin_owner_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_skin_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fk_user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="equipped" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="pk_skin_owner_id"/>
+      <foreign-key name="tb_skin_owner_ibfk_1" columns="fk_skin_id" ref-table="tb_skin" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_skin_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="tb_skin_owner_ibfk_2" columns="fk_user_id" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="tb_skin_slot" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_skin_slot_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="pk_skin_slot_id"/>
+      <exported-key name="tb_skin_ibfk_1" table="tb_skin" schema="" catalog="nicewayto" columns="fk_slot_id"/>
+    </table>
+    <table name="tb_user" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="16" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fname" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lname" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="128" scale="0" nullable="true" jdbcType="12"/>
+      <column name="location" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="bio" sqlType="VARCHAR" precision="1024" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="login_count" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="last_login" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="is_admin" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="is_banned" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="is_shadow_banned" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="datetime_created" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="datetime_updated" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="is_confirmed" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="pk_user_id"/>
+      <exported-key name="tb_admin_log_ibfk_1" table="tb_admin_log" schema="" catalog="nicewayto" columns="fk_user_id"/>
+      <exported-key name="tb_announcement_ibfk_1" table="tb_announcement" schema="" catalog="nicewayto" columns="created_by"/>
+      <exported-key name="tb_comment_ibfk_1" table="tb_comment" schema="" catalog="nicewayto" columns="created_by"/>
+      <exported-key name="tb_rating_ibfk_1" table="tb_rating" schema="" catalog="nicewayto" columns="created_by"/>
+      <exported-key name="tb_report_ibfk_1" table="tb_report" schema="" catalog="nicewayto" columns="reporter_id"/>
+      <exported-key name="tb_route_ibfk_1" table="tb_route" schema="" catalog="nicewayto" columns="created_by"/>
+      <exported-key name="tb_route_log_ibfk_2" table="tb_route_log" schema="" catalog="nicewayto" columns="fk_user_id"/>
+      <exported-key name="tb_skin_owner_ibfk_2" table="tb_skin_owner" schema="" catalog="nicewayto" columns="fk_user_id"/>
+      <exported-key name="tb_user_preference_ibfk_1" table="tb_user_preference" schema="" catalog="nicewayto" columns="fk_user_id"/>
+    </table>
+    <table name="tb_user_preference" schema="" catalog="nicewayto" type="TABLE">
+      <column name="pk_user_preference_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="fk_user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="email_on_route_comment" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="email_on_route_fork" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="email_on_route_rating" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="email_on_announcement" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MQ=="/>
+      <primary-key name="PRIMARY" columns="pk_user_preference_id"/>
+      <foreign-key name="tb_user_preference_ibfk_1" columns="fk_user_id" ref-table="tb_user" ref-schema="" ref-catalog="nicewayto" ref-columns="pk_user_id" update-rule="3" delete-rule="3" deferrability="2"/>
+    </table>
+  </data-source>
+</component>

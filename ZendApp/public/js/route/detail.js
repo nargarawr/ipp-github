@@ -72,44 +72,8 @@ $(document).ready(function () {
         });
     });
 
-    //resizeSocialStream();
+    $(".elements").css("height", window.innerHeight - 350);
 });
-
-/**
- * Window resize function. Resizes the social stream
- *
- * @author Craig Knott
- */
-$(window).resize(function () {
-    //resizeSocialStream();
-});
-
-/**
- * Used to resize the social stream height based on space available
- *
- * @author Craig Knott
- */
-function resizeSocialStream() {
-    var socialStream = $('#socialStream');
-    var streamElements = socialStream.find('.streamElements');
-
-    var wiHeight = window.innerHeight - 80; // Minus padding/nav at the top of the page
-    var tiHeight = socialStream.find('.title').outerHeight(true);
-    var strHeight = socialStream.find('.shareThisRoute').outerHeight(true);
-    var cbHeight = socialStream.find('.commentBox').outerHeight(true);
-    if (cbHeight == null) {
-        cbHeight = 0;
-    }
-
-    var availableSpace = wiHeight - tiHeight - strHeight - cbHeight;
-
-    if (window.innerWidth < 991) {
-        streamElements.css("max-height", "none");
-    } else {
-        streamElements.css("max-height", availableSpace + "px");
-        streamElements.css("overflow", "auto");
-    }
-}
 
 /**
  * Class RatingManager

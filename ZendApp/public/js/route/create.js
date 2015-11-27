@@ -149,7 +149,6 @@ var MapManager = Class.extend({
         map = L.map('map', {zoomControl: false}).setView([lat, long], zoom);
         new L.Control.Zoom({position: 'topright'}).addTo(map);
         this.pointListManager = new PointListManager(this);
-        this.routingControl;
 
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
         var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';

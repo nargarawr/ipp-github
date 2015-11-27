@@ -1,32 +1,47 @@
-<?/*
+<input type="hidden" id="userLoggedIn" value="<?= !is_null($this->user) ?>">
+<? if (!is_null($this->user)) { ?>
+    <input type="hidden" id="userLocation" value="<?= $this->user->location ?>">
+<? } ?>
 
-Make it so the elements are 400px, or 50% of screen (which ever is bigger);
-*/?>
-
+<div id="map"></div>
 <div class="row">
-    <div class="col-xs-12 hero">
-        <form enctype="application/x-www-form-urlencoded" action="/route/list" method="post" id="searchForm">
-            <input type="text" class="form-control" placeholder="Enter your start location" name="start_address" id="start_address">
-            <input type="text" class="form-control" placeholder="and an optional end location" name="end_address" id="end_address">
-            Make submit button look super fancy + flat
+    <div class="col-xs-12" id="hero">
+        <div class="row">
+            <div class="col-xs-0 col-sm-1 col-md-2"></div>
+            <div class="col-xs-12 col-sm-10 col-md-8" id="heroInner">
+                <div class="searchContainer">
+                    <div class="searchTag">
+                        Find the beauty in the world around you...
+                    </div>
+                    <div class="searchFormContainer">
+                        <form enctype="application/x-www-form-urlencoded" action="/route/list" method="post" id="searchForm">
+                            <input type="hidden" name="start_lat" id="start_lat">
+                            <input type="hidden" name="start_lng" id="start_lng">
+                            <input type="hidden" name="end_lat" id="end_lat">
+                            <input type="hidden" name="end_lng" id="end_lng">
+                            <input type="hidden" name="formError" id="formError">
 
-            <input type="hidden" value="" name="start_lat" id="start_lat">
-            <input type="hidden" value="" name="start_lng" id="start_lng">
-            <input type="hidden" value="" name="end_lat" id="end_lat">
-            <input type="hidden" value="" name="end_lng" id="end_lng">
+                            <input type="text" class="form-control" name="start_address" id="start_address"
+                                   placeholder="Where do you wish to start your journey?">
+                            <input type="text" class="form-control" name="end_address" id="end_address"
+                                   placeholder="Where do you wish to end up? (Leave blank if you're feeling adventurous!)" >
+                            <input type="button" class="btn btn-success" id="submit_addresses" value="Find Your Way!">
+                        </form>
+                    </div>
+                </div>
 
-            <input type="button" class="btn btn-success" id="submit_addresses" value="Submit">
-        </form>
-        
+            </div>
+        </div>
     </div>
 </div>
-<div class="row">
+
+<div class="row sections">
     <div class="col-xs-12 col-sm-4 section">
         <div class="section-header">
             <i class="fa fa-search section-icon"></i>
             <div class="section-title">Search</div>
         </div>
-        <p class="font_16">
+        <p class="section-body">
             Find the most visually appealing routes in the area around you, whether that be locally, or while you're away from home. Simply enter a start and end locations and you'll be on your way to finding the beauty in the world around you.
         </p>
     </div>
@@ -35,7 +50,7 @@ Make it so the elements are 400px, or 50% of screen (which ever is bigger);
             <i class="fa fa-street-view section-icon"></i>
             <div class="section-title">Explore</div>
         </div>
-        <p class="font_16">
+        <p class="section-body">
             Tread in the steps that others before you have, and experience the wonders they did. Use the directions provided to navigate your way around the routes provided, and find out for yourself why they are so highly rated!
         </p>
     </div>
@@ -44,7 +59,7 @@ Make it so the elements are 400px, or 50% of screen (which ever is bigger);
             <i class="fa fa-share-square-o section-icon"></i>
             <div class="section-title">Share</div>
         </div>
-        <p class="font_16">
+        <p class="section-body">
             After returning from your journey, share your thoughts with other, by rating routes, leaving your comments, or sharing the route to social media for others to enjoy.
         </p>
     </div>

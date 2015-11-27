@@ -34,7 +34,30 @@ class RouteController extends BaseController {
      * @author Craig Knott
      */
     public function listAction() {
-        die(var_dump($this->getRequest()->getParams()));
+        $error = $this->getRequest()->getParam("formError");
+
+        if ($error == 1) {
+            echo("<h3>There was an error with your start point</h3>");
+        } else if ($error == 2) {
+            echo("<h3>There was an error with your end point</h3>");
+        } else {
+            $startLat = $this->getRequest()->getParam("start_lat");
+            $startLng = $this->getRequest()->getParam("start_lng");
+            $endLat = $this->getRequest()->getParam("end_lat");
+            $endLng = $this->getRequest()->getParam("end_lng");
+            $startAddress = $this->getRequest()->getParam("start_address");
+            $endAddress = $this->getRequest()->getParam("end_address");
+
+            $routes = RouteFactory::getNearbyRoutes($startLat, $startLng, $endLat, $endLng);
+
+            echo("<h3>Your search for routes from " . $startAddress . " to " . $endAddress . " has " . count($routes) . " results</h3>");
+
+            foreach ($routes as $route) {
+                echo "<pre style=\"border: 1px solid #000; margin: 0.5em;\">";
+                var_dump($route);
+                echo "</pre>\n";
+            }
+        }
     }
 
     /**

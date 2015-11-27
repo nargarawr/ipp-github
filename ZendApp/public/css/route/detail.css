@@ -70,6 +70,8 @@ tr td:first-child {
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 10px;
+    overflow: auto;
+    width: 100%;
 }
 
 .streamElement {
