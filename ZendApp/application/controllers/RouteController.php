@@ -34,6 +34,7 @@ class RouteController extends BaseController {
      * @author Craig Knott
      */
     public function listAction() {
+        die(var_dump($this->getRequest()->getParams()));
     }
 
     /**

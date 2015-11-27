@@ -201,3 +201,7 @@ a.btnLink:hover {
 .redBorder {
     border: 1px solid red;
 }
+
+.font_16 {
+    font-size: 16px;
+}

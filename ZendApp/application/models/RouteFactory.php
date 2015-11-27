@@ -599,4 +599,48 @@ class RouteFactory extends ModelFactory {
         );
         return parent::fetchOne($sql, $params)->name;
     }
+
+    public static function getNearbyRoutes($lat, $long) {
+      // Currently gets the start and end points for all routes
+      // Need to compare them to the lat and long passed in
+         $sql = "select
+                   start.latitude,
+                   start.longitude,
+                   end.latitude,
+                   end.longitude,
+                   pk_route_id,
+                   1 + 1 as some_calculation
+                 from tb_route r
+                 join (
+                   select latitude, longitude, fk_route_id
+                   from tb_point group by fk_route_id
+                 ) as start
+                 on start.fk_route_id = r.pk_route_id
+                 join (
+                   select latitude, longitude, fk_route_id
+                   from (
+                     select latitude, longitude, fk_route_id
+                     from tb_point
+                     order by pk_point_id desc
+                   ) as inner_select group by inner_select.fk_route_id
+                 ) as end
+                 on end.fk_route_id = r.pk_route_id
+                 where r.is_private = 0";
+         $params = array (
+
+        );
+
+
+
+        // Get first point for a route
+        // select latitude, longitude from tb_point group by fk_route_id;
+
+        // Get last pooint for a route
+        // select latitude, longitude from (select latitude, longitude, fk_route_id from tb_point order by pk_point_id desc) as inner_select group by inner_select.fk_route_id;
+
+
+
+        return parent::fetchAll($sql, $params);
+    }
 }
+// SELECT id, ( 3959 * acos( cos( radians(37) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(-122) ) + sin( radians(37) ) * sin( radians( lat ) ) ) ) AS distance FROM markers HAVING distance < 25 ORDER BY distance LIMIT
