@@ -102,4 +102,41 @@ class AdminFactory extends ModelFactory {
 
         parent::execute($sql, $params);
     }
+
+    /**
+     * Returns the message of the most recent announcement
+     *
+     * @author Craig Knott
+     */
+    public static function getCurrentAnnouncement() {
+        $sql = "SELECT
+                    message
+                FROM tb_announcement
+                WHERE is_active = 1
+                ORDER BY datetime_created ASC
+                LIMIT 1;";
+        $params = array();
+        $result = parent::fetchOne($sql, $params);
+        if ($result !== false) {
+            return $result->message;
+        }
+        return $result;
+    }
+
+    /**
+     * Deactivates any active announcements
+     *
+     * @param int $userId The id of the user performing this action
+     *
+     * @author Craig Knott
+     */
+    public static function clearAnnouncements($userId) {
+        $sql = "UPDATE tb_announcement
+                SET is_active = 0";
+        $params = array();
+        parent::execute($sql, $params);
+
+        AdminFactory::updateAdminLog($userId, 'Announcements Cleared');
+    }
+
 }

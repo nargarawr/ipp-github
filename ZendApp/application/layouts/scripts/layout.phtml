@@ -115,6 +115,11 @@
         </div>
     </div>
 </nav>
+<? if ($this->announcement !== false) { ?>
+  <div class="announcement alert-danger">
+      <i class="fa fa-warning"></i> <?= $this->announcement ?>
+  </div>
+<? } ?>
 <div class="navbar-stripe"></div>
 
 <? // Display the content of the HTML page?>

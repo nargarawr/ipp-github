@@ -209,3 +209,8 @@ a.btnLink:hover {
 .dropdown-menu {
     z-index: 1004 !important;
 }
+
+.announcement {
+    padding: 10px;
+    text-align: center;
+}

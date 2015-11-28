@@ -22,3 +22,11 @@ dt {
 .forgotPassword a {
     color: white;
 }
+
+.navbar.navbar-inverse, .announcement, .navbar-stripe {
+    z-index: 100000000;
+}
+
+.announcement, .navbar-stripe {
+  position: relative;
+}

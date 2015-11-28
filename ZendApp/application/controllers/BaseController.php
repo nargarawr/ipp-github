@@ -73,6 +73,8 @@ class BaseController extends Zend_Controller_Action {
 
         $this->view->shouldDisplayNav = ($controller != 'member');
         $this->view->navBar = $this->getNavBar($controller, $action);
+
+        $this->view->announcement = AdminFactory::getCurrentAnnouncement();
     }
 
     /**

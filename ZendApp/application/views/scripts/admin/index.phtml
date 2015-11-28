@@ -63,9 +63,16 @@
             </label>
 
             <button type="submit" class="btn btn-success btn-nopad" id="postAnnouncement">
-                <i class="fa fa-bell-o"></i> Post Announcement
+                <i class="fa fa-bell"></i> Post Announcement
             </button>
         </form>
+
+        Current announcement
+        <?= $this->announcement === false ? 'Nothing' : $this->announcement ?>
+        <a class="btnLink" href="/admin/clearannouncements">
+            <button class="btn btn-danger btn-nopad">
+                <i class="fa fa-bell-slash"></i> Clear Announcement
+            </button>
+        </a>
     </div>
 </div>
-

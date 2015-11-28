@@ -164,4 +164,13 @@ class AdminController extends BaseController {
         $this->_helper->redirector('index', 'admin', null, array());
     }
 
+    public function clearannouncementsAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        AdminFactory::clearAnnouncements($this->user->userId);
+
+        $this->_helper->redirector('index', 'admin', null, array());
+    }
+
 }
