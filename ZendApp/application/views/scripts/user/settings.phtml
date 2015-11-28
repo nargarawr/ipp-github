@@ -1,3 +1,5 @@
+<input type="hidden" id="dateField" value="<?= $this->user->age ?>">
+
 <div class="row">
     <div class="col-sm-1 col-md-2"></div>
     <div class="col-sm-10 col-md-8">
@@ -50,7 +52,7 @@
                         <label class="check">
                             <input type="checkbox" name="email_route_fork"<?=
                             ($this->user->preferences->emailOnRouteFork) ? 'checked' : '' ?>>
-                            <span>Someone forks your routes</span>
+                            <span>Someone clones your routes</span>
                         </label>
 
                         <label class="check">
@@ -112,8 +114,8 @@
                         <input type="text" name="location" class="form-control"
                                placeholder="Your location" value="<?= $this->user->location ?>">
 
-                        <label> Age </label>
-                        <input type="text" name="age" class="form-control"
+                        <label> Date of Birth </label>
+                        <input type="text" id="ageDatePicker" name="age" class="form-control"
                                placeholder="Your age" value="<?= $this->user->age ?>">
 
                         <label> Bio </label>
@@ -165,4 +167,3 @@
     </div>
     <div class="col-md-2"></div>
 </div>
-

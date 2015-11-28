@@ -32,7 +32,11 @@
 
                         <? if (!is_null($this->displayedUser->age)) { ?>
                             <div class="age"><i class="fa fa-calendar"></i>
-                                <?= $this->displayedUser->age ?> years old
+                                <? $birthDate = date("m/d/Y", strtotime($this->displayedUser->age)); ?>
+                                <? $birthDate = explode("/", $birthDate); ?>
+                                <?= $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+                                    ? ((date("Y") - $birthDate[2]) - 1)
+                                    : (date("Y") - $birthDate[2])); ?> years old
                             </div>
                         <? } ?>
 
@@ -121,7 +125,7 @@
                                 <? } ?>
                                 <th>Created</th>
                                 <th class="numeric nmth-after"><i class="fa fa-comment"></i></th>
-                                <th class="numeric nmth-after"><i class="fa fa-code-fork"></i></th>
+                                <th class="numeric nmth-after"><i class="fa fa-clone"></i></th>
                                 <th class="numeric nmth-after"><i class="fa fa-share"></i></th>
                                 <th class="numeric nmth-after"><i class="fa fa-download"></i></th>
                                 <th class="nmth-init">Social</th>
@@ -197,7 +201,7 @@
                                         <? } else { ?>
                                             <a class="btnLink" href="/route/fork/id/<?= $route->routeId ?>">
                                                 <button class="btn btn-warning btn-nopad">
-                                                    <i class="fa fa-code-fork"></i>
+                                                    <i class="fa fa-clone"></i>
                                                 </button>
                                             </a>
                                         <? } ?>
@@ -226,8 +230,3 @@
     </div>
     <div class="col-md-2"></div>
 </div>
-
-
-
-
-

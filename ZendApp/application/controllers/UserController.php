@@ -177,7 +177,7 @@ class UserController extends BaseController {
             $firstName = $this->getRequest()->getParam('fname');
             $lastName = $this->getRequest()->getParam('lname');
             $email = $this->getRequest()->getParam('email');
-            $age = $this->getRequest()->getParam('age');
+            $dob = $this->getRequest()->getParam('age');
             $location = $this->getRequest()->getParam('location');
             $bio = $this->getRequest()->getParam('bio');
 
@@ -186,6 +186,12 @@ class UserController extends BaseController {
             if (count($invalid) == 0) {
                 $emailAllowed = UserFactory::checkEmailAllowed($this->user->userId, $email);
                 if ($emailAllowed) {
+
+                    if (!is_null($dob)) {
+                        list($date,$month,$year) = sscanf($dob, "%d/%d/%d");
+                        $dob = "$year-$month-$date";
+                    }
+
                     UserFactory::updateUserDetails(
                         $this->user->userId,
                         $firstName,
@@ -193,7 +199,7 @@ class UserController extends BaseController {
                         $email,
                         $location,
                         $bio,
-                        $age
+                        $dob
                     );
 
                     $this->messageManager->addMessage(array(

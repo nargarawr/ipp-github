@@ -91,7 +91,7 @@ class UserFactory extends ModelFactory {
      * @param string $email    New account email
      * @param string $location New account location
      * @param string $bio      New account bio
-     * @param int    $age      New user age
+     * @param string $age      New user date of birth
      */
     public static function updateUserDetails($userId, $fname, $lname, $email, $location, $bio, $age) {
         $sql = "UPDATE tb_user

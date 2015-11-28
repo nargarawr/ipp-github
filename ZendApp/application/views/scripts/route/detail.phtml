@@ -70,7 +70,7 @@
                 <? if (!(is_null($this->user))) { ?>
                     <a class="btnLink" href="/route/fork/id/<?= $this->route->routeId ?>">
                         <button class="btn btn-warning btn-nopad">
-                            <i class="fa fa-code-fork"></i> Fork Route
+                            <i class="fa fa-clone"></i> Clone Route
                         </button>
                     </a>
                     <br>
@@ -122,7 +122,7 @@
                         <br>
                         <i class="fa fa-download"></i> <?= $this->route->downloads ?> downloads
                         <br>
-                        <i class="fa fa-code-fork"></i> <?= $this->route->forks ?> forks
+                        <i class="fa fa-clone"></i> <?= $this->route->forks ?> clones
                     </div>
                 </div>
             </div>
@@ -152,9 +152,6 @@
                         <a class="a2a_button_tumblr"></a>
                     </div>
                     <script type="text/javascript" src="/libs/addtoany/buttons.js"></script>
-                    <script type="text/javascript">
-
-                    </script>
                 </div>
             </div>
 
@@ -207,7 +204,8 @@
                                     <? if (!is_null($this->user) && $element->username == $this->user->username) { ?>
                                         <div class="hidden" id="userRating"></div>
                                     <? } ?>
-
+                                <? } else if ($element->type === 'fork') { ?>
+                                    cloned this route
                                 <? } else { ?>
                                     <?= rtrim($element->type, 'e') ?>ed this route
                                     <?= ($element->type == 'share' ? ' to ' . ucfirst($element->valueString) : '') ?>

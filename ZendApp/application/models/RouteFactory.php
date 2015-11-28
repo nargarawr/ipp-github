@@ -523,7 +523,7 @@ class RouteFactory extends ModelFactory {
                         WHEN rl.action='rate' THEN 'fa fa-star'
                         WHEN rl.action='download' THEN 'fa fa-download'
                         WHEN rl.action='share' THEN 'fa fa-share'
-                        WHEN rl.action='fork' THEN 'fa fa-code-fork'
+                        WHEN rl.action='fork' THEN 'fa fa-clone'
                     END AS icon
                 FROM tb_route_log rl
                 JOIN tb_user u

@@ -92,7 +92,23 @@ var UploadManager = Class.extend({
      * @param data
      */
     formUploadSuccesful: function (data) {
-        var route = JSON.parse(data);
+        var route;
+
+        // Try to parse the uploaded file as JSON. If we can't throw an error
+        // TIL Javascript has try/catch
+        try {
+            route = JSON.parse(data);
+        } catch (e) {
+            $.alert({
+                title:           'Invalid file',
+                icon:            'fa fa-warning',
+                content:         'The file you uploaded was not a valid Niceway.to route file',
+                theme:           'black',
+                keyboardEnabled: true
+            });
+            return;
+        }
+
         $('#routeName').val(route.name);
         $('#routeDesc').val(route.description);
         $('#routePrivacy').val(route.is_private);
