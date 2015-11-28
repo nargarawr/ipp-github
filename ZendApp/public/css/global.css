@@ -205,3 +205,7 @@ a.btnLink:hover {
 .font_16 {
     font-size: 16px;
 }
+
+.dropdown-menu {
+    z-index: 1004 !important;
+}

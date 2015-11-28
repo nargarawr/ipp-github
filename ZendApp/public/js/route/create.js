@@ -44,6 +44,7 @@ $(document).ready(function () {
         var popupManager = new PopupManager(mm);
     });
 
+    // 90% of the height of the screen (minus the header and top of the social stream)
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
 });
 

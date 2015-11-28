@@ -1,5 +1,5 @@
 #map {
-    height: 957px;
+    height: 95px;
 }
 
 #left-hand-display, #left-hand-display-mini {
@@ -281,4 +281,3 @@ textarea {
     opacity: 0;
     filter: alpha(opacity=0);
 }
-

@@ -20,6 +20,15 @@ class UserController extends BaseController {
     }
 
     /**
+     * Used to redirect to /user/details
+     *
+     * @author Craig Knott
+     */
+    public function indexAction() {
+        $this->_helper->redirector('details', 'user', null, array());
+    }
+
+    /**
      * Displays user details and route (user /id/x to show public profile for user x)
      *
      * @author Craig Knott

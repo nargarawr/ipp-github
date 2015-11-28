@@ -44,7 +44,6 @@ $(document).ready(function () {
     // Submit search form
     $('#submit_addresses').click(function () {
         submitSearchForm();
-
     });
 });
 
@@ -57,9 +56,14 @@ $(document).ready(function () {
  * @param lng Longitude of the centre of the map
  */
 function drawMap(lat, lng) {
-    $('#map').css('height', window.innerHeight - 62);
+    $('#map').css('height', window.innerHeight - 63);
 
     map = L.map('map', {zoomControl: false}).setView([lat, lng], 13);
+
+    // Disable scroll + touch zoom
+    map.touchZoom.disable();
+    map.scrollWheelZoom.disable();
+
     var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
     var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
     var mapBoxCopy = 'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>';
