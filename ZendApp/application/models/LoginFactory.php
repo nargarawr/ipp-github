@@ -194,8 +194,38 @@ class LoginFactory extends ModelFactory {
         $params = array(
             ':username' => $username
         );
-        return parent::fetchOne($sql, $params)->is_banned;
+
+        $result = parent::fetchOne($sql, $params);
+        if ($result !== false) {
+            return $result->is_banned;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks whether or not the given username is for a deleted account
+     *
+     * @author Craig Knott
+     *
+     * @param string $username The user to check
+     *
+     * @return boolean, whether this account is deleted or not
+     */
+    public static function checkUserDeleted($username) {
+        $sql = "SELECT
+                    is_deleted
+                FROM tb_user
+                WHERE username = :username";
+        $params = array(
+            ':username' => $username
+        );
+
+        $result = parent::fetchOne($sql, $params);
+        if ($result !== false) {
+            return $result->is_deleted;
+        }
+
+        return false;
     }
 }
-
-

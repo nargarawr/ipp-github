@@ -95,7 +95,62 @@ $(document).ready(function () {
     });
 
     $(".elements").css("height", window.innerHeight - 350);
+
+    drawMap();
 });
+
+/**
+ * Draws the map and adds the map points to it
+ *
+ * @author Craig Knott
+ */
+function drawMap(){
+    $('#map').height('400px')
+    
+    map = L.map('map', {zoomControl: false}).setView([52, -1.1], 13);
+    new L.Control.Zoom({position: 'topright'}).addTo(map);
+
+    var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+    var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
+    var mapBoxCopy = 'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>';
+    var mapId = 'nargarawr.cig6xoyv103gnvbkvyv7s6a0k';
+    var token = 'pk.eyJ1IjoibmFyZ2FyYXdyIiwiYSI6ImNpZzZ4b3l6MzAzZzF2cWt2djg4d3llZDMifQ.k5f5mW8zW3VBH40GUYS-8A';
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: mapDataCopy + ', ' + creativeCommons + ', ' + mapBoxCopy,
+        maxZoom:     18,
+        minZoom:     8,
+        id:          mapId,
+        accessToken: token
+    }).addTo(map);
+
+    // Get route points and add them to route
+    $.ajax({
+        type: 'GET',
+        url:  '/route/getpoints',
+        data: {
+            id: $('#routeId').val()
+        }
+    }).success(function (response) {
+        var points = JSON.parse(response);
+        var middlePoint;
+
+        for (var i = 0; i < points.length; i++) {
+            var p = points[i];
+            if (i == Math.floor(points.length/2)) {
+                middlePoint = p;
+            }
+
+            var marker = L.marker([p.latitude, p.longitude]).addTo(map);
+        }
+
+        map.setView({
+            lat: middlePoint.latitude,
+            lng: middlePoint.longitude
+        });
+    });
+
+}
 
 /**
  * Class RatingManager

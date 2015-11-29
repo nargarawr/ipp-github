@@ -46,6 +46,8 @@ class MemberController extends BaseController {
                     $this->view->errorMessage = '<b>Could not login:</b> Username or password was wrong';
                 } else if ($loginSuccesful == 1) {
                     $this->view->errorMessage = '<b>Could not login:</b> This account is banned';
+                } else if ($loginSuccesful == 2) {
+                    $this->view->errorMessage = '<b>Could not login:</b> This account has been deleted';
                 }
             } else {
                 $this->view->errorMessage = '<b>Could not log in:</b> Some required fields are missing or invalid';
@@ -423,9 +425,14 @@ class MemberController extends BaseController {
     protected function login($username, $password, $redirect = null) {
         // Check user is not banned
         $isBanned = LoginFactory::checkUserBanned($username);
-
         if ($isBanned) {
             return 1;
+        }
+
+        // Check account hasn't been deleted
+        $isDeleted = LoginFactory::checkUserDeleted($username);
+        if ($isDeleted) {
+            return 2;
         }
 
         // Check if the user exists and the password is correct

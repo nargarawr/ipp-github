@@ -7,4 +7,8 @@ $(document).ready(function(){
     $("#ageDatePicker").val(
         moment($("#dateField").val()).format("DD/MM/YYYY")
     );
+
+    if ($("#ageDatePicker").val() == "Invalid date") {
+        $("#ageDatePicker").val("")
+    }
 });

@@ -149,15 +149,21 @@ class RouteController extends BaseController {
      * @author Craig Knott
      */
     public function createAction() {
-        // User must be logged in to create a route
-        if (!(Zend_Auth::getInstance()->hasIdentity())) {
-            // If the user is not logged in, redirect to the login page
-            $this->_helper->redirector('login', 'member', null, array(
-                'redirect'     => "route-create",
-                'fromRedirect' => 1
-            ));
-        } else if ($this->user->isConfirmed == false) {
-            $this->_redirect("/user/details/nce/1");
+        $isReadOnly = $this->getRequest()->getParam('readOnly', false);
+
+        if (!$isReadOnly) {
+            // User must be logged in to create a route
+            if (!(Zend_Auth::getInstance()->hasIdentity())) {
+                // If the user is not logged in, redirect to the login page
+                $this->_helper->redirector('login', 'member', null, array(
+                    'redirect'     => "route-create",
+                    'fromRedirect' => 1
+                ));
+            } else if ($this->user->isConfirmed == false) {
+                $this->_redirect("/user/details/nce/1");
+            }
+        } else {
+            $this->view->readOnly = $isReadOnly;
         }
 
         $this->view->routeId = $this->getRequest()->getParam('id', null);
@@ -166,8 +172,10 @@ class RouteController extends BaseController {
             $this->view->route = RouteFactory::getRoute($this->view->routeId);
             $this->view->latlng = RouteFactory::getFirstRoutePoint($this->view->routeId);
             $this->view->routeExists = ($this->view->route !== false)
-                && ($this->user->userId == $this->view->route->owner || $this->user->isAdmin);
+                && ($isReadOnly || $this->user->userId == $this->view->route->owner || $this->user->isAdmin);
         }
+
+
     }
 
     /**

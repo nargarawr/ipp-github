@@ -117,7 +117,7 @@ var UploadManager = Class.extend({
         var middlePoint;
         var points = route.points;
         for (var i = 0; i < points.length; i++) {
-            if (i == Math.floor(points.length/2)) {
+            if (i == Math.floor(points.length / 2)) {
                 middlePoint = points[i];
             }
             var p = points[i];
@@ -155,10 +155,10 @@ var MapManager = Class.extend({
      *
      * @author Craig Knott
      *
-     * @param lat     The default latitude of the map
-     * @param long    The default longitude of the map
-     * @param zoom    The default zoom level of the map
-     * @param routeId The Id of this route, if any
+     * @param lat      The default latitude of the map
+     * @param long     The default longitude of the map
+     * @param zoom     The default zoom level of the map
+     * @param routeId  The Id of this route, if any
      */
     init:               function (lat, long, zoom, routeId) {
         $('#map').css('height', window.innerHeight - 62);
@@ -166,6 +166,7 @@ var MapManager = Class.extend({
         map = L.map('map', {zoomControl: false}).setView([lat, long], zoom);
         new L.Control.Zoom({position: 'topright'}).addTo(map);
         this.pointListManager = new PointListManager(this);
+        this.readOnly = $('#mapReadOnly').val();
 
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
         var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
@@ -199,6 +200,10 @@ var MapManager = Class.extend({
     setupListeners:     function () {
         var _self = this;
         map.on('click', function (e) {
+            if (_self.readOnly) {
+                return;
+            }
+
             // Only add a new point if popup is NOT showing
             if (_self.isPopupOpen) {
                 _self.isPopupOpen = false;
@@ -215,10 +220,10 @@ var MapManager = Class.extend({
      * @param lat Latitude to centre at
      * @param lng Longitude to centre at
      */
-    centreMap: function(lat, lng) {
+    centreMap:          function (lat, lng) {
         map.setView({
-          lat: lat,
-          lng: lng
+            lat: lat,
+            lng: lng
         });
     },
     /**
@@ -255,6 +260,10 @@ var MapManager = Class.extend({
                 };
 
                 _self.addPointToMap(e, popupData);
+            }
+
+            if (_self.readOnly) {
+                _self.setReadOnly();
             }
         });
     },
@@ -298,6 +307,12 @@ var MapManager = Class.extend({
                     _self.pointListManager.updatePoint(tempMarker._leaflet_id, newName);
                     marker.closePopup();
                 });
+
+                if (_self.readOnly) {
+                    $('.point_title').attr("readonly", "true");
+                    $('textarea').attr("readonly", "true");
+                    $(".marker-delete-button").remove();
+                }
             })
             .addTo(map);
 
@@ -372,6 +387,20 @@ var MapManager = Class.extend({
 
         container.append(buttons);
         return container[0];
+    },
+    /**
+     * Makes the map read-only (no ability to edit)
+     *
+     * @author Craig Knott
+     */
+    setReadOnly:        function () {
+        $('.marker-delete-button-lhd').remove();
+        $('.right-side').css("float", "right").css("padding-right", "40px").css("width", "26px");
+        $('.middle-side').css("padding-left", "15px");
+        $('.point_title').attr("readonly", "true");
+        $('.popup-trigger').remove();
+        $('.left-side').remove();
+        $('.pointsTitle').text("Route Points");
     }
 });
 

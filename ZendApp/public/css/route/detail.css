@@ -159,3 +159,7 @@ tr td:first-child {
 .shareThisRoute {
     padding-bottom: 5px;
 }
+
+.dropdown-toggle {
+    margin-bottom: 5px;
+}

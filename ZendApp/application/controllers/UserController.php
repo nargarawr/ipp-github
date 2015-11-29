@@ -87,6 +87,20 @@ class UserController extends BaseController {
                 $this->view->errorMessage = $message["msg"];
             }
         }
+
+        $displayedUser = $this->user;
+        $customUserId = $this->getRequest()->getParam('id', null);
+
+        if ($customUserId === "0" || $customUserId < 0) {
+            $this->_helper->redirector('settings', 'user', null, array());
+        }
+
+        // Allow admins to access other user's settings pages
+        if (!is_null($customUserId) && $this->user->isAdmin) {
+            $displayedUser = UserFactory::getUser($customUserId);
+        }
+
+        $this->view->displayedUser = $displayedUser;
     }
 
     /**
@@ -154,9 +168,10 @@ class UserController extends BaseController {
             $emailOnRouteFork = $this->getRequest()->getParam('email_route_fork', 0) === "on" ? 1 : 0;
             $emailOnRouteRate = $this->getRequest()->getParam('email_route_rate', 0) === "on" ? 1 : 0;
             $emailOnAnnouncement = $this->getRequest()->getParam('email_announcement', 0) === "on" ? 1 : 0;
+            $userId = $this->getRequest()->getParam("userId", $this->user->userId);
 
             UserFactory::updateUserPreferences(
-                $this->user->userId,
+                $userId,
                 $emailOnRouteComment,
                 $emailOnRouteFork,
                 $emailOnRouteRate,
@@ -168,7 +183,7 @@ class UserController extends BaseController {
                 'type' => 'success'
             ));
 
-            $this->_helper->redirector('settings', 'user', null, array());
+            $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
         }
     }
 
@@ -189,11 +204,12 @@ class UserController extends BaseController {
             $dob = $this->getRequest()->getParam('age');
             $location = $this->getRequest()->getParam('location');
             $bio = $this->getRequest()->getParam('bio');
+            $userId = $this->getRequest()->getParam("userId", $this->user->userId);
 
             // Check the fields entered are not too long
             $invalid = $this->getInvalidDetailFields($firstName, $lastName, $email, $location, $bio);
             if (count($invalid) == 0) {
-                $emailAllowed = UserFactory::checkEmailAllowed($this->user->userId, $email);
+                $emailAllowed = UserFactory::checkEmailAllowed($userId, $email);
                 if ($emailAllowed) {
 
                     if (!is_null($dob)) {
@@ -202,7 +218,7 @@ class UserController extends BaseController {
                     }
 
                     UserFactory::updateUserDetails(
-                        $this->user->userId,
+                        $userId,
                         $firstName,
                         $lastName,
                         $email,
@@ -216,14 +232,14 @@ class UserController extends BaseController {
                         'type' => 'success'
                     ));
 
-                    $this->_helper->redirector('settings', 'user', null, array());
+                    $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
                 } else {
                     $this->messageManager->addMessage(array(
                         'msg'  => 'The email you entered is already registered to another account',
                         'type' => 'error'
                     ));
 
-                    $this->_helper->redirector('settings', 'user', null, array());
+                    $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
                 }
             } else {
                 $this->messageManager->addMessage(array(
@@ -231,7 +247,7 @@ class UserController extends BaseController {
                     'type' => 'error'
                 ));
 
-                $this->_helper->redirector('settings', 'user', null, array());
+                $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
             }
         }
     }
@@ -249,6 +265,7 @@ class UserController extends BaseController {
             $password = $this->getRequest()->getParam('currentPass');
             $newPass1 = $this->getRequest()->getParam('newPass1');
             $newPass2 = $this->getRequest()->getParam('newPass2');
+            $userId = $this->getRequest()->getParam("userId", $this->user->userId);
 
             // Check new password is of sufficient length
             if (strlen($newPass1) < 6 || strlen($newPass2) < 6) {
@@ -265,27 +282,27 @@ class UserController extends BaseController {
                     'msg'  => 'The entered new passwords did not match',
                     'type' => 'error'
                 ));
-                $this->_helper->redirector('settings', 'user', null, array());
+                $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
             }
 
             // Check user entered their current password correctly
-            $validPassword = UserFactory::checkPassword($this->user->userId, $password);
+            $validPassword = UserFactory::checkPassword($userId, $password);
             if ($validPassword === false) {
                 $this->messageManager->addMessage(array(
                     'msg'  => 'You did not enter your current password correctly',
                     'type' => 'error'
                 ));
-                $this->_helper->redirector('settings', 'user', null, array());
+                $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
             }
 
             // Update user password
-            UserFactory::updatePassword($this->user->userId, $newPass1);
+            UserFactory::updatePassword($userId, $newPass1);
 
             $this->messageManager->addMessage(array(
                 'msg'  => 'Successfully updated your password',
                 'type' => 'success'
             ));
-            $this->_helper->redirector('settings', 'user', null, array());
+            $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
         }
     }
 

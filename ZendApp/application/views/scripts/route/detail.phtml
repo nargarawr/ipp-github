@@ -51,21 +51,28 @@
 
         <div class="row">
             <div class="col-md-6">
-                <div class="thumbnail">
-                    <img src="<?= $this->gmapUrl ?>">
+                <div class="thumbnail" id="map">
                 </div>
 
-                <? if (count($this->points) > 25) { ?>
-                    <div class="omitted">
-                        Some points have been omitted from the image above
-                    </div>
-                <? } ?>
-
-                <a class="btnLink" target="_blank" href="/route/openingooglemaps/id/<?= $this->route->routeId ?>">
-                    <button class="btn btn-success btn-nopad">
-                        <i class="fa fa-street-view"></i> Open in Google Maps
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success btn-nopad dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-folder-open-o"></i> Open... <span class="caret"></span>
                     </button>
-                </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="btnLink" target="_blank" href="/route/openingooglemaps/id/<?= $this->route->routeId ?>">
+                                <i class="fa fa-street-view"></i> In Google Maps
+                            </a>
+                        </li>
+                        <li>
+                            <a class="btnLink" target="_blank" href="/route/create/id/<?= $this->route->routeId ?>/readOnly/1">
+                                <i class="fa fa-expand"></i> In Full View
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
                 <br>
                 <? if (!(is_null($this->user))) { ?>
                     <a class="btnLink" href="/route/fork/id/<?= $this->route->routeId ?>">

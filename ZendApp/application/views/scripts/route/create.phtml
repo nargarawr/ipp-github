@@ -2,12 +2,13 @@
 <input type="hidden" value="<?= $this->user->location ?>" id="userLocation">
 <input type="hidden" value="<?= ($this->routeExists) ? $this->latlng->lat : '' ?>" id="center_map_lat">
 <input type="hidden" value="<?= ($this->routeExists) ? $this->latlng->lng : '' ?>" id="center_map_lng">
+<input type="hidden" value="<?= $this->readOnly ?>" id="mapReadOnly">
 
 <div id="map"></div>
 <div id="left-hand-display">
     <i class="fa fa-compress" id="hide_lhd"></i>
     <div class="title">
-        <h3>Your Points</h3>
+        <h3 class="pointsTitle">Your Points</h3>
         <? if ($this->routeExists) { ?>
             <div class="subtitle"><?= $this->route->name ?></div>
         <? } else { ?>
@@ -34,7 +35,7 @@
 <div id="left-hand-display-mini" class="hidden">
     <i class="fa fa-expand" id="show_lhd"></i>
     <div class="title">
-        <h3>Your Points</h3>
+        <h3 class="pointsTitle">Your Points</h3>
         <? if ($this->routeExists) { ?>
             <div class="subtitle"><?= $this->route->name ?></div>
         <? } else { ?>

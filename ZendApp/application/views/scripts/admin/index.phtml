@@ -71,8 +71,21 @@
         <?= $this->announcement === false ? 'Nothing' : $this->announcement ?>
         <a class="btnLink" href="/admin/clearannouncements">
             <button class="btn btn-danger btn-nopad">
-                <i class="fa fa-bell-slash"></i> Clear Announcement
+                <i class="fa fa-bell-slash"></i> Clear Announcements
             </button>
         </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="border-container">
+      <form enctype="application/x-www-form-urlencoded" action="/admin/finduser" method="post">
+          <label> User Id, Username, or Email Address </label>
+          <input type="text" class="form-control" name="searchTerm">
+
+          <button type="submit" class="btn btn-success btn-nopad" id="findUser">
+              <i class="fa fa-search"></i> Search
+          </button>
+      </form>
     </div>
 </div>

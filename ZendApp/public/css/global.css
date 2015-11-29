@@ -109,7 +109,7 @@ body, .bg {
 
     #navbar-collapse {
         position: relative;
-        z-index: 1002;
+        z-index: 1003;
         background-color: #252628;
         border: none;
         padding-left: 0;

@@ -56,7 +56,6 @@ class AdminController extends BaseController {
      * @author Craig Knott
      */
     public function reportsAction(){
-
     }
 
     /**
@@ -77,7 +76,6 @@ class AdminController extends BaseController {
      * @author Craig Knott
      */
     public function createuserAction(){
-
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -164,11 +162,84 @@ class AdminController extends BaseController {
         $this->_helper->redirector('index', 'admin', null, array());
     }
 
+    /**
+     * Set all active announcements to inactive
+     *
+     * @author Craig Knott
+     */
     public function clearannouncementsAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
         AdminFactory::clearAnnouncements($this->user->userId);
+
+        $this->_helper->redirector('index', 'admin', null, array());
+    }
+
+    /**
+     * Used to search for users and open their settings page
+     *
+     * @author Craig Knott
+     */
+    public function finduserAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $searchTerm = $this->getRequest()->getParam('searchTerm', null);
+        $userId = AdminFactory::findUser($searchTerm);
+        if ($userId === false) {
+            die(var_dump('no user found'));
+        } else {
+            $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
+        }
+    }
+
+    /**
+     * Used to shadow ban, or unshadow ban a user
+     *
+     * @author Craig Knott
+     */
+    public function shadowbanAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $userId = $this->getRequest()->getParam('id', null);
+        $status = $this->getRequest()->getParam('status', null);
+
+        UserFactory::setUserShadowBanStatus($userId, $status);
+
+        $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
+    }
+
+    /**
+     * Used to ban or unban a user
+     *
+     * @author Craig Knott
+     */
+    public function banAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $userId = $this->getRequest()->getParam('id', null);
+        $status = $this->getRequest()->getParam('status', null);
+
+        UserFactory::setUserBanStatus($userId, $status);
+
+        $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
+    }
+
+    /**
+     * Used to delete a user
+     *
+     * @author Craig Knott
+     */
+    public function deleteAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $userId = $this->getRequest()->getParam('id', null);
+
+        UserFactory::deleteUser($userId);
 
         $this->_helper->redirector('index', 'admin', null, array());
     }

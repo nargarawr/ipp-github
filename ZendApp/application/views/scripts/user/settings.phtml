@@ -1,4 +1,4 @@
-<input type="hidden" id="dateField" value="<?= $this->user->age ?>">
+<input type="hidden" id="dateField" value="<?= $this->displayedUser->age ?>">
 
 <div class="row">
     <div class="col-sm-1 col-md-2"></div>
@@ -19,6 +19,60 @@
     <div class="col-md-2"></div>
 </div>
 
+<? if ($this->user->userId != $this->displayedUser->userId && $this->user->isAdmin) { ?>
+    <div class="row margin_t_15">
+        <div class="col-sm-1 col-md-2"></div>
+        <div class="col-sm-10 col-md-8">
+            <div class="border-container">
+                <div class="title adminTitle">
+                    Admin Options
+                </div>
+                <div class="row">
+                      <div class="col-md-4 col-md-push-8 col-sm-push-0">
+                          <div class="alert alert-warning" role="alert">
+                              <i class="fa fa-warning"></i> <b>Admin Options</b>
+                              <p>
+                                  You are currently editing another user's account details. Be careful while you
+                                  are doing this, and only click submit if you are sure that what you have done
+                                  is right.
+                              </p>
+                          </div>
+                      </div>
+
+                      <div class="col-md-8 col-md-pull-4 col-sm-pull-0">
+                          <a href="/admin/shadowban/id/<?= $this->displayedUser->userId ?>/status/<?= !($this->displayedUser->isShadowBanned) ?>">
+                              <button class="btn btn-<?= ($this->displayedUser->isShadowBanned) ? 'success' : 'danger' ?>">
+                                  <i class="fa fa-eye-slash"></i> <?= ($this->displayedUser->isShadowBanned) ? 'Uns' : 'S' ?>hadow Ban User
+                              </button>
+                          </a>
+                          <br>
+                          A shadow banned user will still be able to log in and post, but their comments will not be displayed to other users.
+                          <br><br>
+
+                          <a href="/admin/ban/id/<?= $this->displayedUser->userId ?>/status/<?= !($this->displayedUser->isBanned) ?>">
+                              <button class="btn btn-<?= ($this->displayedUser->isBanned) ? 'success' : 'danger' ?>">
+                                  <i class="fa fa-ban"></i> <?= ($this->displayedUser->isBanned) ? 'Unb' : 'B' ?>an User
+                              </button>
+                          </a>
+                          <br>
+                          A banned user will be unable to log into Niceway.to for the duration of their ban.
+                          <br><br>
+
+                          <a href="/admin/delete/id/<?= $this->displayedUser->userId ?>">
+                              <button class="btn btn-danger">
+                                  <i class="fa fa-trash"></i> Delete User
+                              </button>
+                          </a>
+                          <br>
+                          A deleted user will never be able to log into Niceway.to again.
+
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+<? } ?>
 <div class="row margin_t_15">
     <div class="col-sm-1 col-md-2"></div>
     <div class="col-sm-10 col-md-8">
@@ -43,27 +97,29 @@
                             <b>Receive emails when...</b>
                         </div>
 
+                        <input type="hidden" value="<?= $this->displayedUser->userId ?>" name="userId">
+
                         <label class="check">
                             <input type="checkbox" name="email_route_comment"<?=
-                            ($this->user->preferences->emailOnRouteComment) ? 'checked' : '' ?>>
+                            ($this->displayedUser->preferences->emailOnRouteComment) ? 'checked' : '' ?>>
                             <span>Someone comments on your routes</span>
                         </label>
 
                         <label class="check">
                             <input type="checkbox" name="email_route_fork"<?=
-                            ($this->user->preferences->emailOnRouteFork) ? 'checked' : '' ?>>
+                            ($this->displayedUser->preferences->emailOnRouteFork) ? 'checked' : '' ?>>
                             <span>Someone clones your routes</span>
                         </label>
 
                         <label class="check">
                             <input type="checkbox" name="email_route_rate"<?=
-                            ($this->user->preferences->emailOnRouteRating) ? 'checked' : '' ?>>
+                            ($this->displayedUser->preferences->emailOnRouteRating) ? 'checked' : '' ?>>
                             <span>Someone rates your routes</span>
                         </label>
 
                         <label class="check">
                             <input type="checkbox" name="email_announcement"<?=
-                            ($this->user->preferences->emailOnAnnouncement) ? 'checked' : '' ?>>
+                            ($this->displayedUser->preferences->emailOnAnnouncement) ? 'checked' : '' ?>>
                             <span>Announcements are posted</span>
                         </label>
                         <br>
@@ -85,6 +141,7 @@
             </div>
             <div class="row">
                 <form enctype="application/x-www-form-urlencoded" method="post" action="/user/updateaccountdetails">
+                  <input type="hidden" value="<?= $this->displayedUser->userId ?>" name="userId">
                     <div class="col-md-4 col-md-push-8 col-sm-push-0">
                         <div class="alert alert-info" role="alert">
                             <i class="fa fa-info-circle"></i> <b>Your details</b>
@@ -98,29 +155,29 @@
                     <div class="col-md-8 col-md-pull-4 col-sm-pull-0">
                         <label class="noPad">Name</label>
                         <input type="text" class="form-control" name="fname"
-                               placeholder="First Name" value="<?= $this->user->fname ?>">
+                               placeholder="First Name" value="<?= $this->displayedUser->fname ?>">
                         <input type="text" class="form-control" name="lname"
-                               placeholder="Last Name" value="<?= $this->user->lname ?>">
+                               placeholder="Last Name" value="<?= $this->displayedUser->lname ?>">
 
                         <label>
                             Email <?=
-                            ($this->user->isConfirmed) ? "(<i class=\"fa fa-check\"></i> Confirmed)" : "(<i class=\"fa fa-exclamation-circle\"></i> Not Confirmed)"
+                            ($this->displayedUser->isConfirmed) ? "(<i class=\"fa fa-check\"></i> Confirmed)" : "(<i class=\"fa fa-exclamation-circle\"></i> Not Confirmed)"
                             ?>
                         </label>
                         <input type="text" name="email" class="form-control"
-                               placeholder="Your email address" value="<?= $this->user->email ?>">
+                               placeholder="Your email address" value="<?= $this->displayedUser->email ?>">
 
                         <label> Location </label>
                         <input type="text" name="location" class="form-control"
-                               placeholder="Your location" value="<?= $this->user->location ?>">
+                               placeholder="Your location" value="<?= $this->displayedUser->location ?>">
 
                         <label> Date of Birth </label>
                         <input type="text" id="ageDatePicker" name="age" class="form-control"
-                               placeholder="Your age" value="<?= $this->user->age ?>">
+                               placeholder="Your date of birth" value="<?= $this->displayedUser->age ?>">
 
                         <label> Bio </label>
                             <textarea class="form-control" placeholder="A little about yourself" name="bio"><?=
-                                $this->user->bio ?></textarea>
+                                $this->displayedUser->bio ?></textarea>
 
                         <input id="updateAccount" type="submit" class="btn btn-success" value="Update Details"/>
                     </div>
@@ -140,6 +197,7 @@
             </div>
             <div class="row">
                 <form enctype="application/x-www-form-urlencoded" method="post" action="/user/updatepassword">
+                  <input type="hidden" value="<?= $this->displayedUser->userId ?>" name="userId">
                     <div class="col-md-4 col-md-push-8 col-sm-push-0">
                         <div class="alert alert-info" role="alert">
                             <i class="fa fa-info-circle"></i> <b>Your password</b>

@@ -224,4 +224,60 @@ class UserFactory extends ModelFactory {
         return parent::fetchOne($sql, $params);
     }
 
+    /**
+     * Either shadow bans or unshadow bans the user with the given user id
+     *
+     * @param int $userId The id of the user to shadow ban/unshadow ban
+     * @param string $status Whether to set this user as shadow banned (1) or not (0)
+     *
+     * @author Craig Knott
+     */
+    public static function setUserShadowBanStatus($userId, $status) {
+      $sql = "UPDATE tb_user
+             SET is_shadow_banned = :status
+             WHERE pk_user_id = :userId";
+      $params = array(
+         ':userId' => $userId,
+         ':status' => $status
+      );
+      parent::execute($sql, $params);
+    }
+
+    /**
+     * Sets the ban status of the given user, either banned or not banned
+     *
+     * @param int $userId The id of the user to ban or unban
+     * @param string $status Whether to set this user as banned (1) or not (0)
+     *
+     * @author Craig Knott
+     */
+    public static function setUserBanStatus($userId, $status) {
+      $sql = "UPDATE tb_user
+             SET is_banned = :status
+             WHERE pk_user_id = :userId";
+      $params = array(
+         ':userId' => $userId,
+         ':status' => $status
+      );
+      parent::execute($sql, $params);
+    }
+
+    /**
+     * Deletes the user with the given id
+     *
+     * @param int $userId The id of the user to delete
+     * @param string $status Whether to set this user as banned (1) or not (0)
+     *
+     * @author Craig Knott
+     */
+    public static function deleteUser($userId) {
+       $sql = "UPDATE tb_user
+               SET is_deleted = 1
+               WHERE pk_user_id = :userId";
+       $params = array(
+           ':userId' => $userId
+       );
+       parent::execute($sql, $params);
+    }
+
 }

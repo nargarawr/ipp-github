@@ -139,4 +139,35 @@ class AdminFactory extends ModelFactory {
         AdminFactory::updateAdminLog($userId, 'Announcements Cleared');
     }
 
+    /**
+     * Finds a user based on the given search term
+     *
+     * @param string $searchTerm The term to search with, can either represent the user id, the username, or user email address
+     *
+     * @author Craig Knott
+     */
+     public static function findUser($searchTerm) {
+        if (is_numeric($searchTerm)) {
+            $sql = "SELECT pk_user_id as id
+                    FROM tb_user u
+                    WHERE pk_user_id = :searchTerm
+                    OR username = :searchTerm";
+        } else {
+            $sql = "SELECT pk_user_id as id
+                    FROM tb_user u
+                    WHERE username = :searchTerm
+                    OR email = :searchTerm";
+        }
+
+        $params = array(
+            ':searchTerm' => $searchTerm
+        );
+
+        $result = parent::fetchOne($sql, $params);
+        if ($result !== false) {
+            return $result->id;
+        }
+
+        return $result;
+     }
 }
