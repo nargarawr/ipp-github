@@ -96,7 +96,6 @@ var MapManager = Class.extend({
         }).addTo(map);
 
         map.on('moveend', function () {
-            console.log('from snapping?')
             if (map.getZoom() > 12) {
                 var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
                 var route = 'http://www.openstreetmap.org/api/0.6/map';
@@ -290,7 +289,7 @@ var PopupManager = Class.extend({
  */
 var PointsListManager = Class.extend({
     /**
-     * Initialises the class, setting the values of private variables and setting up the sortable fucntion
+     * Initialises the class, setting the values of private variables
      *
      * @author Craig Knott
      *
@@ -309,14 +308,6 @@ var PointsListManager = Class.extend({
         this.mapManager = mm;
         this.readOnly = $('#mapReadOnly').val();
         this.pointsNotAdded = true;
-
-        $('.pointsList').sortable({
-            handle: ".left-side",
-            update: function () {
-                _self.mapManager.drawRoute();
-            }
-        });
-
     },
     /**
      * Adds a point to the left hand display
@@ -337,7 +328,7 @@ var PointsListManager = Class.extend({
         var _self = this;
 
         var left = $('<div>').addClass('left-side');
-        left.append($('<i>').addClass('fa fa-arrows'));
+        left.append($('<i>').addClass('fa fa-map-marker'));
 
         var mid = $('<div>').addClass('middle-side');
         mid.append($('<div>').addClass('title').text(
