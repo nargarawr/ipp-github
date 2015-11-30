@@ -72,7 +72,6 @@ var MapManager = Class.extend({
             zoomControl: false
         }).setView([lat, long], zoom);
         new L.Control.Zoom({position: 'topright'}).addTo(map);
-        this.readOnly = $('#mapReadOnly').val();
 
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
         var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
@@ -97,6 +96,7 @@ var MapManager = Class.extend({
         }).addTo(map);
 
         map.on('moveend', function () {
+            console.log('from snapping?')
             if (map.getZoom() > 12) {
                 var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
                 var route = 'http://www.openstreetmap.org/api/0.6/map';
@@ -152,7 +152,6 @@ var MapManager = Class.extend({
         });
         map.addControl(routing);
         routing.draw();
-
     }
 });
 
@@ -308,6 +307,8 @@ var PointsListManager = Class.extend({
         this.pointsYet = this.container.find('.pointsYet');
         this.numPoints = 1;
         this.mapManager = mm;
+        this.readOnly = $('#mapReadOnly').val();
+        this.pointsNotAdded = true;
 
         $('.pointsList').sortable({
             handle: ".left-side",
@@ -426,11 +427,13 @@ var PointsListManager = Class.extend({
         container.append(
             $('<input>').addClass('form-control point_title')
                 .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
+                .attr('readonly', plm.readOnly)
         );
         container.append(
             $('<textarea>').addClass('form-control')
                 .attr('placeholder', 'Enter a description')
                 .text((data === undefined) ? ('') : data.description)
+                .attr('readonly', plm.readOnly)
         );
         container.append(
             $('<div>').addClass('hidden latHidden').text(e.lat.toString())
@@ -440,10 +443,14 @@ var PointsListManager = Class.extend({
         );
 
         var buttons = $('<div>').addClass('buttons');
-        buttons.append($('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>"));
+        if (!plm.readOnly) {
+            buttons.append($('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>"));
+        }
         buttons.append($('<button>').addClass('marker-update-button btn btn-success').html("<i class='fa fa-check'></i>"));
 
         container.append(buttons);
+
+
         return container[0];
     },
     /**
@@ -487,7 +494,7 @@ var PointsListManager = Class.extend({
                 };
 
                 _self.router.addWaypoint(
-                    new L.Marker(latlng, {title: 'test'}),
+                    new L.Marker(latlng, {title: 'Waypoint. Drag to move; Click to see details.'}),
                     _self.router.getLast(),
                     null,
                     function (e, f) {
@@ -497,7 +504,26 @@ var PointsListManager = Class.extend({
             }
 
             _self.centreMap(middlePoint.latitude, middlePoint.longitude)
+
+            if (plm.readOnly) {
+                _self.setReadOnly();
+            }
+            _self.pointsNotAdded = false;
         });
+    },
+    /**
+     * Makes the map read-only (no ability to edit)
+     *
+     * @author Craig Knott
+     */
+    setReadOnly:        function () {
+        $('.marker-delete-button-lhd').remove();
+        $('.right-side').css("float", "right").css("padding-right", "40px").css("width", "26px");
+        $('.middle-side').css("padding-left", "15px");
+        $('.point_title').attr("readonly", "true");
+        $('.popup-trigger').remove();
+        $('.left-side').remove();
+        $('.pointsTitle').text("Route Points");
     },
     /**
      * Centres the map at a certain point
