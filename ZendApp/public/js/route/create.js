@@ -76,16 +76,31 @@ var MapManager = Class.extend({
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
         var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
         var mapBoxCopy = 'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>';
-        var mapId = 'nargarawr.cig6xoyv103gnvbkvyv7s6a0k';
         var token = 'pk.eyJ1IjoibmFyZ2FyYXdyIiwiYSI6ImNpZzZ4b3l6MzAzZzF2cWt2djg4d3llZDMifQ.k5f5mW8zW3VBH40GUYS-8A';
 
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        var sat = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: mapDataCopy + ', ' + creativeCommons + ', ' + mapBoxCopy,
             maxZoom:     18,
             minZoom:     7,
-            id:          mapId,
+            id:          'nargarawr.oa864eol',
             accessToken: token
         }).addTo(map);
+
+        var street = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+            attribution: mapDataCopy + ', ' + creativeCommons + ', ' + mapBoxCopy,
+            maxZoom:     18,
+            minZoom:     7,
+            id:          'nargarawr.cig6xoyv103gnvbkvyv7s6a0k',
+            accessToken: token
+        }).addTo(map);
+
+        var baseMaps = {
+            "Satellite": sat,
+            "Streets":   street
+
+        };
+
+        L.control.layers(baseMaps).addTo(map);
 
         // Snapping Layer
         var snapping = new L.geoJson(null, {
@@ -507,7 +522,7 @@ var PointsListManager = Class.extend({
      *
      * @author Craig Knott
      */
-    setReadOnly:        function () {
+    setReadOnly:       function () {
         $('.marker-delete-button-lhd').remove();
         $('.right-side').css("float", "right").css("padding-right", "40px").css("width", "26px");
         $('.middle-side').css("padding-left", "15px");

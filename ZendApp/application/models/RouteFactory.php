@@ -146,11 +146,10 @@ class RouteFactory extends ModelFactory {
      * @author Craig Knott
      *
      * @param int  $routeId          The id of the route to get
-     * @param bool $getPrivateRoutes Whether or not to return the route if it is private
      *
      * @return object The route object
      */
-    public static function getRoute($routeId, $getPrivateRoutes) {
+    public static function getRoute($routeId) {
         $sql = "SELECT
                     name,
                     description,
@@ -158,7 +157,7 @@ class RouteFactory extends ModelFactory {
                     r.created_by AS owner
                 FROM tb_route r
                 WHERE pk_route_id = :routeId
-                AND is_deleted = 0" . (($getPrivateRoutes) ? '' : ' AND is_private = 0');
+                AND is_deleted = 0";
         $params = array(
             ':routeId' => $routeId
         );

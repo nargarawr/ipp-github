@@ -164,6 +164,13 @@
     margin-top: 10px;
 }
 
+.leaflet-control-layers-toggle {
+    background: url(/images/layers.png) no-repeat;
+    margin: 2px;
+    width: 26px;
+    height: 26px;
+}
+
 textarea {
     resize: none;
 }
