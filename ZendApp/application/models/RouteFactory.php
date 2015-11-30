@@ -204,8 +204,7 @@ class RouteFactory extends ModelFactory {
                 JOIN tb_user u
                 ON r.created_by = u.pk_user_id
                 WHERE pk_route_id = :routeId
-                AND r.is_deleted = 0
-                AND r.is_private = 0";
+                AND r.is_deleted = 0";
         $params = array(
             ':routeId' => $routeId
         );

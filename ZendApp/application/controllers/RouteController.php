@@ -67,9 +67,12 @@ class RouteController extends BaseController {
      */
     public function detailAction() {
         $routeId = $this->getRequest()->getParam('id', 0);
-        $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
 
-        if ($routeId == 0 || $this->view->route === false) {
+        $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
+        $ownerOrAdmin = is_null($this->user) ? false : $this->user->isAdmin || ($this->user->userId ==
+                $this->view->route->owner_id);
+
+        if ($routeId == 0 || $this->view->route === false || ($this->view->route->is_private == 1 && !$ownerOrAdmin)) {
             $this->_redirect("/route/index/");
         }
 
@@ -170,7 +173,6 @@ class RouteController extends BaseController {
 
         $canAccessPrivate = !(is_null($this->user))
             && ($this->user->userId == $this->view->route->owner  || $this->user->isAdmin);
-    var_dump('Can access private : ' . $canAccessPrivate);
 
         if (!is_null($this->view->routeId)) {
             $this->view->route = RouteFactory::getRoute($this->view->routeId, $canAccessPrivate);
@@ -291,7 +293,7 @@ class RouteController extends BaseController {
         $this->_helper->viewRenderer->setNoRender(true);
 
         $routeId = $this->getRequest()->getParam('id', 0);
-        $route = RouteFactory::getRoute($routeId, false);
+        $route = RouteFactory::getRoute($routeId, true);
         $route->points = RouteFactory::getRoutePoints($routeId, true);
 
         RouteFactory::updateRouteLog(
