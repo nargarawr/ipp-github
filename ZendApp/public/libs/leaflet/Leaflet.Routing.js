@@ -21,7 +21,6 @@ point added, creates plm which then handles all the custom content, in /user/cre
  *
  * @usage new L.Routing(options);
  *
- * @todo use L.Class.extend instead?
  */
 
 var plm;
@@ -78,7 +77,7 @@ L.Routing = L.Control.extend({
      *
      * @param <Object> options - non-default options
      *
-     * @todo render display of segments and waypoints
+     *  render display of segments and waypoints
      */
     ,initialize: function (options) {
         this._editing = false;
@@ -351,7 +350,7 @@ L.Routing = L.Control.extend({
      *
      * @return void
      *
-     * @todo add propper error checking for callback
+     *  add propper error checking for callback
      */
     ,routeWaypoint: function(marker, cb) {
         var i = 0;
@@ -381,7 +380,7 @@ L.Routing = L.Control.extend({
      *
      * @return void
      *
-     * @todo add propper error checking for callback
+     *  add propper error checking for callback
      */
     ,rerouteAllSegments: function(cb) {
         var numSegments = this.getWaypoints().length - 1;
@@ -422,7 +421,7 @@ L.Routing = L.Control.extend({
      *
      * @return void
      *
-     * @todo logic if router fails
+     *  logic if router fails
      */
     ,_routeSegment: function(m1, m2, cb) {
         var $this = this;
@@ -720,7 +719,7 @@ L.Routing = L.Control.extend({
      *
      * @return void
      *
-     * @todo check enable
+     *  check enable
      */
     ,draw: function (enable) {
         if (typeof enable === 'undefined') {
@@ -741,7 +740,7 @@ L.Routing = L.Control.extend({
      *
      * @return void
      *
-     * @todo check enable
+     *  check enable
      */
     ,routing: function (enable) {
         throw new Error('Not implemented');
@@ -754,7 +753,7 @@ L.Routing = L.Control.extend({
      *
      * @return void
      *
-     * @todo check enable
+     *  check enable
      */
     ,snapping: function (enable) {
         throw new Error('Not implemented');
@@ -807,7 +806,7 @@ L.Util.extend(L.LineUtil, {
             return minPoint;
         }
 
-        map = opts.layers[0]._map; // @todo check for undef
+        map = opts.layers[0]._map; //  check for undef
 
         for (i = 0; i < opts.layers.length; i++) {
             keys = Object.keys(opts.layers[i]._layers);

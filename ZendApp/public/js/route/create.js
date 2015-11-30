@@ -39,6 +39,7 @@ $(document).ready(function () {
             mm = new MapManager(latlng.lat, latlng.lng, 13, routeId);
         }
 
+        var uploadManager = new UploadManager();
         var popupManager = new PopupManager();
     });
 
@@ -111,8 +112,6 @@ var MapManager = Class.extend({
                                 snapping.addData(geojson.features[i]);
                             }
                         }
-                    } else {
-                        console.log('Could not load snapping data');
                     }
                 });
             } else {
@@ -481,11 +480,19 @@ var PointsListManager = Class.extend({
                     middlePoint = data[i];
                 }
 
-                var d = {
+                var latlng = {
                     _feature: null,
                     lat:      data[i].latitude,
                     lng:      data[i].longitude
                 };
+
+                _self.router.addWaypoint(
+                    new L.Marker(latlng, {title: 'test'}),
+                    _self.router.getLast(),
+                    null,
+                    function (e, f) {
+                    }
+                );
 
             }
 
@@ -510,6 +517,10 @@ var PointsListManager = Class.extend({
      * TODO
      */
     onWayPointDragEnd: function (marker) {
+        if (marker.marker == undefined) {
+            return;
+        }
+
         var markerId = marker.marker._leaflet_id;
         var newLat = marker.marker._latlng.lat;
         var newLng = marker.marker._latlng.lng;
@@ -520,7 +531,6 @@ var PointsListManager = Class.extend({
         );
 
         var popup = map._layers[markerId]._popup;
-        console.log(popup._content.innerHTML);
         popup._content.innerHTML = popup._content.innerHTML.replace(
             /<div class=\"coords right\">-?\d*\.\d*, -?\d*\.\d*<\/div>/,
             '<div class="coords right">' + newLat.toString().slice(0, 7) + ', ' + newLng.toString().slice(0, 7) + '</div>'
@@ -530,5 +540,95 @@ var PointsListManager = Class.extend({
             /<div class=\"hidden latHidden\">-?\d*\.\d*<\/div><div class=\"hidden lngHidden\">-?\d*\.\d*<\/div>/,
             '<div class="hidden latHidden">' + newLat + '</div><div class="hidden lngHidden">' + newLng + '</div>'
         );
+    }
+});
+
+/**
+ * Class UploadManager
+ *
+ * Class in charge of uploading a file, and importing the contents of the file
+ *
+ * @author Craig Knott
+ */
+var UploadManager = Class.extend({
+    /**
+     * Initialises the class, assigns a value to the private variables and calls the function to set up listeners
+     */
+    init:                function () {
+        this.uploadForm = $("#uploadForm");
+        this.fileUploadInput = $("#fileUploader");
+        this.mapManager = mm;
+        this.setupListeners();
+    },
+    /**
+     * Assigns listeners to each of the interactive elements of the row
+     *
+     * @author Craig Knott
+     */
+    setupListeners:      function () {
+        var _self = this;
+        this.fileUploadInput.on('change', function () {
+            _self.uploadForm.submit();
+        });
+
+        this.uploadForm.ajaxForm({
+            success: function (data) {
+                _self.formUploadSuccesful(data);
+            }
+        });
+    },
+    /**
+     * Callback function called when the upload of a file is succesful. Reads the contents of the file and shows
+     * them on the page
+     *
+     * @author Craig Knott
+     *
+     * @param data
+     */
+    formUploadSuccesful: function (data) {
+        var route;
+
+        // Try to parse the uploaded file as JSON. If we can't throw an error
+        // TIL Javascript has try/catch
+        try {
+            route = JSON.parse(data);
+        } catch (e) {
+            $.alert({
+                title:           'Invalid file',
+                icon:            'fa fa-warning',
+                content:         'The file you uploaded was not a valid Niceway.to route file',
+                theme:           'black',
+                keyboardEnabled: true
+            });
+            return;
+        }
+
+        $('#routeName').val(route.name);
+        $('#routeDesc').val(route.description);
+        $('#routePrivacy').val(route.is_private);
+
+        var middlePoint;
+        var points = route.points;
+        for (var i = 0; i < points.length; i++) {
+            if (i == Math.floor(points.length / 2)) {
+                middlePoint = points[i];
+            }
+
+            var latlng = {
+                _feature: null,
+                lat:      points[i].lat,
+                lng:      points[i].lng
+            };
+
+            plm.router.addWaypoint(
+                new L.Marker(latlng, {title: 'test'}),
+                plm.router.getLast(),
+                null,
+                function (e, f) {
+                }
+            );
+        }
+
+        plm.centreMap(middlePoint.lat, middlePoint.lng);
     }
 });
