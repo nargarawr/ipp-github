@@ -531,7 +531,11 @@ var PointsListManager = Class.extend({
         });
     },
     /**
-     * TODO
+     * Call back function for a way point drag ending, updates the popup and LHD for this marker
+     *
+     * @author Craig Knott
+     *
+     * @param marker The marker being dragged
      */
     onWayPointDragEnd: function (marker) {
         if (marker.marker == undefined) {

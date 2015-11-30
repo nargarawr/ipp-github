@@ -168,8 +168,12 @@ class RouteController extends BaseController {
 
         $this->view->routeId = $this->getRequest()->getParam('id', null);
 
+        $canAccessPrivate = !(is_null($this->user))
+            && ($this->user->userId == $this->view->route->owner  || $this->user->isAdmin);
+    var_dump('Can access private : ' . $canAccessPrivate);
+
         if (!is_null($this->view->routeId)) {
-            $this->view->route = RouteFactory::getRoute($this->view->routeId);
+            $this->view->route = RouteFactory::getRoute($this->view->routeId, $canAccessPrivate);
             $this->view->latlng = RouteFactory::getFirstRoutePoint($this->view->routeId);
             $this->view->routeExists = ($this->view->route !== false)
                 && ($isReadOnly || $this->user->userId == $this->view->route->owner || $this->user->isAdmin);
@@ -287,7 +291,7 @@ class RouteController extends BaseController {
         $this->_helper->viewRenderer->setNoRender(true);
 
         $routeId = $this->getRequest()->getParam('id', 0);
-        $route = RouteFactory::getRoute($routeId);
+        $route = RouteFactory::getRoute($routeId, false);
         $route->points = RouteFactory::getRoutePoints($routeId, true);
 
         RouteFactory::updateRouteLog(
