@@ -320,9 +320,26 @@ var PointsListManager = Class.extend({
         this.noPointsYet = this.container.find('.noPointsYet');
         this.pointsYet = this.container.find('.pointsYet');
         this.numPoints = 1;
-        this.mapManager = mm;
         this.readOnly = $('#mapReadOnly').val();
         this.pointsNotAdded = true;
+
+        this.setupListeners();
+    },
+    /**
+     * Assigns listeners to the LHD
+     *
+     * @author Craig Knott
+     */
+    setupListeners: function() {
+        $('#hide_lhd').click(function () {
+            $('#left-hand-display').addClass('hidden');
+            $('#left-hand-display-mini').removeClass('hidden');
+        });
+
+        $('#show_lhd').click(function () {
+            $('#left-hand-display').removeClass('hidden');
+            $('#left-hand-display-mini').addClass('hidden');
+        });
     },
     /**
      * Adds a point to the left hand display
