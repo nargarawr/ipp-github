@@ -1,4 +1,5 @@
 var map;
+var mm;
 
 /**
  * Document ready function. Loads the route if a route id if given, and constructs the map manager, upload manager
@@ -7,8 +8,6 @@ var map;
  * @author Craig Knott
  */
 $(document).ready(function () {
-    var mm;
-
     if (window.innerWidth < 768) {
         $('#left-hand-display').addClass('hidden');
         $('#left-hand-display-mini').removeClass('hidden');
@@ -40,106 +39,11 @@ $(document).ready(function () {
             mm = new MapManager(latlng.lat, latlng.lng, 13, routeId);
         }
 
-        var uploadManager = new UploadManager(mm);
-        var popupManager = new PopupManager(mm);
+        var popupManager = new PopupManager();
     });
 
     // 90% of the height of the screen (minus the header and top of the social stream)
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
-});
-
-/**
- * Class UploadManager
- *
- * Class in charge of uploading a file, and importing the contents of the file
- *
- * @author Craig Knott
- */
-var UploadManager = Class.extend({
-    /**
-     * Initialises the class, assigns a value to the private variables and calls the function to set up listeners
-     *
-     * @param mm The map manager object of this page
-     */
-    init:                function (mm) {
-        this.uploadForm = $("#uploadForm");
-        this.fileUploadInput = $("#fileUploader");
-        this.mapManager = mm;
-        this.setupListeners();
-    },
-    /**
-     * Assigns listeners to each of the interactive elements of the row
-     *
-     * @author Craig Knott
-     */
-    setupListeners:      function () {
-        var _self = this;
-        this.fileUploadInput.on('change', function () {
-            _self.uploadForm.submit();
-        });
-
-        this.uploadForm.ajaxForm({
-            success: function (data) {
-                _self.formUploadSuccesful(data);
-            }
-        });
-    },
-    /**
-     * Callback function called when the upload of a file is succesful. Reads the contents of the file and shows
-     * them on the page
-     *
-     * @author Craig Knott
-     *
-     * @param data
-     */
-    formUploadSuccesful: function (data) {
-        var route;
-
-        // Try to parse the uploaded file as JSON. If we can't throw an error
-        // TIL Javascript has try/catch
-        try {
-            route = JSON.parse(data);
-        } catch (e) {
-            $.alert({
-                title:           'Invalid file',
-                icon:            'fa fa-warning',
-                content:         'The file you uploaded was not a valid Niceway.to route file',
-                theme:           'black',
-                keyboardEnabled: true
-            });
-            return;
-        }
-
-        $('#routeName').val(route.name);
-        $('#routeDesc').val(route.description);
-        $('#routePrivacy').val(route.is_private);
-
-        var middlePoint;
-        var points = route.points;
-        for (var i = 0; i < points.length; i++) {
-            if (i == Math.floor(points.length / 2)) {
-                middlePoint = points[i];
-            }
-            var p = points[i];
-            // Construct fake 'e' object with latlng information
-            var e = {
-                latlng: {
-                    lat: p.lat,
-                    lng: p.lng
-                }
-            };
-
-            // Construct object with popup data
-            var popupData = {
-                name:        p.name,
-                description: p.description
-            };
-
-            this.mapManager.addPointToMap(e, popupData);
-        }
-
-        this.mapManager.centreMap(middlePoint.lat, middlePoint.lng);
-    }
 });
 
 /**
@@ -160,12 +64,13 @@ var MapManager = Class.extend({
      * @param zoom     The default zoom level of the map
      * @param routeId  The Id of this route, if any
      */
-    init:               function (lat, long, zoom, routeId) {
+    init: function (lat, long, zoom, routeId) {
         $('#map').css('height', window.innerHeight - 62);
 
-        map = L.map('map', {zoomControl: false}).setView([lat, long], zoom);
+        map = L.map('map', {
+            zoomControl: false
+        }).setView([lat, long], zoom);
         new L.Control.Zoom({position: 'topright'}).addTo(map);
-        this.pointListManager = new PointListManager(this);
         this.readOnly = $('#mapReadOnly').val();
 
         var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -177,387 +82,78 @@ var MapManager = Class.extend({
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
             attribution: mapDataCopy + ', ' + creativeCommons + ', ' + mapBoxCopy,
             maxZoom:     18,
-            minZoom:     8,
+            minZoom:     7,
             id:          mapId,
             accessToken: token
         }).addTo(map);
 
-        this.isPopupOpen = false;
-        this.numPoints = 0;
-
-        // If we are editing a route, we need to get all of that routes information
-        if (routeId != '') {
-            this.loadExistingPoints(routeId);
-        }
-
-        this.setupListeners();
-    },
-    /**
-     * Assigns listeners to each of the interactive elements of the row
-     *
-     * @author Craig Knott
-     */
-    setupListeners:     function () {
-        var _self = this;
-        map.on('click', function (e) {
-            if (_self.readOnly) {
-                return;
+        // Snapping Layer
+        var snapping = new L.geoJson(null, {
+            style: {
+                opacity:     0
+                , clickable: false
             }
+        }).addTo(map);
 
-            // Only add a new point if popup is NOT showing
-            if (_self.isPopupOpen) {
-                _self.isPopupOpen = false;
-            } else {
-                _self.addPointToMap(e);
-            }
-        });
-    },
-    /**
-     * Centres the map at a certain point
-     *
-     * @author Craig Knott
-     *
-     * @param lat Latitude to centre at
-     * @param lng Longitude to centre at
-     */
-    centreMap:          function (lat, lng) {
-        map.setView({
-            lat: lat,
-            lng: lng
-        });
-    },
-    /**
-     * Loads points for this route and displays them on the map
-     *
-     * @author Craig Knott
-     *
-     * @param routeId The id of the route to get the points for
-     */
-    loadExistingPoints: function (routeId) {
-        var _self = this;
-        $.ajax({
-            type: 'GET',
-            url:  '/route/getpoints',
-            data: {
-                id: routeId
-            }
-        }).success(function (response) {
-            var data = JSON.parse(response);
-            for (var i = 0; i < data.length; i++) {
-                var p = data[i];
-                // Construct fake 'e' object with latlng information
-                var e = {
-                    latlng: {
-                        lat: p.latitude,
-                        lng: p.longitude
-                    }
-                };
+        map.on('moveend', function () {
+            if (map.getZoom() > 12) {
+                var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
+                var route = 'http://www.openstreetmap.org/api/0.6/map';
+                var params = '&bbox=' + map.getBounds().toBBoxString() + '&1=2';
+                $.get(proxy + route + params).always(function (osm, status) {
+                    if (status === 'success' && typeof osm === 'object') {
+                        var geojson = osmtogeojson(osm);
 
-                // Construct object with popup data
-                var popupData = {
-                    name:        p.name,
-                    description: p.description
-                };
-
-                _self.addPointToMap(e, popupData);
-            }
-
-            if (_self.readOnly) {
-                _self.setReadOnly();
-            }
-        });
-    },
-    /**
-     * Adds a point to the map
-     *
-     * @author Craig Knott
-     *
-     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
-     * @param popupData An HTML string of the contents of the popup of this point
-     */
-    addPointToMap:      function (e, popupData) {
-        var _self = this;
-
-        _self.numPoints++;
-        var marker = L.marker([e.latlng.lat, e.latlng.lng])
-            .bindPopup(this.getPopupHTML(e, popupData))
-            .on('popupopen', function () {
-                _self.isPopupOpen = true;
-                var tempMarker = this;
-
-                $(".marker-delete-button").click(function () {
-                    $.confirm({
-                        title:           'Delete point?',
-                        icon:            'fa fa-warning',
-                        content:         'Are you sure you wish to delete this point? This action is irreversible.',
-                        theme:           'black',
-                        confirmButton:   'Delete',
-                        keyboardEnabled: true,
-                        confirm:         function () {
-                            _self.isPopupOpen = false;
-                            map.removeLayer(tempMarker);
-                            _self.pointListManager.removePoint(tempMarker._leaflet_id);
-                            _self.drawRoute();
+                        snapping.clearLayers();
+                        for (var i = 0; i < geojson.features.length; i++) {
+                            var feat = geojson.features[i];
+                            if (feat.geometry.type === 'LineString' && feat.properties.tags.highway) {
+                                snapping.addData(geojson.features[i]);
+                            }
                         }
-                    });
+                    } else {
+                        console.log('Could not load snapping data');
+                    }
                 });
-
-                $(".marker-update-button").click(function () {
-                    var newName = $(marker._popup._content).find('.point_title').val();
-                    _self.pointListManager.updatePoint(tempMarker._leaflet_id, newName);
-                    marker.closePopup();
-                });
-
-                if (_self.readOnly) {
-                    $('.point_title').attr("readonly", "true");
-                    $('textarea').attr("readonly", "true");
-                    $(".marker-delete-button").remove();
-                }
-            })
-            .addTo(map);
-
-        this.pointListManager.addPoint(marker, e);
-        this.drawRoute();
-    },
-    /**
-     * Draws a line between all the points on the map
-     *
-     * @author Craig Knott
-     */
-    drawRoute:          function () {
-        var points = this.pointListManager.pointsList.children();
-        if (points.length < 2) {
-            return;
-        }
-
-        console.log("this is where the routing would take place.. :(")
-
-        /*
-         if (this.routingControl !== undefined) {
-         this.routingControl.removeFrom(map);
-         }
-
-         var arrayOfPoints = [];
-         for (var i = 0; i < points.length; i++) {
-         var marker = map._layers[$(points[i]).attr('data-point-id')];
-         arrayOfPoints.push(L.latLng(marker._latlng.lat, marker._latlng.lng));
-         }
-
-         this.routingControl = L.Routing.control({
-         waypoints: arrayOfPoints
-         }).addTo(map);
-
-         $('.leaflet-routing-container').addClass('hidden');
-         $('.leaflet-marker-icon').removeClass('leaflet-marker-draggable');
-         */
-    },
-    /**
-     * Generate the HTML for a given popup
-     *
-     * @author Craig Knott
-     *
-     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
-     * @param data An object containing data about this point (name, desc)
-     *
-     * @returns {*} An HTML string for this popup
-     */
-    getPopupHTML:       function (e, data) {
-        var container = $('<div>').addClass('pointContainer');
-        container.append($('<div>').addClass('coords right')
-            .text(e.latlng.lat.toString().slice(0, 7) + ", " + e.latlng.lng.toString().slice(0, 7)));
-        container.append(
-            $('<input>').addClass('form-control point_title')
-                .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
-        );
-        container.append(
-            $('<textarea>').addClass('form-control')
-                .attr('placeholder', 'Enter a description')
-                .text((data === undefined) ? ('') : data.description)
-        );
-        container.append(
-            $('<div>').addClass('hidden latHidden').text(e.latlng.lat.toString())
-        );
-        container.append(
-            $('<div>').addClass('hidden lngHidden').text(e.latlng.lng.toString())
-        );
-
-        var buttons = $('<div>').addClass('buttons');
-        buttons.append($('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>"));
-        buttons.append($('<button>').addClass('marker-update-button btn btn-success').html("<i class='fa fa-check'></i>"));
-
-        container.append(buttons);
-        return container[0];
-    },
-    /**
-     * Makes the map read-only (no ability to edit)
-     *
-     * @author Craig Knott
-     */
-    setReadOnly:        function () {
-        $('.marker-delete-button-lhd').remove();
-        $('.right-side').css("float", "right").css("padding-right", "40px").css("width", "26px");
-        $('.middle-side').css("padding-left", "15px");
-        $('.point_title').attr("readonly", "true");
-        $('.popup-trigger').remove();
-        $('.left-side').remove();
-        $('.pointsTitle').text("Route Points");
-    }
-});
-
-/**
- * Class PointListManager
- *
- * Manages the points displayed in the left hand display
- *
- * @author Craig Knott
- */
-var PointListManager = Class.extend({
-    /**
-     * Initialises the class, setting the values of private variables and setting up the sortable fucntion
-     *
-     * @author Craig Knott
-     *
-     * @param mapManager The MapManager class for this page
-     */
-    init:           function (mapManager) {
-        var _self = this;
-
-        this.container = $('#left-hand-display');
-        this.pointsList = this.container.find('.pointsList');
-        this.noPointsYet = this.container.find('.noPointsYet');
-        this.pointsYet = this.container.find('.pointsYet');
-        this.mapManager = mapManager;
-
-        $('.pointsList').sortable({
-            handle: ".left-side",
-            update: function () {
-                _self.mapManager.drawRoute();
+            } else {
+                snapping.clearLayers();
             }
         });
+        map.fire('moveend');
 
-        this.setupListeners();
-    },
-    /**
-     * Assigns listeners to each of the interactive elements of the row
-     *
-     * @author Craig Knott
-     */
-    setupListeners: function () {
-        $('#hide_lhd').click(function () {
-            $('#left-hand-display').addClass('hidden');
-            $('#left-hand-display-mini').removeClass('hidden');
-        });
-
-        $('#show_lhd').click(function () {
-            $('#left-hand-display').removeClass('hidden');
-            $('#left-hand-display-mini').addClass('hidden');
-        });
-    },
-    /**
-     * Adds a point to the left hand display
-     *
-     * @author Craig Knott
-     *
-     * @param marker The marker object (as defined in the Leaflet API)
-     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
-     */
-    addPoint:       function (marker, e) {
-        if (this.pointsList.children().length == 0) {
-            this.noPointsYet.addClass('hidden');
-            this.pointsYet.removeClass('hidden');
-        }
-
-        var _self = this;
-
-        var left = $('<div>').addClass('left-side');
-        left.append($('<i>').addClass('fa fa-arrows'));
-
-        var mid = $('<div>').addClass('middle-side');
-        mid.append($('<div>').addClass('title').text(
-            $(marker._popup._content).find('.point_title').val()
-        ));
-        mid.append($('<div>').addClass('coords').text(
-            e.latlng.lat.toString().slice(0, 7) + ", " + e.latlng.lng.toString().slice(0, 7)
-        ));
-
-        var right = $('<div>').addClass('right-side');
-        var editButton = $('<button>').addClass('marker-edit-button btn btn-primary')
-            .html("<i class='fa fa-pencil'></i>");
-        editButton.click(function () {
-            marker.openPopup();
-        });
-
-        var deleteButton = $('<button>').addClass('marker-delete-button-lhd btn btn-danger')
-            .html("<i class='fa fa-trash'></i>");
-        deleteButton.click(function () {
-            $.confirm({
-                title:           'Delete point?',
-                icon:            'fa fa-warning',
-                content:         'Are you sure you wish to delete this point? This action is irreversible.',
-                theme:           'black',
-                confirmButton:   'Delete',
-                keyboardEnabled: true,
-                confirm:         function () {
-                    map.removeLayer(marker);
-                    _self.removePoint(marker._leaflet_id);
-                    _self.mapManager.drawRoute();
+        // OSM Router
+        var router = function (m1, m2, cb) {
+            var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
+            var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=foot&fast=1&layer=mapnik';
+            var params = '&flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
+            $.getJSON(proxy + route + params, function (geojson, status) {
+                if (!geojson || !geojson.coordinates || geojson.coordinates.length === 0) {
+                    if (typeof console.log === 'function') {
+                        console.log('OSM router failed', geojson);
+                    }
+                    return cb(new Error());
                 }
+                return cb(null, L.GeoJSON.geometryToLayer(geojson));
             });
-        });
-        right.append(editButton, deleteButton);
+        };
 
-        var pointContainer = $('<div>').addClass('point').attr('data-point-id', marker._leaflet_id);
-        pointContainer.append(left, mid, right);
-        this.pointsList.append(pointContainer);
-
-
-    },
-    /**
-     * Updates the name of a point on the left hand display
-     *
-     * @author Craig Knott
-     *
-     * @param markerId The id of this marker
-     * @param newName The new name of this marker
-     */
-    updatePoint:    function (markerId, newName) {
-        var obj = this.findPointById(markerId);
-        obj.find('.title').text(newName);
-    },
-    /**
-     * Removes a point from the left hand display
-     *
-     * @author Craig Knott
-     *
-     * @param markerId The id of the marker to remove
-     */
-    removePoint:    function (markerId) {
-        var obj = this.findPointById(markerId);
-        if (obj != null) {
-            obj.remove();
-        }
-
-        if (this.pointsList.children().length == 0) {
-            this.noPointsYet.removeClass('hidden');
-            this.pointsYet.addClass('hidden');
-        }
-    },
-    /**
-     * Finds adn returns a specific marker from the list, by it's Id
-     *
-     * @param markerId The id of the market
-     *
-     * @returns {*} The marker ojbect
-     */
-    findPointById:  function (markerId) {
-        var objToReturn = null;
-        this.pointsList.children().each(function (i, obj) {
-            if ($(obj).attr('data-point-id') == markerId) {
-                objToReturn = $(obj);
+        var routing = new L.Routing({
+            position:   'topleft'
+            , routing:  {
+                router: router
+            }
+            , snapping: {
+                layers: []
+            }
+            , snapping: {
+                layers:        [snapping]
+                , sensitivity: 15
+                , vertexonly:  false
             }
         });
+        map.addControl(routing);
+        routing.draw();
 
-        return objToReturn;
     }
 });
 
@@ -574,9 +170,9 @@ var PopupManager = Class.extend({
      *
      * @author Craig Knott
      *
-     * @param mm The map manager object for this page
      */
-    init:            function (mm) {
+
+    init: function () {
         this.mm = mm;
 
         $('.popup-trigger').magnificPopup({
@@ -595,12 +191,14 @@ var PopupManager = Class.extend({
         this.cancelSubmit = $('#cancelSubmit');
         this.setupListeners();
     },
+
     /**
      * Assigns listeners to each of the interactive elements of the row
      *
      * @author Craig Knott
      */
-    setupListeners:  function () {
+
+    setupListeners: function () {
         var _self = this;
 
         this.cancelSubmit.click(function () {
@@ -633,6 +231,7 @@ var PopupManager = Class.extend({
             }
         });
     },
+
     /**
      * Checks whether the user has entered a name for the route they are attempting to save
      *
@@ -640,6 +239,7 @@ var PopupManager = Class.extend({
      *
      * @returns {boolean} Whether the user has entered a name for their route
      */
+
     checkValidInput: function () {
         var routeName = $('#routeName');
         if (routeName.val() == "") {
@@ -653,6 +253,7 @@ var PopupManager = Class.extend({
 
         return true;
     },
+
     /**
      * Gets all points from the map in an array
      *
@@ -660,9 +261,10 @@ var PopupManager = Class.extend({
      *
      * @returns {Array} Of all points on the map
      */
-    getAllPoints:    function () {
+
+    getAllPoints: function () {
         // Get all points
-        var pointsList = this.mm.pointListManager.pointsList.children();
+        var pointsList = plm.pointsList.children();
         var points = [];
         for (var i = 0; i < pointsList.length; i++) {
             var pointId = $(pointsList[i]).attr('data-point-id');
@@ -677,5 +279,256 @@ var PopupManager = Class.extend({
         }
 
         return points;
+    }
+});
+
+
+/**
+ * Class PointListManager
+ *
+ * Manages all custom extensions to the L.Router.
+ *
+ * @author Craig Knott
+ */
+var PointsListManager = Class.extend({
+    /**
+     * Initialises the class, setting the values of private variables and setting up the sortable fucntion
+     *
+     * @author Craig Knott
+     *
+     * @param router The L.Routing Object
+     */
+    init:        function (router) {
+        var _self = this;
+
+        this.router = router;
+        this.popupOpen = false;
+        this.container = $('#left-hand-display');
+        this.pointsList = this.container.find('.pointsList');
+        this.noPointsYet = this.container.find('.noPointsYet');
+        this.pointsYet = this.container.find('.pointsYet');
+        this.numPoints = 1;
+        this.mapManager = mm;
+
+        $('.pointsList').sortable({
+            handle: ".left-side",
+            update: function () {
+                _self.mapManager.drawRoute();
+            }
+        });
+
+    },
+    /**
+     * Adds a point to the left hand display
+     *
+     * @author Craig Knott
+     *
+     * @param marker The marker object (as defined in the Leaflet API)
+     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
+     */
+    addPoint:    function (marker, e) {
+        if (this.pointsList.children().length == 0) {
+            this.noPointsYet.addClass('hidden');
+            this.pointsYet.removeClass('hidden');
+        }
+
+        this.numPoints++;
+
+        var _self = this;
+
+        var left = $('<div>').addClass('left-side');
+        left.append($('<i>').addClass('fa fa-arrows'));
+
+        var mid = $('<div>').addClass('middle-side');
+        mid.append($('<div>').addClass('title').text(
+            $(marker._popup._content).find('.point_title').val()
+        ));
+        mid.append($('<div>').addClass('coords').text(
+            e.lat.toString().slice(0, 7) + ", " + e.lng.toString().slice(0, 7)
+        ));
+
+        var right = $('<div>').addClass('right-side');
+        var editButton = $('<button>').addClass('marker-edit-button btn btn-primary')
+            .html("<i class='fa fa-pencil'></i>");
+        editButton.click(function () {
+            marker.openPopup();
+        });
+
+        var deleteButton = $('<button>').addClass('marker-delete-button-lhd btn btn-danger')
+            .html("<i class='fa fa-trash'></i>");
+        deleteButton.click(function () {
+            $.confirm({
+                title:           'Delete point?',
+                icon:            'fa fa-warning',
+                content:         'Are you sure you wish to delete this point? This action is irreversible.',
+                theme:           'black',
+                confirmButton:   'Delete',
+                keyboardEnabled: true,
+                confirm:         function () {
+                    _self.removePoint(marker._leaflet_id);
+                    _self.router.removeWaypoint(marker, function () {
+                    });
+                }
+            });
+        });
+        right.append(editButton, deleteButton);
+
+        var pointContainer = $('<div>').addClass('point').attr('data-point-id', marker._leaflet_id);
+        pointContainer.append(left, mid, right);
+        this.pointsList.append(pointContainer);
+    },
+    /**
+     * Updates the name of a point on the left hand display
+     *
+     * @author Craig Knott
+     *
+     * @param markerId The id of this marker
+     * @param newName The new name of this marker
+     */
+
+    updatePoint: function (markerId, newName) {
+        var obj = this.findPointById(markerId);
+        obj.find('.title').text(newName);
+    },
+
+    /**
+     * Removes a point from the left hand display
+     *
+     * @author Craig Knott
+     *
+     * @param markerId The id of the marker to remove
+     */
+
+    removePoint:       function (markerId) {
+        var obj = this.findPointById(markerId);
+        if (obj != null) {
+            obj.remove();
+        }
+
+        if (this.pointsList.children().length == 0) {
+            this.noPointsYet.removeClass('hidden');
+            this.pointsYet.addClass('hidden');
+        }
+    },
+    /**
+     * Generate the HTML for a given popup
+     *
+     * @author Craig Knott
+     *
+     * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
+     * @param data An object containing data about this point (name, desc)
+     *
+     * @returns {*} An HTML string for this popup
+     */
+    getPopupHTML:      function (e, data) {
+        var container = $('<div>').addClass('pointContainer');
+        container.append($('<div>').addClass('coords right')
+            .text(e.lat.toString().slice(0, 7) + ", " + e.lng.toString().slice(0, 7)));
+        container.append(
+            $('<input>').addClass('form-control point_title')
+                .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
+        );
+        container.append(
+            $('<textarea>').addClass('form-control')
+                .attr('placeholder', 'Enter a description')
+                .text((data === undefined) ? ('') : data.description)
+        );
+        container.append(
+            $('<div>').addClass('hidden latHidden').text(e.lat.toString())
+        );
+        container.append(
+            $('<div>').addClass('hidden lngHidden').text(e.lng.toString())
+        );
+
+        var buttons = $('<div>').addClass('buttons');
+        buttons.append($('<button>').addClass('marker-delete-button btn btn-danger').html("<i class='fa fa-trash'></i>"));
+        buttons.append($('<button>').addClass('marker-update-button btn btn-success').html("<i class='fa fa-check'></i>"));
+
+        container.append(buttons);
+        return container[0];
+    },
+    /**
+     * Finds and returns a specific marker from the list, by it's Id
+     *
+     * @param markerId The id of the market
+     *
+     * @returns {*} The marker object
+     */
+    findPointById:     function (markerId) {
+        var objToReturn = null;
+        this.pointsList.children().each(function (i, obj) {
+            if ($(obj).attr('data-point-id') == markerId) {
+                objToReturn = $(obj);
+            }
+        });
+
+        return objToReturn;
+    },
+    addExistingPoints: function (routeId) {
+        var _self = this;
+        $.ajax({
+            type: 'GET',
+            url:  '/route/getpoints',
+            data: {
+                id: routeId
+            }
+        }).success(function (response) {
+            var data = JSON.parse(response);
+            var middlePoint;
+
+            for (var i = 0; i < data.length; i++) {
+                if (i == Math.floor(data.length / 2)) {
+                    middlePoint = data[i];
+                }
+
+                var d = {
+                    _feature: null,
+                    lat:      data[i].latitude,
+                    lng:      data[i].longitude
+                };
+
+            }
+
+            _self.centreMap(middlePoint.latitude, middlePoint.longitude)
+        });
+    },
+    /**
+     * Centres the map at a certain point
+     *
+     * @author Craig Knott
+     *
+     * @param lat Latitude to centre at
+     * @param lng Longitude to centre at
+     */
+    centreMap:         function (lat, lng) {
+        map.setView({
+            lat: lat,
+            lng: lng
+        });
+    },
+    /**
+     * TODO
+     */
+    onWayPointDragEnd: function (marker) {
+        var markerId = marker.marker._leaflet_id;
+        var newLat = marker.marker._latlng.lat;
+        var newLng = marker.marker._latlng.lng;
+
+        var lhd = $('.point[data-point-id=' + markerId + ']').find('.coords');
+        lhd.text(
+            newLat.toString().slice(0, 7) + ", " + newLng.toString().slice(0, 7)
+        );
+
+        var popup = map._layers[markerId]._popup;
+        console.log(popup._content.innerHTML);
+        popup._content.innerHTML = popup._content.innerHTML.replace(
+            /<div class=\"coords right\">-?\d*\.\d*, -?\d*\.\d*<\/div>/,
+            '<div class="coords right">' + newLat.toString().slice(0, 7) + ', ' + newLng.toString().slice(0, 7) + '</div>'
+        );
+
+        popup._content.innerHTML = popup._content.innerHTML.replace(
+            /<div class=\"hidden latHidden\">-?\d*\.\d*<\/div><div class=\"hidden lngHidden\">-?\d*\.\d*<\/div>/,
+            '<div class="hidden latHidden">' + newLat + '</div><div class="hidden lngHidden">' + newLng + '</div>'
+        );
     }
 });
