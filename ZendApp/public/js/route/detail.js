@@ -159,7 +159,7 @@ function drawMap(){
     // OSM Router
     var router = function (m1, m2, cb) {
         var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
-        var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=foot&fast=1&layer=mapnik';
+        var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=car&fast=1&layer=mapnik';
         var params = '&flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
         $.getJSON(proxy + route + params, function (geojson, status) {
             if (!geojson || !geojson.coordinates || geojson.coordinates.length === 0) {
