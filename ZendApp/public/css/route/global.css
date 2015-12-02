@@ -1,0 +1,3 @@
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    background-image: none !important;
+}

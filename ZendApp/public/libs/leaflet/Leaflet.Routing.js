@@ -1050,24 +1050,13 @@ L.Routing.Draw = L.Handler.extend({
                 clickable:    false
             })
         }
-        if (!this._trailer) {
-            var b = this._map.getCenter();
-            this._trailerOpacity = this.options.styles.trailer.opacity || 0.2;
-            var a = L.extend({}, this.options.styles.trailer, {opacity: 0, clickable: false});
-            this._trailer = new L.Polyline([b, b], a)
-        }
         this._parent.on("waypoint:mouseover", this._catchWaypointEvent, this);
         this._parent.on("waypoint:mouseout", this._catchWaypointEvent, this);
         this._parent.on("waypoint:dragstart", this._catchWaypointEvent, this);
         this._parent.on("waypoint:dragend", this._catchWaypointEvent, this);
-        this._parent.on("segment:mouseover", this._catchWaypointEvent, this);
-        this._parent.on("segment:mouseout", this._catchWaypointEvent, this);
-        this._parent.on("segment:dragstart", this._catchWaypointEvent, this);
-        this._parent.on("segment:dragend", this._catchWaypointEvent, this);
         this._map.on("mousemove", this._onMouseMove, this);
         this._map.on("click", this._onMouseClick, this);
         this._marker.addTo(this._map);
-        this._trailer.addTo(this._map)
     }, _removeHooks:        function () {
         if (!this._map) {
             return
@@ -1076,16 +1065,10 @@ L.Routing.Draw = L.Handler.extend({
         this._parent.off("waypoint:mouseout", this._catchWaypointEvent, this);
         this._parent.off("waypoint:dragstart", this._catchWaypointEvent, this);
         this._parent.off("waypoint:dragend", this._catchWaypointEvent, this);
-        this._parent.off("segment:mouseover", this._catchWaypointEvent, this);
-        this._parent.off("segment:mouseout", this._catchWaypointEvent, this);
-        this._parent.off("segment:dragstart", this._catchWaypointEvent, this);
-        this._parent.off("segment:dragend", this._catchWaypointEvent, this);
         this._map.off("click", this._onMouseClick, this);
         this._map.off("mousemove", this._onMouseMove, this);
         this._map.removeLayer(this._marker);
-        this._map.removeLayer(this._trailer);
         delete this._marker;
-        delete this._trailer
     }, _catchWaypointEvent: function (b) {
         var a = b.type.split(":")[1];
         if (a === "dragstart" && plm.readOnly) {
@@ -1119,18 +1102,12 @@ L.Routing.Draw = L.Handler.extend({
     }, _hide:               function () {
         this._hidden = true;
         this._marker.setOpacity(0);
-        this._trailer.setStyle({opacity: 0})
     }, _show:               function () {
         this._hidden = false;
         this._marker.setOpacity(this.options.icons.draw ? 1 : 0);
         this._showTrailer()
     }, _showTrailer:        function () {
-        if (this._trailer.options.opacity === 0) {
-            this._trailer.setStyle({opacity: this._trailerOpacity})
-        }
     }, _setTrailer:         function (b, a) {
-        this._trailer.setLatLngs([b, a]);
-        this._showTrailer()
     }, _onMouseMove:        function (b) {
         if (this._hidden) {
             return
@@ -1144,21 +1121,23 @@ L.Routing.Draw = L.Handler.extend({
         if (a !== null) {
             this._setTrailer(a.getLatLng(), c)
         }
-    }, _onMouseClick:       function (c) {
-        if (this._hidden) {
-            return
-        }
-        var a, d, b;
-        d = c.latlng;
+    }, _onMouseClick: function(e) {
+        if (this._hidden) { return; }
 
+
+        var marker, latlng, last;
+
+        latlng = e.latlng;
         if (this.options.snapping) {
-            d = L.LineUtil.snapToLayers(d, null, this.options.snapping)
+            latlng = L.LineUtil.snapToLayers(latlng, null, this.options.snapping);
         }
-        a = new L.Marker(d, {title: this.options.tooltips.waypoint});
-        b = this._parent.getLast();
-        this._setTrailer(d, d);
-        this._parent.addWaypoint(a, b, null, function (e, f) {
-        })
+        marker = new L.Marker(latlng, {title: this.options.tooltips.waypoint });
+        last = this._parent.getLast();
+
+        this._setTrailer(latlng, latlng);
+        this._parent.addWaypoint(marker, last, null, function(err, data) {
+            // console.log(err, data);
+        });
     }
 });
 
@@ -1204,19 +1183,7 @@ L.Routing.Edit = L.Handler.extend({
         }
 
         this._mouseMarker.addTo(this._map);
-        if (!this._trailer1) {
-            var b = this._map.getCenter();
-            this._trailerOpacity = this.options.styles.trailer.opacity || 0.2;
-            var a = L.extend({}, this.options.styles.trailer, {opacity: 0, clickable: false});
-            this._trailer1 = new L.Polyline([b, b], a);
-            this._trailer2 = new L.Polyline([b, b], a)
-        }
-        this._trailer1.addTo(this._map);
-        this._trailer2.addTo(this._map);
-        this._parent.on("segment:mouseover", this._segmentOnMouseover, this);
-        this._mouseMarker.on("dragstart", this._segmentOnDragstart, this);
-        this._mouseMarker.on("drag", this._segmentOnDrag, this);
-        this._mouseMarker.on("dragend", this._segmentOnDragend, this);
+
         this._parent.on("waypoint:dragstart", this._waypointOnDragstart, this);
         this._parent.on("waypoint:drag", this._waypointOnDrag, this);
         this._parent.on("waypoint:dragend", this._waypointOnDragend, this)
@@ -1224,10 +1191,6 @@ L.Routing.Edit = L.Handler.extend({
         if (!this._map) {
             return
         }
-        this._parent.off("segment:mouseover", this._segmentOnMouseover, this);
-        this._mouseMarker.off("dragstart", this._segmentOnDragstart, this);
-        this._mouseMarker.off("drag", this._segmentOnDrag, this);
-        this._mouseMarker.off("dragend", this._segmentOnDragend, this);
         this._parent.off("waypoint:dragstart", this._waypointOnDragstart, this);
         this._parent.off("waypoint:drag", this._waypointOnDrag, this);
         this._parent.off("waypoint:dragend", this._waypointOnDragend, this)
@@ -1301,25 +1264,6 @@ L.Routing.Edit = L.Handler.extend({
     }, _waypointOnClick:     function (a) {
 
     }, _setTrailers:         function (d, b, c, a) {
-        if (typeof a !== "undefined") {
-            if (a === false) {
-                this._trailer1.setStyle({opacity: 0});
-                this._trailer2.setStyle({opacity: 0});
-                return
-            } else {
-                if (b !== null) {
-                    this._trailer1.setStyle({opacity: this._trailerOpacity})
-                }
-                if (c !== null) {
-                    this._trailer2.setStyle({opacity: this._trailerOpacity})
-                }
-            }
-        }
-        if (b) {
-            this._trailer1.setLatLngs([d, b.getLatLng()])
-        }
-        if (c) {
-            this._trailer2.setLatLngs([d, c.getLatLng()])
-        }
+
     }
 });

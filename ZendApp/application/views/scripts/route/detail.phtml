@@ -1,6 +1,7 @@
 <input type="hidden" id="email-confirmed" value="<?= ((!is_null($this->user)) && $this->user->isConfirmed) ? 1 : 0 ?>">
 <input type="hidden" id="routeId" value="<?= $this->route->routeId ?>">
 <input type="hidden" id="ratingId" value="<?= $this->userRouteRating->ratingId ?>">
+<input type="hidden" value="1" id="mapReadOnly">
 
 <div class="row containingRow">
     <div class="col-md-7">
