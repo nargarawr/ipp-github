@@ -113,7 +113,9 @@
                     <br>
                     <div>
                         <b>Author Description</b><br>
-                        <i><?= $this->route->description ?></i>
+                        <i>
+                            <?= ($this->route->description == "") ? "None given" : $this->route->description ?>
+                        </i>
                     </div>
                 </div>
 

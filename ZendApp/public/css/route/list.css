@@ -1,0 +1,21 @@
+.searchtermsTitle {
+    width: 135px;
+}
+
+.searchTermContainer {
+    margin-top: 20px;
+}
+
+#end_address {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.searchTermBody form {
+    top: -10px;
+    position: relative;
+}
+
+#submit_search {
+    margin-top: 20px;
+}

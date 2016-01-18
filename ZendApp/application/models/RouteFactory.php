@@ -145,7 +145,7 @@ class RouteFactory extends ModelFactory {
      *
      * @author Craig Knott
      *
-     * @param int  $routeId          The id of the route to get
+     * @param int $routeId The id of the route to get
      *
      * @return object The route object
      */
@@ -609,11 +609,15 @@ class RouteFactory extends ModelFactory {
      * @param float $startLng    The start point longitude
      * @param float $endLat      The end point latitude
      * @param float $endLng      The end point longitude
-     * @param int   $maxDistance What constitutes as "nearby" (in m)
+     * @param int   $maxDistance What constitutes as "nearby" (in km)
+     * @param int   $pageNum     Number to get for pagination
+     * @param int   $pageLimit   The number of items to get per page
      *
      * @return array List of routes within 25KM, ordered by distance ascending
      */
-    public static function getNearbyRoutes($startLat, $startLng, $endLat = null, $endLng = null, $maxDistance = 25000) {
+    public static function getNearbyRoutes($startLat, $startLng, $endLat = null, $endLng = null, $maxDistance = 25,
+                                           $pageNum = 0, $pageLimit) {
+        $maxDistance = $maxDistance * 1000;
         $sql = "SELECT
                     start.latitude AS start_lat,
                     start.longitude AS start_lng,
@@ -699,9 +703,16 @@ class RouteFactory extends ModelFactory {
             return $a->distanceFromEnteredPoint > $b->distanceFromEnteredPoint;
         });
 
-        // Add points to the routes
+        // Add points to the routes and implement pagination
+        $index = 0;
+        $lower = $pageNum * $pageLimit;
+        $upper = ($pageNum + 1) * $pageLimit;
+
         foreach ($routes as &$route) {
             $route->points = RouteFactory::getRoutePoints($route->id);
+
+            $route->onPage = ($index >= $lower) && ($index < $upper);
+            $index++;
         }
 
         return $routes;

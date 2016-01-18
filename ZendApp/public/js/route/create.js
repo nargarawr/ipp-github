@@ -140,7 +140,6 @@ var MapManager = Class.extend({
             var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=car&fast=1&layer=mapnik';
             var params = '&flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
             $.getJSON(proxy + route + params, function (geojson, status) {
-                console.log('SHOW ICON TO DISPLAY MAP LOADING POINTS')
                 if (!geojson || !geojson.coordinates || geojson.coordinates.length === 0) {
                     if (typeof console.log === 'function') {
                         console.log('OSM router failed', geojson);
@@ -149,7 +148,7 @@ var MapManager = Class.extend({
                 }
                 return cb(null, L.GeoJSON.geometryToLayer(geojson));
             }).success(function() {
-                console.log('REMOVE ICON TO DISPLAY MAP LOADING POINTS')
+                toggleMapLoadingIcon();
             });
         };
 
@@ -387,3 +386,17 @@ var UploadManager = Class.extend({
         plm.centreMap(middlePoint.lat, middlePoint.lng);
     }
 });
+
+/**
+ * Used to hide/show the "Loading Map" message/icon
+ */
+function toggleMapLoadingIcon() {
+    var l = $("#loading");
+    if (l.hasClass("hidden")) {
+        console.log("showing");
+        l.removeClass("hidden");
+    } else {
+        console.log("hiding");
+        l.addClass("hidden");
+    }
+}
