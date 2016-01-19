@@ -254,7 +254,11 @@ L.Routing = L.Control.extend({
             if (marker._routing.prevLine !== null) {
                 marker._routing.prevLine._routing.nextMarker = marker;
             }
-            toggleMapLoadingIcon();
+
+            try {
+                toggleMapLoadingIcon();
+            } catch(err) {
+            }
         }
 
         if (marker._routing.nextMarker !== null) {
@@ -1123,9 +1127,7 @@ L.Routing.Draw = L.Handler.extend({
             this._setTrailer(a.getLatLng(), c)
         }
     }, _onMouseClick: function(e) {
-        console.log("map clicked")
         if (this._hidden) { return; }
-
 
         var marker, latlng, last;
 

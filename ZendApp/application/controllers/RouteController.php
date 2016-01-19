@@ -183,8 +183,6 @@ class RouteController extends BaseController {
 
         $this->view->routeId = $this->getRequest()->getParam('id', null);
 
-
-
         if (!is_null($this->view->routeId)) {
             $this->view->route = RouteFactory::getRoute($this->view->routeId);
 
@@ -216,7 +214,10 @@ class RouteController extends BaseController {
         $isPrivate = $this->getRequest()->getParam('privacy', 0);
         $points = $this->getRequest()->getParam('points', null);
 
-        $routeId = RouteFactory::createRoute($name, $desc, $isPrivate, $this->user->userId);
+        $start = $this->getRequest()->getParam('start_add', null);
+        $end = $this->getRequest()->getParam('end_add', null);
+
+        $routeId = RouteFactory::createRoute($name, $desc, $isPrivate, $this->user->userId, $start, $end);
         foreach ($points as $point) {
             RouteFactory::createRoutePoint((object)$point, $routeId);
         }
@@ -239,8 +240,10 @@ class RouteController extends BaseController {
         $isPrivate = $this->getRequest()->getParam('privacy', 0);
         $points = $this->getRequest()->getParam('points', null);
         $routeId = $this->getRequest()->getParam('routeId', null);
+        $start = $this->getRequest()->getParam('start_add', null);
+        $end = $this->getRequest()->getParam('end_add', null);
 
-        RouteFactory::updateRoute($routeId, $name, $desc, $isPrivate);
+        RouteFactory::updateRoute($routeId, $name, $desc, $isPrivate, $start, $end);
 
         $highestIdForRoute = (int)RouteFactory::getHighestPointId($routeId);
         foreach ($points as $point) {

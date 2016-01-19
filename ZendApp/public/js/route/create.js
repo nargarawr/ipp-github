@@ -147,14 +147,14 @@ var MapManager = Class.extend({
                     return cb(new Error());
                 }
                 return cb(null, L.GeoJSON.geometryToLayer(geojson));
-            }).success(function() {
+            }).success(function () {
                 toggleMapLoadingIcon();
             });
         };
 
         var routing = new L.Routing({
             position:   'topleft'
-            , routing: {
+            , routing:  {
                 router: router
             }
             , snapping: {
@@ -226,21 +226,53 @@ var PopupManager = Class.extend({
 
                 points = _self.getAllPoints();
                 routeId = $('#routeId').val();
-                var url = (routeId == "") ? '/route/new' : '/route/update';
+
+                // Get the start and end address for the points
+                var startPoint = points[0];
+                var endPoint = points[points.length - 1];
+
+                var location = $('#userLocation').val();
                 $.ajax({
-                    type: 'POST',
-                    url:  url,
+                    type: 'GET',
+                    url:  "https://maps.googleapis.com/maps/api/geocode/json",
                     data: {
-                        name:        $('#routeName').val(),
-                        description: $('#routeDesc').val(),
-                        privacy:     $('#routePrivacy').val(),
-                        points:      points,
-                        routeId:     routeId
+                        latlng: startPoint.lat + "," + startPoint.lng,
+                        key:    "AIzaSyCwkWD2VSfdZWqbc8GUSOe76SZju3bx460"
                     }
-                }).error(function () {
-                    window.location.href = '/user/routes';
                 }).success(function (response) {
-                    window.location.href = '/route/create/id/' + response;
+                    var start_address = response.results[0].address_components;
+                    var start_address_name = (start_address[start_address.length - 1]).long_name;
+
+                    $.ajax({
+                        type: 'GET',
+                        url:  "https://maps.googleapis.com/maps/api/geocode/json",
+                        data: {
+                            latlng: endPoint.lat + "," + endPoint.lng,
+                            key:    "AIzaSyCwkWD2VSfdZWqbc8GUSOe76SZju3bx460"
+                        }
+                    }).success(function (response) {
+                        var end_address = response.results[0].address_components;
+                        var end_address_name = (end_address[end_address.length - 1]).long_name;
+
+                        var url = (routeId == "") ? '/route/new' : '/route/update';
+                        $.ajax({
+                            type: 'POST',
+                            url:  url,
+                            data: {
+                                name:        $('#routeName').val(),
+                                description: $('#routeDesc').val(),
+                                privacy:     $('#routePrivacy').val(),
+                                points:      points,
+                                routeId:     routeId,
+                                start_add:   start_address_name,
+                                end_add:     end_address_name
+                            }
+                        }).error(function () {
+                            window.location.href = '/user/routes';
+                        }).success(function (response) {
+                            window.location.href = '/route/create/id/' + response;
+                        });
+                    });
                 });
             }
         });
@@ -393,10 +425,8 @@ var UploadManager = Class.extend({
 function toggleMapLoadingIcon() {
     var l = $("#loading");
     if (l.hasClass("hidden")) {
-        console.log("showing");
         l.removeClass("hidden");
     } else {
-        console.log("hiding");
         l.addClass("hidden");
     }
 }

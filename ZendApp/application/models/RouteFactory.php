@@ -22,7 +22,7 @@ class RouteFactory extends ModelFactory {
      *
      * @return int The Id of the newly created route
      */
-    public static function createRoute($name, $description, $isPrivate, $userId) {
+    public static function createRoute($name, $description, $isPrivate, $userId, $start, $end) {
         $sql = "INSERT INTO tb_route (
                     created_by,
                     name,
@@ -31,7 +31,9 @@ class RouteFactory extends ModelFactory {
                     cost,
                     distance,
                     datetime_created,
-                    datetime_updated
+                    datetime_updated,
+                    start_address,
+                    end_address
                 ) VALUES (
                     :userId,
                     :name,
@@ -40,13 +42,17 @@ class RouteFactory extends ModelFactory {
                     0,
                     0,
                     NOW(),
-                    NOW()
+                    NOW(),
+                    :start_address,
+                    :end_address
                 )";
         $params = array(
-            ':userId'      => $userId,
-            ':name'        => $name,
-            ':description' => $description,
-            ':isPrivate'   => $isPrivate
+            ':userId'        => $userId,
+            ':name'          => $name,
+            ':description'   => $description,
+            ':isPrivate'     => $isPrivate,
+            ':start_address' => $start,
+            ':end_address'   => $end
         );
         return parent::execute($sql, $params, true);
     }
@@ -246,23 +252,29 @@ class RouteFactory extends ModelFactory {
      * @param string $name        The route's new name
      * @param string $description The route's new description
      * @param int    $isPrivate   The route's new privacy setting
+     * @param string $start       The address of the start position
+     * @param string $end         The address of the end position
      *
      * @return void
      */
-    public static function updateRoute($routeId, $name, $description, $isPrivate) {
+    public static function updateRoute($routeId, $name, $description, $isPrivate, $start, $end) {
         $sql = "UPDATE tb_route
                 SET name = :name,
                     description = :description,
                     is_private = :isPrivate,
                     cost = 0,
                     distance = 0,
-                    datetime_updated = NOW()
+                    datetime_updated = NOW(),
+                    start_address = :start_address,
+                    end_address = :end_address
                 WHERE pk_route_id = :routeId";
         $params = array(
-            ':routeId'     => $routeId,
-            ':name'        => $name,
-            ':description' => $description,
-            ':isPrivate'   => $isPrivate
+            ':routeId'       => $routeId,
+            ':name'          => $name,
+            ':description'   => $description,
+            ':isPrivate'     => $isPrivate,
+            ':start_address' => $start,
+            ':end_address'   => $end
         );
         parent::execute($sql, $params);
     }
@@ -626,6 +638,8 @@ class RouteFactory extends ModelFactory {
                     pk_route_id AS id,
                     r.description,
                     r.name,
+                    r.start_address,
+                    r.end_address,
                     IFNULL(
                         (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
                     ) AS rating,
@@ -678,7 +692,7 @@ class RouteFactory extends ModelFactory {
         $params = array();
 
         $routes = parent::fetchAll($sql, $params);
-
+//die(var_dump($routes));
         // Calculate distance for each distance from the start/end locations
         foreach ($routes as &$route) {
             $startDistance = RouteFactory::distanceBetweenPoints($route->start_lat, $route->start_lng, $startLat, $startLng);
