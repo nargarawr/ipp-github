@@ -692,7 +692,7 @@ class RouteFactory extends ModelFactory {
         $params = array();
 
         $routes = parent::fetchAll($sql, $params);
-//die(var_dump($routes));
+
         // Calculate distance for each distance from the start/end locations
         foreach ($routes as &$route) {
             $startDistance = RouteFactory::distanceBetweenPoints($route->start_lat, $route->start_lng, $startLat, $startLng);

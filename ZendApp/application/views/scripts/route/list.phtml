@@ -65,3 +65,37 @@
         <? } ?>
     </div>
 </div>
+
+<form enctype="application/x-www-form-urlencoded" action="/route/list" method="post" id="pageForm">
+    <input type="hidden" name="start_lat" id="start_lat" value="<?= $this->startLat ?>">
+    <input type="hidden" name="start_lng" id="start_lng" value="<?= $this->startLng ?>">
+    <input type="hidden" name="end_lat" id="end_lat" value="<?= $this->endLat ?>">
+    <input type="hidden" name="end_lng" id="end_lng" value="<?= $this->endLng ?>">
+    <input type="hidden" name="formError" id="formError">
+
+    <input type="hidden" name="start_address" id="start_address" value="<?= $this->startAddress ?>">
+    <input type="hidden" name="end_address" id="end_address" value="<?= $this->endAddress ?>">
+    <input type="hidden" name="page_num" id="page_num" value="<?= $this->pageNum ?>">
+    <input type="hidden" name="page_lim" id="page_lim" value="<?= $this->pageLimit ?>">
+</form>
+
+<nav>
+    <ul class="pagination">
+        <li class="prevPage <?= ($this->pageNum == 0) ? 'disabled' : '' ?>">
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <? for ($i = 0; $i < count($this->routes); $i += $this->pageLimit) { ?>
+            <li class="iPage <?= (($i / $this->pageLimit) == $this->pageNum) ? 'active' : '' ?>">
+                <a href="#"><?= 1 + ($i / $this->pageLimit) ?></a>
+            </li>
+        <? } ?>
+
+        <li class="nextPage <?= ((count($this->routes) / $this->pageLimit) == ($this->pageNum + 1)) ? 'disabled' : '' ?>">
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

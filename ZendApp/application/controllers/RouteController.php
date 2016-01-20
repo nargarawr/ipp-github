@@ -35,7 +35,7 @@ class RouteController extends BaseController {
      */
     public function listAction() {
         $pageLimit = 10;
-        $pageNum = $this->getRequest()->getParam("pageNum", 0);
+        $pageNum = $this->getRequest()->getParam("page_num", 0);
 
         $error = $this->getRequest()->getParam("formError");
 
@@ -64,12 +64,15 @@ class RouteController extends BaseController {
         }
 
         // Assign variables
+        $this->view->startLat = $startLat;
         $this->view->startLng = $startLng;
         $this->view->endLat = $endLat;
         $this->view->endLng = $endLng;
         $this->view->startAddress = $startAddress;
         $this->view->endAddress = $endAddress;
         $this->view->maxDistance = $maxDistance;
+        $this->view->pageNum = $pageNum;
+        $this->view->pageLimit = $pageLimit;
     }
 
     /**
