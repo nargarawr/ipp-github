@@ -26,6 +26,10 @@ $(document).ready(function () {
         var goTo = parseInt($(this).find('a').text()) - 1;
         submitPaginiationForm(goTo);
     });
+
+    $('#submit_addresses').click(function(e) {
+        submitSearchForm();
+    })
 });
 
 /**
@@ -86,6 +90,57 @@ function submitPaginiationForm(type) {
             }
 
             $("#pageForm").submit();
+        });
+
+    });
+}
+
+/**
+ * Process the entered user search terms, then submit the search form
+ *
+ * @author Craig Knott
+ */
+function submitSearchForm() {
+    // Geocode the start and end points, so we can process them as lat and long values
+    $.ajax({
+        type: 'GET',
+        url:  "https://maps.googleapis.com/maps/api/geocode/json",
+        data: {
+            address: $("#start_address_1").val(),
+            key:     "AIzaSyCwkWD2VSfdZWqbc8GUSOe76SZju3bx460"
+        }
+    }).success(function (response) {
+        if (response.status != "OK") {
+            $("#formError_1").val(1);
+        } else {
+            var geocodedStart = response.results[0].geometry.location;
+            $("#start_lat_1").val(geocodedStart.lat);
+            $("#start_lng_1").val(geocodedStart.lng);
+        }
+
+        $.ajax({
+            type: 'GET',
+            url:  "https://maps.googleapis.com/maps/api/geocode/json",
+            data: {
+                address: $("#end_address_1").val(),
+                key:     "AIzaSyCwkWD2VSfdZWqbc8GUSOe76SZju3bx460"
+            }
+        }).success(function (response2) {
+            var end = $("#end_address_1");
+
+            // If user entered something for the end point, but it doesn't exist, throw an error
+            if (response2.status != "OK" && end.val() != "") {
+                $("#formError_1").val(2);
+            } else {
+                if (end.val() != "") {
+                    var geocodedEnd = response2.results[0].geometry.location;
+
+                    $("#end_lat_1").val(geocodedEnd.lat);
+                    $("#end_lng_1").val(geocodedEnd.lng);
+                }
+            }
+
+            $("#searchForm").submit();
         });
 
     });

@@ -5,21 +5,34 @@
                 Search Terms
             </div>
             <div class="searchTermBody">
-                <form enctype="application/x-www-form-urlencoded" action="" method="post" id="">
+                <div class="searchFormContainer">
+                    <form enctype="application/x-www-form-urlencoded" action="/route/list" method="post" id="searchForm">
+                        <input type="hidden" name="start_lat" id="start_lat_1">
+                        <input type="hidden" name="start_lng" id="start_lng_1">
+                        <input type="hidden" name="end_lat" id="end_lat_1">
+                        <input type="hidden" name="end_lng" id="end_lng_1">
+                        <input type="hidden" name="formError" id="formError_1">
 
-                    <label for="start_address">
-                        Start And Finish
-                    </label>
-                    <input type="text" class="form-control" name="start_address" id="start_address" value="<?= $this->startAddress ?>">
-                    <input type="text" class="form-control" name="end_address" id="end_address" value="<?= $this->endAddress ?>">
+                        <input type="text" class="form-control" name="start_address" id="start_address_1" value="<?=
+                        $this->startAddress ?>"
+                               placeholder="Where do you wish to start your journey?">
+                        <input type="text" class="form-control" name="end_address" id="end_address_1" value="<?=
+                        $this->endAddress ?>"
+                               placeholder="Where do you wish to end up? (Leave blank if you're feeling adventurous!)">
 
-                    <label for="max_distance">
-                        Maximum Distance (km)
-                    </label>
-                    <input type="number" class="form-control" name="max_distance" id="max_distance" value="<?= $this->maxDistance ?>">
+                        <label for="max_distance">
+                            Maximum Distance (km)
+                        </label>
+                        <input type="number" class="form-control" name="max_dist" id="max_dist" value="<?= $this->maxDistance ?>">
 
-                    <input type="button" class="btn btn-success center-block" id="submit_search" value="Search Again">
-                </form>
+                        <label for="max_distance">
+                            Minimum Star Rating
+                        </label>
+                        <input type="number" class="form-control" name="min_stars" id="min_stars" value="<?= $this->minStars ?>">
+
+                        <input type="button" class="btn btn-success" id="submit_addresses" value="Find Your Way!">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -63,6 +76,31 @@
                 </div>
             </div>
         <? } ?>
+
+        <? if (count($this->routes) > 0) { ?>
+            <div class="text-center">
+                <nav>
+                    <ul class="pagination">
+                        <li class="prevPage <?= ($this->pageNum == 0) ? 'disabled' : '' ?>">
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <? for ($i = 0; $i < count($this->routes); $i += $this->pageLimit) { ?>
+                            <li class="iPage <?= (($i / $this->pageLimit) == $this->pageNum) ? 'active' : '' ?>">
+                                <a href="#"><?= 1 + ($i / $this->pageLimit) ?></a>
+                            </li>
+                        <? } ?>
+
+                        <li class="nextPage <?= ((count($this->routes) / $this->pageLimit) == ($this->pageNum + 1)) ? 'disabled' : '' ?>">
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        <? } ?>
     </div>
 </div>
 
@@ -79,23 +117,3 @@
     <input type="hidden" name="page_lim" id="page_lim" value="<?= $this->pageLimit ?>">
 </form>
 
-<nav>
-    <ul class="pagination">
-        <li class="prevPage <?= ($this->pageNum == 0) ? 'disabled' : '' ?>">
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <? for ($i = 0; $i < count($this->routes); $i += $this->pageLimit) { ?>
-            <li class="iPage <?= (($i / $this->pageLimit) == $this->pageNum) ? 'active' : '' ?>">
-                <a href="#"><?= 1 + ($i / $this->pageLimit) ?></a>
-            </li>
-        <? } ?>
-
-        <li class="nextPage <?= ((count($this->routes) / $this->pageLimit) == ($this->pageNum + 1)) ? 'disabled' : '' ?>">
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>

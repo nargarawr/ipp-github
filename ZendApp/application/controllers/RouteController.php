@@ -51,6 +51,7 @@ class RouteController extends BaseController {
             $startAddress = $this->getRequest()->getParam("start_address");
             $endAddress = $this->getRequest()->getParam("end_address");
             $maxDistance = $this->getRequest()->getParam("max_dist", 25);
+            $minStars = $this->getRequest()->getParam("min_stars", 0);
 
             $this->view->routes = RouteFactory::getNearbyRoutes(
                 $startLat,
@@ -59,7 +60,8 @@ class RouteController extends BaseController {
                 $endLng,
                 $maxDistance,
                 $pageNum,
-                $pageLimit
+                $pageLimit,
+                $minStars
             );
         }
 
@@ -73,6 +75,7 @@ class RouteController extends BaseController {
         $this->view->maxDistance = $maxDistance;
         $this->view->pageNum = $pageNum;
         $this->view->pageLimit = $pageLimit;
+        $this->view->minStars = $minStars;
     }
 
     /**
@@ -109,7 +112,7 @@ class RouteController extends BaseController {
         $points = RouteFactory::getRoutePoints($routeId);
         $this->view->points = $points;
 
-        $this->view->gmapUrl = $this->getGmapStaticUrlForRoute($points);
+        //$this->view->gmapUrl = $this->getGmapStaticUrlForRoute($points);
 
         $this->view->firstPoint = $points[0]->latitude . "," . $points[0]->longitude;
         $this->view->lastPoint = $points[count($points) - 1]->latitude . "," . $points[count($points) - 1]->longitude;

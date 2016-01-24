@@ -624,11 +624,12 @@ class RouteFactory extends ModelFactory {
      * @param int   $maxDistance What constitutes as "nearby" (in km)
      * @param int   $pageNum     Number to get for pagination
      * @param int   $pageLimit   The number of items to get per page
+     * @param int   $minStars    The minimum number of stars the returned route must have
      *
      * @return array List of routes within 25KM, ordered by distance ascending
      */
     public static function getNearbyRoutes($startLat, $startLng, $endLat = null, $endLng = null, $maxDistance = 25,
-                                           $pageNum = 0, $pageLimit) {
+                                           $pageNum = 0, $pageLimit, $minStars = 0) {
         $maxDistance = $maxDistance * 1000;
         $sql = "SELECT
                     start.latitude AS start_lat,
@@ -688,8 +689,15 @@ class RouteFactory extends ModelFactory {
                 JOIN tb_user u
                 ON r.created_by = u.pk_user_id
                 WHERE r.is_private = 0
-                AND r.is_deleted = 0";
-        $params = array();
+                AND r.is_deleted = 0
+                AND (
+                    IFNULL(
+                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
+                    )
+                ) >= :minStars";
+        $params = array(
+            'minStars' => $minStars
+        );
 
         $routes = parent::fetchAll($sql, $params);
 
