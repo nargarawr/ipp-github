@@ -27,9 +27,28 @@ $(document).ready(function () {
         submitPaginiationForm(goTo);
     });
 
-    $('#submit_addresses').click(function(e) {
+    $('#submit_addresses').click(function (e) {
         submitSearchForm();
-    })
+    });
+
+    $('.route').each(function () {
+        var shrt = $(this).find('.shortDesc');
+        var long = $(this).find('.fullDesc');
+        var readMore = $(this).find('.readMore');
+        var readLess = $(this).find('.readLess');
+
+        readMore.click(function () {
+            long.removeClass('hidden');
+            shrt.addClass('hidden')
+        });
+
+        readLess.click(function () {
+            shrt.removeClass('hidden');
+            long.addClass('hidden')
+        });
+    });
+
+    var ratingManager = new RatingManager();
 });
 
 /**
@@ -145,3 +164,130 @@ function submitSearchForm() {
 
     });
 }
+
+/**
+ * Class RatingManager
+ *
+ * Class in charge of the rating system on the routes page
+ *
+ * @author Craig Knott
+ */
+var RatingManager = Class.extend({
+    /**
+     * Initialises this class and assigns member variables
+     *
+     * @author Craig Knott
+     */
+    init: function () {
+        this.stars = $('.clickableRating').find('.starDisplay');
+        this.starStates = [];
+        this.minStarsField = $('#min_stars');
+
+        for (var i = 0; i < this.stars.length; i++) {
+            this.starStates.push(
+                ($(this.stars[i]).hasClass('fa-star')) ? 'fa-star' : 'fa-star-o'
+            );
+        }
+
+        this.setupListeners();
+    },
+
+    /**
+     * Set up the listeners for the stars
+     *
+     * @author Craig Knott
+     */
+    setupListeners: function () {
+        var _self = this;
+
+        this.stars.mouseenter(function () {
+            var index = $(this).attr('data-index');
+            _self.fillStar($(this), index);
+
+            for (var i = 0; i < index; i++) {
+                _self.fillStar($(_self.stars[i]), i);
+            }
+        });
+
+        this.stars.mouseleave(function () {
+            var index = $(this).attr('data-index');
+            _self.resetStar($(this), index);
+
+            for (var i = 0; i < index; i++) {
+                _self.resetStar($(_self.stars[i]), i);
+            }
+        });
+
+        this.stars.click(function () {
+            var index = $(this).attr('data-index');
+            _self.selectStar($(this), index);
+            _self.minStarsField.val(parseInt(index) + 1)
+
+            for (var i = 0; i < _self.stars.length; i++) {
+                if (i <= index) {
+                    _self.selectStar($(_self.stars[i]), i);
+                } else {
+                    _self.deselectStar($(_self.stars[i]), i);
+                }
+            }
+        });
+    },
+
+    /**
+     * Sets a star as hovered
+     *
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
+     */
+    fillStar: function (star, index) {
+        star.addClass('starSelected');
+        star.removeClass(this.starStates[index]);
+        star.addClass('fa-star');
+    },
+
+    /**
+     * Sets a star as non-hovered
+     *
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
+     */
+    resetStar: function (star, index) {
+        star.removeClass('starSelected');
+        star.removeClass('fa-star');
+        star.addClass(this.starStates[index]);
+    },
+
+    /**
+     * Sets a star as selected but non-hovered
+     *
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
+     */
+    selectStar: function (star, index) {
+        star.removeClass('starSelected');
+        star.removeClass(this.starStates[index]);
+        this.starStates[index] = 'fa-star';
+        star.addClass('fa-star');
+    },
+
+    /**
+     * Sets a star as non-selected and non-hovered
+     *
+     * @author Craig Knott
+     *
+     * @param star The star object to fill
+     * @param index The index of this star object
+     */
+    deselectStar: function (star, index) {
+        star.removeClass('starSelected');
+        star.removeClass(this.starStates[index]);
+        this.starStates[index] = 'fa-star-o';
+        star.addClass('fa-star-o');
+    }
+});

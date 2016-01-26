@@ -87,7 +87,9 @@ class RouteController extends BaseController {
         $routeId = $this->getRequest()->getParam('id', 0);
 
         $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
-        $ownerOrAdmin = is_null($this->user) ? false : $this->user->isAdmin || ($this->user->userId ==
+        $ownerOrAdmin = is_null($this->user)
+            ? false
+            : $this->user->isAdmin || ($this->user->userId ==
                 $this->view->route->owner_id);
 
         if ($routeId == 0 || $this->view->route === false || ($this->view->route->is_private == 1 && !$ownerOrAdmin)) {
@@ -111,8 +113,6 @@ class RouteController extends BaseController {
 
         $points = RouteFactory::getRoutePoints($routeId);
         $this->view->points = $points;
-
-        //$this->view->gmapUrl = $this->getGmapStaticUrlForRoute($points);
 
         $this->view->firstPoint = $points[0]->latitude . "," . $points[0]->longitude;
         $this->view->lastPoint = $points[count($points) - 1]->latitude . "," . $points[count($points) - 1]->longitude;

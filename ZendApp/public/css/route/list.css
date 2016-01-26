@@ -4,6 +4,7 @@
 
 .searchTermContainer {
     margin-top: 20px;
+    padding-bottom: 0px;
 }
 
 #end_address {
@@ -17,5 +18,32 @@
 }
 
 #submit_search {
+    margin-top: 20px;
+}
+
+.readMore,
+.readLess {
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 12px;
+    color: #0078A8;
+}
+
+#end_address_1 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.searchTermBody {
+    position: relative;
+    top: -5px;
+}
+
+#max_dist {
+    margin-bottom: 10px;
+}
+
+.searchButton {
+    text-align: center;
     margin-top: 20px;
 }

@@ -13,12 +13,13 @@
                         <input type="hidden" name="end_lng" id="end_lng_1">
                         <input type="hidden" name="formError" id="formError_1">
 
+                        <label for="start_address_1">
+                            Start and End
+                        </label>
                         <input type="text" class="form-control" name="start_address" id="start_address_1" value="<?=
-                        $this->startAddress ?>"
-                               placeholder="Where do you wish to start your journey?">
+                        $this->startAddress ?>">
                         <input type="text" class="form-control" name="end_address" id="end_address_1" value="<?=
-                        $this->endAddress ?>"
-                               placeholder="Where do you wish to end up? (Leave blank if you're feeling adventurous!)">
+                        $this->endAddress ?>">
 
                         <label for="max_distance">
                             Maximum Distance (km)
@@ -28,9 +29,24 @@
                         <label for="max_distance">
                             Minimum Star Rating
                         </label>
-                        <input type="number" class="form-control" name="min_stars" id="min_stars" value="<?= $this->minStars ?>">
 
-                        <input type="button" class="btn btn-success" id="submit_addresses" value="Find Your Way!">
+                        <div class="row">
+                            <div class="clickableRating">
+                                <?= $this->partial('user', 'stars', null, array(
+                                    'rating'   => $this->minStars,
+                                    'showId'   => true,
+                                    'addBreak' => true,
+                                    'fontSize' => '26px'
+                                )); ?>
+                            </div>
+                        </div>
+
+                        <input type="hidden" class="form-control" name="min_stars" id="min_stars" value="<?= $this->minStars ?>">
+
+                        <div class="searchButton">
+                            <input type="button" class="btn btn-success" id="submit_addresses" value="Search Again">
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -60,9 +76,23 @@
                 <div>
                     <?= $route->start_address ?> to <?= $route->end_address ?>
                 </div>
-                <div>
-                    <?= $route->description ?>
-                </div>
+
+                <? $charLimit = 150; ?>
+                <? if (strlen($route->description) != 0) { ?>
+                    <? if (strlen($route->description) > $charLimit) { ?>
+                        <div class="desc shortDesc">
+                            <?= substr($route->description, 0, $charLimit) ?>
+                            <span class="readMore">Read More</span>
+                        </div>
+                        <div class="desc fullDesc hidden">
+                            <?= $route->description ?>
+                            <span class="readLess">Read Less</span>
+                        </div>
+                    <? } else { ?>
+                        <div class="desc"><?= $route->description ?></div>
+                    <? } ?>
+                <? } ?>
+
                 <div class="stats">
                     <i class="fa fa-comment"></i> <?= $route->comments ?> comments
                     <br>
