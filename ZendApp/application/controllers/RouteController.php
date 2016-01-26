@@ -89,8 +89,7 @@ class RouteController extends BaseController {
         $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
         $ownerOrAdmin = is_null($this->user)
             ? false
-            : $this->user->isAdmin || ($this->user->userId ==
-                $this->view->route->owner_id);
+            : $this->user->isAdmin || ($this->user->userId == $this->view->route->owner_id);
 
         if ($routeId == 0 || $this->view->route === false || ($this->view->route->is_private == 1 && !$ownerOrAdmin)) {
             $this->_redirect("/route/index/");

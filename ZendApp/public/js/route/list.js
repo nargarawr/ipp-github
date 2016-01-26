@@ -48,6 +48,8 @@ $(document).ready(function () {
         });
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
+
     var ratingManager = new RatingManager();
 });
 
@@ -182,6 +184,7 @@ var RatingManager = Class.extend({
         this.stars = $('.clickableRating').find('.starDisplay');
         this.starStates = [];
         this.minStarsField = $('#min_stars');
+        this.clearBtn = $('.clearBtn');
 
         for (var i = 0; i < this.stars.length; i++) {
             this.starStates.push(
@@ -221,7 +224,7 @@ var RatingManager = Class.extend({
         this.stars.click(function () {
             var index = $(this).attr('data-index');
             _self.selectStar($(this), index);
-            _self.minStarsField.val(parseInt(index) + 1)
+            _self.minStarsField.val(parseInt(index) + 1);
 
             for (var i = 0; i < _self.stars.length; i++) {
                 if (i <= index) {
@@ -229,6 +232,13 @@ var RatingManager = Class.extend({
                 } else {
                     _self.deselectStar($(_self.stars[i]), i);
                 }
+            }
+        });
+
+        this.clearBtn.click(function () {
+            _self.minStarsField.val(0);
+            for (var i = 0; i < _self.stars.length; i++) {
+                _self.deselectStar($(_self.stars[i]), i);
             }
         });
     },

@@ -24,27 +24,29 @@
                 <div class="row">
                     <div class="rating" id="ratingContainer">
                         <?= $this->partial('user', 'stars', null, array(
-                            'rating' => $this->route->rating
+                            'rating'   => $this->route->rating,
+                            'fontSize' => '28px'
                         )); ?>
                     </div>
                 </div>
 
                 <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
                     <div class="row">
-                            <div class="yourRating">
-                                Your rating
-                                <? if ($this->userRouteRating->value > 0) { ?>
-                                    <span class="clearBtn">
-                                        (<i class="fa fa-times"></i>)
-                                    </span>
-                                <? } ?>
+                        <div class="yourRating">
+                            Your rating
+                            <? if ($this->userRouteRating->value > 0) { ?>
+                                <span class="clearBtn">
+                                    (<i class="fa fa-times"></i>)
+                                </span>
+                            <? } ?>
 
-                                <?= $this->partial('user', 'stars', null, array(
-                                    'rating'   => $this->userRouteRating->value,
-                                    'showId'   => true,
-                                    'addBreak' => true,
-                                )); ?>
-                            </div>
+                            <?= $this->partial('user', 'stars', null, array(
+                                'rating'   => $this->userRouteRating->value,
+                                'showId'   => true,
+                                'addBreak' => true,
+                                'fontSize' => '14px'
+                            )); ?>
+                        </div>
                     </div>
                 <? } ?>
             </div>
@@ -89,7 +91,7 @@
                     </button>
                 </a>
                 <br>
-                <? if ($this->route->owner == $this->user->username || $this->user->isAdmin) { ?>
+                <? if (!is_null($this->user) && ($this->route->owner == $this->user->username || $this->user->isAdmin)) { ?>
                     <button class="btn btn-danger btn-nopad" id="deleteRoute">
                         <i class="fa fa-street-view"></i> Delete Route
                     </button>

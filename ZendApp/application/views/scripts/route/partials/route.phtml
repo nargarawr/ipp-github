@@ -1,0 +1,82 @@
+<? $route = $this->route ?>
+
+<div class="route row">
+    <div class="col-md-3">
+        <div class="leftBar">
+            <img src="../images/map_placeholder.png" class="img-responsive img-thumbnail">
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row rightBar">
+            <div class="col-md-8">
+                <h3 class="title">
+                    <?= $this->route->name ?>
+                </h3>
+                <div class="owner">
+                    By <?= $this->route->owner ?>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="rating">
+                        <?= $this->partial('user', 'stars', null, array(
+                            'rating' => $this->route->rating,
+                            'fontSize' => '20px'
+                        )); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="startEnd">
+                    From <?= $route->start_address ?> to <?= $route->end_address ?>
+                </div>
+                <div class="description">
+                    <? $charLimit = 150; ?>
+                    <? if (strlen($route->description) != 0) { ?>
+                        <? if (strlen($route->description) > $charLimit) { ?>
+                            <div class="desc shortDesc">
+                                "<?= substr($route->description, 0, $charLimit) ?>..."
+                                <span class="readMore">Read More</span>
+                            </div>
+                            <div class="desc fullDesc hidden">
+                                "<?= $route->description ?>"
+                                <div class="readLess">Read Less</div>
+                            </div>
+                        <? } else { ?>
+                            <div class="desc">"<?= $route->description ?>"</div>
+                        <? } ?>
+                    <? } ?>
+                </div>
+                <div class="stats">
+                    <a href="#" data-toggle="tooltip" title="Comments">
+                        <i class="fa fa-comment"></i> <?= $route->comments ?>
+                    </a>
+
+                    <a href="#" data-toggle="tooltip" title="Ratings Received">
+                        <i class="fa fa-star"></i> <?= $route->ratings ?>
+                    </a>
+
+                    <a href="#" data-toggle="tooltip" title="Shares">
+                        <i class="fa fa-share"></i> <?= $route->shares ?>
+                    </a>
+
+                    <a href="#" data-toggle="tooltip" title="Downloads">
+                        <i class="fa fa-download"></i> <?= $route->downloads ?>
+                    </a>
+
+                    <a href="#" data-toggle="tooltip" title="Clones">
+                        <i class="fa fa-clone"></i> <?= $route->forks ?>
+                    </a>
+                </div>
+                <div class="linkTo">
+                    <a href="/route/detail/id/<?= $route->id ?>">
+                        See Full Details <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

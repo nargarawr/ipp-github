@@ -29,6 +29,13 @@
                         <label for="max_distance">
                             Minimum Star Rating
                         </label>
+                        <span class="clearBtn">
+                            (
+                            <span class="inner">
+                                <i class="fa fa-times"></i> clear
+                            </span>
+                            )
+                        </span>
 
                         <div class="row">
                             <div class="clickableRating">
@@ -44,7 +51,9 @@
                         <input type="hidden" class="form-control" name="min_stars" id="min_stars" value="<?= $this->minStars ?>">
 
                         <div class="searchButton">
-                            <input type="button" class="btn btn-success" id="submit_addresses" value="Search Again">
+                            <button class="btn btn-success" id="submit_addresses">
+                                <i class="fa fa-search"></i> Search Again
+                            </button>
                         </div>
 
                     </form>
@@ -59,55 +68,19 @@
             had <?= count($this->routes) ?> results
         </h3>
         <p>
-            Not what you were looking for? Trying being more specific (i.e, St.Ives, Cornwall, instead of just St.Ives)
+            Not what you were looking for? Trying being more specific (i.e, "<i>St.Ives, Cornwall</i>", instead of just
+            "<i>St.Ives</i>")
         </p>
         <? foreach ($this->routes as $route) { ?>
             <? if (!($route->onPage)) { ?>
                 <? continue; ?>
             <? } ?>
-            <div class="route">
-                <h3> <?= $route->name ?> </h3>
-                by <?= $route->owner ?>
-                <div class="rating" id="ratingContainer">
-                    <?= $this->partial('user', 'stars', null, array(
-                        'rating' => $route->rating
-                    )); ?>
-                </div>
-                <div>
-                    <?= $route->start_address ?> to <?= $route->end_address ?>
-                </div>
-
-                <? $charLimit = 150; ?>
-                <? if (strlen($route->description) != 0) { ?>
-                    <? if (strlen($route->description) > $charLimit) { ?>
-                        <div class="desc shortDesc">
-                            <?= substr($route->description, 0, $charLimit) ?>
-                            <span class="readMore">Read More</span>
-                        </div>
-                        <div class="desc fullDesc hidden">
-                            <?= $route->description ?>
-                            <span class="readLess">Read Less</span>
-                        </div>
-                    <? } else { ?>
-                        <div class="desc"><?= $route->description ?></div>
-                    <? } ?>
-                <? } ?>
-
-                <div class="stats">
-                    <i class="fa fa-comment"></i> <?= $route->comments ?> comments
-                    <br>
-                    <i class="fa fa-star"></i> <?= $route->ratings ?> ratings
-                    <br>
-                    <i class="fa fa-share"></i> <?= $route->shares ?> shares
-                    <br>
-                    <i class="fa fa-download"></i> <?= $route->downloads ?> downloads
-                    <br>
-                    <i class="fa fa-clone"></i> <?= $route->forks ?> clones
-                </div>
-            </div>
+            <?= $this->partial('route', 'route', null, array(
+                'route' => $route
+            )); ?>
         <? } ?>
 
-        <? if (count($this->routes) > 0) { ?>
+        <? if (count($this->routes) > $this->pageLimit) { ?>
             <div class="text-center">
                 <nav>
                     <ul class="pagination">
