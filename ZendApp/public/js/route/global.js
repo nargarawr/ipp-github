@@ -156,11 +156,20 @@ var PointsListManager = Class.extend({
                 .attr('readonly', plm.readOnly)
         );
         container.append(
-            $('<textarea>').addClass('form-control')
+            $('<textarea>').addClass('form-control in_desc')
                 .attr('placeholder', 'Enter a description')
                 .text((data === undefined) ? ('') : data.description)
                 .attr('readonly', plm.readOnly)
         );
+
+        if (!plm.readOnly) {
+            container.append(
+                $('<textarea>').addClass('form-control in_media')
+                    .attr('placeholder', 'Comma separated list of image links')
+                    .text((data === undefined) ? ('') : data.media)
+            );
+        }
+
         container.append(
             $('<div>').addClass('hidden latHidden').text(e.lat.toString())
         );
@@ -224,7 +233,8 @@ var PointsListManager = Class.extend({
                     _self.router.getLast(),
                     null,
                     function (e, f) {
-                    }
+                    },
+                    data[i]
                 );
 
             }

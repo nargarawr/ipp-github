@@ -183,7 +183,7 @@ L.Routing = L.Control.extend({
      *
      * @return void
      */
-    , addWaypoint:           function (marker, prev, next, cb) {
+    , addWaypoint:           function (marker, prev, next, cb, data) {
         if (plm.readOnly && !(plm.pointsNotAdded)) {
             return;
         }
@@ -201,8 +201,9 @@ L.Routing = L.Control.extend({
         };
         var _self = this;
         var popupData = {
-            name:        'Point ' + plm.numPoints,
-            description: ''
+            name:        (data == undefined) ? 'Point ' + plm.numPoints : data.name,
+            description: (data == undefined) ? ''  : data.description,
+            media:       (data == undefined) ? ''  : data.media
         };
         marker.bindPopup(plm.getPopupHTML(marker._latlng, popupData))
             .on('popupopen', function () {

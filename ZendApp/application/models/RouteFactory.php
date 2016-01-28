@@ -68,26 +68,31 @@ class RouteFactory extends ModelFactory {
      * @return void
      */
     public static function createRoutePoint($point, $routeId) {
+
         $sql = "INSERT INTO tb_point (
                     fk_route_id,
                     name,
                     description,
                     latitude,
-                    longitude
+                    longitude,
+                    media
                 ) VALUES (
                     :routeId,
                     :name,
                     :description,
                     :latitude,
-                    :longitude
+                    :longitude,
+                    :media
                 )";
         $params = array(
             ':routeId'     => $routeId,
             ':name'        => $point->name,
             ':description' => $point->description,
             ':latitude'    => $point->lat,
-            ':longitude'   => $point->lng
+            ':longitude'   => $point->lng,
+            ':media'       => $point->media
         );
+
         parent::execute($sql, $params);
     }
 
@@ -234,52 +239,14 @@ class RouteFactory extends ModelFactory {
                     name,
                     description,
                     latitude" . ($forJson ? (" as lat") : "") . ",
-                    longitude" . ($forJson ? (" as lng") : "") . "
+                    longitude" . ($forJson ? (" as lng") : "") . ",
+                    media
                 FROM tb_point
                 WHERE fk_route_id = :routeId";
         $params = array(
             ':routeId' => $routeId
         );
 
-        $points = parent::fetchAll($sql, $params);
-        $media = self::getRouteMedia($routeId);
-
-        // Loop through points and add media
-        foreach ($points as &$point) {
-            $point->media = array();
-            foreach ($media as $m) {
-                if ($point->id === $m->route_id) {
-                    $point->media[] = $m;
-                }
-            }
-        }
-
-        return $points;
-    }
-
-    /**
-     * Get all media for a specified route
-     *
-     * @author Craig Knott
-     *
-     * @param int $routeId The Id of the route to get the points for
-     *
-     * @return array Array of all media for the given route
-     */
-    public static function getRouteMedia($routeId) {
-        $sql = "SELECT
-                    pk_point_media_id AS id,
-                    fk_point_id AS route_id,
-                    type,
-                    address
-                FROM tb_point_media pm
-                JOIN tb_point p
-                ON p.pk_point_id = pm.fk_point_id
-                WHERE fk_route_id = :routeId
-                AND is_deleted = 0";
-        $params = array(
-            ':routeId' => $routeId
-        );
         return parent::fetchAll($sql, $params);
     }
 

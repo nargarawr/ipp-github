@@ -318,9 +318,10 @@ var PopupManager = Class.extend({
 
             var point = {};
             point.name = pointPopup.find('.point_title').val();
-            point.description = pointPopup.find('textarea').val();
+            point.description = pointPopup.find('.in_desc').val();
             point.lat = pointPopup.find('.latHidden').text();
             point.lng = pointPopup.find('.lngHidden').text();
+            point.media = pointPopup.find('.in_media').val();
             points.push(point);
         }
 
