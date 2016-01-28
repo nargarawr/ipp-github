@@ -23,7 +23,7 @@ var PointsListManager = Class.extend({
         this.noPointsYet = this.container.find('.noPointsYet');
         this.pointsYet = this.container.find('.pointsYet');
         this.numPoints = 1;
-        this.readOnly = $('#mapReadOnly').val();
+        this.readOnly = ($('#mapReadOnly').val() != "");
         this.pointsNotAdded = true;
 
         this.setupListeners();
@@ -147,6 +147,7 @@ var PointsListManager = Class.extend({
      * @returns {*} An HTML string for this popup
      */
     getPopupHTML:      function (e, data) {
+        console.log(plm.readOnly);
         var container = $('<div>').addClass('pointContainer');
         container.append($('<div>').addClass('coords right')
             .text(e.lat.toString().slice(0, 7) + ", " + e.lng.toString().slice(0, 7)));

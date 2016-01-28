@@ -230,6 +230,7 @@ class RouteFactory extends ModelFactory {
      */
     public static function getRoutePoints($routeId, $forJson = false) {
         $sql = "SELECT
+                    pk_point_id as id,
                     name,
                     description,
                     latitude" . ($forJson ? (" as lat") : "") . ",
@@ -239,9 +240,48 @@ class RouteFactory extends ModelFactory {
         $params = array(
             ':routeId' => $routeId
         );
-        return parent::fetchAll($sql, $params);
+
+        $points = parent::fetchAll($sql, $params);
+        $media = self::getRouteMedia($routeId);
+
+        // Loop through points and add media
+        foreach ($points as &$point) {
+            $point->media = array();
+            foreach ($media as $m) {
+                if ($point->id === $m->route_id) {
+                    $point->media[] = $m;
+                }
+            }
+        }
+
+        return $points;
     }
 
+    /**
+     * Get all media for a specified route
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The Id of the route to get the points for
+     *
+     * @return array Array of all media for the given route
+     */
+    public static function getRouteMedia($routeId) {
+        $sql = "SELECT
+                    pk_point_media_id as id,
+                    fk_point_id as route_id,
+                    type,
+                    address
+                from tb_point_media pm
+                join tb_point p
+                on p.pk_point_id = pm.fk_point_id
+                WHERE fk_route_id = :routeId
+                and is_deleted = 0";
+        $params = array(
+            ':routeId' => $routeId
+        );
+        return parent::fetchAll($sql, $params);
+    }
 
     /**
      * Update a route's details
