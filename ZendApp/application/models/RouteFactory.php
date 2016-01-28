@@ -268,15 +268,15 @@ class RouteFactory extends ModelFactory {
      */
     public static function getRouteMedia($routeId) {
         $sql = "SELECT
-                    pk_point_media_id as id,
-                    fk_point_id as route_id,
+                    pk_point_media_id AS id,
+                    fk_point_id AS route_id,
                     type,
                     address
-                from tb_point_media pm
-                join tb_point p
-                on p.pk_point_id = pm.fk_point_id
+                FROM tb_point_media pm
+                JOIN tb_point p
+                ON p.pk_point_id = pm.fk_point_id
                 WHERE fk_route_id = :routeId
-                and is_deleted = 0";
+                AND is_deleted = 0";
         $params = array(
             ':routeId' => $routeId
         );

@@ -147,7 +147,6 @@ var PointsListManager = Class.extend({
      * @returns {*} An HTML string for this popup
      */
     getPopupHTML:      function (e, data) {
-        console.log(plm.readOnly);
         var container = $('<div>').addClass('pointContainer');
         container.append($('<div>').addClass('coords right')
             .text(e.lat.toString().slice(0, 7) + ", " + e.lng.toString().slice(0, 7)));

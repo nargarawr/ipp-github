@@ -347,7 +347,6 @@ L.Routing = L.Control.extend({
             toggleMapLoadingIcon();
         } catch(err) {
         }
-
     }
 
     /**
