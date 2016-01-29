@@ -778,4 +778,60 @@ class RouteFactory extends ModelFactory {
         $angle = atan2(sqrt($a), $b);
         return $angle * $earthRadius;
     }
+
+    public static function getSavedRoutesForUser($userId) {
+        $sql = "SELECT
+                    pk_route_id AS routeId,
+                    name,
+                    description,
+                    cost,
+                    distance,
+                    datetime_created AS created,
+                    (SELECT count(1) FROM tb_point WHERE fk_route_id = pk_route_id) AS num_points,
+                    IFNULL(
+                        (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = tb_route.pk_route_id AND is_deleted = 0), 0
+                    ) AS rating,
+                    IFNULL (
+                        (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
+                    ) AS comments,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'download'), 0
+                    ) AS downloads,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'fork'), 0
+                    ) AS forks,
+                    IFNULL (
+                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'share'), 0
+                    ) AS shares
+                FROM tb_route
+                WHERE pk_route_id IN (
+                    SELECT fk_route_id
+                    FROM tb_saved_route
+                    WHERE fk_user_id = :userId
+                    AND is_active = 1
+                )
+                AND is_deleted = 0
+                ORDER BY datetime_created DESC";
+        $params = array(
+            ':userId' => $userId
+        );
+
+        return parent::fetchAll($sql, $params);
+    }
+
+    public static function addSavedRoute(){
+
+    }
+
+    public static function removeSavedRoute($userId, $routeId) {
+        $sql = "UPDATE tb_saved_route
+                SET is_active = 0
+                WHERE fk_user_id = :userId
+                AND fk_route_id = :routeId";
+        $params = array (
+            ':userId' => $userId,
+            ':routeId' => $routeId
+        );
+        parent::execute($sql, $params);
+    }
 }

@@ -55,6 +55,10 @@ class UserController extends BaseController {
             $displayedUser = UserFactory::getUser($customUserId);
         }
 
+        if ($customUserId === $this->user->userId || is_null($customUserId)) {
+            $this->view->savedRoutes = RouteFactory::getSavedRoutesForUser($this->user->userId);
+        }
+
         // Get usage statistics for the user
         $userStats = SkinFactory::getUserStats($displayedUser->userId);
         $displayedUser->stats = $userStats;

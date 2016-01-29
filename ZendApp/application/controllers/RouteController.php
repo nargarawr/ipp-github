@@ -413,4 +413,21 @@ class RouteController extends BaseController {
         ));
         exit;
     }
+
+    /**
+     * Deletes a saved route from a user's account
+     *
+     * @author Craig Knott
+     */
+    public function deletesavedAction () {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('rid', 0);
+        $userId = $this->getRequest()->getParam('uid', 0);
+
+        RouteFactory::removeSavedRoute($userId, $routeId);
+
+        $this->_helper->redirector('details', 'user', null, array());
+    }
 }

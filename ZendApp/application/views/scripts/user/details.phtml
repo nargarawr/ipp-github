@@ -110,9 +110,9 @@
     <div class="col-sm-10 col-md-8">
         <div class="border-container">
             <div class="title routesTitle">
-                Routes
+                Routes <i class="minimiseRoutes fa fa-minus-square"></i>
             </div>
-            <div class="row">
+            <div class="row" id="routesContainer">
                 <? if (count($this->routes) > 0) { ?>
                     <div id="no-more-tables">
                         <table class="col-md-12 table table-striped table-condensed cf">
@@ -230,3 +230,100 @@
     </div>
     <div class="col-md-2"></div>
 </div>
+
+<? if ($this->viewingOwnProfile) { ?>
+    <div class="row margin_b_20">
+        <div class="col-sm-1 col-md-2"></div>
+        <div class="col-sm-10 col-md-8">
+            <div class="border-container">
+                <div class="title savedRoutesTitle">
+                    Saved Routes <i class="minimiseSavedRoutes fa fa-minus-square"></i>
+                </div>
+                <div class="row" id="savedRoutesContainer">
+                    <? if (count($this->savedRoutes) > 0) { ?>
+                        <div id="no-more-tables">
+                            <table class="col-md-12 table table-striped table-condensed cf">
+                                <thead class="cf">
+                                <tr>
+                                    <th>Name</th>
+                                    <th class="numeric">Points</th>
+                                    <th>Created</th>
+                                    <th class="numeric nmth-after"><i class="fa fa-comment"></i></th>
+                                    <th class="numeric nmth-after"><i class="fa fa-clone"></i></th>
+                                    <th class="numeric nmth-after"><i class="fa fa-share"></i></th>
+                                    <th class="numeric nmth-after"><i class="fa fa-download"></i></th>
+                                    <th class="nmth-init">Social</th>
+                                    <th>Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <? foreach ($this->savedRoutes as $route) { ?>
+                                    <tr class="routeRow">
+                                        <td data-title="Name" class="nmt-large">
+                                            <?= $route->name ?>
+                                        </td>
+                                        <td data-title="Points" class="numeric">
+                                            <?= $route->num_points ?>
+                                        </td>
+
+                                        <td data-title="Created">
+                                            <?= date("d M y", strtotime($route->created)) ?>
+                                        </td>
+                                        <td data-title="Comments" class="numeric nmth-after">
+                                            <?= $route->comments ?>
+                                        </td>
+                                        <td data-title="Forks" class="numeric nmth-after">
+                                            <?= $route->forks ?>
+                                        </td>
+                                        <td data-title="Shares" class="numeric nmth-after">
+                                            <?= $route->shares ?>
+                                        </td>
+                                        <td data-title="Downloads" class="numeric nmth-after">
+                                            <?= $route->downloads ?>
+                                        </td>
+
+                                        <td data-title="Social" class="nmth-init">
+                                            <i class="fa fa-comment"></i> <?= $route->comments ?>
+                                            <i class="fa fa-code-fork"></i> <?= $route->forks ?>
+                                            <i class="fa fa-share"></i> <?= $route->shares ?>
+                                            <i class="fa fa-download"></i> <?= $route->downloads ?>
+                                        </td>
+
+                                        <td data-title="Rating">
+                                            <?= $this->partial('user', 'stars', null, array(
+                                                'rating' => $route->rating
+                                            )) ?>
+                                        </td>
+                                        <td data-title="Actions">
+                                            <a class="btnLink" href="/route/detail/id/<?= $route->routeId ?>">
+                                                <button class="btn btn-success btn-nopad">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </button>
+                                            </a>
+
+                                            <a class="btnLink" target="_blank" href="/route/download/id/<?= $route->routeId ?>">
+                                                <button class="btn btn-warning btn-nopad"><i class="fa fa-download"></i>
+                                                </button>
+                                            </a>
+
+                                            <a class="delSaveBtn btnLink" href="/route/deletesaved/rid/<?=
+                                            $route->routeId ?>/uid/<?= $this->user->userId ?>">
+                                                <button class="btn btn-danger btn-nopad"><i class="fa fa-trash"></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <? } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <? } else { ?>
+                        You have not saved any routes yet.
+                    <? } ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+<? } ?>

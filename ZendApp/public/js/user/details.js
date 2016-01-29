@@ -18,7 +18,7 @@ $(document).ready(function () {
         var url = this.href;
         e.preventDefault();
         $.confirm({
-            title:           'Delete point?',
+            title:           'Delete route?',
             icon:            'fa fa-warning',
             content:         'Are you sure you wish to delete this route? This action is irreversible.',
             theme:           'black',
@@ -28,6 +28,41 @@ $(document).ready(function () {
                 window.location = url;
             }
         });
+    });
+
+    $('.delSaveBtn').click(function (e) {
+        var url = this.href;
+        e.preventDefault();
+        $.confirm({
+            title:           'Delete saved route?',
+            icon:            'fa fa-warning',
+            content:         'Are you sure you wish to remove this route from your saved routes? This action is irreversible.',
+            theme:           'black',
+            confirmButton:   'Delete',
+            keyboardEnabled: true,
+            confirm:         function () {
+                window.location = url;
+            }
+        });
+    });
+
+    var toggleDisplay = function (obj, container) {
+        $(obj).toggleClass('fa-minus-square');
+        $(obj).toggleClass('fa-plus-square');
+
+        if ($(obj).hasClass('fa-minus-square')) {
+            $(container).show();
+        } else {
+            $(container).hide();
+        }
+    };
+
+    $('.minimiseRoutes').click(function(){
+        toggleDisplay(this, '#routesContainer')
+    });
+    
+    $('.minimiseSavedRoutes').click(function(){
+        toggleDisplay(this, '#savedRoutesContainer')
     });
 });
 

@@ -3,7 +3,17 @@
 }
 
 .border-container .routesTitle {
-    width: 77px;
+    width: 104px;
+}
+
+.border-container .savedRoutesTitle {
+    width: 156px;
+}
+
+.fa-minus-square,
+.fa-plus-square {
+    margin-left: 10px;
+    cursor: pointer;
 }
 
 @media (max-width: 991px) {
