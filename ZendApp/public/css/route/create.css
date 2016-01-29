@@ -299,3 +299,9 @@ textarea {
     position: relative;
     text-align: center;
 }
+
+.viewMedia {
+    margin-top: 10px;
+    font-size: 14px;
+    padding-left: 2px;
+}

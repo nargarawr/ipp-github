@@ -111,12 +111,10 @@ var PointsListManager = Class.extend({
      * @param markerId The id of this marker
      * @param newName The new name of this marker
      */
-
     updatePoint: function (markerId, newName) {
         var obj = this.findPointById(markerId);
         obj.find('.title').text(newName);
     },
-
     /**
      * Removes a point from the left hand display
      *
@@ -124,7 +122,6 @@ var PointsListManager = Class.extend({
      *
      * @param markerId The id of the marker to remove
      */
-
     removePoint:       function (markerId) {
         var obj = this.findPointById(markerId);
         if (obj != null) {
@@ -157,7 +154,7 @@ var PointsListManager = Class.extend({
         );
         container.append(
             $('<textarea>').addClass('form-control in_desc')
-                .attr('placeholder', 'Enter a description')
+                .attr('placeholder', plm.readOnly ? 'No description' : 'Enter a description')
                 .text((data === undefined) ? ('') : data.description)
                 .attr('readonly', plm.readOnly)
         );
@@ -168,6 +165,31 @@ var PointsListManager = Class.extend({
                     .attr('placeholder', 'Comma separated list of image links')
                     .text((data === undefined) ? ('') : data.media)
             );
+        } else if (data.media !== '') {
+            var images = data.media.split(',');
+
+            var div = $('<div>').addClass('viewMedia');
+            div.append($('<a>')
+                .attr('href', '#')
+                .text('View Photos (' + images.length + ')'));
+
+            container.append(
+                div
+            );
+
+            $(div).click(function (e) {
+                e.preventDefault();
+                $.alert({
+                    title:           'Point Media',
+                    icon:            'fa fa-picture-o',
+                    content:         generateCarousel(images),
+                    theme:           'black',
+                    confirmButton:   'Close',
+                    keyboardEnabled: true,
+                    confirm:         function () {
+                    }
+                });
+            });
         }
 
         container.append(
@@ -205,6 +227,11 @@ var PointsListManager = Class.extend({
 
         return objToReturn;
     },
+    /**
+     * Display points on this route
+     *
+     * @param routeId The id of the route the points belong to
+     */
     addExistingPoints: function (routeId) {
         var _self = this;
         $.ajax({
@@ -308,3 +335,44 @@ var PointsListManager = Class.extend({
         );
     }
 });
+
+/**
+ * Generates the HTML for the media carousel
+ */
+function generateCarousel(images) {
+    var myCarousel = $('<div>').attr('id', 'myCarousel').addClass('carousel slide').attr('data-ride', 'carousel');
+    var indicators = $('<ol>').addClass('carousel-indicators');
+    for (var i = 0; i < images.length; i++) {
+        indicators.append(
+            $('<li>').attr('data-target', '#myCarousel').attr('data-slide-to', i).addClass((i == 0) ? 'active' : '')
+        )
+    }
+    myCarousel.append(indicators);
+
+    var carouselInner = $('<div>').addClass('carousel-inner').attr('role', 'listbox');
+    for (i = 0; i < images.length; i++) {
+        carouselInner.append(
+            $('<div>').addClass('item').addClass((i == 0) ? 'active' : '').append(
+                $('<img>').attr('src', images[i])
+            )
+        )
+    }
+    myCarousel.append(carouselInner);
+
+
+    var leftButton = $('<a>').addClass('left carousel-control').attr('href', '#myCarousel').attr('role', 'button').attr('data-slide', 'prev').append(
+        $('<span>').addClass('glyphicon glyphicon-chevron-left').attr('aria-hidden', 'true')
+    ).append(
+        $('<span>').addClass('sr-only').text('Previous')
+    );
+    myCarousel.append(leftButton);
+
+    var rightButton = $('<a>').addClass('right carousel-control').attr('href', '#myCarousel').attr('role', 'button').attr('data-slide', 'next').append(
+        $('<span>').addClass('glyphicon glyphicon-chevron-right').attr('aria-hidden', 'true')
+    ).append(
+        $('<span>').addClass('sr-only').text('Next')
+    );
+    myCarousel.append(rightButton);
+
+    return myCarousel.prop('outerHTML');
+}
