@@ -813,7 +813,8 @@ class RouteFactory extends ModelFactory {
                     ) AS shares
                 FROM tb_route
                 WHERE pk_route_id IN (
-                    SELECT fk_route_id
+                    SELECT
+                        fk_route_id
                     FROM tb_saved_route
                     WHERE fk_user_id = :userId
                     AND is_active = 1
@@ -870,5 +871,28 @@ class RouteFactory extends ModelFactory {
             ':routeId' => $routeId
         );
         parent::execute($sql, $params);
+    }
+
+    /**
+     * Returns whether or not the given is favourited by the user
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId  User to check
+     * @param int $routeId Route to check
+     */
+    public static function isFavourited($userId, $routeId) {
+        $sql = "SELECT
+                    fk_route_id
+                FROM tb_saved_route
+                WHERE fk_user_id = :userId
+                AND fk_route_id = :routeId
+                AND is_active = 1";
+        $params = array(
+            ':userId'  => $userId,
+            ':routeId' => $routeId
+        );
+
+        return count(parent::fetchAll($sql, $params)) > 0;
     }
 }

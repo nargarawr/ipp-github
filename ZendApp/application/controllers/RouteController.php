@@ -110,6 +110,10 @@ class RouteController extends BaseController {
         }
         $this->view->socialStream = $ss;
 
+        if (!is_null($this->user)) {
+            $this->view->isFavourite = RouteFactory::isFavourited($this->user->userId, $routeId);
+        }
+
         $points = RouteFactory::getRoutePoints($routeId);
         $this->view->points = $points;
 

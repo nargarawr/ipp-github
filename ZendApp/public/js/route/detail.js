@@ -695,11 +695,11 @@ var SavingManager = Class.extend({
      *
      * @author Craig Knott
      */
-    init:           function () {
+    init:            function () {
         this.button = $('.bmButton');
         this.buttonIcon = this.button.find('.fa');
         this.buttonText = this.button.find('.txt');
-        this.state = 'saved';
+        this.state = this.buttonIcon.hasClass('fa-bookmark') ? 'save' : 'saved';
         this.setupListeners();
     },
     /**
@@ -707,50 +707,77 @@ var SavingManager = Class.extend({
      *
      * @author Craig Knott
      */
-    setupListeners: function () {
+    setupListeners:  function () {
         var _self = this;
 
         this.button.mouseenter(function () {
-
             if (_self.state === 'saved') {
-                _self.button.addClass('btn-danger');
-                _self.button.removeClass('btn-success');
-                _self.buttonIcon.removeClass('fa-check').addClass('fa-times');
+                _self.button.addClass('btn-danger').removeClass('btn-success');
+                _self.buttonIcon.removeClass('fa-check').removeClass('fa-bookmark').addClass('fa-times');
                 _self.buttonText.text('Remove');
             }
         });
 
         this.button.mouseleave(function () {
+            console.log(_self.state)
             if (_self.state === 'saved') {
-                _self.button.removeClass('btn-danger');
-                _self.button.addClass('btn-success');
+                _self.button.removeClass('btn-danger').addClass('btn-success');
                 _self.buttonIcon.addClass('fa-check').removeClass('fa-times');
                 _self.buttonText.text('Saved');
+            } else if (_self.state === 'save') {
+                _self.button.removeClass('btn-danger').addClass('btn-success');
+                _self.buttonIcon.addClass('fa-bookmark').removeClass('fa-times');
+                _self.buttonText.text('Save');
             }
         });
 
-        this.button.click(function() {
+        this.button.click(function () {
             if (_self.state === 'saved') {
-                console.log('remove saved state and go to save');
+                _self.removeFavourite();
                 _self.state = 'save';
+
+                _self.button.addClass('btn-success').removeClass('btn-danger');
+                _self.buttonIcon.addClass('fa-bookmark').removeClass('fa-times');
+                _self.buttonText.text('Save');
             } else if (_self.state === 'save') {
-                console.log('add save state and go to saved');
                 _self.state = 'saved';
+                _self.addFavourite();
+
+                _self.buttonIcon.addClass('fa-check').removeClass('fa-bookmark');
+                _self.buttonText.text('Saved');
             }
         })
     },
     /**
-     * Sets the state / ui of the button
+     * Adds favourite to the database
      *
      * @author Craig Knott
      */
-    setState:       function (state) {
-        if (state == 'saved') {
-
-        } else if (state == 'save') {
-
-        } else if (state == 'remove') {
-
-        }
+    addFavourite:    function () {
+        $.ajax({
+            type: 'POST',
+            url:  '/route/addsaved',
+            data: {
+                rid: $('#routeId').val(),
+                uid: $('#userId').val()
+            }
+        }).success(function (response) {
+        });
+    },
+    /**
+     * Removes a favourite from the database
+     *
+     * @author Craig Knott
+     */
+    removeFavourite: function () {
+        $.ajax({
+            type: 'POST',
+            url:  '/route/deletesaved',
+            data: {
+                rid: $('#routeId').val(),
+                uid: $('#userId').val()
+            }
+        }).success(function (response) {
+        });
     }
 });

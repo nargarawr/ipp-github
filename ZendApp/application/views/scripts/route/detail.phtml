@@ -1,6 +1,7 @@
 <input type="hidden" id="email-confirmed" value="<?= ((!is_null($this->user)) && $this->user->isConfirmed) ? 1 : 0 ?>">
 <input type="hidden" id="routeId" value="<?= $this->route->routeId ?>">
 <input type="hidden" id="ratingId" value="<?= $this->userRouteRating->ratingId ?>">
+<input type="hidden" id="userId" value="<?= (!is_null($this->user)) ? $this->user->userId : null ?>">
 <input type="hidden" value="1" id="mapReadOnly">
 
 <div class="row containingRow">
@@ -237,11 +238,10 @@
     </div>
 </div>
 
+<? if (!is_null($this->user)) { ?>
+    <button class="btn btn-success bmButton">
+        <i class="fa fa-<?= $this->isFavourite ? 'check' : 'bookmark' ?>"></i>
+        <span class='txt'>Save<?= $this->isFavourite ? 'd' : '' ?></span>
+    </button>
+<? } ?>
 
-<button class="btn btn-success bmButton">
-    <i class="fa fa-check"></i> <span class='txt'>Saved</span>
-</button>
-
-<button class="btn btn-success">
-    <i class="fa fa-bookmark"></i> Save
-</button>
