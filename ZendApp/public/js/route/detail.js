@@ -719,7 +719,6 @@ var SavingManager = Class.extend({
         });
 
         this.button.mouseleave(function () {
-            console.log(_self.state)
             if (_self.state === 'saved') {
                 _self.button.removeClass('btn-danger').addClass('btn-success');
                 _self.buttonIcon.addClass('fa-check').removeClass('fa-times');
