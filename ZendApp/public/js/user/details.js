@@ -60,7 +60,7 @@ $(document).ready(function () {
     $('.minimiseRoutes').click(function(){
         toggleDisplay(this, '#routesContainer')
     });
-    
+
     $('.minimiseSavedRoutes').click(function(){
         toggleDisplay(this, '#savedRoutesContainer')
     });

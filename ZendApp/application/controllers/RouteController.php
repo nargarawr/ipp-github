@@ -415,6 +415,21 @@ class RouteController extends BaseController {
     }
 
     /**
+     * Adds a saved route to a user's account
+     *
+     * @author Craig Knott
+     */
+    public function addsavedAction () {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('rid', 0);
+        $userId = $this->getRequest()->getParam('uid', 0);
+
+        RouteFactory::addSavedRoute($userId, $routeId);
+    }
+
+    /**
      * Deletes a saved route from a user's account
      *
      * @author Craig Knott

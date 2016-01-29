@@ -115,6 +115,10 @@ tr td:first-child {
     color: #FF6961;
 }
 
+.bmButton {
+    width: 94px;
+}
+
 #reportRoute:hover .fa {
     color: #FF6961;
 }

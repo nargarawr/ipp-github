@@ -41,6 +41,7 @@ $(document).ready(function () {
 
     var cm = new CommentManager();
     var rm = new RatingManager();
+    var sm = new SavingManager();
 
     $('#reportRoute').click(function () {
         $.confirm({
@@ -72,7 +73,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#deleteRoute').click(function(){
+    $('#deleteRoute').click(function () {
         $.confirm({
             title:           'Delete comment?',
             icon:            'fa fa-warning',
@@ -104,7 +105,7 @@ $(document).ready(function () {
  *
  * @author Craig Knott
  */
-function drawMap(){
+function drawMap() {
     $('#map').height('400px');
 
     map = L.map('map', {zoomControl: false}).setView([52, -1.1], 13);
@@ -680,3 +681,76 @@ function my_addtoany_onshare(data) {
     });
 
 }
+
+/**
+ * Class SavingManager
+ *
+ * Use to manage the bookmarking of routes and the UI for this
+ *
+ * @author Craig Knott
+ */
+var SavingManager = Class.extend({
+    /**
+     * Initialises this class and assigns member variables
+     *
+     * @author Craig Knott
+     */
+    init:           function () {
+        this.button = $('.bmButton');
+        this.buttonIcon = this.button.find('.fa');
+        this.buttonText = this.button.find('.txt');
+        this.state = 'saved';
+        this.setupListeners();
+    },
+    /**
+     * Set up the listeners for the button
+     *
+     * @author Craig Knott
+     */
+    setupListeners: function () {
+        var _self = this;
+
+        this.button.mouseenter(function () {
+
+            if (_self.state === 'saved') {
+                _self.button.addClass('btn-danger');
+                _self.button.removeClass('btn-success');
+                _self.buttonIcon.removeClass('fa-check').addClass('fa-times');
+                _self.buttonText.text('Remove');
+            }
+        });
+
+        this.button.mouseleave(function () {
+            if (_self.state === 'saved') {
+                _self.button.removeClass('btn-danger');
+                _self.button.addClass('btn-success');
+                _self.buttonIcon.addClass('fa-check').removeClass('fa-times');
+                _self.buttonText.text('Saved');
+            }
+        });
+
+        this.button.click(function() {
+            if (_self.state === 'saved') {
+                console.log('remove saved state and go to save');
+                _self.state = 'save';
+            } else if (_self.state === 'save') {
+                console.log('add save state and go to saved');
+                _self.state = 'saved';
+            }
+        })
+    },
+    /**
+     * Sets the state / ui of the button
+     *
+     * @author Craig Knott
+     */
+    setState:       function (state) {
+        if (state == 'saved') {
+
+        } else if (state == 'save') {
+
+        } else if (state == 'remove') {
+
+        }
+    }
+});

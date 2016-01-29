@@ -779,6 +779,14 @@ class RouteFactory extends ModelFactory {
         return $angle * $earthRadius;
     }
 
+    /**
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId User to get results for
+     *
+     * @return array
+     */
     public static function getSavedRoutesForUser($userId) {
         $sql = "SELECT
                     pk_route_id AS routeId,
@@ -819,17 +827,46 @@ class RouteFactory extends ModelFactory {
         return parent::fetchAll($sql, $params);
     }
 
-    public static function addSavedRoute(){
-
+    /**
+     * Add a saved route to a user
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId  User that saved the route
+     * @param int $routeId The route to be saved
+     */
+    public static function addSavedRoute($userId, $routeId) {
+        $sql = "INSERT INTO tb_saved_route (
+                    fk_route_id,
+                    fk_user_id,
+                    is_active
+                ) VALUES (
+                    :routeId,
+                    :userId,
+                    1
+                )";
+        $params = array(
+            ':userId'  => $userId,
+            ':routeId' => $routeId
+        );
+        parent::execute($sql, $params);
     }
 
+    /**
+     * Remove a saved routes from a particular user
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId  User that saved the route
+     * @param int $routeId The saved route
+     */
     public static function removeSavedRoute($userId, $routeId) {
         $sql = "UPDATE tb_saved_route
                 SET is_active = 0
                 WHERE fk_user_id = :userId
                 AND fk_route_id = :routeId";
-        $params = array (
-            ':userId' => $userId,
+        $params = array(
+            ':userId'  => $userId,
             ':routeId' => $routeId
         );
         parent::execute($sql, $params);
