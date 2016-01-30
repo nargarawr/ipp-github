@@ -124,6 +124,8 @@ class RouteController extends BaseController {
             (is_null($this->user)) ? 0 : $this->user->userId,
             $routeId
         );
+
+        $this->view->routeMedia = RouteFactory::getRouteMedia($routeId);
     }
 
     /**

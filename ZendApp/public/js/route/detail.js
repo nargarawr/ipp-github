@@ -117,7 +117,7 @@ function drawMap() {
     var mapId = 'nargarawr.cig6xoyv103gnvbkvyv7s6a0k';
     var token = 'pk.eyJ1IjoibmFyZ2FyYXdyIiwiYSI6ImNpZzZ4b3l6MzAzZzF2cWt2djg4d3llZDMifQ.k5f5mW8zW3VBH40GUYS-8A';
 
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    var c = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: mapDataCopy + ', ' + creativeCommons + ', ' + mapBoxCopy,
         maxZoom:     18,
         minZoom:     8,

@@ -25,6 +25,7 @@ var PointsListManager = Class.extend({
         this.numPoints = 1;
         this.readOnly = ($('#mapReadOnly').val() != "");
         this.pointsNotAdded = true;
+        this.detailPage = window.location.pathname.search(/detail/) > 0;
 
         this.setupListeners();
     },
@@ -53,6 +54,10 @@ var PointsListManager = Class.extend({
      * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
      */
     addPoint:          function (marker, e) {
+        if (this.detailPage) {
+            return;
+        }
+
         if (this.pointsList.children().length == 0) {
             this.noPointsYet.addClass('hidden');
             this.pointsYet.removeClass('hidden');

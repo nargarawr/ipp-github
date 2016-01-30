@@ -107,10 +107,6 @@ L.Routing = L.Control.extend({
         this._waypoints._first = null;
         this._waypoints._last = null;
 
-        //L.DomUtil.disableTextSelection();
-        //this._tooltip = new L.Tooltip(this._map);
-        //this._tooltip.updateContent({ text: L.drawLocal.draw.marker.tooltip.start });
-
         if (this.options.shortcut) {
             L.DomEvent.addListener(this._container, 'keyup', this._keyupListener, this);
         }
@@ -202,43 +198,47 @@ L.Routing = L.Control.extend({
         var _self = this;
         var popupData = {
             name:        (data == undefined) ? 'Point ' + plm.numPoints : data.name,
-            description: (data == undefined) ? ''  : data.description,
-            media:       (data == undefined) ? ''  : data.media
+            description: (data == undefined) ? '' : data.description,
+            media:       (data == undefined) ? '' : data.media
         };
-        marker.bindPopup(plm.getPopupHTML(marker._latlng, popupData))
-            .on('popupopen', function () {
-                plm.isPopupOpen = true;
-                var tempMarker = this;
 
-                $(".marker-delete-button").click(function () {
-                    $.confirm({
-                        title:           'Delete point?',
-                        icon:            'fa fa-warning',
-                        content:         'Are you sure you wish to delete this point? This action is irreversible.',
-                        theme:           'black',
-                        confirmButton:   'Delete',
-                        keyboardEnabled: true,
-                        confirm:         function () {
-                            plm.isPopupOpen = false;
-                            plm.removePoint(tempMarker._leaflet_id);
-                            _self.removeWaypoint(marker, function () {
-                            });
-                        }
+        if (!plm.detailPage) {
+            marker.bindPopup(plm.getPopupHTML(marker._latlng, popupData))
+                .on('popupopen', function () {
+                    plm.isPopupOpen = true;
+                    var tempMarker = this;
+
+                    var markerDeleteBtn = $(".marker-delete-button");
+                    markerDeleteBtn.click(function () {
+                        $.confirm({
+                            title:           'Delete point?',
+                            icon:            'fa fa-warning',
+                            content:         'Are you sure you wish to delete this point? This action is irreversible.',
+                            theme:           'black',
+                            confirmButton:   'Delete',
+                            keyboardEnabled: true,
+                            confirm:         function () {
+                                plm.isPopupOpen = false;
+                                plm.removePoint(tempMarker._leaflet_id);
+                                _self.removeWaypoint(marker, function () {
+                                });
+                            }
+                        });
                     });
-                });
 
-                $(".marker-update-button").click(function () {
-                    var newName = $(marker._popup._content).find('.point_title').val();
-                    plm.updatePoint(tempMarker._leaflet_id, newName);
-                    marker.closePopup();
-                });
+                    $(".marker-update-button").click(function () {
+                        var newName = $(marker._popup._content).find('.point_title').val();
+                        plm.updatePoint(tempMarker._leaflet_id, newName);
+                        marker.closePopup();
+                    });
 
-                if (_self.readOnly) {
-                    $('.point_title').attr("readonly", "true");
-                    $('textarea').attr("readonly", "true");
-                    $(".marker-delete-button").remove();
-                }
-            });
+                    if (_self.readOnly) {
+                        $('.point_title').attr("readonly", "true");
+                        $('textarea').attr("readonly", "true");
+                        markerDeleteBtn.remove();
+                    }
+                });
+        }
 
         if (this._waypoints._first === null && this._waypoints._last === null) {
             this._waypoints._first = marker;
@@ -258,7 +258,7 @@ L.Routing = L.Control.extend({
 
             try {
                 toggleMapLoadingIcon();
-            } catch(err) {
+            } catch (err) {
             }
         }
 
@@ -346,7 +346,7 @@ L.Routing = L.Control.extend({
 
         try {
             toggleMapLoadingIcon();
-        } catch(err) {
+        } catch (err) {
         }
     }
 
@@ -1131,8 +1131,10 @@ L.Routing.Draw = L.Handler.extend({
         if (a !== null) {
             this._setTrailer(a.getLatLng(), c)
         }
-    }, _onMouseClick: function(e) {
-        if (this._hidden) { return; }
+    }, _onMouseClick:       function (e) {
+        if (this._hidden) {
+            return;
+        }
 
         var marker, latlng, last;
 
@@ -1140,11 +1142,11 @@ L.Routing.Draw = L.Handler.extend({
         if (this.options.snapping) {
             latlng = L.LineUtil.snapToLayers(latlng, null, this.options.snapping);
         }
-        marker = new L.Marker(latlng, {title: this.options.tooltips.waypoint });
+        marker = new L.Marker(latlng, {title: this.options.tooltips.waypoint});
         last = this._parent.getLast();
 
         this._setTrailer(latlng, latlng);
-        this._parent.addWaypoint(marker, last, null, function(err, data) {
+        this._parent.addWaypoint(marker, last, null, function (err, data) {
             // console.log(err, data);
         });
     }

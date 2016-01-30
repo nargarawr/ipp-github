@@ -897,4 +897,35 @@ class RouteFactory extends ModelFactory {
 
         return count(parent::fetchAll($sql, $params)) > 0;
     }
+
+    /**
+     * Get all media for a given route
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId Route to get the media for
+     */
+    public static function getRouteMedia ($routeId) {
+        $sql = "SELECT media
+                FROM tb_point
+                WHERE fk_route_id = :routeId";
+        $params = array(
+            ':routeId' => $routeId
+        );
+
+        $results = parent::fetchAll($sql, $params);
+
+
+        $media = array();
+        foreach ($results as $result) {
+            if ($result->media !== "") {
+                $strings = explode(",", $result->media);
+                foreach ($strings as $s) {
+                    $media[] = $s;
+                }
+            }
+        }
+
+        return $media;
+    }
 }

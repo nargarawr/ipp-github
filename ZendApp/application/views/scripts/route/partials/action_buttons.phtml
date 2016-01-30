@@ -1,0 +1,54 @@
+<div class="btn-group">
+
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Actions <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu text-left">
+        <li>
+            <a class="btnLink" target="_blank" href="/route/openingooglemaps/id/<?= $this->routeId ?>">
+                <i class="fa fa-street-view"></i> Open In Google Maps
+            </a>
+        </li>
+
+        <li>
+            <a class="btnLink" target="_blank" href="/route/create/id/<?= $this->routeId ?>/readOnly/1">
+                <i class="fa fa-expand"></i> Open In Full View
+            </a>
+        </li>
+
+        <li role="separator" class="divider"></li>
+
+        <? if (!(is_null($this->user))) { ?>
+            <li>
+                <a href="/route/fork/id/<?= $this->routeId ?>">
+                    <i class="fa fa-clone"></i> Clone Route
+                </a>
+            </li>
+        <? } ?>
+
+        <li>
+            <a target="_blank" href="/route/download/id/<?= $this->routeId ?>">
+                <i class="fa fa-download"></i> Download Route
+            </a>
+        </li>
+
+        <? if (!is_null($this->user) && ($this->routeowner == $this->user->username || $this->user->isAdmin)) { ?>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a id="deleteRoute" href="#">
+                    <i class="fa fa-trash"></i> Delete Route
+                </a>
+            </li>
+        <? } ?>
+
+        <? if (!is_null($this->user)) { ?>
+            <li class="bmButton">
+                <a>
+                    <i class="fa fa-<?= $this->isFavourite ? 'check' : 'bookmark' ?>"></i>
+                    <span class='txt'>Save<?= $this->isFavourite ? 'd' : '' ?></span>
+                </a>
+            </li>
+        <? } ?>
+    </ul>
+</div>

@@ -58,64 +58,45 @@
                 <div class="thumbnail" id="map">
                 </div>
 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Actions <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="btnLink" target="_blank" href="/route/openingooglemaps/id/<?= $this->route->routeId ?>">
-                                <i class="fa fa-street-view"></i> Open In Google Maps
+                <div class="border-container border-container-less-pad">
+                    <div class="title mediaTitle">
+                        Media
+                    </div>
+
+                    <? if (!is_null($this->routeMedia) && count($this->routeMedia) > 0) { ?>
+                        <div id="mediaCarousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                <? $i = 0; ?>
+                                <? foreach ($this->routeMedia as $m) { ?>
+                                    <div class="item<?= $i == 0 ? ' active' : '' ?>">
+                                        <img src="<?= $m ?>">
+                                    </div>
+                                    <? $i++; ?>
+                                <? } ?>
+                            </div>
+
+                            <a class="left carousel-control" href="#mediaCarousel" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
                             </a>
-                        </li>
-
-                        <li>
-                            <a class="btnLink" target="_blank" href="/route/create/id/<?= $this->route->routeId ?>/readOnly/1">
-                                <i class="fa fa-expand"></i> Open In Full View
+                            <a class="right carousel-control" href="#mediaCarousel" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
                             </a>
-                        </li>
-
-                        <li role="separator" class="divider"></li>
-
-                        <? if (!(is_null($this->user))) { ?>
-                            <li>
-                                <a href="/route/fork/id/<?= $this->route->routeId ?>">
-                                    <i class="fa fa-clone"></i> Clone Route
-                                </a>
-                            </li>
-                        <? } ?>
-
-                        <li>
-                            <a target="_blank" href="/route/download/id/<?= $this->route->routeId ?>">
-                                <i class="fa fa-download"></i> Download Route
-                            </a>
-                        </li>
-
-                        <? if (!is_null($this->user) && ($this->route->owner == $this->user->username || $this->user->isAdmin)) { ?>
-                            <li role="separator" class="divider"></li>
-                            <li>
-                                <a id="deleteRoute" href="#">
-                                    <i class="fa fa-trash"></i> Delete Route
-                                </a>
-                            </li>
-                        <? } ?>
-
-                        <? if (!is_null($this->user)) { ?>
-                            <li class="bmButton">
-                                <a>
-                                    <i class="fa fa-<?= $this->isFavourite ? 'check' : 'bookmark' ?>"></i>
-                                    <span class='txt'>Save<?= $this->isFavourite ? 'd' : '' ?></span>
-                                </a>
-                            </li>
-                        <? } ?>
-
-
-                    </ul>
+                        </div>
+                    <? } ?>
                 </div>
-
-
             </div>
             <div class="col-md-6">
+                <div class="text-right">
+                    <?= $this->partial("route", "action_buttons", null, array(
+                        'routeId'     => $this->route->routeId,
+                        'user'        => $this->user,
+                        'routeOwner'  => $this->route->owner,
+                        'isFavourite' => $this->isFavourite
+                    )); ?>
+                </div>
+
                 <div class="border-container">
                     <div class="title routedetailTitle">
                         Route Details
@@ -160,7 +141,7 @@
 
     <div class="col-md-5" id="socialStream">
         <div class="border-container">
-            <div class="title routessTitle">
+            <div class="title routesTitle">
                 Social Stream
             </div>
 

@@ -140,8 +140,13 @@ tr td:first-child {
     width: 133px;
 }
 
-.border-container .routessTitle {
+.border-container .routesTitle {
     width: 136px;
+}
+
+.border-container .mediaTitle {
+    width: 65px;
+    top: -18px !important;
 }
 
 .border-container {
@@ -167,3 +172,24 @@ tr td:first-child {
 .dropdown-toggle {
     margin-bottom: 5px;
 }
+
+#mediaCarousel {
+    height: 225px;
+    max-height: 225px;
+    top: -7px;
+}
+
+#mediaCarousel img {
+    width: auto;
+    height: 225px;
+    max-height: 225px;
+}
+
+#mediaCarousel .carousel-inner > .item > img {
+    margin: 0 auto;
+}
+
+.border-container.border-container-less-pad {
+    padding: 0.65em;
+}
+
