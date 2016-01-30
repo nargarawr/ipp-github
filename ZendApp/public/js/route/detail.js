@@ -712,7 +712,6 @@ var SavingManager = Class.extend({
 
         this.button.mouseenter(function () {
             if (_self.state === 'saved') {
-                _self.button.addClass('btn-danger').removeClass('btn-success');
                 _self.buttonIcon.removeClass('fa-check').removeClass('fa-bookmark').addClass('fa-times');
                 _self.buttonText.text('Remove');
             }
@@ -720,11 +719,9 @@ var SavingManager = Class.extend({
 
         this.button.mouseleave(function () {
             if (_self.state === 'saved') {
-                _self.button.removeClass('btn-danger').addClass('btn-success');
                 _self.buttonIcon.addClass('fa-check').removeClass('fa-times');
                 _self.buttonText.text('Saved');
             } else if (_self.state === 'save') {
-                _self.button.removeClass('btn-danger').addClass('btn-success');
                 _self.buttonIcon.addClass('fa-bookmark').removeClass('fa-times');
                 _self.buttonText.text('Save');
             }
@@ -735,7 +732,6 @@ var SavingManager = Class.extend({
                 _self.removeFavourite();
                 _self.state = 'save';
 
-                _self.button.addClass('btn-success').removeClass('btn-danger');
                 _self.buttonIcon.addClass('fa-bookmark').removeClass('fa-times');
                 _self.buttonText.text('Save');
             } else if (_self.state === 'save') {

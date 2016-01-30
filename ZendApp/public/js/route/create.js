@@ -407,12 +407,19 @@ var UploadManager = Class.extend({
                 lng:      points[i].lng
             };
 
+            var popupData = {
+                name:        points[i].name,
+                description: points[i].description,
+                media:       points[i].media
+            };
+
             plm.router.addWaypoint(
                 new L.Marker(latlng, {title: 'test'}),
                 plm.router.getLast(),
                 null,
                 function (e, f) {
-                }
+                },
+                popupData
             );
         }
 

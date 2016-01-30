@@ -13,7 +13,7 @@ var PointsListManager = Class.extend({
      *
      * @param router The L.Routing Object
      */
-    init:        function (router) {
+    init:              function (router) {
         var _self = this;
 
         this.router = router;
@@ -33,7 +33,7 @@ var PointsListManager = Class.extend({
      *
      * @author Craig Knott
      */
-    setupListeners: function() {
+    setupListeners:    function () {
         $('#hide_lhd').click(function () {
             $('#left-hand-display').addClass('hidden');
             $('#left-hand-display-mini').removeClass('hidden');
@@ -52,7 +52,7 @@ var PointsListManager = Class.extend({
      * @param marker The marker object (as defined in the Leaflet API)
      * @param e An object containing the lat and long of the point (as defined in the Leaflet API)
      */
-    addPoint:    function (marker, e) {
+    addPoint:          function (marker, e) {
         if (this.pointsList.children().length == 0) {
             this.noPointsYet.addClass('hidden');
             this.pointsYet.removeClass('hidden');
@@ -111,7 +111,7 @@ var PointsListManager = Class.extend({
      * @param markerId The id of this marker
      * @param newName The new name of this marker
      */
-    updatePoint: function (markerId, newName) {
+    updatePoint:       function (markerId, newName) {
         var obj = this.findPointById(markerId);
         obj.find('.title').text(newName);
     },
@@ -186,9 +186,11 @@ var PointsListManager = Class.extend({
                     theme:           'black',
                     confirmButton:   'Close',
                     keyboardEnabled: true,
+                    columnClass:     'col-xs-11 col-sm-11 col-md-11 col-lg-11',
                     confirm:         function () {
                     }
                 });
+                $('.jconfirm-box').css('margin-top', window.innerHeight * 0.1 + 'px')
             });
         }
 
@@ -358,7 +360,6 @@ function generateCarousel(images) {
         )
     }
     myCarousel.append(carouselInner);
-
 
     var leftButton = $('<a>').addClass('left carousel-control').attr('href', '#myCarousel').attr('role', 'button').attr('data-slide', 'prev').append(
         $('<span>').addClass('glyphicon glyphicon-chevron-left').attr('aria-hidden', 'true')

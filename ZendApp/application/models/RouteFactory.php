@@ -415,14 +415,16 @@ class RouteFactory extends ModelFactory {
                     name,
                     description,
                     latitude,
-                    longitude
+                    longitude,
+                    media
                 )
                 SELECT
                     :routeId,
                     name,
                     description,
                     latitude,
-                    longitude
+                    longitude,
+                    media
                 FROM tb_point
                 WHERE fk_route_id = :oldRouteId;";
         $params = array(

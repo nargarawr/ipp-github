@@ -116,7 +116,7 @@ tr td:first-child {
 }
 
 .bmButton {
-    width: 94px;
+    cursor: pointer;
 }
 
 #reportRoute:hover .fa {
@@ -137,8 +137,8 @@ tr td:first-child {
 }
 
 .border-container .routedetailTitle {
-     width: 133px;
- }
+    width: 133px;
+}
 
 .border-container .routessTitle {
     width: 136px;

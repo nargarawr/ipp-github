@@ -305,3 +305,7 @@ textarea {
     font-size: 14px;
     padding-left: 2px;
 }
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}

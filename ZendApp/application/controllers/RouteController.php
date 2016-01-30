@@ -197,12 +197,13 @@ class RouteController extends BaseController {
 
             $canAccessPrivate = !(is_null($this->user))
                 && ($this->user->userId == $this->view->route->owner || $this->user->isAdmin);
-            if (!$canAccessPrivate) {
+            if (!$canAccessPrivate && !$isReadOnly) {
                 $this->view->route = false;
             }
 
             $this->view->latlng = RouteFactory::getFirstRoutePoint($this->view->routeId);
-            $this->view->routeExists = ($this->view->route !== false)
+            $this->view->routeExists =
+                ($this->view->route !== false)
                 && ($isReadOnly || $this->user->userId == $this->view->route->owner || $this->user->isAdmin);
         }
 
