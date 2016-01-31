@@ -20,7 +20,7 @@ class ModelFactory {
     public static function getDb() {
         $host = 'niceway.to';
         $username = 'root';
-        $password = 'bC5sx5hLnV';
+        $password = ModelFactory::getPassword();
         $dbName = 'nicewayto';
 
         $db = new Zend_Db_Adapter_Pdo_Mysql(array(
@@ -30,6 +30,17 @@ class ModelFactory {
             'dbname'   => $dbName
         ));
         return $db;
+    }
+
+    /**
+     * Returns the database password
+     *
+     * @author Craig Knott
+     *
+     * @return String The niceway.to database password
+     */
+    public static function getPassword() {
+        return 'bC5sx5hLnV';
     }
 
     /**

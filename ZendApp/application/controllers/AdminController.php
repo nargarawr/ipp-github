@@ -244,4 +244,24 @@ class AdminController extends BaseController {
         $this->_helper->redirector('index', 'admin', null, array());
     }
 
+    /**
+     * Takes a backup of the SQL database. Stores the backup in /backups on the web server
+     *
+     * @author Craig Knott
+     */
+    public function backupAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $filename = date('Y-m-d_H:i:s') . "-backup.sql";
+        $command = "mysqldump nicewayto --user=root --password=" . ModelFactory::getPassword() .  " > " . $filename;
+
+        shell_exec('cd /backups;' . $command);
+
+        $this->messageManager->addMessage(array(
+            'msg'  => 'Backup taken succesfully, saved as ' . $filename,
+            'type' => 'success'
+        ));
+
+        $this->_helper->redirector('index', 'admin', null, array());
+    }
 }
