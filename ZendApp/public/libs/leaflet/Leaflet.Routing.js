@@ -81,8 +81,14 @@ L.Routing = L.Control.extend({
 
         L.Util.setOptions(this, options);
 
-        if ($('#routeId').val() != '') {
+        var routeId = $('#routeId').val();
+        if (routeId !== '' && routeId !== undefined) {
             plm.addExistingPoints($('#routeId').val());
+        }
+
+        // On the route listing page
+        if (window.location.pathname.search(/list/) > 0 && options.routeToDraw !== undefined) {
+            plm.addExistingPoints(parseInt(options.routeToDraw), options.multiMapCentre, options.mapId);
         }
 
     }

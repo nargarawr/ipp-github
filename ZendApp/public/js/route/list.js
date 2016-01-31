@@ -1,3 +1,5 @@
+var maps = [];
+
 /**
  * Document ready function. Gets the geocodes the submitted data and submits the form
  *
@@ -31,7 +33,8 @@ $(document).ready(function () {
         submitSearchForm();
     });
 
-    $('.route').each(function () {
+    var routes = $('.route');
+    routes.each(function () {
         var shrt = $(this).find('.shortDesc');
         var long = $(this).find('.fullDesc');
         var readMore = $(this).find('.readMore');
@@ -51,6 +54,9 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     var ratingManager = new RatingManager();
+    for (var i = 0; i < routes.length; i++) {
+        drawMap('map_' + i);
+    }
 });
 
 /**
@@ -301,3 +307,96 @@ var RatingManager = Class.extend({
         star.addClass('fa-star-o');
     }
 });
+
+
+/**
+ * Draws the map and adds the map points to it
+ *
+ * @author Craig Knott
+ */
+function drawMap(id) {
+    $('#' + id).height('200px');
+
+    map = L.map(id, {zoomControl: false}).setView([52, -1.1], 13);
+    new L.Control.Zoom({position: 'topright'}).addTo(map);
+
+    var mapId = 'nargarawr.cig6xoyv103gnvbkvyv7s6a0k';
+    var token = 'pk.eyJ1IjoibmFyZ2FyYXdyIiwiYSI6ImNpZzZ4b3l6MzAzZzF2cWt2djg4d3llZDMifQ.k5f5mW8zW3VBH40GUYS-8A';
+
+    var c = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        maxZoom:     18,
+        minZoom:     8,
+        id:          mapId,
+        accessToken: token
+    }).addTo(map);
+
+    // Snapping Layer
+    var snapping = new L.geoJson(null, {
+        style: {
+            opacity:     0
+            , clickable: false
+        }
+    }).addTo(map);
+
+    map.on('moveend', function () {
+        if (map.getZoom() > 12) {
+            var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
+            var route = 'http://www.openstreetmap.org/api/0.6/map';
+            var params = '&bbox=' + map.getBounds().toBBoxString() + '&1=2';
+            $.get(proxy + route + params).always(function (osm, status) {
+                if (status === 'success' && typeof osm === 'object') {
+                    var geojson = osmtogeojson(osm);
+
+                    snapping.clearLayers();
+                    for (var i = 0; i < geojson.features.length; i++) {
+                        var feat = geojson.features[i];
+                        if (feat.geometry.type === 'LineString' && feat.properties.tags.highway) {
+                            snapping.addData(geojson.features[i]);
+                        }
+                    }
+                }
+            });
+        } else {
+            snapping.clearLayers();
+        }
+    });
+    map.fire('moveend');
+
+    // OSM Router
+    var router = function (m1, m2, cb) {
+        var proxy = 'http://www2.turistforeningen.no/routing.php?url=';
+        var route = 'http://www.yournavigation.org/api/1.0/gosmore.php&format=geojson&v=car&fast=1&layer=mapnik';
+        var params = '&flat=' + m1.lat + '&flon=' + m1.lng + '&tlat=' + m2.lat + '&tlon=' + m2.lng;
+        $.getJSON(proxy + route + params, function (geojson, status) {
+            if (!geojson || !geojson.coordinates || geojson.coordinates.length === 0) {
+                if (typeof console.log === 'function') {
+                    console.log('OSM router failed', geojson);
+                }
+                return cb(new Error());
+            }
+            return cb(null, L.GeoJSON.geometryToLayer(geojson));
+        });
+    };
+
+    var routing = new L.Routing({
+        position:         'topleft'
+        , routing:        {
+            router: router
+        }
+        , snapping:       {
+            layers: []
+        }
+        , snapping:       {
+            layers:        [snapping]
+            , sensitivity: 15
+            , vertexonly:  false
+        }
+        , routeToDraw:    $('#' + id + '_routeId').val()
+        , multiMapCentre: true
+        , mapId:          id.split("map_")[1]
+    });
+    map.addControl(routing);
+    routing.draw();
+
+    maps.push(map);
+}

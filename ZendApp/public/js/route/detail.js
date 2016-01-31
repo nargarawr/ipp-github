@@ -111,14 +111,10 @@ function drawMap() {
     map = L.map('map', {zoomControl: false}).setView([52, -1.1], 13);
     new L.Control.Zoom({position: 'topright'}).addTo(map);
 
-    var mapDataCopy = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-    var creativeCommons = '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-    var mapBoxCopy = 'Imagery &copy; <a href="http://mapbox.com">Mapbox</a>';
     var mapId = 'nargarawr.cig6xoyv103gnvbkvyv7s6a0k';
     var token = 'pk.eyJ1IjoibmFyZ2FyYXdyIiwiYSI6ImNpZzZ4b3l6MzAzZzF2cWt2djg4d3llZDMifQ.k5f5mW8zW3VBH40GUYS-8A';
 
     var c = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: mapDataCopy + ', ' + creativeCommons + ', ' + mapBoxCopy,
         maxZoom:     18,
         minZoom:     8,
         id:          mapId,

@@ -1,9 +1,11 @@
 <? $route = $this->route ?>
 
+<input type="hidden" id="<?= $this->mapId ?>_routeId" value="<?= $this->route->id ?>">
 <div class="route row">
     <div class="col-md-3">
         <div class="leftBar">
-            <img src="../images/map_placeholder.png" class="img-responsive img-thumbnail">
+            <div class="thumbnail" id="<?= $this->mapId ?>">
+            </div>
         </div>
     </div>
     <div class="col-md-9">

@@ -767,11 +767,12 @@ class RouteFactory extends ModelFactory {
      */
     public static function distanceBetweenPoints($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo,
                                                  $earthRadius = 6371000) {
+
         // convert from degrees to radians
-        $latFrom = deg2rad($latitudeFrom);
-        $lonFrom = deg2rad($longitudeFrom);
-        $latTo = deg2rad($latitudeTo);
-        $lonTo = deg2rad($longitudeTo);
+        $latFrom = deg2rad(floatval($latitudeFrom));
+        $lonFrom = deg2rad(floatval($longitudeFrom));
+        $latTo = deg2rad(floatval($latitudeTo));
+        $lonTo = deg2rad(floatval($longitudeTo));
 
         $lonDelta = $lonTo - $lonFrom;
         $a = pow(cos($latTo) * sin($lonDelta), 2) + pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);

@@ -25,7 +25,7 @@ var PointsListManager = Class.extend({
         this.numPoints = 1;
         this.readOnly = ($('#mapReadOnly').val() != "");
         this.pointsNotAdded = true;
-        this.detailPage = window.location.pathname.search(/detail/) > 0;
+        this.detailPage = window.location.pathname.search(/detail|list/) > 0;
 
         this.setupListeners();
     },
@@ -195,7 +195,9 @@ var PointsListManager = Class.extend({
                     confirm:         function () {
                     }
                 });
-                $('.jconfirm-box').css('margin-top', window.innerHeight * 0.1 + 'px')
+                var confirmBox = $('.jconfirm-box');
+                confirmBox.css('margin-top', window.innerHeight * 0.1 + 'px');
+                confirmBox.find('.carousel-inner .item img').css('height', window.innerHeight * 0.7 + 'px').css('max-height', window.innerHeight * 0.7 + 'px');
             });
         }
 
@@ -238,8 +240,10 @@ var PointsListManager = Class.extend({
      * Display points on this route
      *
      * @param routeId The id of the route the points belong to
+     * @param multiMapCentre A boolean to change centring behaviour
+     * @param mapId ID of specific map to centre
      */
-    addExistingPoints: function (routeId) {
+    addExistingPoints: function (routeId, multiMapCentre, mapId) {
         var _self = this;
         $.ajax({
             type: 'GET',
@@ -248,18 +252,23 @@ var PointsListManager = Class.extend({
                 id: routeId
             }
         }).success(function (response) {
-            var data = JSON.parse(response);
-            var middlePoint;
+            var points = JSON.parse(response);
 
-            for (var i = 0; i < data.length; i++) {
-                if (i == Math.floor(data.length / 2)) {
-                    middlePoint = data[i];
-                }
+            var highestLat = points[0].latitude;
+            var highestLon = points[0].longitude;
+            var lowestLat = points[0].latitude;
+            var lowestLon = points[0].longitude;
+
+            for (var i = 0; i < points.length; i++) {
+                if (points[i].latitude > highestLat) highestLat = points[i].latitude;
+                if (points[i].longitude > highestLon) highestLon = points[i].longitude;
+                if (points[i].latitude < lowestLat) lowestLat = points[i].latitude;
+                if (points[i].longitude < lowestLon) lowestLon = points[i].longitude;
 
                 var latlng = {
                     _feature: null,
-                    lat:      data[i].latitude,
-                    lng:      data[i].longitude
+                    lat:      points[i].latitude,
+                    lng:      points[i].longitude
                 };
 
                 _self.router.addWaypoint(
@@ -268,12 +277,17 @@ var PointsListManager = Class.extend({
                     null,
                     function (e, f) {
                     },
-                    data[i]
+                    points[i]
                 );
-
             }
 
-            _self.centreMap(middlePoint.latitude, middlePoint.longitude)
+            plm.centreMap(
+                highestLat,
+                highestLon,
+                lowestLat,
+                lowestLon,
+                mapId
+            );
 
             if (plm.readOnly) {
                 _self.setReadOnly();
@@ -300,14 +314,24 @@ var PointsListManager = Class.extend({
      *
      * @author Craig Knott
      *
-     * @param lat Latitude to centre at
-     * @param lng Longitude to centre at
+     * @param highestLat Maximum latitude
+     * @param highestLon Maximum longitude
+     * @param lowestLat Minimum latitude
+     * @param lowestLon Minimum longitude
+     * @param index The map to centre
      */
-    centreMap:         function (lat, lng) {
-        map.setView({
-            lat: lat,
-            lng: lng
-        });
+    centreMap:         function (highestLat, highestLon, lowestLat, lowestLon, index) {
+        if (index === undefined) {
+            map.fitBounds([
+                [highestLat, highestLon],
+                [lowestLat, lowestLon]
+            ]);
+        } else {
+            maps[index].fitBounds([
+                [highestLat, highestLon],
+                [lowestLat, lowestLon]
+            ]);
+        }
     },
     /**
      * Call back function for a way point drag ending, updates the popup and LHD for this marker
@@ -345,6 +369,8 @@ var PointsListManager = Class.extend({
 
 /**
  * Generates the HTML for the media carousel
+ *
+ * @author Craig Knott
  */
 function generateCarousel(images) {
     var myCarousel = $('<div>').attr('id', 'myCarousel').addClass('carousel slide').attr('data-ride', 'carousel');
@@ -380,5 +406,6 @@ function generateCarousel(images) {
     );
     myCarousel.append(rightButton);
 
+    // Return an HTML string
     return myCarousel.prop('outerHTML');
 }

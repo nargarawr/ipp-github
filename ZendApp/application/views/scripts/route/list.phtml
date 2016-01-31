@@ -1,4 +1,10 @@
 <div class="row">
+    <div id="map">
+
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-3">
         <div class="border-container searchTermContainer">
             <div class="title searchtermsTitle">
@@ -71,13 +77,16 @@
             Not what you were looking for? Trying being more specific (i.e, "<i>St.Ives, Cornwall</i>", instead of just
             "<i>St.Ives</i>")
         </p>
+        <? $i = 0; ?>
         <? foreach ($this->routes as $route) { ?>
             <? if (!($route->onPage)) { ?>
                 <? continue; ?>
             <? } ?>
             <?= $this->partial('route', 'route', null, array(
-                'route' => $route
+                'route' => $route,
+                'mapId' => 'map_' . $i
             )); ?>
+            <? $i++; ?>
         <? } ?>
 
         <? if (count($this->routes) > $this->pageLimit) { ?>
