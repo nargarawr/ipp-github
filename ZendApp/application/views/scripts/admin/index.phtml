@@ -1,102 +1,137 @@
 <div class="row">
     <div class="col-sm-1 col-md-2"></div>
     <div class="col-sm-10 col-md-8">
-        <? if (!is_null($this->errorMessage)) { ?>
-            <div class="alert alert-danger msg" role="alert">
-                <i class="fa fa-exclamation-circle"></i>
-                <?= $this->errorMessage; ?>
+        <!--
+            Error/Success messages
+        -->
+        <div class="row">
+            <div class="col-sm-1 col-md-2"></div>
+            <div class="col-sm-10 col-md-8">
+                <? if (!is_null($this->errorMessage)) { ?>
+                    <div class="alert alert-danger msg" role="alert">
+                        <i class="fa fa-exclamation-circle"></i>
+                        <?= $this->errorMessage; ?>
+                    </div>
+                <? } ?>
+                <? if (!is_null($this->successMessage)) { ?>
+                    <div class="alert alert-success msg" role="alert">
+                        <i class="fa fa-check"></i>
+                        <?= $this->successMessage; ?>
+                    </div>
+                <? } ?>
             </div>
-        <? } ?>
-        <? if (!is_null($this->successMessage)) { ?>
-            <div class="alert alert-success msg" role="alert">
-                <i class="fa fa-check"></i>
-                <?= $this->successMessage; ?>
+            <div class="col-md-2"></div>
+        </div>
+
+        <!--
+            Site Usage
+        -->
+        <div class="row">
+            <div class="border-container">
+                <div class="title statsTitle">
+                    Site Usage
+                </div>
             </div>
-        <? } ?>
-    </div>
-    <div class="col-md-2"></div>
-</div>
+        </div>
 
-<div class="row">
-    <div class="border-container">
-        <a href="/admin/locksite/lock/<?= !($this->siteAdmin->is_locked) ?>">
-            <? if ($this->siteAdmin->is_locked) { ?>
-                <button class="btn btn-success btn-nopad">
-                    <i class="fa fa-unlock"></i> Unlock Site
-                </button>
-            <? } else { ?>
-                <button class="btn btn-danger btn-nopad">
-                    <i class="fa fa-lock"></i> Lock Site
-                </button>
-            <? } ?>
-        </a>
-    </div>
-</div>
+        <!--
+            User Management
+        -->
+        <div class="row">
+            <div class="border-container">
+                <div class="title userTitle">
+                    User Management
+                </div>
+                <div class="border-inner">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form enctype="application/x-www-form-urlencoded" action="/admin/createuser" method="post">
+                                <label> User Name </label>
+                                <input type="text" class="form-control" name="username">
 
-<div class="row">
-    <div class="border-container">
-        <form enctype="application/x-www-form-urlencoded" action="/admin/createuser" method="post">
-            <label> User Name </label>
-            <input type="text" class="form-control" name="username">
+                                <label> Email</label>
+                                <input type="text" class="form-control" name="email">
 
-            <label> Email</label>
-            <input type="text" class="form-control" name="email">
+                                <label> Password </label>
+                                <input type="text" class="form-control" name="password">
 
-            <label> Password </label>
-            <input type="text" class="form-control" name="password">
+                                <button type="submit" class="btn btn-success btn-nopad">
+                                    <i class="fa fa-user-plus"></i> Create User
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-6">
+                            <form enctype="application/x-www-form-urlencoded" action="/admin/finduser" method="post">
+                                <label> User Id, Username, or Email Address </label>
+                                <input type="text" class="form-control" name="searchTerm">
 
-            <button type="submit" class="btn btn-success btn-nopad">
-                <i class="fa fa-user-plus"></i> Create User
-            </button>
-        </form>
-    </div>
-</div>
+                                <button type="submit" class="btn btn-success btn-nopad" id="findUser">
+                                    <i class="fa fa-search"></i> Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="border-container">
-        <form enctype="application/x-www-form-urlencoded" action="/admin/postannouncement" method="post" id="ancmtForm">
-            <label> Announcement </label>
-            <input type="text" class="form-control" name="message">
+        <!--
+            Site Management
+        -->
+        <div class="row">
+            <div class="border-container">
+                <div class="title siteTitle">
+                    Site Management
+                </div>
+                <div class="border-inner">
+                    <a href="/admin/locksite/lock/<?= !($this->siteAdmin->is_locked) ?>">
+                        <? if ($this->siteAdmin->is_locked) { ?>
+                            <button class="btn btn-success btn-nopad">
+                                <i class="fa fa-unlock"></i> Unlock Site
+                            </button>
+                        <? } else { ?>
+                            <button class="btn btn-danger btn-nopad">
+                                <i class="fa fa-lock"></i> Lock Site
+                            </button>
+                        <? } ?>
+                    </a>
+                </div>
 
-            <label>
-                <input type="checkbox" name="shouldEmail"> Sent Email Too?
-            </label>
+            </div>
+        </div>
 
-            <button type="submit" class="btn btn-success btn-nopad" id="postAnnouncement">
-                <i class="fa fa-bell"></i> Post Announcement
-            </button>
-        </form>
+        <!--
+            Announcements
+        -->
+        <div class="row">
+            <div class="border-container">
+                <div class="title announcementsTitle">
+                    Announcements
+                </div>
+                <div class="border-inner">
+                    <form enctype="application/x-www-form-urlencoded" action="/admin/postannouncement" method="post" id="ancmtForm">
+                        <label> Announcement </label>
+                        <input type="text" class="form-control" name="message">
 
-        Current announcement
-        <?= $this->announcement === false ? 'Nothing' : $this->announcement ?>
-        <a class="btnLink" href="/admin/clearannouncements">
-            <button class="btn btn-danger btn-nopad">
-                <i class="fa fa-bell-slash"></i> Clear Announcements
-            </button>
-        </a>
-    </div>
-</div>
+                        <label>
+                            <input type="checkbox" name="shouldEmail"> Sent Email Too?
+                        </label>
 
-<div class="row">
-    <div class="border-container">
-      <form enctype="application/x-www-form-urlencoded" action="/admin/finduser" method="post">
-          <label> User Id, Username, or Email Address </label>
-          <input type="text" class="form-control" name="searchTerm">
+                        <button type="submit" class="btn btn-success btn-nopad" id="postAnnouncement">
+                            <i class="fa fa-bell"></i> Post Announcement
+                        </button>
+                    </form>
 
-          <button type="submit" class="btn btn-success btn-nopad" id="findUser">
-              <i class="fa fa-search"></i> Search
-          </button>
-      </form>
-    </div>
-</div>
+                    Current announcement
+                    <?= $this->announcement === false ? 'Nothing' : $this->announcement ?>
+                    <a class="btnLink" href="/admin/clearannouncements">
+                        <button class="btn btn-danger btn-nopad">
+                            <i class="fa fa-bell-slash"></i> Clear Announcements
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="border-container">
-      Backups are stored in the "/backups" directory on the web server
-        <a class="btnLink" href="/admin/backup">
-            <button class="btn btn-success btn-nopad">
-                <i class="fa fa-hdd-o"></i> Take Backup
-            </button>
-        </a>
     </div>
 </div>
