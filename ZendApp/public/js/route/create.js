@@ -400,10 +400,18 @@ var UploadManager = Class.extend({
         var lowestLat = points[0].lat;
         var lowestLon = points[0].lng;
         for (var i = 0; i < points.length; i++) {
-            if (points[i].latitude > highestLat) highestLat = points[i].latitude;
-            if (points[i].longitude > highestLon) highestLon = points[i].longitude;
-            if (points[i].latitude < lowestLat) lowestLat = points[i].latitude;
-            if (points[i].longitude < lowestLon) lowestLon = points[i].longitude;
+            if (points[i].latitude > highestLat) {
+                highestLat = points[i].latitude;
+            }
+            if (points[i].longitude > highestLon) {
+                highestLon = points[i].longitude;
+            }
+            if (points[i].latitude < lowestLat) {
+                lowestLat = points[i].latitude;
+            }
+            if (points[i].longitude < lowestLon) {
+                lowestLon = points[i].longitude;
+            }
 
             var latlng = {
                 _feature: null,
