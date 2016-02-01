@@ -45,13 +45,14 @@
     pdfnewwindow=true,  
     colorlinks=true,  
     linkcolor=black,  
-    citecolor=black, a
+    citecolor=black, 
     filecolor=black,  
     urlcolor=black  
 }
 
-\newcommand{\paperTitleShort}{Niceway.to: Scenic Route Mapping}
-\newcommand{\paperTitle}{Niceway.to: Scenic Route Mapping}
+\newcommand{\paperTitleStart}{Niceway.to\ \\Crowd Sourced Scenic Route Sharing}
+\newcommand{\paperTitleShort}{Niceway.to: Crowd Sourced Scenic Route Sharing}
+\newcommand{\paperTitle}{Niceway.to: Crowd Sourced Scenic Route Sharing}
 
 \newcommand{\nocontentsline}[3]{}
 \newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
@@ -146,7 +147,6 @@
 %
 %
 
-
 \newgeometry{left=3cm, right=3cm, top = 75pt, bottom=75pt}
 \setlength{\cftbeforesecskip}{0.6ex}
 \addtocontents{toc}{\protect\thispagestyle{empty}}
@@ -175,13 +175,13 @@
 \newpage 
 \input{sections/implementation}
 \newpage 
+\input{sections/external}
+\newpage 
 \input{sections/evaluation}
 \newpage 
 \input{sections/furtherwork}
 \newpage 
 \input{sections/summary}
-
-
 
 %
 %
