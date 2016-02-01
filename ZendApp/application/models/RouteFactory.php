@@ -906,7 +906,7 @@ class RouteFactory extends ModelFactory {
      *
      * @param int $routeId Route to get the media for
      */
-    public static function getRouteMedia ($routeId) {
+    public static function getRouteMedia($routeId) {
         $sql = "SELECT media
                 FROM tb_point
                 WHERE fk_route_id = :routeId";
@@ -929,4 +929,65 @@ class RouteFactory extends ModelFactory {
 
         return $media;
     }
+
+    /**
+     * Adds a user's visit (accessing of the RDP) to a route, so we can get 'x most recent'
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId  Id of the user
+     * @param int $routeId Id of the route visited
+     */
+    public static function addVisitToLog($userId, $routeId) {
+        $sql = "INSERT INTO tb_log (
+                    fk_user_id,
+                    fk_route_id,
+                    datetime
+                ) VALUES (
+                    :userId,
+                    :routeId,
+                    NOW()
+                )";
+        $params = array(
+            'userId'   => $userId,
+            ':routeId' => $routeId
+        );
+
+        parent::execute($sql, $params);
+    }
+
+    /**
+     * Returns the last $num routes this user has visited
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId The ID of the user
+     * @param int $num    The number of routes to return
+     *
+     * @return array Array of route Ids last visited
+     */
+    public static function getLastVisits($userId, $num) {
+        $sql = "SELECT
+                    pk_route_id,
+                    u.username AS owner,
+                    name
+                FROM tb_log l
+                JOIN tb_route r
+                ON r.pk_route_id = l.fk_route_id
+                JOIN tb_user u
+                ON u.pk_user_id = r.created_by
+                WHERE fk_user_id = :userId
+                AND r.is_private = 0
+                AND r.is_deleted = 0
+                ORDER BY datetime DESC
+                LIMIT :num";
+
+        $params = array(
+            ':userId' => $userId,
+            ':num'    => $num
+        );
+
+        return parent::fetchAll($sql, $params);
+    }
+
 }

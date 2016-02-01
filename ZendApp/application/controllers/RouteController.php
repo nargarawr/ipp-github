@@ -112,6 +112,7 @@ class RouteController extends BaseController {
 
         if (!is_null($this->user)) {
             $this->view->isFavourite = RouteFactory::isFavourited($this->user->userId, $routeId);
+            RouteFactory::addVisitToLog($this->user->userId, $routeId);
         }
 
         $points = RouteFactory::getRoutePoints($routeId);
