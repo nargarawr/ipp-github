@@ -31,6 +31,9 @@
                 <div class="title statsTitle">
                     Site Usage
                 </div>
+                <div class="border-inner">
+                    Coming soon TM
+                </div>
             </div>
         </div>
 
@@ -43,10 +46,12 @@
                     User Management
                 </div>
                 <div class="border-inner">
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row users">
+                        <div class="col-md-6 border-right">
+                            <div class="sectionTitle"> Create a User</div>
+                            <p> Use this form to create a new user with the specified username and email address</p>
                             <form enctype="application/x-www-form-urlencoded" action="/admin/createuser" method="post">
-                                <label> User Name </label>
+                                <label> Username </label>
                                 <input type="text" class="form-control" name="username">
 
                                 <label> Email</label>
@@ -55,19 +60,26 @@
                                 <label> Password </label>
                                 <input type="text" class="form-control" name="password">
 
-                                <button type="submit" class="btn btn-success btn-nopad">
-                                    <i class="fa fa-user-plus"></i> Create User
-                                </button>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa fa-user-plus"></i> Create User
+                                    </button>
+                                </div>
                             </form>
                         </div>
+
                         <div class="col-md-6">
+                            <div class="sectionTitle"> Search for a User</div>
+                            <p> Use this tool to search for a user account, for management </p>
                             <form enctype="application/x-www-form-urlencoded" action="/admin/finduser" method="post">
                                 <label> User Id, Username, or Email Address </label>
                                 <input type="text" class="form-control" name="searchTerm">
 
-                                <button type="submit" class="btn btn-success btn-nopad" id="findUser">
-                                    <i class="fa fa-search"></i> Search
-                                </button>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success" id="findUser">
+                                        <i class="fa fa-search"></i> Search
+                                    </button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -83,52 +95,97 @@
                 <div class="title siteTitle">
                     Site Management
                 </div>
-                <div class="border-inner">
-                    <a href="/admin/locksite/lock/<?= !($this->siteAdmin->is_locked) ?>">
-                        <? if ($this->siteAdmin->is_locked) { ?>
-                            <button class="btn btn-success btn-nopad">
-                                <i class="fa fa-unlock"></i> Unlock Site
-                            </button>
-                        <? } else { ?>
-                            <button class="btn btn-danger btn-nopad">
-                                <i class="fa fa-lock"></i> Lock Site
-                            </button>
-                        <? } ?>
-                    </a>
+                <div class="border-inner site">
+                    <div class="row">
+                        <div class="col-md-4 border-right">
+                            <div class="sectionTitle"> Lock/Unlock Site</div>
+                            <p> Press this button to lock and unlock the site. If the site is locked, only admins will
+                                be able to log in</p>
+                            <div class="text-center">
+                                <a href="/admin/locksite/lock/<?= !($this->siteAdmin->is_locked) ?>">
+                                    <? if ($this->siteAdmin->is_locked) { ?>
+                                        <button class="btn btn-success">
+                                            <i class="fa fa-unlock"></i> Unlock Site
+                                        </button>
+                                    <? } else { ?>
+                                        <button class="btn btn-danger">
+                                            <i class="fa fa-lock"></i> Lock Site
+                                        </button>
+                                    <? } ?>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 border-right">
+                            <div class="sectionTitle"> Take a Backup</div>
+                            <p> Press this button to take a backup of the SQL database (which will be stored in /backups
+                                on the server) </p>
+                            <div class="text-center">
+                                <a class="btnLink" href="/admin/backup">
+                                    <button class="btn btn-success">
+                                        <i class="fa fa-hdd-o"></i> Take Backup
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="sectionTitle"> Deauthorise Sessions</div>
+                            <p> Deauthorise all active user sessions (all users will be required to log in again) </p>
+                            <div class="text-center">
+                                <a class="btnLink" href="http://www.google.com">
+                                    <button class="btn btn-success">
+                                        <i class="fa fa-ban"></i> Deauthorise
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </div>
 
         <!--
             Announcements
         -->
-        <div class="row">
+        <div class="row annc">
             <div class="border-container">
                 <div class="title announcementsTitle">
                     Announcements
                 </div>
-                <div class="border-inner">
-                    <form enctype="application/x-www-form-urlencoded" action="/admin/postannouncement" method="post" id="ancmtForm">
-                        <label> Announcement </label>
-                        <input type="text" class="form-control" name="message">
+                <div class="row">
+                    <div class="col-md-6 border-right">
+                        <div class="sectionTitle"> Post an Announcement</div>
+                        <p> Use this tool post a side-wide message to disseminate important information to users </p>
+                        <form enctype="application/x-www-form-urlencoded" action="/admin/postannouncement" method="post" id="ancmtForm">
+                            <label> Text to post </label>
+                            <input type="text" class="form-control" name="message">
 
-                        <label>
-                            <input type="checkbox" name="shouldEmail"> Sent Email Too?
-                        </label>
+                            <div class="text-right">
+                                <label>
+                                    <input type="checkbox" name="shouldEmail"> Send Email Too?
+                                </label>
+                            </div>
 
-                        <button type="submit" class="btn btn-success btn-nopad" id="postAnnouncement">
-                            <i class="fa fa-bell"></i> Post Announcement
-                        </button>
-                    </form>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success" id="postAnnouncement">
+                                    <i class="fa fa-bell"></i> Post Announcement
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="sectionTitle"> Clear Announcements</div>
+                        <p> Use this tool to clear the currently displayed announcement </p>
+                        <b> Current Announcement: </b>
+                        <p> <?= $this->announcement === false ? 'Nothing' : $this->announcement ?> </p>
 
-                    Current announcement
-                    <?= $this->announcement === false ? 'Nothing' : $this->announcement ?>
-                    <a class="btnLink" href="/admin/clearannouncements">
-                        <button class="btn btn-danger btn-nopad">
-                            <i class="fa fa-bell-slash"></i> Clear Announcements
-                        </button>
-                    </a>
+                        <div class="text-center" id="clearAnnouncement">
+                            <a class="btnLink" href="/admin/clearannouncements">
+                                <button class="btn btn-danger">
+                                    <i class="fa fa-bell-slash"></i> Clear Announcement
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

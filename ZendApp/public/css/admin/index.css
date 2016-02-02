@@ -3,13 +3,44 @@
 }
 
 .userTitle {
-    width: 164px;
+    width: 166px;
 }
 
 .siteTitle {
-    width: 157px;
+    width: 158px;
 }
 
 .announcementsTitle {
     width: 148px;
+}
+
+.border-right {
+    border-right: 1px solid #CCCCCC;
+}
+
+.sectionTitle {
+    font-size: 18px;
+}
+
+.users input {
+    margin-bottom: 10px;
+}
+
+.users .col-md-6,
+.site .col-md-4,
+.annc .col-md-6 {
+    top: -10px;
+}
+
+.annc {
+    margin-bottom: 15px;
+}
+
+.annc input {
+    margin-bottom: 5px;
+}
+
+#postAnnouncement,
+#clearAnnouncement {
+    margin-top: 10px;
 }
