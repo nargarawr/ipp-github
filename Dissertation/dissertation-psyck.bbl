@@ -1,4 +1,19 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{url2015gmaps}
+{Google Maps, My Maps} website.
+\newblock \url{https://www.google.com/maps/d}.
+\newblock Accessed: 01/10/2015.
+
+\bibitem{url2015madmaps}
+{MADMAPs} website.
+\newblock \url{http://www.madmaps.net/}.
+\newblock Accessed: 01/10/2015.
+
+\bibitem{url2015myscenicdrives}
+{My Scenic Drives} website.
+\newblock \url{https://www.myscenicdrives.com/}.
+\newblock Accessed: 01/10/2015.
 
 \bibitem{beizer1995black}
 Boris Beizer.
@@ -6,10 +21,41 @@ Boris Beizer.
   and systems}.
 \newblock John Wiley \& Sons, Inc., 1995.
 
+\bibitem{chen2011discovering}
+Zaiben Chen, Heng~Tao Shen, and Xiaofang Zhou.
+\newblock Discovering popular routes from trajectories.
+\newblock In {\em Data Engineering (ICDE), 2011 IEEE 27th International
+  Conference on}, pages 900--911. IEEE, 2011.
+
 \bibitem{kniberg2007scrum}
 Henrik Kniberg.
 \newblock Scrum and xp from the trenches.
 \newblock {\em Lulu. com}, 2007.
+
+\bibitem{lou2009map}
+Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang.
+\newblock Map-matching for low-sampling-rate gps trajectories.
+\newblock In {\em Proceedings of the 17th ACM SIGSPATIAL International
+  Conference on Advances in Geographic Information Systems}, pages 352--361.
+  ACM, 2009.
+
+\bibitem{ofcom2015comms}
+Ofcom.
+\newblock The communications market report, published 6th august 2015.
+\newblock Ofcom, 2015.
+
+\bibitem{peregrino2012mapping}
+Fernando~S Peregrino, David Tom{\'a}s, Paul Clough, and Fernando Llopis.
+\newblock Mapping routes of sentiments.
+
+\bibitem{van2011time}
+Steven Van~Canneyt, Steven Schockaert, Olivier Van~Laere, and Bart Dhoedt.
+\newblock Time-dependent recommendation of tourist attractions using flickr.
+
+\bibitem{vest1997road}
+Jason Vest, Warren Cohen, and Mike Tharp.
+\newblock Road rage (usa).
+\newblock {\em US News and World Report}, 1997.
 
 \bibitem{wilson2008goal}
 Susan~B Wilson and Michael~S Dobson.
