@@ -4,9 +4,9 @@
 \contentsline {section}{\numberline {3}Background Information \& Research}{3}{section.3}
 \contentsline {subsection}{\numberline {3.1}What is Scenic Route Mapping}{3}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Existing Systems}{3}{subsection.3.2}
-\contentsline {paragraph}{SW X}{3}{subsection.3.2}
-\contentsline {paragraph}{SW Y}{3}{subsection.3.2}
-\contentsline {paragraph}{SW Z}{3}{subsection.3.2}
+\contentsline {paragraph}{Google's ``My Maps''}{3}{subsection.3.2}
+\contentsline {paragraph}{MADMAPs}{3}{subsection.3.2}
+\contentsline {paragraph}{MyScenicDrives}{3}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Platforms and Tools}{3}{subsection.3.3}
 \contentsline {subsubsection}{\numberline {3.3.1}System Back End}{4}{subsubsection.3.3.1}
 \contentsline {paragraph}{Backend X}{4}{subsubsection.3.3.1}
