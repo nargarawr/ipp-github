@@ -8,16 +8,17 @@
 \contentsline {paragraph}{MADMAPs}{3}{subsection.3.2}
 \contentsline {paragraph}{MyScenicDrives}{3}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Platforms and Tools}{3}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}System Back End}{4}{subsubsection.3.3.1}
-\contentsline {paragraph}{Backend X}{4}{subsubsection.3.3.1}
-\contentsline {paragraph}{Backend Y}{4}{subsubsection.3.3.1}
-\contentsline {paragraph}{Backend Z}{4}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Front End Programming Language}{4}{subsubsection.3.3.2}
-\contentsline {paragraph}{Front End X}{4}{subsubsection.3.3.2}
-\contentsline {paragraph}{Front End Y}{4}{subsubsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.3}Front End Design Framework}{5}{subsubsection.3.3.3}
-\contentsline {paragraph}{Front End X}{5}{subsubsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Mobile App VS Native Mobile App}{4}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}System Back End}{4}{subsubsection.3.3.2}
+\contentsline {paragraph}{Backend X}{4}{subsubsection.3.3.2}
+\contentsline {paragraph}{Backend Y}{4}{subsubsection.3.3.2}
+\contentsline {paragraph}{Backend Z}{4}{subsubsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3}Front End Programming Language}{4}{subsubsection.3.3.3}
+\contentsline {paragraph}{Front End X}{4}{subsubsection.3.3.3}
 \contentsline {paragraph}{Front End Y}{5}{subsubsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.4}Front End Design Framework}{5}{subsubsection.3.3.4}
+\contentsline {paragraph}{Front End X}{5}{subsubsection.3.3.4}
+\contentsline {paragraph}{Front End Y}{5}{subsubsection.3.3.4}
 \contentsline {section}{\numberline {4}System Specification}{6}{section.4}
 \contentsline {subsection}{\numberline {4.1}Functional Requirements}{6}{subsection.4.1}
 \contentsline {paragraph}{Accessibility}{7}{subsection.4.1}
