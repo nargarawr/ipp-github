@@ -735,7 +735,7 @@ var RecommendationManager = Class.extend({
      *
      * @author Craig Knott
      */
-    init:           function () {
+    init:            function () {
         this.button = $('#recommendSimilar');
         this.idSelected = undefined;
         this.setupListeners();
@@ -745,7 +745,7 @@ var RecommendationManager = Class.extend({
      *
      * @author Craig Knott
      */
-    setupListeners: function () {
+    setupListeners:  function () {
         var _self = this;
 
         this.button.click(function () {
@@ -757,28 +757,28 @@ var RecommendationManager = Class.extend({
                 }
             }).success(function (response) {
                 $.confirm({
-                    title:           'Recommend a Route',
-                    icon:            'fa fa-link',
-                    content:         _self.getPopupContent(JSON.parse(response)),
-                    theme:           'black',
-                    confirmButton:   'Confirm',
-                    cancelButton:    'Cancel',
-                    columnClass:     'col-xs-10 col-sm-10 col-md-10 col-lg-10',
-                    onOpen: function() {
+                    title:         'Recommend a Route',
+                    icon:          'fa fa-link',
+                    content:       _self.getPopupContent(JSON.parse(response)),
+                    theme:         'black',
+                    confirmButton: 'Confirm',
+                    cancelButton:  'Cancel',
+                    columnClass:   'col-xs-10 col-sm-10 col-md-10 col-lg-10',
+                    onOpen:        function () {
                         // Clear current id
                         _self.idSelected = undefined;
 
                         // Add listeners to the route selectors
                         var rRoutes = $('.rRoute');
-                        rRoutes.each(function(){
-                            $(this).click(function() {
+                        rRoutes.each(function () {
+                            $(this).click(function () {
                                 rRoutes.removeClass('selected');
                                 $(this).addClass('selected');
                                 _self.idSelected = $(this).attr('data-id');
                             })
                         });
                     },
-                    confirm: function() {
+                    confirm:       function () {
                         if (_self.idSelected !== undefined) {
                             // Add temp element to social stream
                             var tmp = $('<div>').addClass('streamElement recommend').append(
@@ -815,7 +815,7 @@ var RecommendationManager = Class.extend({
      *
      * @param data JSON data for recent/saved/owned routes
      */
-    getPopupContent: function(data) {
+    getPopupContent: function (data) {
         var text = 'Do you know a similar route you think other users would enjoy? Simply select below for your recently visited routes to suggest it!';
 
         var container = $('<div>').addClass('row');

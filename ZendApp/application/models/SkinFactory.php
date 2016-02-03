@@ -155,11 +155,11 @@ class SkinFactory extends ModelFactory {
                     fk_user_id,
                     equipped
                 ) VALUES
-                (1, :userId, 1),
-                (6, :userId, 0),
-                (7, :userId, 1),
-                (8, :userId, 1),
-                (9, :userId, 1)";
+                (1, :userId, 0),
+                (2, :userId, 1),
+                (3, :userId, 1),
+                (4, :userId, 1),
+                (5, :userId, 1)";
 
         $params = array(
             ':userId' => $userId
