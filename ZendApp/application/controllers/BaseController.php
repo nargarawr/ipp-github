@@ -62,6 +62,15 @@ class BaseController extends Zend_Controller_Action {
                 // Create the user object
                 $userIdentity = Zend_Auth::getInstance()->getIdentity();
                 $this->view->user = $this->user = new User($userIdentity->pk_user_id);
+
+                // If user should deauthorise
+                if ($this->user->shouldDeauth) {
+                    Zend_Auth::getInstance()->clearIdentity();
+                    $this->_helper->redirector('logout', 'member', null, array(
+                        'redirTo' => 'login',
+                        'fromRedirect' => 1
+                    ));
+                }
             } else if ($this->view->isExternal == false) {
                 // If the user session is no longer valid and they are navigating to a page
                 $this->_helper->redirector('login', 'member', null, array(

@@ -87,7 +87,8 @@ class LoginFactory extends ModelFactory {
     public static function registerUserLogin($userId) {
         $sql = "UPDATE tb_user
                 SET login_count = login_count + 1,
-                    last_login = NOW()
+                    last_login = NOW(),
+                    should_deauth = 0
                 WHERE pk_user_id = :userId";
         $params = array(
             ":userId" => $userId

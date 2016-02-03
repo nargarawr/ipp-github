@@ -5,8 +5,7 @@
             Error/Success messages
         -->
         <div class="row">
-            <div class="col-sm-1 col-md-2"></div>
-            <div class="col-sm-10 col-md-8">
+            <div class="col-md-12">
                 <? if (!is_null($this->errorMessage)) { ?>
                     <div class="alert alert-danger msg" role="alert">
                         <i class="fa fa-exclamation-circle"></i>
@@ -20,7 +19,6 @@
                     </div>
                 <? } ?>
             </div>
-            <div class="col-md-2"></div>
         </div>
 
         <!--
@@ -131,7 +129,7 @@
                             <div class="sectionTitle"> Deauthorise Sessions</div>
                             <p> Deauthorise all active user sessions (all users will be required to log in again) </p>
                             <div class="text-center">
-                                <a class="btnLink" href="http://www.google.com">
+                                <a class="btnLink" href="/admin/deauth">
                                     <button class="btn btn-success">
                                         <i class="fa fa-ban"></i> Deauthorise
                                     </button>

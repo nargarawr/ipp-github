@@ -55,7 +55,7 @@ class MemberController extends BaseController {
         }
 
         // If the user was redirected here, explain the situation to them
-        if ($redir != "" && $this->getRequest()->getParam("fromRedirect") == 1) {
+        if ($this->getRequest()->getParam("fromRedirect") == 1) {
             $this->view->infoMessage = '<b>Please log in</b> before accessing that page';
         }
 
@@ -71,7 +71,14 @@ class MemberController extends BaseController {
     public function logoutAction() {
         Zend_Auth::getInstance()->clearIdentity();
         $redirTo = $this->getRequest()->getParam('redirTo', 'login');
-        $this->_redirect('member/' . $redirTo);
+        $fromRedirect = $this->getRequest()->getParam('fromRedirect', 0);
+
+        $redirStr = 'member/' . $redirTo;
+        if ($fromRedirect == 1) {
+            $redirStr .= '/fromRedirect/1';
+        }
+
+        $this->_redirect($redirStr);
     }
 
     /**

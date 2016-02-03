@@ -264,4 +264,23 @@ class AdminController extends BaseController {
 
         $this->_helper->redirector('index', 'admin', null, array());
     }
+
+    /**
+     * Sets all users to log out
+     *
+     * @author Craig Knott
+     */
+    public function deauthAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        AdminFactory::deauthoriseSessions();
+
+        $this->messageManager->addMessage(array(
+            'msg'  => 'Sessions de-authorised, all users will be required to log in again',
+            'type' => 'success'
+        ));
+
+        $this->_helper->redirector('index', 'admin', null, array());
+    }
 }

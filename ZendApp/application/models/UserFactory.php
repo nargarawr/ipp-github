@@ -177,7 +177,8 @@ class UserFactory extends ModelFactory {
                     email_on_route_comment,
                     email_on_route_fork,
                     email_on_route_rating,
-                    email_on_announcement
+                    email_on_announcement,
+                    should_deauth
                 FROM tb_user u
                 JOIN tb_user_preference up
                 ON u.pk_user_id = up.fk_user_id

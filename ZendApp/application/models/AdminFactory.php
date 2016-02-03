@@ -170,4 +170,18 @@ class AdminFactory extends ModelFactory {
 
         return $result;
      }
+
+    /**
+     * Sets the 'should_deauth' flag for all user accounts to 1. When the users next navigate to a page, they will be
+     * logged out and will need to log in again
+     *
+     * @author Craig Knott
+     */
+    public static function deauthoriseSessions() {
+        $sql = "UPDATE tb_user
+                SET should_deauth = 1
+                WHERE is_admin = 0";
+        $params = array();
+        parent::execute($sql, $params);
+    }
 }

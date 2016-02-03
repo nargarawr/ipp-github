@@ -27,6 +27,7 @@ class User {
     public $datetimeCreated;
     public $datetimeUpdated;
     public $preferences;
+    public $shouldDeauth;
 
     /**
      * Constructs user class to represent the user. Accessed with $this->user
@@ -60,5 +61,6 @@ class User {
             'emailOnRouteRating'  => $dbUser->email_on_route_rating,
             'emailOnAnnouncement' => $dbUser->email_on_announcement
         );
+        $this->shouldDeauth = $dbUser->should_deauth;
     }
 }
