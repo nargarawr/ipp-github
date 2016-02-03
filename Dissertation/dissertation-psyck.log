@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  3 FEB 2016 13:25
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  3 FEB 2016 18:28
 entering extended mode
 **dissertation-psyck.tex
 
@@ -1007,7 +1007,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 31--32
 
  []
 
-<images/UoN_Arms.png, id=123, 266.9975pt x 301.125pt>
+<images/UoN_Arms.png, id=127, 266.9975pt x 301.125pt>
 File: images/UoN_Arms.png Graphic file (type png)
 
 <use images/UoN_Arms.png>
@@ -1097,8 +1097,28 @@ been already used, duplicate ignored
 l.168 \newpage
                [1]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
-/motivation.tex")pdfTeX warning (ext4): destination with the same identifier (n
-ame{page.2}) has been already used, duplicate ignored
+/motivation.tex")
+Underfull \hbox (badness 10000) in paragraph at lines 2--170
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--170
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--170
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--170
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
+been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.170 \newpage
@@ -1198,25 +1218,19 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 217.
 tion-psyck.aux")
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 217.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 217.
+Package rerunfilecheck Info: File `dissertation-psyck.out' has not changed.
+(rerunfilecheck)             Checksum: 8C5178F3DE0CACB445598B6F641A21F0;2161.
 
-
-Package rerunfilecheck Warning: File `dissertation-psyck.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `dissertation-psyck.out':
-(rerunfilecheck)             Before: 11D04B0FAED84C3EB39DDFC7CBBB7381;2069
-(rerunfilecheck)             After:  8C5178F3DE0CACB445598B6F641A21F0;2161.
 
 LaTeX Warning: There were undefined references.
 
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 217.
  ) 
 Here is how much of TeX's memory you used:
- 15847 strings out of 493921
- 238387 string characters out of 3144882
+ 15858 strings out of 493921
+ 238603 string characters out of 3144882
  434286 words of memory out of 3000000
- 18776 multiletter control sequences out of 15000+200000
+ 18782 multiletter control sequences out of 15000+200000
  17341 words of font info for 71 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  42i,11n,43p,3249b,455s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1234,9 +1248,9 @@ s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files (x
 )/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on dissertation-psyck.pdf (23 pages, 362246 bytes).
+Output written on dissertation-psyck.pdf (23 pages, 368334 bytes).
 PDF statistics:
- 342 PDF objects out of 1000 (max. 8388607)
- 62 named destinations out of 1000 (max. 500000)
- 246 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 357 PDF objects out of 1000 (max. 8388607)
+ 67 named destinations out of 1000 (max. 500000)
+ 254 words of extra memory for PDF output out of 10000 (max. 10000000)
 

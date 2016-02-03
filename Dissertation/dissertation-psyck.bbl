@@ -27,10 +27,21 @@ Zaiben Chen, Heng~Tao Shen, and Xiaofang Zhou.
 \newblock In {\em Data Engineering (ICDE), 2011 IEEE 27th International
   Conference on}, pages 900--911. IEEE, 2011.
 
+\bibitem{joint1995road}
+Matthew Joint.
+\newblock Road rage.
+\newblock 1995.
+
 \bibitem{kniberg2007scrum}
 Henrik Kniberg.
 \newblock Scrum and xp from the trenches.
 \newblock {\em Lulu. com}, 2007.
+
+\bibitem{lazar2006workplace}
+Jonathan Lazar, Adam Jones, and Ben Shneiderman.
+\newblock Workplace user frustration with computers: An exploratory
+  investigation of the causes and severity.
+\newblock {\em Behaviour \& Information Technology}, 25(03):239--251, 2006.
 
 \bibitem{lou2009map}
 Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang.
@@ -38,6 +49,13 @@ Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang.
 \newblock In {\em Proceedings of the 17th ACM SIGSPATIAL International
   Conference on Advances in Geographic Information Systems}, pages 352--361.
   ACM, 2009.
+
+\bibitem{o2008user}
+Heather~L O'Brien and Elaine~G Toms.
+\newblock What is user engagement? a conceptual framework for defining user
+  engagement with technology.
+\newblock {\em Journal of the American Society for Information Science and
+  Technology}, 59(6):938--955, 2008.
 
 \bibitem{ofcom2015comms}
 Ofcom.
@@ -47,6 +65,18 @@ Ofcom.
 \bibitem{peregrino2012mapping}
 Fernando~S Peregrino, David Tom{\'a}s, Paul Clough, and Fernando Llopis.
 \newblock Mapping routes of sentiments.
+
+\bibitem{quercia2014shortest}
+Daniele Quercia, Rossano Schifanella, and Luca~Maria Aiello.
+\newblock The shortest path to happiness: Recommending beautiful, quiet, and
+  happy routes in the city.
+\newblock In {\em Proceedings of the 25th ACM conference on Hypertext and
+  social media}, pages 116--125. ACM, 2014.
+
+\bibitem{thiffault2003monotony}
+Pierre Thiffault and Jacques Bergeron.
+\newblock Monotony of road environment and driver fatigue: a simulator study.
+\newblock {\em Accident Analysis \& Prevention}, 35(3):381--391, 2003.
 
 \bibitem{van2011time}
 Steven Van~Canneyt, Steven Schockaert, Olivier Van~Laere, and Bart Dhoedt.

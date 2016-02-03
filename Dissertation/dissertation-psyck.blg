@@ -1,12 +1,17 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: dissertation-psyck.aux
 The style file: plain.bst
 Database file #1: bib.bib
+Repeated entry---line 118 of file bib.bib
+ : @article{lazar2006workplace
+ :                            ,
+I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in url2015gmaps
 Warning--to sort, need author or key in url2015madmaps
 Warning--to sort, need author or key in url2015myscenicdrives
+Warning--empty journal in joint1995road
 Warning--empty booktitle in ofcom2015comms
 Warning--empty booktitle in peregrino2012mapping
 Warning--empty year in peregrino2012mapping
 Warning--empty booktitle in van2011time
 Warning--empty year in van2011time
-(There were 8 warnings)
+(There was 1 error message)
