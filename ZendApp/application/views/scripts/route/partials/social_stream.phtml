@@ -1,0 +1,96 @@
+<div class="col-md-5" id="socialStream">
+    <div class="border-container">
+        <div class="title routesTitle">
+            Social Stream
+        </div>
+
+        <div class="shareThisRoute">
+            <div class="bold">
+                Like this route? Why not share it?
+            </div>
+            <div class="shareButtons">
+                <div class="a2a_kit a2a_default_style">
+                    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+                    <span class="a2a_divider"></span>
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_google_plus"></a>
+                    <a class="a2a_button_pinterest"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_reddit"></a>
+                    <a class="a2a_button_tumblr"></a>
+                </div>
+                <script type="text/javascript" src="/libs/addtoany/buttons.js"></script>
+            </div>
+        </div>
+
+        <? if (!(is_null($this->user)) && ($this->user->username != $this->route->owner)) { ?>
+            <div class="commentBox">
+                <span class="bold">
+                    Got something to say?
+                </span>
+                <div class="row">
+                    <div class="input-group">
+                        <textarea class="form-control custom-control" id="comment-input" rows="2"></textarea>
+                        <span class="input-group-addon btn btn-success" id="comment-btn">Comment</span>
+                    </div>
+                </div>
+            </div>
+        <? } ?>
+
+        <div class="streamElements">
+            <label id="filterComments" class="right">
+                <input type="checkbox"> Only show comments?
+            </label>
+            <div class="bold">See what others thought:</div>
+
+            <div class="elements">
+                <? if (count($this->socialStream) > 0) { ?>
+                    <? foreach ($this->socialStream as $element) { ?>
+                        <div class="streamElement <?= $element->type ?>">
+                            <i class="<?= $element->icon ?>"></i>
+                            <? if ($element->type == 'share') { ?>
+                                <i class="fa fa-<?= $element->valueString ?>-square"></i>
+                            <? } ?>
+                            <span class="bold"> <?= $element->username ?> </span>
+
+                            <? if ($element->type === 'comment') { ?>
+                                <span class="right commentAction">
+                                    <? if (!(is_null($this->user))) { ?>
+                                        <? if ($element->username == $this->user->username || $this->user->isAdmin) { ?>
+                                            <i class="fa fa-times"></i>
+                                        <? } else { ?>
+                                            <i class="fa fa-flag"></i>
+                                        <? }
+                                    } ?>
+                                </span>
+                                says: <p> <?= $element->comment ?> </p>
+                                <input type="hidden" class="commentId" value="<?= $element->valueId ?>">
+                            <? } else if ($element->type === 'rate') { ?>
+                                gave this route a rating of
+                                <span class="userRatingValue"><?= $element->rating ?></span>
+                                <i class="fa fa-star"></i>
+                                <? if (!is_null($this->user) && $element->username == $this->user->username) { ?>
+                                    <div class="hidden" id="userRating"></div>
+                                <? } ?>
+                            <? } else if ($element->type === 'fork') { ?>
+                                cloned this route
+                            <? } else if ($element->type === 'recommend') { ?>
+                                recommended a <a href="/route/detail/id/<?= $element->valueId ?>">similar route</a>
+                            <? } else { ?>
+                                <?= rtrim($element->type, 'e') ?>ed this route
+                                <?= ($element->type == 'share' ? ' to ' . ucfirst($element->valueString) : '') ?>
+                            <? } ?>
+                        </div>
+                    <? } ?>
+                <? } else { ?>
+                    <? if ((!is_null($this->user)) && ($this->user->username == $this->route->owner)) { ?>
+                        No one has said anything yet! Perhaps you should share your route with your friends?
+                    <? } else { ?>
+                        No one has said anything yet! Why not kick off the discussion?
+                    <? } ?>
+                <? } ?>
+            </div>
+        </div>
+    </div>
+</div>

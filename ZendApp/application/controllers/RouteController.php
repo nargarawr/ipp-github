@@ -453,4 +453,38 @@ class RouteController extends BaseController {
 
         $this->_helper->redirector('details', 'user', null, array());
     }
+
+    /**
+     * Returns a list of all recommended routes
+     *
+     * @author Craig Knott
+     */
+    public function recommendableAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $userId = $this->getRequest()->getParam('userId', 0);
+
+        $routes = RouteFactory::getRecommendableRoutes($userId, 10);
+
+        echo Zend_Json::encode($routes);
+        exit;
+    }
+
+    /**
+     * Logs when a route is recommend on another route
+     *
+     * @author Craig Knott
+     */
+    public function recommendAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $routeId = $this->getRequest()->getParam('routeId', 0);
+        $recommendedId= $this->getRequest()->getParam('recomId', 0);
+
+        RouteFactory::updateRouteLog($routeId, $this->user->userId, 'recommend', $recommendedId, null);
+
+        exit;
+    }
 }

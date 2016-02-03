@@ -175,7 +175,8 @@ tr td:first-child {
 
 #mediaCarousel {
     height: 250px;
-    max-height: 250px;    top: -7px;
+    max-height: 250px;
+    top: -7px;
 }
 
 #mediaCarousel img {
@@ -192,3 +193,21 @@ tr td:first-child {
     padding: 0.65em;
 }
 
+.jconfirm .header {
+    font-size: 16px;
+    color: #FFB347 !important;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.jconfirm .rRoute {
+    cursor: pointer;
+    height: 22px;
+}
+
+.rRoute.selected {
+    border: 1px solid #FFB347;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #FFFFFF;
+}

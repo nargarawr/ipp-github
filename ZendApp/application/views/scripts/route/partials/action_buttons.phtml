@@ -33,6 +33,14 @@
             </a>
         </li>
 
+        <? if (!(is_null($this->user))) { ?>
+            <li>
+                <a href="#" id="recommendSimilar">
+                    <i class="fa fa-link"></i> Recommend Similar
+                </a>
+            </li>
+        <? } ?>
+
         <? if (!is_null($this->user) && ($this->routeowner == $this->user->username || $this->user->isAdmin)) { ?>
             <li role="separator" class="divider"></li>
             <li>

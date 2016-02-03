@@ -544,6 +544,7 @@ class RouteFactory extends ModelFactory {
                         WHEN rl.action='download' THEN 'fa fa-download'
                         WHEN rl.action='share' THEN 'fa fa-share'
                         WHEN rl.action='fork' THEN 'fa fa-clone'
+                        WHEN rl.action='recommend' THEN 'fa fa-link'
                     END AS icon
                 FROM tb_route_log rl
                 JOIN tb_user u
@@ -798,6 +799,7 @@ class RouteFactory extends ModelFactory {
                     cost,
                     distance,
                     datetime_created AS created,
+                    created_by AS owner,
                     (SELECT count(1) FROM tb_point WHERE fk_route_id = pk_route_id) AS num_points,
                     IFNULL(
                         (SELECT FLOOR(avg(value) * 2) / 2  FROM tb_rating WHERE fk_route_id = tb_route.pk_route_id AND is_deleted = 0), 0
@@ -968,7 +970,7 @@ class RouteFactory extends ModelFactory {
      */
     public static function getLastVisits($userId, $num) {
         $sql = "SELECT
-                    pk_route_id,
+                    DISTINCT pk_route_id AS routeId,
                     u.username AS owner,
                     name
                 FROM tb_log l
@@ -980,14 +982,59 @@ class RouteFactory extends ModelFactory {
                 AND r.is_private = 0
                 AND r.is_deleted = 0
                 ORDER BY datetime DESC
-                LIMIT :num";
-
+                LIMIT " . $num;
         $params = array(
-            ':userId' => $userId,
-            ':num'    => $num
+            ':userId' => $userId
         );
 
         return parent::fetchAll($sql, $params);
+    }
+
+    /**
+     * Gets all routes a user can recommend. Which is: all their saved routes, all their own routes, and their
+     * {numRecent} most recently visited routes
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId ID of the user to do the recommending
+     */
+    public static function getRecommendableRoutes($userId, $numRecent) {
+        $ownRoutes = self::getRoutesForUser($userId);
+        $savedRoutes = self::getSavedRoutesForUser($userId);
+        $recentRoutes = self::getLastVisits($userId, $numRecent);
+
+        $routes = array(
+            'recent' => array(),
+            'saved'  => array(),
+            'own'    => array()
+        );
+        // route id, owner, name
+        foreach ($recentRoutes as $route) {
+            $routes['recent'][] = (object)array(
+                'id'    => $route->routeId,
+                'name'  => $route->name
+            );
+        }
+
+        foreach ($savedRoutes as $route) {
+            $routes['saved'][] = (object)array(
+                'id'    => $route->routeId,
+                'name'  => $route->name
+            );
+        }
+
+        foreach ($ownRoutes as $route) {
+            if ($route->is_private == 1) {
+                continue;
+            }
+
+            $routes['own'][] = (object)array(
+                'id'    => $route->routeId,
+                'name'  => $route->name
+            );
+        }
+
+        return (object) $routes;
     }
 
 }
