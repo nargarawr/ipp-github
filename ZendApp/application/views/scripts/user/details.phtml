@@ -30,7 +30,7 @@
                                 <?= $this->displayedUser->fname ?> <?= $this->displayedUser->lname ?> </div>
                         <? } ?>
 
-                        <? if (!is_null($this->displayedUser->age)) { ?>
+                        <? if (!is_null($this->displayedUser->age) && ($this->displayedUser->age != "0000-00-00")) { ?>
                             <div class="age"><i class="fa fa-calendar"></i>
                                 <? $birthDate = date("m/d/Y", strtotime($this->displayedUser->age)); ?>
                                 <? $birthDate = explode("/", $birthDate); ?>
@@ -68,7 +68,7 @@
 
                         <br>
                         <i>
-                            <?= (!is_null($this->displayedUser->bio))
+                            <?= (!is_null($this->displayedUser->bio) && ($this->displayedUser->bio != ""))
                                 ? "\"" . $this->displayedUser->bio . "\"" : "No bio" ?>
                         </i>
 
