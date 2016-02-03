@@ -59,12 +59,12 @@
                 <div class="thumbnail" id="map">
                 </div>
 
-                <div class="border-container border-container-less-pad">
-                    <div class="title mediaTitle">
-                        Media
-                    </div>
+                <? if (!is_null($this->routeMedia) && count($this->routeMedia) > 0) { ?>
+                    <div class="border-container border-container-less-pad">
+                        <div class="title mediaTitle">
+                            Media
+                        </div>
 
-                    <? if (!is_null($this->routeMedia) && count($this->routeMedia) > 0) { ?>
                         <div id="mediaCarousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
                                 <? $i = 0; ?>
@@ -85,9 +85,11 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-                    <? } ?>
-                </div>
+
+                    </div>
+                <? } ?>
             </div>
+
             <div class="col-md-6">
                 <div class="text-right">
                     <?= $this->partial("route", "action_buttons", null, array(

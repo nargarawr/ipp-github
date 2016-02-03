@@ -730,11 +730,21 @@ var SavingManager = Class.extend({
  * @author Craig Knott
  */
 var RecommendationManager = Class.extend({
+    /**
+     * Initialises this class and assigns member variables
+     *
+     * @author Craig Knott
+     */
     init:           function () {
         this.button = $('#recommendSimilar');
         this.idSelected = undefined;
         this.setupListeners();
     },
+    /**
+     * Set up the listeners for the button
+     *
+     * @author Craig Knott
+     */
     setupListeners: function () {
         var _self = this;
 
@@ -798,6 +808,13 @@ var RecommendationManager = Class.extend({
             });
         });
     },
+    /**
+     * Get content for the popup
+     *
+     * @author Craig Knott
+     *
+     * @param data JSON data for recent/saved/owned routes
+     */
     getPopupContent: function(data) {
         var text = 'Do you know a similar route you think other users would enjoy? Simply select below for your recently visited routes to suggest it!';
 
