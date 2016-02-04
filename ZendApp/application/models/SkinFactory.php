@@ -114,7 +114,7 @@ class SkinFactory extends ModelFactory {
                             100 * (count(fk_skin_id) / (SELECT count(1) FROM tb_user))
                         FROM tb_skin_owner
                         WHERE fk_skin_id = s.pk_skin_id
-                    ) as ownerPercentage
+                    ) AS ownerPercentage
                 FROM tb_skin s
                 JOIN tb_skin_slot ss
                 ON ss.pk_skin_slot_id = s.fk_slot_id
@@ -198,8 +198,8 @@ class SkinFactory extends ModelFactory {
                     forksGiven,
                     forksReceived,
                     accountAge,
-                    routeCount.cnt as routeCount,
-                    pointCount.cnt as pointCount,
+                    routeCount.cnt AS routeCount,
+                    pointCount.cnt AS pointCount,
                     mostDownloadsForOne,
                     mostCommentsForOne,
                     mostForksForOne,
@@ -209,7 +209,7 @@ class SkinFactory extends ModelFactory {
                     SELECT
                         'c' AS chain,
                         FLOOR(avg(value) * 2) / 2 AS ratingAverage,
-                        datediff(NOW(), user.datetime_created) as accountAge
+                        datediff(NOW(), user.datetime_created) AS accountAge
                     FROM tb_rating rating
                     JOIN tb_route route
                     ON rating.fk_route_id = route.pk_route_id
@@ -265,7 +265,7 @@ class SkinFactory extends ModelFactory {
                 JOIN (
                     SELECT
                         'c' AS chain,
-                        count(pk_route_id) as cnt
+                        count(pk_route_id) AS cnt
                     FROM tb_route
                     WHERE created_by = :userId
                     AND is_deleted = 0
@@ -274,7 +274,7 @@ class SkinFactory extends ModelFactory {
                 JOIN (
                     SELECT
                         'c' AS chain,
-                        count(pk_point_id) as cnt
+                        count(pk_point_id) AS cnt
                     FROM tb_point p
                     JOIN tb_route r
                     ON r.pk_route_id = p.fk_route_id
@@ -284,7 +284,7 @@ class SkinFactory extends ModelFactory {
                 ON pointCount.chain = routeCount.chain
                 JOIN (
                     SELECT
-                        'c' as chain,
+                        'c' AS chain,
                         substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='download',raw.cnt,NULL)),0),',', 1) AS mostDownloadsForOne,
                         substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='comment',raw.cnt,NULL)),0),',', 1) AS mostCommentsForOne,
                         substring_index(IFNULL(GROUP_CONCAT(IF(raw.action='fork',raw.cnt,NULL)),0),',', 1) AS mostForksForOne,
@@ -312,8 +312,8 @@ class SkinFactory extends ModelFactory {
                         AND (rating.is_deleted = 0 OR rating.is_deleted IS NULL OR (rating.is_deleted = 1 AND rl.action = 'comment'))
                         GROUP BY action, rl.fk_route_id
                         ORDER BY action, count(action) DESC
-                    ) as raw
-                ) as mostSocialForOneRoute
+                    ) AS raw
+                ) AS mostSocialForOneRoute
                 ON mostSocialForOneRoute.chain = pointCount.chain";
         $params = array(
             ":userId" => $userId
@@ -341,14 +341,64 @@ class SkinFactory extends ModelFactory {
     }
 
     /**
+     * Gets the requirements necessary to award all skins this user does not currently possess
+     *
+     * @author Craig Knott
+     *
+     * @param int $userId The user to check for
+     */
+    public static function getSkinRequirements($userId) {
+        $sql = "SELECT
+                    fk_skin_id AS skin,
+                    requirement_tag AS tag,
+                    requirement_value AS value
+                FROM tb_skin_requirement
+                WHERE fk_skin_id NOT IN (
+                    SELECT
+                        fk_skin_id
+                    FROM tb_skin_owner
+                    WHERE fk_user_id = :userId
+                )";
+        $params = array(
+            ':userId' => $userId
+        );
+        return parent::fetchAll($sql, $params);
+    }
+
+    /**
      * Given an object of user statistics, awards skins to the user
      *
      * @author Craig Knott
      *
-     * @param array $stats An array of different stats for the user
+     * @param array $stats  An array of different stats for the user
+     * @param int   $userId Id of user to allocate to
      */
-    public static function allocateSkins($stats) {
-        // TODO
+    public static function allocateSkins($stats, $userId) {
+        $requirements = self::getSkinRequirements($userId);
+
+        $shouldAward = array();
+        foreach ($requirements as $requirement) {
+            if ($stats->{$requirement->tag} >= $requirement->value) {
+                $shouldAward[] = $requirement->skin;
+            }
+        }
+
+        if (count($shouldAward) === 0) {
+            return;
+        }
+
+        $sql = "INSERT INTO tb_skin_owner (
+                    fk_skin_id,
+                    fk_user_id,
+                    equipped
+                ) VALUES ";
+        foreach ($shouldAward as $award) {
+            $sql .= "(" . $award . ", " . $userId . ", 0),";
+        }
+        $sql = rtrim($sql, ",");
+        $params = array();
+
+        parent::execute($sql, $params);
     }
 
     /**
