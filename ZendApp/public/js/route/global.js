@@ -329,6 +329,12 @@ var PointsListManager = Class.extend({
      * @param index The map to centre
      */
     centreMap:         function (highestLat, highestLon, lowestLat, lowestLon, index) {
+        // Extend the bounds slightly
+        highestLat *= 1.0001;
+        highestLon *= 1.0001;
+        lowestLat *= 0.9999;
+        lowestLon *= 0.9999;
+
         if (index === undefined) {
             map.fitBounds([
                 [highestLat, highestLon],
