@@ -833,14 +833,14 @@ var RecommendationManager = Class.extend({
         // Your saved routes
         var savedRoutes = $('<div>').addClass('saved row');
         savedRoutes.append($('<div>').addClass('header').text('Your Saved Routes'));
-        for (i = 0; i < data.recent.length; i++) {
+        for (i = 0; i < data.saved.length; i++) {
             savedRoutes.append($('<div>').addClass('rRoute col-md-3').text(data.saved[i].name).attr('data-id', data.saved[i].id))
         }
 
         // Your own routes
         var myRoutes = $('<div>').addClass('own row');
         myRoutes.append($('<div>').addClass('header').text('Your Routes'));
-        for (i = 0; i < data.recent.length; i++) {
+        for (i = 0; i < data.own.length; i++) {
             myRoutes.append($('<div>').addClass('rRoute col-md-3').text(data.own[i].name).attr('data-id', data.own[i].id))
         }
 

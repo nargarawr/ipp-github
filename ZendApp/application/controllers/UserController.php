@@ -64,7 +64,7 @@ class UserController extends BaseController {
         $displayedUser->stats = $userStats;
 
         // Check if the user has any new skins
-        SkinFactory::allocateSkins($userStats);
+        SkinFactory::allocateSkins($userStats, $displayedUser->userId);
 
         // Display user skins
         $this->view->userSkins = SkinFactory::getUserEquippedSkins($displayedUser->userId);
