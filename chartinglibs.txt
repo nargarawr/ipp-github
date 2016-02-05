@@ -1,0 +1,34 @@
+d3
+	+ 'super' nice looking
+	+ huge selection
+	- not responsive
+
+google charts
+	+ look nice
+	+ big range
+	+ interactive
+	- require internet
+	- not responsive (but can be redrawn to simulate this)
+
+chartist
+	+ responsive
+	+ clean ui
+	- only three chart types
+	
+raphael
+	+ lots of graph types
+	- not interactive
+	- not good looking
+	- not responsive
+
+chartjs
+	+ responsive
+	+ interactive
+	+ decent choice
+
+
+i use
+pie
+area
+line
+bar

@@ -70,20 +70,6 @@ CREATE TABLE tb_point (
     foreign key (fk_route_id) references tb_route(pk_route_id)
 );
 
-
-
-
-
-
-
-CREATE TABLE tb_announcement (
-  pk_announcement_id int not null auto_increment,
-  message varchar(255) not null,
-  created_by int not null,
-  datetime_created datetime not null
-  primary key (pk_announcement_id),
-  foreign key (created_by) references tb_user(pk_user_id)
-);
 CREATE TABLE tb_rating (
   pk_rating_id int not null auto_increment,
   fk_route_id int not null,
@@ -103,4 +89,31 @@ CREATE TABLE tb_comment (
   foreign key (fk_route_id) references tb_route(pk_route_id)
 );
 
-CREATE TABLE tb_report ();
+CREATE TABLE tb_admin_log (
+  pk_admin_log_id int not null auto_increment,
+  fk_user_id int not null,
+  datetime datetime,
+  action varchar(32),
+  primary key(pk_admin_log_id),
+  foreign key(fk_user_id) references tb_user(pk_user_id)
+);
+
+CREATE TABLE tb_site_admin (
+  pk_site_admin_id int not null auto_increment,
+  is_locked int not null default 0,
+  primary key(pk_site_admin_id)
+);
+
+
+
+
+
+
+CREATE TABLE tb_announcement (
+  pk_announcement_id int not null auto_increment,
+  message varchar(255) not null,
+  created_by int not null,
+  datetime_created datetime not null
+  primary key (pk_announcement_id),
+  foreign key (created_by) references tb_user(pk_user_id)
+);
