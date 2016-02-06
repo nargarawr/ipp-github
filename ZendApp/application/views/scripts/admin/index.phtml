@@ -30,7 +30,11 @@
                     Site Usage
                 </div>
                 <div class="border-inner">
-                    Coming soon TM
+                    <b>Monitors</b><br>
+                    Since you started watch: Number of log ins, number of log outs, pages accessed, database calls?,
+                    actions taken (shares, downloads, ratings, comments, clones).
+
+                    <?= var_dump(shell_exec("uptime")); ?>
                 </div>
             </div>
         </div>

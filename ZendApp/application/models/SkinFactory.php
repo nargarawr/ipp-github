@@ -231,7 +231,7 @@ class SkinFactory extends ModelFactory {
                         SELECT
                             count(action) AS cnt,
                             action
-                        FROM tb_route_log rl
+                        FROM tb_route_social_log rl
                             JOIN tb_user u
                                 ON u.pk_user_id = rl.fk_user_id
                         WHERE u.pk_user_id = :userId
@@ -252,7 +252,7 @@ class SkinFactory extends ModelFactory {
                              SELECT
                                  COUNT(action) AS cnt,
                                  action
-                             FROM tb_route_log rl
+                             FROM tb_route_social_log rl
                                  JOIN tb_route r
                                      ON rl.fk_route_id = r.pk_route_id
                                  JOIN tb_user u
@@ -295,7 +295,7 @@ class SkinFactory extends ModelFactory {
                             count(action) AS cnt,
                             action,
                             rl.fk_route_id
-                        FROM tb_route_log rl
+                        FROM tb_route_social_log rl
                         JOIN tb_route r
                         ON r.pk_route_id = rl.fk_route_id
                         JOIN tb_user u

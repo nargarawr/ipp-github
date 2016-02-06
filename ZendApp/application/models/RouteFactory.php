@@ -124,13 +124,13 @@ class RouteFactory extends ModelFactory {
                         (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
                     ) AS comments,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'download'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'download'), 0
                     ) AS downloads,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'fork'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'fork'), 0
                     ) AS forks,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'share'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'share'), 0
                     ) AS shares
                 FROM tb_route
                 WHERE created_by = :userId
@@ -200,13 +200,13 @@ class RouteFactory extends ModelFactory {
                         (SELECT count(pk_rating_id) AS comments FROM tb_rating r WHERE fk_route_id = :routeId AND is_deleted = 0), 0
                     ) AS ratings,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = :routeId AND action = 'download'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = :routeId AND action = 'download'), 0
                     ) AS downloads,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = :routeId AND action = 'fork'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = :routeId AND action = 'fork'), 0
                     ) AS forks,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = :routeId AND action = 'share'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = :routeId AND action = 'share'), 0
                     ) AS shares,
                     u.username AS owner,
                     u.pk_user_id AS owner_id
@@ -448,8 +448,8 @@ class RouteFactory extends ModelFactory {
      */
     public static function checkIfRatingExists($routeId, $userId) {
         $sql = "SELECT
-                    pk_route_log_id
-                FROM tb_route_log
+                    pk_route_social_log_id
+                FROM tb_route_social_log
                 WHERE action = 'rate'
                 AND fk_user_id = :userId
                 AND fk_route_id = :routeId";
@@ -463,7 +463,7 @@ class RouteFactory extends ModelFactory {
     }
 
     /**
-     * Logs a row in tb_route_log whenever an action is taken on a route. This is so we can display them all in the
+     * Logs a row in tb_route_social_log whenever an action is taken on a route. This is so we can display them all in the
      * social stream
      *
      * @author Craig Knott
@@ -480,7 +480,7 @@ class RouteFactory extends ModelFactory {
         if ($action === 'rate') {
             $exists = RouteFactory::checkIfRatingExists($routeId, $userId);
             if ($exists) {
-                $sql = "UPDATE tb_route_log
+                $sql = "UPDATE tb_route_social_log
                         SET datetime = NOW()
                         WHERE fk_route_id = :routeId
                         AND fk_user_id = :userId
@@ -494,7 +494,7 @@ class RouteFactory extends ModelFactory {
             }
         }
 
-        $sql = "INSERT INTO tb_route_log (
+        $sql = "INSERT INTO tb_route_social_log (
                     fk_route_id,
                     fk_user_id,
                     action,
@@ -546,7 +546,7 @@ class RouteFactory extends ModelFactory {
                         WHEN rl.action='fork' THEN 'fa fa-clone'
                         WHEN rl.action='recommend' THEN 'fa fa-link'
                     END AS icon
-                FROM tb_route_log rl
+                FROM tb_route_social_log rl
                 JOIN tb_user u
                 ON u.pk_user_id = rl.fk_user_id
                 LEFT JOIN tb_comment c
@@ -661,13 +661,13 @@ class RouteFactory extends ModelFactory {
                         (SELECT count(pk_rating_id) AS comments FROM tb_rating r WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
                     ) AS ratings,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = pk_route_id AND action = 'download'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = pk_route_id AND action = 'download'), 0
                     ) AS downloads,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = pk_route_id AND action = 'fork'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = pk_route_id AND action = 'fork'), 0
                     ) AS forks,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = pk_route_id AND action = 'share'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = pk_route_id AND action = 'share'), 0
                     ) AS shares,
                     u.username AS owner
                 FROM tb_route r
@@ -808,13 +808,13 @@ class RouteFactory extends ModelFactory {
                         (SELECT count(pk_comment_id) AS comments FROM tb_comment c WHERE fk_route_id = pk_route_id AND is_deleted = 0), 0
                     ) AS comments,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'download'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'download'), 0
                     ) AS downloads,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'fork'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'fork'), 0
                     ) AS forks,
                     IFNULL (
-                        (SELECT count(pk_route_log_id) FROM tb_route_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'share'), 0
+                        (SELECT count(pk_route_social_log_id) FROM tb_route_social_log WHERE fk_route_id = tb_route.pk_route_id AND action = 'share'), 0
                     ) AS shares
                 FROM tb_route
                 WHERE pk_route_id IN (
@@ -941,7 +941,7 @@ class RouteFactory extends ModelFactory {
      * @param int $routeId Id of the route visited
      */
     public static function addVisitToLog($userId, $routeId) {
-        $sql = "INSERT INTO tb_log (
+        $sql = "INSERT INTO tb_route_visit_log (
                     fk_user_id,
                     fk_route_id,
                     datetime
@@ -973,7 +973,7 @@ class RouteFactory extends ModelFactory {
                     DISTINCT pk_route_id AS routeId,
                     u.username AS owner,
                     name
-                FROM tb_log l
+                FROM tb_route_visit_log l
                 JOIN tb_route r
                 ON r.pk_route_id = l.fk_route_id
                 JOIN tb_user u
