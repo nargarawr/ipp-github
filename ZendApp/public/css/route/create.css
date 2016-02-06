@@ -1,46 +1,311 @@
-.statsTitle {
-    width: 104px;
+#map {
+    height: 95px;
 }
 
-.userTitle {
-    width: 166px;
+#left-hand-display, #left-hand-display-mini {
+    position: fixed;
+    top: 65px;
+    left: 5px;
+    width: 250px;
+    background-color: #FEFEFE;
+    z-index: 1001;
 }
 
-.siteTitle {
-    width: 158px;
+#left-hand-display .title,
+#left-hand-display-mini .title {
+    font-size: 24px;
+    text-align: center;
 }
 
-.announcementsTitle {
-    width: 148px;
+.title h3 {
+    margin-bottom: 0;
+    margin-left: 20px;
 }
 
-.border-right {
-    border-right: 1px solid #CCCCCC;
+#left-hand-display .noPointsYet {
+    font-weight: bold;
+    padding: 10px;
 }
 
-.sectionTitle {
-    font-size: 18px;
-}
-
-.users input {
-    margin-bottom: 10px;
-}
-
-.users .col-md-6,
-.site .col-md-4,
-.annc .col-md-6 {
-    top: -10px;
-}
-
-.annc {
-    margin-bottom: 15px;
-}
-
-.annc input {
-    margin-bottom: 5px;
-}
-
-#postAnnouncement,
-#clearAnnouncement {
+#left-hand-display #hide_lhd,
+#left-hand-display-mini #show_lhd {
+    text-align: right;
+    float: right;
+    margin-right: 10px;
     margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#left-hand-display .subtitle-buffer,
+#left-hand-display-mini .subtitle-buffer {
+    height: 18px;
+}
+
+#left-hand-display .subtitle,
+#left-hand-display-mini .subtitle {
+    font-size: 13px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    max-width: 95%;
+    max-height: 18px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#left-hand-display .submit {
+    text-align: center;
+    color: white;
+    height: 40px;
+    font-size: 18px;
+    background-color: #C2D59A;
+    cursor: pointer;
+    padding-top: 7px;
+    padding-bottom: 10px;
+}
+
+#left-hand-display .submit:hover {
+    background-color: #A1BF64;
+}
+
+#left-hand-display .uploadButton {
+    text-align: center;
+    color: white;
+    height: 40px;
+    font-size: 18px;
+    background-color: #A0C6E8;
+    cursor: pointer;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    font-weight: normal;
+}
+
+#left-hand-display .uploadButton:hover {
+    background-color: #77ABD9;
+}
+
+#left-hand-display .pointsList .point {
+    border-top: 1px solid #FFB347;
+    overflow: hidden;
+    background-color: white;
+}
+
+#left-hand-display .pointsList .point:first-child {
+    border-top: none;
+}
+
+#left-hand-display .pointsList {
+    max-height: 700px;
+    overflow: auto;
+}
+
+#left-hand-display .pointsList .point .left-side {
+    width: 25px;
+    float: left;
+    height: 50px;
+    background-color: #F1F1F1;
+    text-align: center;
+    padding-top: 16px;
+}
+
+#left-hand-display .pointsList .point .middle-side {
+    width: 155px;
+    float: left;
+    padding-left: 5px;
+    background-color: #FEFEFE;
+}
+
+#left-hand-display .pointsList .point .middle-side .title {
+    padding-top: 2px;
+    font-size: 18px;
+    text-align: left;
+    max-height: 26px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#left-hand-display .pointsList .point .middle-side .coords {
+    font-size: 14px;
+    color: #999999;
+}
+
+#left-hand-display .pointsList .point .right-side {
+    width: 60px;
+    height: 46px;
+    float: left;
+    padding-left: 5px;
+    background-color: #FEFEFE;
+}
+
+#left-hand-display .pointsList .point .right-side button {
+    padding: 1px 6px;
+    margin-top: 13px;
+}
+
+#left-hand-display .pointsList .point .right-side button.marker-delete-button-lhd {
+    margin-left: 3px;
+}
+
+.leaflet-popup-content {
+    width: 280px;
+    padding-top: 8px;
+    margin: 0;
+}
+
+.leaflet-popup-content .pointContainer button {
+    margin-top: 8px;
+    margin-left: 5px;
+    padding: 1px 6px;
+}
+
+.leaflet-popup-content .pointContainer textarea {
+    margin-top: 10px;
+}
+
+.leaflet-control-layers-toggle {
+    background: url(/images/layers.png) no-repeat;
+    margin: 2px;
+    width: 26px;
+    height: 26px;
+}
+
+textarea {
+    resize: none;
+}
+
+.leaflet-popup-content .pointContainer .buttons {
+    text-align: right;
+}
+
+#saveroute-popup {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    background: #444;
+    color: white;
+}
+
+#saveroute-popup h3 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: inherit;
+    padding: 10px 15px 5px 0;
+    color: #FFB347 !important;
+}
+
+#saveroute-popup .mfp-close {
+    display:none;
+}
+
+#saveroute-popup .buttons {
+    float: right;
+    padding: 10px 0;
+}
+
+#saveroute-popup .bottom-filler {
+    height: 40px;
+}
+
+#saveroute-popup .buttons .btn {
+    border: 0;
+    background-image: none;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: none;
+    -webkit-transition: background .1s;
+    transition: background .1s;
+    color: white;
+    box-shadow: none;
+    background: 0;
+}
+
+#saveroute-popup .buttons .btn:hover {
+    background: #666666;
+}
+
+#saveroute-popup .buttons .btn:first-child {
+    color: #FFB347 !important;
+}
+
+#saveroute-popup .textContainer {
+    padding-top: 10px;
+}
+
+#saveroute-popup .btnContainer {
+    text-align: right;
+    padding-top: 10px;
+}
+
+#saveroute-popup .checkContainer {
+    padding-top: 10px;
+}
+
+#saveroute-popup .errorMessage {
+    color: red;
+}
+
+#saveroute-popup #routeName.error {
+    border: red 1px solid;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.leaflet-top, .leaflet-bottom {
+    z-index: 5;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#loading {
+    position: fixed;
+    top: 48%;
+    left: 48%;
+    width: 260px;
+    background: rgba(255, 255, 255, .9);
+    height: 89px;
+    font-size:20pt
+}
+
+#loading .loading_body {
+    top: 25px;
+    position: relative;
+    text-align: center;
+}
+
+.viewMedia {
+    margin-top: 10px;
+    font-size: 14px;
+    padding-left: 2px;
+}
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
 }

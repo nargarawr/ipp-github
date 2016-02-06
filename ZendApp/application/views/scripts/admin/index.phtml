@@ -1,3 +1,5 @@
+<input type="hidden" value="<?= date("Y-m-d h:i:s") ?>" id="start_time">
+
 <div class="row">
     <div class="col-sm-1 col-md-2"></div>
     <div class="col-sm-10 col-md-8">
@@ -30,11 +32,71 @@
                     Site Usage
                 </div>
                 <div class="border-inner">
-                    <b>Monitors</b><br>
-                    Since you started watch: Number of log ins, number of log outs, pages accessed, database calls?,
-                    actions taken (shares, downloads, ratings, comments, clones).
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Total</th>
+                                    <th>New</th>
+                                </tr>
+                                </thead>
+                                <? foreach ($this->totalStats as $key => $value) { ?>
+                                    <? if (preg_match("/new_/", $key) === 1) { ?>
+                                        <? continue; ?>
+                                    <? } ?>
+                                    <? $k = substr($key, 6); ?>
+                                    <tr>
+                                        <td><?= ucfirst($k) ?></td>
+                                        <td id="total_<?= $k ?>"><?= $value ?></td>
+                                        <td id="new_<?= $k ?>">0</td>
+                                    </tr>
+                                <? } ?>
+                            </table>
+                            <div class="disclaimer">
+                                Updates every 30 seconds
+                            </div>
+                        </div>
 
-                    <?= var_dump(shell_exec("uptime")); ?>
+                        <div class="col-md-6">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th colspan="2">Server Stats</th>
+                                </tr>
+                                </thead>
+                                <tr>
+                                    <td>Time</td>
+                                    <td id="server_time"></td>
+                                </tr>
+                                <tr>
+                                    <td>Uptime</td>
+                                    <td id="server_uptime"></td>
+                                </tr>
+                                <tr>
+                                    <td>Users logged in</td>
+                                    <td id="server_users"></td>
+                                </tr>
+                                <tr>
+                                    <td>Average Load (last 1m)</td>
+                                    <td id="server_load_1"></td>
+                                </tr>
+                                <tr>
+                                    <td>Average Load (last 5m)</td>
+                                    <td id="server_load_2"></td>
+                                </tr>
+                                <tr>
+                                    <td>Average Load (last 15m)</td>
+                                    <td id="server_load_3"></td>
+                                </tr>
+                            </table>
+
+                            <div class="disclaimer">
+                                Updates every second
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

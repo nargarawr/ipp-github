@@ -48,3 +48,12 @@
 .alert {
     margin-top: 10px;
 }
+
+.table {
+    margin-bottom: 0;
+}
+
+.disclaimer {
+    font-size: 12px;
+    float: right;
+}

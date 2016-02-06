@@ -184,4 +184,48 @@ class AdminFactory extends ModelFactory {
         $params = array();
         parent::execute($sql, $params);
     }
+
+
+    /**
+     * Gets site statistics/figures
+     *
+     * @author Craig Knott
+     *
+     * @param string $from When to start the statistics from (Y-m-d h:i:s date)
+     *
+     * @return Object of statistics
+     */
+    public static function getSiteStatistics($from) {
+        $sql = "select
+                    (select count(pk_user_id) from tb_user where is_deleted = 0 and datetime_created >= '" . $from .  "'
+                    ) as new_users,
+                    (select count(pk_route_id) from tb_route where is_deleted = 0 and datetime_created >= '" . $from .  "'
+                    ) as new_routes,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'comment' and datetime >= '" . $from .  "'
+                    ) as new_comments,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'download' and datetime >= '" . $from .  "'
+                    ) as new_downloads,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'fork' and datetime >= '" . $from .  "'
+                    ) as new_forks,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'rate' and datetime >= '" . $from .  "'
+                    ) as new_ratings,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'share' and datetime >= '" . $from .  "'
+                    ) as new_shares,
+                    (select count(pk_user_id) from tb_user where is_deleted = 0
+                    ) as total_users,
+                    (select count(pk_route_id) from tb_route where is_deleted = 0
+                    ) as total_routes,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'comment'
+                    ) as total_comments,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'download'
+                    ) as total_downloads,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'fork'
+                    ) as total_forks,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'rate'
+                    ) as total_rating,
+                    (select count(pk_route_social_log_id) from tb_route_social_log where action = 'share'
+                    ) as total_shares;";
+        $params = array();
+        return parent::fetchOne($sql, $params);
+    }
 }

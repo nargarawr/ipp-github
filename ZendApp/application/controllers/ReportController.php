@@ -12,7 +12,7 @@ class ReportController extends BaseController {
     /**
      * Initialisation function that allowed for JSON to be displayed on the page, and sets up the flash messenger
      *
-     * @author Craig Knott
+     * @author Craig Knott 
      */
     public function init() {
         parent::init();

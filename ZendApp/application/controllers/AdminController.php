@@ -47,6 +47,7 @@ class AdminController extends BaseController {
             }
         }
 
+        $this->view->totalStats = AdminFactory::getSiteStatistics(date("Y-m-d h:i:s"));
         $this->view->siteAdmin = AdminFactory::getSiteAdmin();
     }
 
@@ -55,7 +56,7 @@ class AdminController extends BaseController {
      *
      * @author Craig Knott
      */
-    public function reportsAction(){
+    public function reportsAction() {
     }
 
     /**
@@ -75,7 +76,7 @@ class AdminController extends BaseController {
      *
      * @author Craig Knott
      */
-    public function createuserAction(){
+    public function createuserAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -188,7 +189,12 @@ class AdminController extends BaseController {
         $searchTerm = $this->getRequest()->getParam('searchTerm', null);
         $userId = AdminFactory::findUser($searchTerm);
         if ($userId === false) {
-            die(var_dump('no user found'));
+            $this->messageManager->addMessage(array(
+                'msg'  => 'No user found with those search parameters',
+                'type' => 'error'
+            ));
+
+            $this->_helper->redirector('index', 'admin', null, array());
         } else {
             $this->_helper->redirector('settings', 'user', null, array('id' => $userId));
         }
@@ -199,7 +205,7 @@ class AdminController extends BaseController {
      *
      * @author Craig Knott
      */
-    public function shadowbanAction(){
+    public function shadowbanAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -253,7 +259,7 @@ class AdminController extends BaseController {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $filename = date('Y-m-d_H:i:s') . "-backup.sql";
-        $command = "mysqldump nicewayto --user=root --password=" . ModelFactory::getPassword() .  " > " . $filename;
+        $command = "mysqldump nicewayto --user=root --password=" . ModelFactory::getPassword() . " > " . $filename;
 
         shell_exec('cd /backups;' . $command);
 
@@ -282,5 +288,49 @@ class AdminController extends BaseController {
         ));
 
         $this->_helper->redirector('index', 'admin', null, array());
+    }
+
+    /**
+     * Get site usage statistics
+     *
+     * @author Craig Knott
+     */
+    public function getstatsAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $from = $this->getRequest()->getParam('from', null);
+
+        $results = AdminFactory::getSiteStatistics($from);
+
+        echo Zend_Json::encode($results);
+        exit;
+    }
+
+    /**
+     * Get server usage statistics
+     *
+     * @author Craig Knott
+     */
+    public function getserverstatsAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $upTime = shell_exec("uptime");
+        $firstSplit = (explode("load average: ", $upTime));
+        $secondSplit = preg_split("/, | up /", $firstSplit[0]);
+        $loadAverageVals = explode(",", $firstSplit[1]);
+
+        $upTimeStats = (object)array(
+            'load_1' => trim($loadAverageVals[0]),
+            'load_2' => trim($loadAverageVals[1]),
+            'load_3' => trim($loadAverageVals[2]),
+            'time'   => trim($secondSplit[0]),
+            'uptime' => trim($secondSplit[1]),
+            'users'  => trim($secondSplit[3])
+        );
+
+        echo Zend_Json::encode($upTimeStats);
+        exit;
     }
 }

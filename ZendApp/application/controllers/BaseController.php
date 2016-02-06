@@ -67,7 +67,7 @@ class BaseController extends Zend_Controller_Action {
                 if ($this->user->shouldDeauth) {
                     Zend_Auth::getInstance()->clearIdentity();
                     $this->_helper->redirector('logout', 'member', null, array(
-                        'redirTo' => 'login',
+                        'redirTo'      => 'login',
                         'fromRedirect' => 1
                     ));
                 }
