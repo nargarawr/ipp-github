@@ -27,6 +27,24 @@ Zaiben Chen, Heng~Tao Shen, and Xiaofang Zhou.
 \newblock In {\em Data Engineering (ICDE), 2011 IEEE 27th International
   Conference on}, pages 900--911. IEEE, 2011.
 
+\bibitem{cyr2010colour}
+Dianne Cyr, Milena Head, and Hector Larios.
+\newblock Colour appeal in website design within and across cultures: A
+  multi-method evaluation.
+\newblock {\em International journal of human-computer studies}, 68(1):1--21,
+  2010.
+
+\bibitem{depot2014clutter}
+Webdesigner Depot.
+\newblock Interface design technique to simplify and declutter your interfaces,
+  2014.
+
+\bibitem{golombisky2013white}
+Kim Golombisky and Rebecca Hagen.
+\newblock {\em White Space is Not Your Enemy: A Beginner's Guide to
+  Communicating Visually Through Graphic, Web \& Multimedia Design}.
+\newblock CRC Press, 2013.
+
 \bibitem{joint1995road}
 Matthew Joint.
 \newblock Road rage.
@@ -36,6 +54,10 @@ Matthew Joint.
 Henrik Kniberg.
 \newblock Scrum and xp from the trenches.
 \newblock {\em Lulu. com}, 2007.
+
+\bibitem{kuparinen2013introducing}
+Liisa Kuparinen, Johanna Silvennoinen, and Hannakaisa Isom{\"a}ki.
+\newblock Introducing usability heuristics for mobile map applications.
 
 \bibitem{lazar2006workplace}
 Jonathan Lazar, Adam Jones, and Ben Shneiderman.
@@ -56,6 +78,35 @@ Yin Lou, Chengyang Zhang, Yu~Zheng, Xing Xie, Wei Wang, and Yan Huang.
 \newblock In {\em Proceedings of the 17th ACM SIGSPATIAL International
   Conference on Advances in Geographic Information Systems}, pages 352--361.
   ACM, 2009.
+
+\bibitem{mccarthy2004could}
+John~D McCarthy, M~Angela Sasse, and Jens Riegelsberger.
+\newblock Could i have the menu please? an eye tracking study of design
+  conventions.
+\newblock In {\em People and computers XVII—Designing for society}, pages
+  401--414. Springer, 2004.
+
+\bibitem{miller1956magical}
+George~A Miller.
+\newblock The magical number seven, plus or minus two: some limits on our
+  capacity for processing information.
+\newblock {\em Psychological review}, 63(2):81, 1956.
+
+\bibitem{nielsen1992usability}
+Jakob Nielsen.
+\newblock The usability engineering life cycle.
+\newblock {\em Computer}, 25(3):12--22, 1992.
+
+\bibitem{nielsen2005ten}
+Jakob Nielsen.
+\newblock Ten usability heuristics.
+\newblock {\em .}, 2005.
+
+\bibitem{nielsen1990heuristic}
+Jakob Nielsen and Rolf Molich.
+\newblock Heuristic evaluation of user interfaces.
+\newblock In {\em Proceedings of the SIGCHI conference on Human factors in
+  computing systems}, pages 249--256. ACM, 1990.
 
 \bibitem{o2008user}
 Heather~L O'Brien and Elaine~G Toms.
@@ -80,6 +131,15 @@ Daniele Quercia, Rossano Schifanella, and Luca~Maria Aiello.
 \newblock In {\em Proceedings of the 25th ACM conference on Hypertext and
   social media}, pages 116--125. ACM, 2014.
 
+\bibitem{savio2007design}
+Nadav Savio.
+\newblock Design sketch: The context of mobile interaction.
+
+\bibitem{shneiderman2005designing}
+Shneiderman~Ben Shneiderman and Catherine Plaisant.
+\newblock Designing the user interface 4 th edition.
+\newblock {\em ed: Pearson Addison Wesley, USA}, 2005.
+
 \bibitem{thiffault2003monotony}
 Pierre Thiffault and Jacques Bergeron.
 \newblock Monotony of road environment and driver fatigue: a simulator study.
@@ -99,5 +159,12 @@ Susan~B Wilson and Michael~S Dobson.
 \newblock {\em Goal Setting: How to Create an Action Plan and Achieve Your
   Goals}.
 \newblock Publisher - Amacom, 2008.
+
+\bibitem{zhang2000satisfiers}
+Ping Zhang and Gisela~M Von~Dran.
+\newblock Satisfiers and dissatisfiers: A two-factor model for website design
+  and evaluation.
+\newblock {\em Journal of the American society for information science},
+  51(14):1253--1268, 2000.
 
 \end{thebibliography}

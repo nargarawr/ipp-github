@@ -1,79 +1,71 @@
 \section{System Specification}
 \label{sec:spec}
-In this section, the functional and non-functional requirements of the system have been outlined. These were obtained by looking through the design specification that the client provided at the start of the project, and were agreed upon by both parties. 
+In this section, the functional and non-functional requirements of the system have been outlined. These were obtained by looking through the design specification that was provided at the start of the project, and were agreed upon by both parties. 
 
 \subsection{Functional Requirements}
 \label{sec:funcs}
 
  \begin{enumerate}
- \item[1.] The user should be able to search by geographic region and discover submitted routes for that region.
+ \item[1.] The user should be able to search by geographic region and discover routes for that region.
  \item[2.] The user should be able to contribute routes.
  	\begin{enumerate}
  	\item[2.1.] Only the creating user should be able to modify these routes
- 	\item[2.2.] The user should be able to decide on the visibility of this route
+ 	\item[2.2.] The user can make the route private
  	\end{enumerate}
  \item[3.] The user should be able to interact socially with the route, including:
  	\begin{enumerate}
- 	\item[3.1.] Comment on public routes
- 	\item[3.2.] Recommend alternative routes
- 	\item[3.3.] Share routes to external social media websites
+ 	\item[3.1.] Commenting on public routes
+ 	\item[3.2.] Recommending similar routes
+ 	\item[3.3.] Sharing routes to external social media websites
  	\end{enumerate}
- \item[4.] Users should be able to create an account with, for example, name, email and location 
+ \item[4.] Users should be able to create an account with basic information
  \item[5.] There should be administrative users who have extra functionality, including:
 	 \begin{enumerate}
- 		\item[5.1.] Managing users
- 		\begin{enumerate}
- 			\item[5.1.1.] Delete users
- 			\item[5.1.2.] Update users
- 			\item[5.1.3.] Create users
- 		\end{enumerate}
- 		\item[5.2.] Managing routes
- 		\begin{enumerate}
- 			\item[5.2.1.] Delete routes
- 			\item[5.2.2.] Update routes
- 		\end{enumerate}
- 		\item[5.3.] Delete comments
- 		\item[5.4.] Make announcements
- 		\item[5.5.] Make backups of the website in a standard, compliant, free and open format
- 		\item[5.6.] De-authorize active sessions
- 		\item[5.7.] Lock the site and prevent access
+ 		\item[5.1.] Deleting users
+ 		\item[5.2.] Updating users	
+ 		\item[5.3.] Creating users 		
+ 		\item[5.4.] Deleting routes
+ 		\item[5.5.] Deleting comments
+ 		\item[5.6.] Making announcements
+ 		\item[5.7.] Making backups in a standard, free and open format
+ 		\item[5.8.] De-authorizing active sessions
+ 		\item[5.9.] Locking the site and preventing access
  	\end{enumerate}
- \item[6.] Users should be able to export their routes to a FOSS
- \item[7.] Users should be able to make a copy of other user's public routes and edit them
- \item[8.] There should be a route editor component which allows the users to specify a route
- \item[9.] The user should be able to log into their account and:
+ \item[6.] Users should be able to export their routes
+ \item[7.] Users should be able to make a copy of other user's routes and edit them
+ \item[8.] There should be a route editor component which allows the users to construct a route
+ \item[9.] Users should be able to log into their account and:
 	 \begin{enumerate}
-	 	\item[9.1.] Access and change personal information
+	 	\item[9.1.] Update personal information
 	  	\item[9.2.] Access and edit their submitted routes
 	 \end{enumerate}
  \end{enumerate}
-
+ 
+\subsection{Non-Functional Requirements}
 \paragraph{Accessibility}\ \\
-The proposed system is to be made available entirely on-line, allowing anyone with internet access, and a computer, to use the system. As the application will be web-based, the user is not required to download anything to start using it, which will make it more accessible for the user, and easier for them to get started using the application. The only potential issue with a web-based application is if the server goes down, or if the domain expires. The server going down does not, unfortunately, have a solution, but keeping the domain should be relatively trivial.
+The proposed system is to be made available entirely on-line, allowing anyone with Internet access to use the system. As the application will be web-based, users are not required to download anything before using it, which will make it more accessible, and easier to get started with the application. The only potential issue with a web-based application is if the server goes down, or if the domain expires. The server going down does not, unfortunately, have a solution, but keeping the domain should be trivial.
 
 \paragraph{Usability and Operability}\ \\
-The project should be designed in such a way that users ranging from a low level of skill, to a high level of skill should be able to use it with little prior knowledge. Help will be available within the system, so the user can received help and directions, without having to leave the system and check some external documentation. The project will be developed as a fully-responsive web application, meaning mobile devices will be fully supported.
+The project should be designed in such a way that users ranging from a low level of skill, to a high level of skill should be able to use it with little prior knowledge. The project will be developed as a fully-responsive web application, meaning mobile devices will be fully supported.
 
 \paragraph{Maintainability \& Documentation}\ \\
-The system must be exceptionally well documented allowing for easy maintenance by an external developer. This includes both an easy to understand code structure, as well as commented code (specifically using PHPDoc, and a similar style in the JavaScript code), which should be kept as modular as possible.  The system itself will have help available to the user, so that if they are confused, they can be guided in the right direction.
+The system must be well documented allowing for easy maintenance by an external developer. This includes both an easy to understand code structure, as well as commented code (specifically using PHPDoc, and a similar style in the JavaScript code), which should be kept as modular as possible.
 
 \paragraph{Quality}\ \\
-As this system is to be used externally, and will be a representation of both myself, and the client, there are several quality issues that must be addressed. The system must be built so that it is robust, and works as the user expects, but it must also contain as few bugs as possible. Any bugs that are identified should be reportable to the maintainer, and be fixed as soon as possible.\ \\
-\ \\
-The quality of the code must also be considered. In this regard, the code will be written in a modular way, and useful comments will be provided to highlight the purpose of each function, and to illustrate any particularly complex code.
+As this system is to be used externally, and will be a representation of both myself and the client, there are several quality concerns that must be addressed. The system must be built so that it is robust, and works as the user expects, and contains as few bugs as possible. Any bugs that are identified should be reportable to the maintainer, and be fixed as soon as possible. The code must also be of a high quality, and therefore will be written in a modular way, with useful comments provided to highlight the purpose of each function, and illustrate any particularly complex code.
 
 \paragraph{Resource Requirements and Constraints}\ \\
-As this system is aimed at users with a mixture of skill levels, no assumptions can be made on the level of hardware that the users will possess. For this reason, the system will be designed to use as few resources as possible. Fortunately, due to being a web-based system, the load of the system would be fairly minimal anyway, as it is mostly loading only JavaScript and HTML5. The only true computation takes place on the server, and thus would not be a concern for the user.\ \\
+As this system is aimed at users with a mixture of skill levels, no assumptions can be made on the level of hardware that the users will possess. For this reason, the system will be designed to use as few resources as possible. Fortunately, due to being a web-based system, the load of the system will be fairly minimal, as it is mostly loading JavaScript and HTML5. The only true computation takes place on the server, and thus would not be a concern for the user.\ \\
 \ \\
-The ability to load and save files potentially causes a problem, but only if the user has very little hard drive space, and attempts to save an extremely large file from the system. Unfortunately, there is nothing that can be done about this, but even very large systems will have a relatively small file size.\ \\
+The loading and saving of files potentially causes a problem, but only if the user has very little hard drive space, and attempts to save an extremely large file. This is, however, unlikely, as even very large routes will have a relatively small file size.\ \\
 \ \\
 The final concern is internet bandwidth which, whilst not a problem on desktops, will be a problem for mobile phones. This is why the amount of data sent to the user when they are navigating a route will be kept to a minimum, so that they do not use up their data allowance (or drain their battery).
 
 \paragraph{Cross Platform Compatibility}\ \\
-Due to the project being a web-based system (developed using HTML5, CSS3, and JavaScript), it is difficult for it not to be cross platform compatible. However, there are still a few issues that may have to be dealt with, especially when looking at different browsers that the user may be using. For this reason, research into how the system performs on different browsers will be important, so that it can be assured that any user using any browser will have full access to the system, as it was meant to be.
+Due to the project being a web-based system, it is difficult for it not to be cross platform compatible. The only real concern is cross-browser compatibility, so it is important that the system is tested on different browsers.
 
 \paragraph{Security}\ \\
 Security is a concern for this project, as the users will be able to create accounts with the system, and therefore their data will need to be stored. This data will be stored in compliance with the Data Protection Act, and all passwords will be encrypted. 
 
 \paragraph{Disaster Recovery}\ \\
-The administrator should be able to take backups of the site in a standard, compliant, free and open format. They should also be able to de-authorize active sessions, and lock the website to prevent access. As far as the code base itself, the project will be stored both on the server, and in a Git repository, allowing for recovery if anything goes wrong.
+The administrator should be able to take backups of the site in a standard, free and open format. They should also be able to de-authorize active sessions, and lock the website to prevent access. As far as the code base itself, the project will be stored both on the server, and in a Git repository, allowing for recovery if any problems occur.
