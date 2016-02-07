@@ -228,57 +228,96 @@ class UserFactory extends ModelFactory {
     /**
      * Either shadow bans or unshadow bans the user with the given user id
      *
-     * @param int $userId The id of the user to shadow ban/unshadow ban
+     * @param int    $userId The id of the user to shadow ban/unshadow ban
      * @param string $status Whether to set this user as shadow banned (1) or not (0)
      *
      * @author Craig Knott
      */
     public static function setUserShadowBanStatus($userId, $status) {
-      $sql = "UPDATE tb_user
+        $sql = "UPDATE tb_user
              SET is_shadow_banned = :status
              WHERE pk_user_id = :userId";
-      $params = array(
-         ':userId' => $userId,
-         ':status' => $status
-      );
-      parent::execute($sql, $params);
+        $params = array(
+            ':userId' => $userId,
+            ':status' => $status
+        );
+        parent::execute($sql, $params);
     }
 
     /**
      * Sets the ban status of the given user, either banned or not banned
      *
-     * @param int $userId The id of the user to ban or unban
+     * @param int    $userId The id of the user to ban or unban
      * @param string $status Whether to set this user as banned (1) or not (0)
      *
      * @author Craig Knott
      */
     public static function setUserBanStatus($userId, $status) {
-      $sql = "UPDATE tb_user
+        $sql = "UPDATE tb_user
              SET is_banned = :status
              WHERE pk_user_id = :userId";
-      $params = array(
-         ':userId' => $userId,
-         ':status' => $status
-      );
-      parent::execute($sql, $params);
+        $params = array(
+            ':userId' => $userId,
+            ':status' => $status
+        );
+        parent::execute($sql, $params);
     }
 
     /**
      * Deletes the user with the given id
      *
-     * @param int $userId The id of the user to delete
-     * @param string $status Whether to set this user as banned (1) or not (0)
+     * @param int    $userId The id of the user to delete
      *
      * @author Craig Knott
      */
     public static function deleteUser($userId) {
-       $sql = "UPDATE tb_user
+        $sql = "UPDATE tb_user
                SET is_deleted = 1
                WHERE pk_user_id = :userId";
-       $params = array(
-           ':userId' => $userId
-       );
-       parent::execute($sql, $params);
+        $params = array(
+            ':userId' => $userId
+        );
+        parent::execute($sql, $params);
+    }
+
+    /**
+     * Used to change the admin status of a user
+     *
+     * @author Craig Knott
+     *
+     * @param int     $userId The Id of the user to update
+     * @param boolean $status Whether to set this user as admin (true) or not (false)
+     */
+    public static function setAdmin($userId, $status) {
+        $sql = "UPDATE tb_user
+                SET is_admin = :status
+                WHERE pk_user_id = :userId";
+        $params = array(
+            ':userId' => $userId,
+            ':status' => $status
+        );
+        parent::execute($sql, $params);
+
+        // Add/Remove admin badge skin
+        if ($status) {
+            $sql = "INSERT INTO tb_skin_owner (
+                        fk_skin_id,
+                        fk_user_id,
+                        equipped
+                    ) VALUES (
+                        43,
+                        :userId,
+                        0
+                    )";
+        } else {
+            $sql = "DELETE FROM tb_skin_owner
+                WHERE fk_user_id = :userId
+                AND fk_skin_id = 43";
+        }
+        $params = array(
+            ':userId' => $userId
+        );
+        parent::execute($sql, $params);
     }
 
 }
