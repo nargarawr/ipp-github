@@ -71,29 +71,39 @@ However, the Internet is a large place, and without a centralised place to adver
 
 \newpage 
 \subsubsection{Back End Tools}
-{\color{purple}
-Language  - framework pairs
-}
+In this section several well known back end frameworks utilising different programming languages are discussed, with the advantages and disadvantages of each identified. 
 
 \paragraph{The Zend Framework (PHP)}\ \\
-{\color{red} What is it, why it's good, why it's not}
+The Zend Framework\footnote{http://framework.zend.com/} is an open source MVC framework for developing web applications using PHP. It has been around for a long time, and therefore has extensive documentation, and well defined standards and guidelines. This helps all developers using Zend to be able to instantly recognise and understand what specific parts of code are doing. It is a fully object oriented framework, which means that all classes can be extended and an inheritance model can be utilised.\ \\
+\ \\
+The drawbacks of Zend are that is it very bloated, and can be a little slow, but the reason for this is the huge number of convenience classes that are provided by default (including form validation, user authentication, and many more), which can be removed as necessary to increase performance. In addition, this modularity means that Zend can easily be combined with other libraries, so further features can easily be added.
 
 \paragraph{Ruby on Rails?}\ \\
-{\color{red} What is it, why it's good, why it's not}
+Ruby on Rails\footnote{http://rubyonrails.org/} is an open source web application framework written in Ruby that implements the MVC framework. The advantage of Ruby code is that it is very readable and mostly self-documenting, which saves developers time whilst programming. However, this can also lead to laziness, and lack of comments, with developers assuming that what they have one is obvious. The modular design of Ruby on rails results in faster development of applications and flexibility, and there is a vast collection of open source libraries (known as gems) available within the Rails continuity.\ \\
+\ \\
+The negatives of Ruby on rails is that it is difficult to find good documentation for it, and it is more resource intensive that some of the other frameworks discussed, making it slower to boot, and slower to run. In addition to this, Ruby is the only language of those discussed, that I do not personally know, which would have slowed down the initial development process by a large amount, and the intricacies of the framework would most likely not have been utilised effectively.
 
 \paragraph{Javascript with Node.js}\ \\
-{\color{red} What is it, why it's good, why it's not - good because all one language!}
-
+Node.js\footnote{https://nodejs.org/en/} is a JavaScript runtime which uses an event-driven, non-blocking I/O model, and is very lightweight and efficient. The advantages of using Node.js is that it is quick and easy to set up a basic server, and it is extremely popular, which means there is a huge amount of support available. This includes Node.js' package ecosystem, \textit{npm}, which is the largest ecosystem of open source libraries in the world. It also means that the entire code base would be written in JavaScript, meaning external developers would only be required to know one language. \ \\
+\ \\
+However, Node.js is not without it's downfalls. These being that it does not scale well to large applications, and quickly becomes confusing and difficult to manage. Along with this, there is no separate of model and controller, which means database internals ``leak'' out into applications.
 
 \subsubsection{Front End Tools}
-{\color{purple}
-After it was decided that it was to be a web app, the language choice was obvious, so I looked at front-end design frameowkrs instead instead.
-}
+After deciding that the project would be a responsive web-application, the language choice was obvious: HTML, CSS and JavaScript. However, consideration was still necessary for the framework that would be used to create the interface.
+
 \paragraph{Bootstrap}\ \\
-{\color{red} What is it, why it's good, why it's not}
+Bootstrap\footnote{http://getbootstrap.com/} is a very popular front end design framework produced by Twitter. It is fully responsive and scales easily and efficient to a multitude of devices, include phones, tablets, and desktops. Due to it's popularity, there is a huge amount of support online, as well as extensive documentation provided by Twitter themselves. These things, combined with it's simple class names, make it extremely easy for beginners to pick it up, which is an advantage if external developers have never used it before. It can also be customised to only load the components that are required, which help to reduce the overall size.\ \\
+\ \\
+One of the biggest advantages of Bootstrap, it's huge user base, had proven to also be one of it's biggest downfalls. Due to the quantity of websites now using Bootstrap, a large of websites look extremely similar, which detracts users and prevents them from standing out amongst the crowd. Many developers are specifically recommending to not use Bootstrap for this very reason\cite{gross2013bootstrap}, and thus the inclusion of Bootstrap in this project would require thought as to how to make the design stand out.
 
 \paragraph{Foundation}\ \\
-{\color{red} What is it, why it's good, why it's not}
+The Foundation Framework\footnote{http://foundation.zurb.com/} is, similar to Bootstrap, a fully responsive front end design framework. Unlike Bootstrap, and most other front end design frameworks, Foundation is ``mobile-first'': which means that everything is responsive by default, and assumes you are developing for mobile. This is useful for mobile-only applications, but it  means that applications that also target desktops require more work to implement. As a result of this mobile-first approach, the grid system in Foundation is much more fleshed out than in other frameworks, and has much more functionality. Foundation also has a collection of built in extra tools, such as \textit{Abide}, which can be used for simple form validation.\ \\
+\ \\
+However, Foundation provides far fewer themes than Bootstrap, and due to it's smaller user base, there is a lot less support available from the community. In addition to this, the majority of the documentation provided is in video format, which makes finding information quickly more troublesome. Finally, Foundation is not supported by certain older browsers (like Internet Explorer 8), which restricts certain users from using the site.
 
 \paragraph{Semantic}\ \\
-{\color{red} What is it, why it's good, why it's not}
+Semantic\footnote{http://semantic-ui.com/} is the final front end design framework that was investigated, and is the newest of the three. The main advantage of semantic is it's concise HTML and how classes use syntax from natural language, which makes writing code much more user friendly. It also extends the majority of interface elements through intuitive JavaScript ``phrases'', which can trigger different behaviours on those elements.\ \\
+\ \\
+The disadvantages are that it is not as well known, and therefore has a far smaller user base than either Bootstrap or Foundation, which means the only real support comes from the documentation that has been provided (which, whilst good, isn't fully comprehensive). This also means that an external developer is less likely to know how to use it, and they may find it difficult to pick up.
+
+
