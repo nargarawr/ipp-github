@@ -333,4 +333,38 @@ class AdminController extends BaseController {
         echo Zend_Json::encode($upTimeStats);
         exit;
     }
+
+    /**
+     * Used to promote a user to an admin
+     *
+     * @author Craig Knott
+     */
+    public function promoteAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $userId = $this->getRequest()->getParam('id', null);
+        UserFactory::setAdmin($userId, true);
+
+        $this->_helper->redirector('settings', 'user', null, array(
+            'id' => $userId
+        ));
+    }
+
+    /**
+     * Used to demote a user from being an admin
+     *
+     * @author Craig Knott
+     */
+    public function demoteAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        $userId = $this->getRequest()->getParam('id', null);
+        UserFactory::setAdmin($userId, false);
+
+        $this->_helper->redirector('settings', 'user', null, array(
+            'id' => $userId
+        ));
+    }
 }

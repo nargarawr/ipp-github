@@ -65,6 +65,26 @@
                           </a>
                           <br>
                           A deleted user will never be able to log into Niceway.to again.
+                          <br><br>
+
+                          <? if ($this->displayedUser->isAdmin) { ?>
+                              <a href="/admin/demote/id/<?= $this->displayedUser->userId ?>">
+                                  <button class="btn btn-danger">
+                                      <i class="fa fa-user"></i> Demote from Admin
+                                  </button>
+                              </a>
+                              <br>
+                              This will grant the user admin privileges
+                          <? } else { ?>
+                              <a href="/admin/promote/id/<?= $this->displayedUser->userId ?>">
+                                  <button class="btn btn-success">
+                                      <i class="fa fa-user"></i> Promote to Admin
+                                  </button>
+                              </a>
+                              <br>
+                              This will grant the user admin privileges
+                          <? } ?>
+
 
                       </div>
                 </div>
