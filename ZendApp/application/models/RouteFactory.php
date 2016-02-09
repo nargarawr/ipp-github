@@ -463,8 +463,8 @@ class RouteFactory extends ModelFactory {
     }
 
     /**
-     * Logs a row in tb_route_social_log whenever an action is taken on a route. This is so we can display them all in the
-     * social stream
+     * Logs a row in tb_route_social_log whenever an action is taken on a route. This is so we can display them all in
+     * the social stream
      *
      * @author Craig Knott
      *
@@ -735,13 +735,14 @@ class RouteFactory extends ModelFactory {
             return $a->distanceFromEnteredPoint > $b->distanceFromEnteredPoint;
         });
 
-        // Add points to the routes and implement pagination
+        // Add points and comments to the routes and implement pagination
         $index = 0;
         $lower = $pageNum * $pageLimit;
         $upper = ($pageNum + 1) * $pageLimit;
 
         foreach ($routes as &$route) {
             $route->points = RouteFactory::getRoutePoints($route->id);
+            $route->comments_text = RouteFactory::processComments(RouteFactory::getRouteComments($route->id));
 
             $route->onPage = ($index >= $lower) && ($index < $upper);
             $index++;
@@ -951,10 +952,9 @@ class RouteFactory extends ModelFactory {
                     NOW()
                 )";
         $params = array(
-            'userId'   => $userId,
+            ':userId'  => $userId,
             ':routeId' => $routeId
         );
-
         parent::execute($sql, $params);
     }
 
@@ -1011,15 +1011,15 @@ class RouteFactory extends ModelFactory {
         // route id, owner, name
         foreach ($recentRoutes as $route) {
             $routes['recent'][] = (object)array(
-                'id'    => $route->routeId,
-                'name'  => $route->name
+                'id'   => $route->routeId,
+                'name' => $route->name
             );
         }
 
         foreach ($savedRoutes as $route) {
             $routes['saved'][] = (object)array(
-                'id'    => $route->routeId,
-                'name'  => $route->name
+                'id'   => $route->routeId,
+                'name' => $route->name
             );
         }
 
@@ -1029,12 +1029,44 @@ class RouteFactory extends ModelFactory {
             }
 
             $routes['own'][] = (object)array(
-                'id'    => $route->routeId,
-                'name'  => $route->name
+                'id'   => $route->routeId,
+                'name' => $route->name
             );
         }
 
-        return (object) $routes;
+        return (object)$routes;
     }
 
+    /**
+     * Gets all comments for a particular route
+     *
+     * @author Craig Knott
+     *
+     * @param int $routeId The ID of the route to get comments for
+     */
+    public static function getRouteComments($routeId) {
+        $sql = "select
+                    comment,
+                    created_by
+                from tb_comment
+                where fk_route_id = :routeId
+                and is_deleted = 0;";
+        $params = array(
+            ':routeId' => $routeId
+        );
+        return parent::fetchAll($sql, $params);
+    }
+
+    /**
+     * Looks at a set of comments and pulls out meaningful data
+     *
+     * @author Craig Knott
+     *
+     * @param array $comments Comments to look through
+     *
+     * @return // TODO
+     */
+     public static function processComments($comments){
+        return $comments;
+     }
 }

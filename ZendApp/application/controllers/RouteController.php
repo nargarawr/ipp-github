@@ -87,6 +87,7 @@ class RouteController extends BaseController {
         $routeId = $this->getRequest()->getParam('id', 0);
 
         $this->view->route = RouteFactory::getRouteForDetailPage($routeId);
+
         $ownerOrAdmin = is_null($this->user)
             ? false
             : $this->user->isAdmin || ($this->user->userId == $this->view->route->owner_id);
@@ -114,6 +115,7 @@ class RouteController extends BaseController {
             $this->view->isFavourite = RouteFactory::isFavourited($this->user->userId, $routeId);
             RouteFactory::addVisitToLog($this->user->userId, $routeId);
         }
+
 
         $points = RouteFactory::getRoutePoints($routeId);
         $this->view->points = $points;
