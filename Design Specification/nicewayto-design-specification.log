@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  1 FEB 2016 17:30
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  6 FEB 2016 12:04
 entering extended mode
 **nicewayto-design-specification.tex
 
@@ -1534,17 +1534,17 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 63--67
+Underfull \hbox (badness 10000) in paragraph at lines 62--66
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--74
+Underfull \hbox (badness 10000) in paragraph at lines 67--73
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 68--74
+Underfull \hbox (badness 10000) in paragraph at lines 67--73
 
  []
 
@@ -1869,17 +1869,9 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 180.
 nicewayto-design-specification.aux")
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 180.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 180.
-
-
-Package rerunfilecheck Warning: File `nicewayto-design-specification.out' has c
-hanged.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `nicewayto-design-specification.out'
-:
-(rerunfilecheck)             Before: 30725D3C0D4112F783883C21058765C8;1960
-(rerunfilecheck)             After:  A645A3114BDADD2EEB85F129C46CB971;1988.
+Package rerunfilecheck Info: File `nicewayto-design-specification.out' has not 
+changed.
+(rerunfilecheck)             Checksum: A645A3114BDADD2EEB85F129C46CB971;1988.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 180.
  ) 
 Here is how much of TeX's memory you used:

@@ -10,15 +10,15 @@
 \BOOKMARK [2][-]{subsection.4.1}{Functional Requirements}{section.4}% 10
 \BOOKMARK [2][-]{subsection.4.2}{Non-Functional Requirements}{section.4}% 11
 \BOOKMARK [1][-]{section.5}{System Designs}{}% 12
-\BOOKMARK [2][-]{subsection.5.1}{UI Design}{section.5}% 13
-\BOOKMARK [2][-]{subsection.5.2}{Navigation/Control Flow Design}{section.5}% 14
-\BOOKMARK [2][-]{subsection.5.3}{Internal Design}{section.5}% 15
-\BOOKMARK [1][-]{section.6}{Software Implementation}{}% 16
-\BOOKMARK [2][-]{subsection.6.1}{Key Implementation Decisions}{section.6}% 17
-\BOOKMARK [2][-]{subsection.6.2}{Implementation Methodology}{section.6}% 18
-\BOOKMARK [2][-]{subsection.6.3}{Detailed Description of the User Interface}{section.6}% 19
-\BOOKMARK [2][-]{subsection.6.4}{Implementation of System Components}{section.6}% 20
-\BOOKMARK [2][-]{subsection.6.5}{Problems Encountered}{section.6}% 21
+\BOOKMARK [2][-]{subsection.5.1}{User Interface Design}{section.5}% 13
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Heuristic Evaluation of the Interface}{subsection.5.1}% 14
+\BOOKMARK [2][-]{subsection.5.2}{Navigation/Control Flow Design}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.3}{Internal Design}{section.5}% 16
+\BOOKMARK [1][-]{section.6}{Software Implementation}{}% 17
+\BOOKMARK [2][-]{subsection.6.1}{Key Implementation Decisions}{section.6}% 18
+\BOOKMARK [2][-]{subsection.6.2}{Implementation Methodology}{section.6}% 19
+\BOOKMARK [2][-]{subsection.6.3}{Implementation of System Components}{section.6}% 20
+\BOOKMARK [2][-]{subsection.6.4}{Problems Encountered}{section.6}% 21
 \BOOKMARK [1][-]{section.7}{Testing of the Project}{}% 22
 \BOOKMARK [2][-]{subsection.7.1}{Functional Testing}{section.7}% 23
 \BOOKMARK [2][-]{subsection.7.2}{Non-Functional Testing}{section.7}% 24

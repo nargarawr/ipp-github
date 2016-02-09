@@ -45,6 +45,10 @@ Kim Golombisky and Rebecca Hagen.
   Communicating Visually Through Graphic, Web \& Multimedia Design}.
 \newblock CRC Press, 2013.
 
+\bibitem{gross2013bootstrap}
+Joshua Gross.
+\newblock Please stop using twitter bootstrap, 2013.
+
 \bibitem{joint1995road}
 Matthew Joint.
 \newblock Road rage.
@@ -97,16 +101,11 @@ Jakob Nielsen.
 \newblock The usability engineering life cycle.
 \newblock {\em Computer}, 25(3):12--22, 1992.
 
-\bibitem{nielsen2005ten}
+\bibitem{nielsen199510}
 Jakob Nielsen.
-\newblock Ten usability heuristics.
-\newblock {\em .}, 2005.
-
-\bibitem{nielsen1990heuristic}
-Jakob Nielsen and Rolf Molich.
-\newblock Heuristic evaluation of user interfaces.
-\newblock In {\em Proceedings of the SIGCHI conference on Human factors in
-  computing systems}, pages 249--256. ACM, 1990.
+\newblock 10 usability heuristics for user interface design.
+\newblock {\em Fremont: Nielsen Norman Group.[Consult. 20 maio 2014].
+  Dispon{\'\i}vel na Internet}, 1995.
 
 \bibitem{o2008user}
 Heather~L O'Brien and Elaine~G Toms.
