@@ -59,10 +59,6 @@ Henrik Kniberg.
 \newblock Scrum and xp from the trenches.
 \newblock {\em Lulu. com}, 2007.
 
-\bibitem{kuparinen2013introducing}
-Liisa Kuparinen, Johanna Silvennoinen, and Hannakaisa Isom{\"a}ki.
-\newblock Introducing usability heuristics for mobile map applications.
-
 \bibitem{lazar2006workplace}
 Jonathan Lazar, Adam Jones, and Ben Shneiderman.
 \newblock Workplace user frustration with computers: An exploratory
@@ -89,6 +85,13 @@ John~D McCarthy, M~Angela Sasse, and Jens Riegelsberger.
   conventions.
 \newblock In {\em People and computers XVII—Designing for society}, pages
   401--414. Springer, 2004.
+
+\bibitem{mcdougall2008like}
+Sin{\'e}~JP McDougall and Irene Reppa.
+\newblock Why do i like it? the relationships between icon characteristics,
+  user performance and aesthetic appeal.
+\newblock In {\em Proceedings of the Human Factors and Ergonomics Society
+  Annual Meeting}, volume~52, pages 1257--1261. SAGE Publications, 2008.
 
 \bibitem{miller1956magical}
 George~A Miller.
@@ -129,10 +132,6 @@ Daniele Quercia, Rossano Schifanella, and Luca~Maria Aiello.
   happy routes in the city.
 \newblock In {\em Proceedings of the 25th ACM conference on Hypertext and
   social media}, pages 116--125. ACM, 2014.
-
-\bibitem{savio2007design}
-Nadav Savio.
-\newblock Design sketch: The context of mobile interaction.
 
 \bibitem{shneiderman2005designing}
 Shneiderman~Ben Shneiderman and Catherine Plaisant.
