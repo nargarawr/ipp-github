@@ -1,51 +1,75 @@
 \section{Software Implementation}
 In this section, the actual implementation of the software has been detailed, including: what tools were used in the implementation, how the software was implemented, and any issues that were encountered during the implementation process.
 
-{\color{red}
-	\begin{itemize}
-		\item Screenshots of initial designs + justifications
-		\item Screenshots of final designs + justifications + reasons for changes
-		\item Screenshots of actual final system + reasons for changes
-	\end{itemize}
-}
-
 \subsection{Key Implementation Decisions}
 \label{sec:kid}
-{\color{red}
-	\begin{itemize}
-		\item From the background research section, list all the technology I chose to use and why
-	\end{itemize}
+In this section, the tools used for the implementation for this project have been detailed, and the reason for their adoption has been justified. These justifications stem directly from the advantages and disadvantages discussed in section \ref{sec:pat}.
+
+\subsubsection{Implementation Platform - Responsive Web Application}
+{\color{red} 
+	\textbf{why did I pick this? - shouldn't just be a repeat of section 3.1 ...}\\
+can function both on desktop devices, and mobile devices by scaling the elements on display. \\
+versatile because they run in a web browser, which means that they target all possible devices \\
+back end can be whichever language the developers are most comfortable with, \\
+easy to release updates, because they are instantaneous, and the users do not have to download \\
+require constant internet connection - which is why the user has the ability to download stuff\\
+more support / more personal experience\\
+}
+\subsubsection{Back End Tool - The Zend Framework (PHP)}
+{\color{red} 
+	\textbf{why did I pick this? - shouldn't just be a repeat of section 3.1 ...}\\
+been around for a long time, and therefore has extensive documentation, \\
+and well defined standards and guidelines. \\
+fully object oriented framework, \\
+huge number of convenience classes that are provided by default \\
+bloated / slow, so I will specific remove core components I don't need\\
+}
+
+\subsubsection{Front End Tool - Twitter's Bootstrap}
+{\color{red} 
+	\textbf{why did I pick this? - shouldn't just be a repeat of section 3.1 ...}\\
+fully responsive and scales easily and efficient to a multitude of devices, \\
+huge amount of support online, \\
+extensive documentation provided by Twitter themselves. \\
+customised to only load the components that are required\\
+ large of websites look extremely similar - so mine looks different because x y and z
 }
 
 \subsection{Implementation Methodology}
 {\color{red}
 	\begin{itemize}
-		\item To help manage the implementation of such a large piece of software, the adoption of some methodology was necessary. It was decided that the best methodology would be an agile one, with heavy use of Kanban, using the tips laid out by Henrik Kniberg \cite{kniberg2007scrum}. In order to accomplish this, at the beginning of the implementation stage, after the requirements specification had been detailed, the entire project was split into user stories. Each of these stories detailed a specific action that a user of the system would be able to accomplish, along with how long it should take to implement, how important it was, and a way of testing its completion. These stories were then organised onto a digital Kanban Board, using a service called Trello\footnote{\url{http://www.trello.com}}. \ \\
-		\ \\
-		Each week, a set of tasks would be selected to be worked on for that week. The amount of tasks selected would be dependent on how much was completed, on average, in the weeks before, so that reasonable estimates could be made (obviously excluding the first few weeks). This ensured a decent portion of work was being completed per week, and that progress was constant. During the week, tasks would be selected from the available pool, prioritising those that were prerequisites of others, or had a high importance, and would then be worked on until completion. After the completion of a task, a new task would be selected, and work would begin on this. This was an extremely effective method of managing the implementation, as any small tasks that were necessary could be added to the board, and there was an assurance they would eventually be completed, and nothing would be overlooked. It has also been shown that it is much easier to reach goals if they have been written down \cite{wilson2008goal}, which a Kanban Board was the perfect tool for.\ \\
-		\ \\
-		Also mention weekly meetings with max and use of Gantt chart. Also mention this is what I did at work and in my last diss and found it the best way to work for me?
-	\end{itemize}
-
-}
-{\color{blue}
-	full example of taking a requirement, making story, splitting into sub tasks (in table or screenshot format)
-}
-
-\subsection{Implementation of System Components}
-{\color{red}
-	\begin{itemize}
-		\item Potentially don't need this
-		\item Do last, look at last year's diss
+		\item kanban - did with last diss and worked well, tips laid out by Henrik Kniberg \cite{kniberg2007scrum}
+		\item meetings with max
+		\item user stories - did with last diss and worked well
+		\item gantt chart with max
+		\item 	full example of taking a requirement, making story, splitting into sub tasks (in table or screenshot format)
+		\item wrote down and expressed goals because its easier to reach if writtesn down \cite{wilson2008goal}. this is why, i would write down everything, including small bugs, so nothing was overlooked
 	\end{itemize}
 }
-
 
 \subsection{Problems Encountered}
 {\color{red}
 	\begin{itemize}
-		\item Look through problem log document and pick out key things, especially those with lessons
-		\item What happened / what this affected / how the project was affected / what I would do differently / why it happened
-		\item problem: lack of unit tests meant that the addition of features would break others. especially silly with the support Zend has for unit tests
+		\item \textbf{Problem:} No unit tests, new features meant bugs
+		\item \textbf{What happened:} didn't have unit tests, so when adding new features others would break
+		\item \textbf{What effect did this have:} lots of extra time spent debugging because i was unaware of bugs, and many demos not working because of bugs 
+		\item \textbf{Why did it happen:} no unit tests, or proper debugging structure
+		\item \textbf{What would I do differently/what I learned:} do unit tests, espec with zend
 	\end{itemize}
+		\begin{itemize}
+			\item \textbf{Problem:} mapping service troubles
+			\item \textbf{What happened:} I didn't spend time researching routing services, and just picked the first. 
+			\item \textbf{What effect did this have:} when it came down to it, it didn't do what i needed it to do, this meant i had to reimplement functionality all over again - 
+			\item \textbf{Why did it happen:}i rushed into things and didn't look at my options
+			\item \textbf{What would I do differently/what I learned:} do your research!
+		\end{itemize}
+			\begin{itemize}
+				\item \textbf{Problem:} didn't read spec
+				\item \textbf{What happened:} got towards the end of the project and realised there were many features I had not included
+				\item \textbf{What effect did this have:} meant I had to spend more time developing, when I thought I would be done
+				\item \textbf{Why did it happen:} did't read the spec, I only looked at the major bullet points and glazed over the details because I was eager to get started
+				\item \textbf{What would I do differently/what I learned:} read the spec very carefully
+			\end{itemize}
 }
+
+
