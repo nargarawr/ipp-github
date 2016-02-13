@@ -1,4 +1,5 @@
 \documentclass[a4paper,twoside,notitlepage,11pt]{article}
+\usepackage{etex}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{fancyeq}
@@ -17,6 +18,7 @@
 \usepackage{setspace}
 \usepackage[all]{xy}
 \usepackage{nccmath}
+\usepackage{pgfgantt}
 \usepackage[a4paper,hmargin=2.5cm,vmargin=2.5cm]{geometry}
 \usepackage[hypcap]{caption}
 \usepackage{qtree}
@@ -101,6 +103,10 @@
 	\fancyhead[LE]{\thepage}
 	\fancyhead[CE]{\textit{\paperTitleShort}}
 	\fancyhead[RE]{Craig Knott}
+}
+
+\fancypagestyle{none}{
+	\fancyhf{}
 }
 
 \begin{document}
@@ -207,7 +213,7 @@
 \newpage
 \pagestyle{appendix}
 \appendix
-%\input{appendix}
+\input{appendix}
 
 
 %
