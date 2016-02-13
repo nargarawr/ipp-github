@@ -4,34 +4,15 @@
 \label{sec:kid}
 In this section, the tools used for the implementation for this project have been detailed, and the reason for their adoption has been justified.
 \subsubsection{Implementation Platform - Responsive Web Application}
-{\color{red} 
-	\textbf{why did I pick this? - shouldn't just be a repeat of section 3.1 ...}\\
-can function both on desktop devices, and mobile devices by scaling the elements on display. \\
-versatile because they run in a web browser, which means that they target all possible devices \\
-back end can be whichever language the developers are most comfortable with, \\
-easy to release updates, because they are instantaneous, and the users do not have to download \\
-require constant internet connection - which is why the user has the ability to download stuff\\
-more support / more personal experience\\
-}
+Responsive web applications have many advantages that make them perfect for this project. Firstly, they work both on desktop devices, and on mobile devices. This means that the application can be built one, and it will work (almost automatically) on both platforms, and therefore the user is not restricted to using only one of these platforms. Further to this, a web application is ran through a web browser, and therefore there is no need to compensate for different operating systems or environments, as the application should theoretically work on them all. Another reason for picking this medium is that they are written in the default web languages, and the backend can be any language desired, meaning that external developers are much more likely to be able to pick it up and begin working on it (rather than them being required to have specific knowledge on how to create Android or iOS applications). The final major advantage is that they do not need to be downloaded, which means the user doesn't need to make a commitment to the application, and updates can be released instantaneously, and with ease. 
+
 \subsubsection{Back End Tool - The Zend Framework (PHP)}
-{\color{red} 
-	\textbf{why did I pick this? - shouldn't just be a repeat of section 3.1 ...}\\
-been around for a long time, and therefore has extensive documentation, \\
-and well defined standards and guidelines. \\
-fully object oriented framework, \\
-huge number of convenience classes that are provided by default \\
-bloated / slow, so I will specific remove core components I don't need\\
-}
+The back end tool of choice was the Zend Framework, which is written in PHP. This framework was picked because of its maturity, which includes its extensive documentation, online support, and well defined standards. This means an external developer can easily interpret the code produced, and can find help online if necessary. The Zend Framework also defines a very strict standard in how code should be organised and managed which is very intuitive to pick up, and helps split up large projects into small segments which are much more manageable. In addition to this, the speed of developing a Zend application can be heavily sped up with the use of its many convenience classes and extra features, such as form generation and validation, and authentication. This also has the advantage that it is well documented by Zend themselves, and help is easily accessible, which will help future developers to understand and debug the code.
 
 \subsubsection{Front End Tool - Twitter's Bootstrap}
-{\color{red} 
-	\textbf{why did I pick this? - shouldn't just be a repeat of section 3.1 ...}\\
-fully responsive and scales easily and efficient to a multitude of devices, \\
-huge amount of support online, \\
-extensive documentation provided by Twitter themselves. \\
-customised to only load the components that are required\\
- large of websites look extremely similar - so mine looks different because x y and z
-}
+Twitter's Bootstrap is extremely well known and extremely well documented. This makes it very simple for new users to understand how it works, and how to start using it themselves. It effortlessly creates aesthetically pleasing websites, with little work required on the part of the develop, which makes it perfect for a project like this. In addition to this, it automatically resizes to different screensizes and display resolutions, which is a necessity for a responsive web application.\ \\
+\ \\
+One important factor that was taken into consideration when designing the site was how to make it stand out from other websites developed with Bootstrap. The main step was to use a flat design with special orange highlights to give the site a unique defining feature and colour scheme, which helps to make it distinguishable from other Bootstrap websites. In addition to this, other libraries were also used, like the jquery-confirm\footnote{\url{http://craftpip.github.io/jquery-confirm/}} plugin, instead of some of Bootstrap's default features (like modals), to further help it stand out.
 
 \newpage 
 \subsection{Implementation Methodology}
