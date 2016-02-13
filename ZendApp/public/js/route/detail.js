@@ -66,7 +66,6 @@ function drawMap() {
 
     var c = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         maxZoom:     18,
-        minZoom:     8,
         id:          mapId,
         accessToken: token
     }).addTo(map);

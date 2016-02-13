@@ -79,8 +79,8 @@ var PointsListManager = Class.extend({
         ));
 
         var right = $('<div>').addClass('right-side');
-        var editButton = $('<button>').addClass('marker-edit-button btn btn-primary')
-            .html("<i class='fa fa-pencil'></i>");
+        var editButton = $('<button>').addClass('marker-edit-button btn ' + ((plm.readOnly) ? 'btn-success' : 'btn-primary'))
+            .html((plm.readOnly) ? "<i class='fa fa-eye'></i>" : "<i class='fa fa-pencil'></i>");
         editButton.click(function () {
             marker.openPopup();
         });
@@ -152,17 +152,42 @@ var PointsListManager = Class.extend({
         var container = $('<div>').addClass('pointContainer');
         container.append($('<div>').addClass('coords right')
             .text(e.lat.toString().slice(0, 7) + ", " + e.lng.toString().slice(0, 7)));
-        container.append(
-            $('<input>').addClass('form-control point_title')
-                .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
-                .attr('readonly', plm.readOnly)
-        );
-        container.append(
-            $('<textarea>').addClass('form-control in_desc')
-                .attr('placeholder', plm.readOnly ? 'No description' : 'Enter a description')
-                .text((data === undefined) ? ('') : data.description)
-                .attr('readonly', plm.readOnly)
-        );
+
+        if (plm.readOnly) {
+            container.append(
+                $('<div>').addClass('point_title_readonly')
+                    .text((data === undefined) ? ('Point ' + this.numPoints) : data.name)
+            );
+
+            container.append(
+                $('<div>').addClass('point_desc_readonly')
+                    .text((data === undefined) ? ('') : data.description)
+            );
+
+            container.append(
+                $('<input>').addClass('form-control point_title')
+                    .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
+                    .attr('type', 'hidden')
+            );
+
+            container.append(
+                $('<textarea>').addClass('form-control in_desc hidden')
+                    .attr('placeholder', 'No description')
+                    .text((data === undefined) ? ('') : data.description)
+            );
+        } else {
+            container.append(
+                $('<input>').addClass('form-control point_title')
+                    .attr('value', (data === undefined) ? ('Point ' + this.numPoints) : data.name)
+            );
+
+            container.append(
+                $('<textarea>').addClass('form-control in_desc')
+                    .attr('placeholder', plm.readOnly ? 'No description' : 'Enter a description')
+                    .text((data === undefined) ? ('') : data.description)
+            );
+        }
+
 
         if (!plm.readOnly) {
             container.append(

@@ -325,7 +325,6 @@ function drawMap(id) {
 
     var c = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         maxZoom:     18,
-        minZoom:     8,
         id:          mapId,
         accessToken: token
     }).addTo(map);
@@ -333,8 +332,8 @@ function drawMap(id) {
     // Snapping Layer
     var snapping = new L.geoJson(null, {
         style: {
-            opacity:     0
-            , clickable: false
+            opacity:   0,
+            clickable: false
         }
     }).addTo(map);
 

@@ -45,7 +45,22 @@ $(document).ready(function () {
     $('#submit_addresses').click(function () {
         submitSearchForm();
     });
+
+    $('#start_address').keypress(function(e) {
+        handleEnterPress(e);
+    });
+    $('#end_address').keypress(function(e) {
+        handleEnterPress(e);
+    });
 });
+
+
+function handleEnterPress(event) {
+    // If we press return, and the start box is not empty, submit
+    if (event.which == 13 && $('#start_address').val() !== '') {
+        submitSearchForm();
+    }
+}
 
 /**
  * Draws the MapBox map behind the search box

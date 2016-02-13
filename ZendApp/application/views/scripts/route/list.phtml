@@ -70,7 +70,8 @@
 
     <div class="col-md-9">
         <h3>
-            Your search for routes from <?= $this->startAddress ?> to <?= $this->endAddress ?>
+            Your search for routes from <?= $this->startAddress ?>
+            <?= $this->endAddress != '' ? 'to ' . $this->endAddress : '' ?>
             had <?= count($this->routes) ?> results
         </h3>
         <p>

@@ -309,3 +309,15 @@ textarea {
 .carousel-inner > .item > img {
     margin: 0 auto;
 }
+
+.point_title_readonly {
+    top: 20px;
+    position: relative;
+    font-size: 20px;
+}
+
+.point_desc_readonly {
+    top: 20px;
+    position: relative;
+    margin-bottom: 15px;
+}
