@@ -55,20 +55,19 @@
 \contentsline {section}{\numberline {7}Testing of the Project}{21}{section.7}
 \contentsline {subsection}{\numberline {7.1}Functional Testing}{21}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Non-Functional Testing}{21}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}User Feedback Testing}{21}{subsection.7.3}
 \contentsline {section}{\numberline {8}Evaluation of the Project}{22}{section.8}
-\contentsline {subsection}{\numberline {8.1}User Feedback Testing}{22}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Successes and Limitations of the Project}{22}{subsection.8.2}
 \contentsline {section}{\numberline {9}External Aspect}{23}{section.9}
 \contentsline {section}{\numberline {10}Further Work}{24}{section.10}
-\contentsline {section}{\numberline {11}Summary \& Personal Evaluation}{25}{section.11}
-\contentsline {section}{\numberline {A}Initial System Designs}{28}{appendix.A}
-\contentsline {subsection}{\numberline {A.1}Route Discovery/Landing Page}{28}{subsection.A.1}
-\contentsline {subsection}{\numberline {A.2}Route Listing Page}{29}{subsection.A.2}
-\contentsline {subsection}{\numberline {A.3}Route Detail Page}{30}{subsection.A.3}
-\contentsline {subsection}{\numberline {A.4}Route Creation Page}{31}{subsection.A.4}
-\contentsline {subsection}{\numberline {A.5}Profile Page}{31}{subsection.A.5}
-\contentsline {section}{\numberline {B}Interface Design Heuristics}{32}{appendix.B}
-\contentsline {subsection}{\numberline {B.1}Jakob Nielsen's Usability Heuristics}{32}{subsection.B.1}
-\contentsline {subsection}{\numberline {B.2}Ben Schneiderman's Golden Rules}{32}{subsection.B.2}
-\contentsline {section}{\numberline {C}Project Gantt Chart}{33}{appendix.C}
+\contentsline {section}{\numberline {11}Summary \& Personal Evaluation}{26}{section.11}
+\contentsline {section}{\numberline {A}Initial System Designs}{29}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}Route Discovery/Landing Page}{29}{subsection.A.1}
+\contentsline {subsection}{\numberline {A.2}Route Listing Page}{30}{subsection.A.2}
+\contentsline {subsection}{\numberline {A.3}Route Detail Page}{31}{subsection.A.3}
+\contentsline {subsection}{\numberline {A.4}Route Creation Page}{32}{subsection.A.4}
+\contentsline {subsection}{\numberline {A.5}Profile Page}{32}{subsection.A.5}
+\contentsline {section}{\numberline {B}Interface Design Heuristics}{33}{appendix.B}
+\contentsline {subsection}{\numberline {B.1}Jakob Nielsen's Usability Heuristics}{33}{subsection.B.1}
+\contentsline {subsection}{\numberline {B.2}Ben Schneiderman's Golden Rules}{33}{subsection.B.2}
+\contentsline {section}{\numberline {C}Project Gantt Chart}{34}{appendix.C}
 \contentsfinish 
