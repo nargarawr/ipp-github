@@ -1,73 +1,14 @@
 \thispagestyle {empty}
-\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
-\contentsline {section}{\numberline {2}Motivation}{2}{section.2}
-\contentsline {section}{\numberline {3}Background Information \& Research}{3}{section.3}
-\contentsline {subsection}{\numberline {3.1}Existing Systems}{3}{subsection.3.1}
-\contentsline {paragraph}{Google's ``My Maps'', \url {https://www.google.com/maps/d}}{3}{subsection.3.1}
-\contentsline {paragraph}{MyScenicDrives, \url {https://www.myscenicdrives.com}}{4}{figure.caption.1}
-\contentsline {paragraph}{Mad Maps, \url {http://madmaps.net/}}{4}{figure.caption.2}
-\contentsline {subsection}{\numberline {3.2}Platforms and Tools}{5}{subsection.3.2}
-\contentsline {subsubsection}{\numberline {3.2.1}Native Mobile Applications VS Responsive Web Applications}{5}{subsubsection.3.2.1}
-\contentsline {paragraph}{Native Mobile Application}{5}{subsubsection.3.2.1}
-\contentsline {paragraph}{Responsive Web Application}{5}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}Back End Tools}{6}{subsubsection.3.2.2}
-\contentsline {paragraph}{The Zend Framework (PHP)}{6}{subsubsection.3.2.2}
-\contentsline {paragraph}{Ruby on Rails}{6}{subsubsection.3.2.2}
-\contentsline {paragraph}{Javascript with Node.js}{6}{subsubsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.3}Front End Tools}{7}{subsubsection.3.2.3}
-\contentsline {paragraph}{Bootstrap}{7}{subsubsection.3.2.3}
-\contentsline {paragraph}{Foundation}{7}{subsubsection.3.2.3}
-\contentsline {paragraph}{Semantic}{7}{subsubsection.3.2.3}
-\contentsline {section}{\numberline {4}System Specification}{8}{section.4}
-\contentsline {subsection}{\numberline {4.1}Functional Requirements}{8}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Non-Functional Requirements}{8}{subsection.4.2}
-\contentsline {paragraph}{Accessibility}{8}{subsection.4.2}
-\contentsline {paragraph}{Usability and Operability}{9}{subsection.4.2}
-\contentsline {paragraph}{Maintainability \& Documentation}{9}{subsection.4.2}
-\contentsline {paragraph}{Quality}{9}{subsection.4.2}
-\contentsline {paragraph}{Resource Requirements and Constraints}{9}{subsection.4.2}
-\contentsline {paragraph}{Cross Platform Compatibility}{9}{subsection.4.2}
-\contentsline {paragraph}{Security}{9}{subsection.4.2}
-\contentsline {paragraph}{Disaster Recovery}{9}{subsection.4.2}
-\contentsline {section}{\numberline {5}System Designs}{10}{section.5}
-\contentsline {subsection}{\numberline {5.1}Navigation/Control Flow Design}{10}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}User Interface Design}{12}{subsection.5.2}
-\contentsline {paragraph}{Route Discovery Page/Landing Page}{12}{subsection.5.2}
-\contentsline {paragraph}{Route Listing Page}{12}{figure.caption.7}
-\contentsline {paragraph}{Route Detail Page}{13}{figure.caption.8}
-\contentsline {paragraph}{Route Creation Page}{14}{figure.caption.9}
-\contentsline {paragraph}{Profile Page}{15}{figure.caption.10}
-\contentsline {subsubsection}{\numberline {5.2.1}Heuristic Evaluation of the Interface}{15}{subsubsection.5.2.1}
-\contentsline {paragraph}{Visibility and Feedback (JN1, BS3)}{16}{subsubsection.5.2.1}
-\contentsline {paragraph}{User should be in full control (JN3, JN7, BS4, BS7, BS8)}{16}{subsubsection.5.2.1}
-\contentsline {paragraph}{Consistency (JN4, BS1)}{16}{subsubsection.5.2.1}
-\contentsline {paragraph}{Error prevention and Recovery (JN5, JN9, BS5, BS6)}{16}{subsubsection.5.2.1}
-\contentsline {paragraph}{Reduce Cognitive Load (JN6, JN10, BS8)}{16}{subsubsection.5.2.1}
-\contentsline {paragraph}{Match between system and the real world (JN2)}{16}{subsubsection.5.2.1}
-\contentsline {subsection}{\numberline {5.3}Internal Design}{17}{subsection.5.3}
-\contentsline {section}{\numberline {6}Software Implementation}{18}{section.6}
-\contentsline {subsection}{\numberline {6.1}Key Implementation Decisions}{18}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {6.1.1}Implementation Platform - Responsive Web Application}{18}{subsubsection.6.1.1}
-\contentsline {subsubsection}{\numberline {6.1.2}Back End Tool - The Zend Framework (PHP)}{18}{subsubsection.6.1.2}
-\contentsline {subsubsection}{\numberline {6.1.3}Front End Tool - Twitter's Bootstrap}{18}{subsubsection.6.1.3}
-\contentsline {subsection}{\numberline {6.2}Implementation Methodology}{19}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Problems Encountered}{20}{subsection.6.3}
-\contentsline {section}{\numberline {7}Testing of the Project}{21}{section.7}
-\contentsline {subsection}{\numberline {7.1}Functional Testing}{21}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}Non-Functional Testing}{21}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}User Feedback Testing}{21}{subsection.7.3}
-\contentsline {section}{\numberline {8}Evaluation of the Project}{22}{section.8}
-\contentsline {section}{\numberline {9}External Aspect}{23}{section.9}
-\contentsline {section}{\numberline {10}Further Work}{24}{section.10}
-\contentsline {section}{\numberline {11}Summary \& Personal Evaluation}{26}{section.11}
-\contentsline {section}{\numberline {A}Initial System Designs}{29}{appendix.A}
-\contentsline {subsection}{\numberline {A.1}Route Discovery/Landing Page}{29}{subsection.A.1}
-\contentsline {subsection}{\numberline {A.2}Route Listing Page}{30}{subsection.A.2}
-\contentsline {subsection}{\numberline {A.3}Route Detail Page}{31}{subsection.A.3}
-\contentsline {subsection}{\numberline {A.4}Route Creation Page}{32}{subsection.A.4}
-\contentsline {subsection}{\numberline {A.5}Profile Page}{32}{subsection.A.5}
-\contentsline {section}{\numberline {B}Interface Design Heuristics}{33}{appendix.B}
-\contentsline {subsection}{\numberline {B.1}Jakob Nielsen's Usability Heuristics}{33}{subsection.B.1}
-\contentsline {subsection}{\numberline {B.2}Ben Schneiderman's Golden Rules}{33}{subsection.B.2}
-\contentsline {section}{\numberline {C}Project Gantt Chart}{34}{appendix.C}
+\contentsline {section}{\numberline {1}Testing of the Project}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}Functional Testing}{1}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Non-Functional Testing}{1}{subsection.1.2}
+\contentsline {paragraph}{Accessibility}{1}{subsection.1.2}
+\contentsline {paragraph}{Usability and Operability}{1}{subsection.1.2}
+\contentsline {paragraph}{Maintainability \& Documentation}{1}{subsection.1.2}
+\contentsline {paragraph}{Quality}{1}{subsection.1.2}
+\contentsline {paragraph}{Resource Requirements and Constraints}{1}{subsection.1.2}
+\contentsline {paragraph}{Cross Platform Compatibility}{1}{subsection.1.2}
+\contentsline {paragraph}{Security}{1}{subsection.1.2}
+\contentsline {paragraph}{Disaster Recovery}{1}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}User Feedback Testing}{1}{subsection.1.3}
 \contentsfinish 
