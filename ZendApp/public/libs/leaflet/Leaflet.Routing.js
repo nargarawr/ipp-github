@@ -263,7 +263,7 @@ L.Routing = L.Control.extend({
             }
 
             try {
-                toggleMapLoadingIcon();
+                showMapLoadingIcon();
             } catch (err) {
             }
         }
@@ -350,9 +350,11 @@ L.Routing = L.Control.extend({
             cb(null, null);
         }
 
-        try {
-            toggleMapLoadingIcon();
-        } catch (err) {
+        if (this._waypoints._layers.length > 2) {
+            try {
+                showMapLoadingIcon();
+            } catch (err) {
+            }
         }
     }
 

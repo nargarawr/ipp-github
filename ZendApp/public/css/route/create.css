@@ -321,3 +321,23 @@ textarea {
     position: relative;
     margin-bottom: 15px;
 }
+
+.pointsTitle .fa.fa-pencil {
+    cursor: pointer;
+}
+
+#routeName_2 {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 30px;
+}
+
+#basic-addon {
+    cursor: pointer;
+    background-color: #5cb85c;
+    color:white;
+}
+
+#basic-addon:hover {
+    background-color: #47A447;
+}

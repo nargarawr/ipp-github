@@ -8,12 +8,20 @@
 <div id="left-hand-display">
     <i class="fa fa-compress" id="hide_lhd"></i>
     <div class="title">
-        <h3 class="pointsTitle">Your Points</h3>
+        <h3 class="pointsTitle">
+            <?= ($this->routeExists) ?
+                '<span>' . $this->route->name . '</span> <i class="fa fa-pencil"></i>'
+                : "Your Points"
+            ?>
+        </h3>
         <? if ($this->routeExists) { ?>
-            <div class="subtitle"><?= $this->route->name ?></div>
-        <? } else { ?>
-            <div class="subtitle-buffer"></div>
+            <div class="input-group hidden" id="routeName_2">
+                <input type="text" class="form-control" aria-describedby="basic-addon" value="<?= $this->route->name ?>">
+                <span class="input-group-addon" id="basic-addon"><i class="fa fa-check"></i></span>
+            </div>
+
         <? } ?>
+        <div class="subtitle-buffer"></div>
     </div>
     <div class="navbar-stripe"></div>
     <div class="noPointsYet">
@@ -35,12 +43,13 @@
 <div id="left-hand-display-mini" class="hidden">
     <i class="fa fa-expand" id="show_lhd"></i>
     <div class="title">
-        <h3 class="pointsTitle">Your Points</h3>
-        <? if ($this->routeExists) { ?>
-            <div class="subtitle"><?= $this->route->name ?></div>
-        <? } else { ?>
-            <div class="subtitle-buffer"></div>
-        <? } ?>
+        <h3 class="pointsTitle">
+            <?= ($this->routeExists) ?
+                '<span>' . $this->route->name . '</span> <i class="fa fa-pencil"></i>'
+                : "Your Points"
+            ?>
+        </h3>
+        <div class="subtitle-buffer"></div>
     </div>
     <div class="navbar-stripe"></div>
 </div>

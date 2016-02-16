@@ -148,7 +148,7 @@ var MapManager = Class.extend({
                 }
                 return cb(null, L.GeoJSON.geometryToLayer(geojson));
             }).success(function () {
-                toggleMapLoadingIcon();
+                hideMapLoadingIcon();
             });
         };
 
@@ -201,6 +201,7 @@ var PopupManager = Class.extend({
             mainClass:       'my-mfp-zoom-in'
         });
 
+        this.trigger = $('.popup-trigger.submit.pointsYet');
         this.submitButton = $('#submitRoute');
         this.cancelSubmit = $('#cancelSubmit');
         this.setupListeners();
@@ -276,6 +277,10 @@ var PopupManager = Class.extend({
                 });
             }
         });
+
+        this.trigger.click(function(){
+            $('#routeName').val($('#routeName_2').find('input').val());
+        })
     },
 
     /**
@@ -444,13 +449,15 @@ var UploadManager = Class.extend({
 });
 
 /**
- * Used to hide/show the "Loading Map" message/icon
+ * Used to show the "Loading Map" message/icon
  */
-function toggleMapLoadingIcon() {
-    var l = $("#loading");
-    if (l.hasClass("hidden")) {
-        l.removeClass("hidden");
-    } else {
-        l.addClass("hidden");
-    }
+function showMapLoadingIcon() {
+    $("#loading").removeClass("hidden");
+}
+
+/**
+ * Used to hide the "Loading Map" message/icon
+ */
+function hideMapLoadingIcon() {
+    $("#loading").addClass("hidden");
 }

@@ -35,15 +35,37 @@ var PointsListManager = Class.extend({
      * @author Craig Knott
      */
     setupListeners:    function () {
+        var _self = this;
         $('#hide_lhd').click(function () {
             $('#left-hand-display').addClass('hidden');
             $('#left-hand-display-mini').removeClass('hidden');
+
+            $('.pointsTitle').removeClass('hidden');
+            $('#routeName_2').addClass('hidden')
+            $('#routeName_2').find('input').val($($('.pointsTitle')[1]).text().trim());
+            $('.pointsTitle .fa.fa-pencil').addClass('hidden');
+
         });
 
         $('#show_lhd').click(function () {
             $('#left-hand-display').removeClass('hidden');
             $('#left-hand-display-mini').addClass('hidden');
+
+            $('.pointsTitle .fa.fa-pencil').removeClass('hidden');
         });
+
+        $('.pointsTitle .fa.fa-pencil').click(function(){
+            $('#routeName_2').removeClass('hidden');
+            $('.pointsTitle').addClass('hidden');
+        });
+
+        $('#basic-addon').click(function(){
+            $('#routeName_2').addClass('hidden');
+            $('.pointsTitle').removeClass('hidden');
+            $('.pointsTitle').find('span').text($('#routeName_2').find('input').val())
+            $('.pointsTitle .fa.fa-pencil').removeClass('hidden');
+        });
+
     },
     /**
      * Adds a point to the left hand display
