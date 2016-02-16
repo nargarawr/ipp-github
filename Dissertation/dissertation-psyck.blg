@@ -7,51 +7,50 @@ Warning--to sort, need author or key in url2015gmaps
 Warning--to sort, need author or key in url2015madmaps
 Warning--to sort, need author or key in url2015myscenicdrives
 Warning--empty journal in joint1995road
-Warning--can't use both volume and number fields in mcdougall2008like
 Warning--empty booktitle in ofcom2015comms
 Warning--empty booktitle in peregrino2012mapping
 Warning--empty year in peregrino2012mapping
 Warning--empty booktitle in van2011time
 Warning--empty year in van2011time
-You've used 29 entries,
+You've used 24 entries,
             2118 wiz_defined-function locations,
-            654 strings with 8623 characters,
-and the built_in function-call counts, 9069 in all, are:
-= -- 886
-> -- 402
-< -- 6
-+ -- 165
-- -- 132
-* -- 571
-:= -- 1467
-add.period$ -- 88
-call.type$ -- 29
-change.case$ -- 149
+            624 strings with 7671 characters,
+and the built_in function-call counts, 7414 in all, are:
+= -- 718
+> -- 338
+< -- 4
++ -- 140
+- -- 112
+* -- 464
+:= -- 1208
+add.period$ -- 73
+call.type$ -- 24
+change.case$ -- 125
 chr.to.int$ -- 0
-cite$ -- 39
-duplicate$ -- 366
-empty$ -- 757
-format.name$ -- 132
-if$ -- 1932
+cite$ -- 33
+duplicate$ -- 300
+empty$ -- 616
+format.name$ -- 112
+if$ -- 1574
 int.to.chr$ -- 0
-int.to.str$ -- 29
-missing$ -- 27
-newline$ -- 144
-num.names$ -- 52
-pop$ -- 213
+int.to.str$ -- 24
+missing$ -- 22
+newline$ -- 120
+num.names$ -- 42
+pop$ -- 182
 preamble$ -- 1
-purify$ -- 123
+purify$ -- 103
 quote$ -- 0
-skip$ -- 259
+skip$ -- 206
 stack$ -- 0
-substring$ -- 483
-swap$ -- 81
-text.length$ -- 6
+substring$ -- 371
+swap$ -- 62
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 110
-warning$ -- 10
-while$ -- 82
-width$ -- 31
-write$ -- 297
-(There were 10 warnings)
+type$ -- 92
+warning$ -- 9
+while$ -- 65
+width$ -- 26
+write$ -- 244
+(There were 9 warnings)

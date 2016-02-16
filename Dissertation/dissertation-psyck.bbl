@@ -3,17 +3,17 @@
 \bibitem{url2015gmaps}
 {Google Maps, My Maps} website.
 \newblock \url{https://www.google.com/maps/d}.
-\newblock Accessed: 01/10/2015.
+\newblock Accessed: 01/02/2016.
 
 \bibitem{url2015madmaps}
 {MADMAPs} website.
 \newblock \url{http://www.madmaps.net/}.
-\newblock Accessed: 01/10/2015.
+\newblock Accessed: 01/02/2016.
 
 \bibitem{url2015myscenicdrives}
 {My Scenic Drives} website.
 \newblock \url{https://www.myscenicdrives.com/}.
-\newblock Accessed: 01/10/2015.
+\newblock Accessed: 01/02/2016.
 
 \bibitem{beizer1995black}
 Boris Beizer.
@@ -26,24 +26,6 @@ Zaiben Chen, Heng~Tao Shen, and Xiaofang Zhou.
 \newblock Discovering popular routes from trajectories.
 \newblock In {\em Data Engineering (ICDE), 2011 IEEE 27th International
   Conference on}, pages 900--911. IEEE, 2011.
-
-\bibitem{cyr2010colour}
-Dianne Cyr, Milena Head, and Hector Larios.
-\newblock Colour appeal in website design within and across cultures: A
-  multi-method evaluation.
-\newblock {\em International journal of human-computer studies}, 68(1):1--21,
-  2010.
-
-\bibitem{depot2014clutter}
-Webdesigner Depot.
-\newblock Interface design technique to simplify and declutter your interfaces,
-  2014.
-
-\bibitem{golombisky2013white}
-Kim Golombisky and Rebecca Hagen.
-\newblock {\em White Space is Not Your Enemy: A Beginner's Guide to
-  Communicating Visually Through Graphic, Web \& Multimedia Design}.
-\newblock CRC Press, 2013.
 
 \bibitem{gross2013bootstrap}
 Joshua Gross.
@@ -85,13 +67,6 @@ John~D McCarthy, M~Angela Sasse, and Jens Riegelsberger.
   conventions.
 \newblock In {\em People and computers XVII—Designing for society}, pages
   401--414. Springer, 2004.
-
-\bibitem{mcdougall2008like}
-Sin{\'e}~JP McDougall and Irene Reppa.
-\newblock Why do i like it? the relationships between icon characteristics,
-  user performance and aesthetic appeal.
-\newblock In {\em Proceedings of the Human Factors and Ergonomics Society
-  Annual Meeting}, volume~52, pages 1257--1261. SAGE Publications, 2008.
 
 \bibitem{miller1956magical}
 George~A Miller.
@@ -157,12 +132,5 @@ Susan~B Wilson and Michael~S Dobson.
 \newblock {\em Goal Setting: How to Create an Action Plan and Achieve Your
   Goals}.
 \newblock Publisher - Amacom, 2008.
-
-\bibitem{zhang2000satisfiers}
-Ping Zhang and Gisela~M Von~Dran.
-\newblock Satisfiers and dissatisfiers: A two-factor model for website design
-  and evaluation.
-\newblock {\em Journal of the American society for information science},
-  51(14):1253--1268, 2000.
 
 \end{thebibliography}
