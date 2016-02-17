@@ -12,45 +12,45 @@ Warning--empty booktitle in peregrino2012mapping
 Warning--empty year in peregrino2012mapping
 Warning--empty booktitle in van2011time
 Warning--empty year in van2011time
-You've used 24 entries,
+You've used 23 entries,
             2118 wiz_defined-function locations,
-            624 strings with 7671 characters,
-and the built_in function-call counts, 7414 in all, are:
-= -- 718
-> -- 338
+            619 strings with 7597 characters,
+and the built_in function-call counts, 7133 in all, are:
+= -- 688
+> -- 331
 < -- 4
-+ -- 140
-- -- 112
-* -- 464
-:= -- 1208
-add.period$ -- 73
-call.type$ -- 24
-change.case$ -- 125
++ -- 136
+- -- 110
+* -- 444
+:= -- 1161
+add.period$ -- 70
+call.type$ -- 23
+change.case$ -- 121
 chr.to.int$ -- 0
-cite$ -- 33
-duplicate$ -- 300
-empty$ -- 616
-format.name$ -- 112
-if$ -- 1574
+cite$ -- 32
+duplicate$ -- 289
+empty$ -- 591
+format.name$ -- 110
+if$ -- 1517
 int.to.chr$ -- 0
-int.to.str$ -- 24
-missing$ -- 22
-newline$ -- 120
-num.names$ -- 42
-pop$ -- 182
+int.to.str$ -- 23
+missing$ -- 21
+newline$ -- 115
+num.names$ -- 40
+pop$ -- 180
 preamble$ -- 1
-purify$ -- 103
+purify$ -- 100
 quote$ -- 0
-skip$ -- 206
+skip$ -- 199
 stack$ -- 0
-substring$ -- 371
-swap$ -- 62
+substring$ -- 346
+swap$ -- 61
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 92
+type$ -- 88
 warning$ -- 9
-while$ -- 65
-width$ -- 26
-write$ -- 244
+while$ -- 61
+width$ -- 25
+write$ -- 233
 (There were 9 warnings)
