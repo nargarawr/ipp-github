@@ -53,6 +53,9 @@ class UserController extends BaseController {
 
         if (!is_null($customUserId)) {
             $displayedUser = UserFactory::getUser($customUserId);
+            if (is_null($displayedUser->username)) {
+                $this->_helper->redirector('details', 'user', null, array());
+            }
         }
 
         if ($customUserId === $this->user->userId || is_null($customUserId)) {
