@@ -45,6 +45,22 @@ $(document).ready(function () {
 
     // 90% of the height of the screen (minus the header and top of the social stream)
     $('.pointsList').css('max-height', (innerHeight - 165) * 0.9);
+
+    // centre map
+    $('#search-addon').click(function() {
+        $.ajax({
+            type: 'GET',
+            url:  "https://maps.googleapis.com/maps/api/geocode/json",
+            data: {
+                address: $('#centreMap').val(),
+                key:     "AIzaSyCwkWD2VSfdZWqbc8GUSOe76SZju3bx460"
+            }
+        }).success(function (response) {
+            var latlng = response.results[0].geometry.location;
+            map.setView([latlng.lat, latlng.lng], map.getZoom())
+        });
+
+    });
 });
 
 /**
@@ -97,7 +113,6 @@ var MapManager = Class.extend({
         var baseMaps = {
             "Satellite": sat,
             "Streets":   street
-
         };
 
         L.control.layers(baseMaps).addTo(map);

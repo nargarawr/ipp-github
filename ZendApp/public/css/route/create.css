@@ -341,3 +341,17 @@ textarea {
 #basic-addon:hover {
     background-color: #47A447;
 }
+
+.mapCentre {
+    padding: 5px;
+}
+
+#search-addon {
+    cursor: pointer;
+    color: white;
+    background-color:#428bca;
+}
+
+#search-addon:hover {
+    background-color:#3276b1;
+}

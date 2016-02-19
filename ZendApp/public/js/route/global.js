@@ -65,7 +65,6 @@ var PointsListManager = Class.extend({
             $('.pointsTitle').find('span').text($('#routeName_2').find('input').val())
             $('.pointsTitle .fa.fa-pencil').removeClass('hidden');
         });
-
     },
     /**
      * Adds a point to the left hand display
