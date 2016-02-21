@@ -86,40 +86,44 @@ In this section, each of the functional requirements laid out in section \ref{se
 
 \newpage 
 \subsection{Non-Functional Testing}
-In this section, each of the functional requirements laid out in section \ref{sec:funcs} have been evaluated and tested, to ensure that the system meets them. Black box testing\cite{beizer1995black} was employed here, where the inners workings of the system are irrelevant, as long as the external product could perform the function.
-{\color{red}
-	
-	\begin{itemize}
-		\item Look at non-functional requirements and talk about if they were met
-		\item Just like last year's diss
-	\end{itemize}
-}
+In this section, each of the non-functional requirements defined in section \ref{sec:nfuncs} have been evaluated, and steps taken to ensure they were adhered to have been listed.
+
+
 \paragraph{Accessibility}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+To ensure the service was accessible for the largest number of people, it was developed as a fully responsive web application, rather than a native mobile application. This meant that any users with an Internet connection could access the site, regardless of device. As a website, the project relied on the server to allow users to continually access it, for which there were two main concerns: the domain expiring, and the server going down. The solution to the first of these was setting up reminders to renew the domain when necessary, and the solution to the second would be to set up backup servers (although that was not within the scope of this project).
 
 \paragraph{Usability and Operability}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+To ensure that all users, regardless of skill level, could use the system effectively, it was designed to be as leading and simple as possible. This mean having large buttons to draw the eye to certain key tasks, decorating pages with well known icons (so users could easily determine what the functionality of each item should be), ensuring that simple language was used throughout, and that the interface was free of clutter, or at least presented in an organised way. As mentioned above, the application was developed as a fully responsive web application, utilising Twitter's Bootstrap framework, therefore allowing users of any device to access the website.
 
 \paragraph{Maintainability \& Documentation}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+This requirement was partially met simply through the use of the Zend Framework, which enforces a Model View Controller design pattern for the project. This meant that it was already modular, and the form was separate from the function. This, along with the extensive documentation and standards that have been produced for the Zend Framework, meant that understand different segments of the code is simple.\ \\
+\ \\
+In addition, every function and class has been commented with PHPDoc (or a JavaScript equivalent for the JavaScript code), and there the functionality of each individual block of code is immediately obvious, and an external developer should be able to understand what each block does, and how to use it.
 
 \paragraph{Quality}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+To ensure the software was of the highest quality, the standards defined above were strictly adhered to, including the use of Zend standards, and extensive commenting of code. To ensure that the quality of the product was equally as high, all new functionality was tested vigorously to ensure that it was free of bugs, and that it did not introduce bugs to other parts of the software. Further to this, the RITE method for identifying usability issues (which is discussed further in section \ref{sec:rite}) was employed with 15 individuals, to identify any potential problems with the interface. 
 
 \paragraph{Resource Requirements and Constraints}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+To ensure that the system was not a burden on the user's hardware, it was designed to do as much computation and calculation on the server side as possible. This meant that the server was responsible for doing the majority of the work, and the client would be spared. Even after page loads and the user did some interaction, an AJAX call would be made, which would get results, and do computation, and then the DOM of the page only needed a quick update to reflect these changes.\ \\
+\ \\
+The downloadable files (of routes) produced by the website were saved in JSON format, so that the signal-to-noise ratio (the amount of data used to describe the data itself) was kept to a minimum, meaning the size of the file was reduced. Even extremely large routes saved in this format would have minuscule file sizes (as a test, a route with 50 points was created, which only had a file size of 6KB).\ \\
+\ \\
+The final consideration was the amount of data being sent to the user, and keeping this to a minimum. For this reason, all libraries in the project were minified (both JavaScript and CSS), to reduce the total data expenditure. After the project is released fully, the JavaScript and CSS of each page can also be minified to further reduce the size of each web page. 
 
 \paragraph{Cross Platform Compatibility}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+Due to the project being a website, it was inherently cross-platform compatible, because it is rendered within a web browser rather than a specific application or operating system. However, there are many intricacies within each web browser, and therefore it was necessary to test the core functionality of the application in each of the main web browsers: Google Chrome, Internet Explorer, Mozilla Firefox, and Apple Safari. Despite some graphical differences due to how each browser renders page differently, the core functionality worked across each of these browsers (which served to increase the size of the user base that could be targeted).
 
 \paragraph{Security}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+As users were signing up for accounts for the system, they could provide some personally identifiable information. For this reason, both access to the web server, and access to the database running on the server required a correct user name and password. In addition to this, the passwords for all users were stored as an encrypted MD5 hash, to ensure that no member of the Niceway.to team could access a user's account unlawfully. \ \\
+\ \\
+Some information that user's can enter is also displayed on their profile page. For this reason, a disclaimer is included on the settings page, so that users can see what pieces of information will be publicly visible. This included: user name, age, length of membership, public routes, and location, but explicitly \textit{not} email address. This meant that had the freedom choose which pieces of information they shared, and those they would rather not include.
 
 \paragraph{Disaster Recovery}\ \\
-{\color{red} Was this met? If so, \textbf{how}?}
+There were several methods employed to aid in disaster prevention and recovery for Niceway.to. Other than having access to the server, and the ability to use the UNIX system to run whatever commands were necessary, the administrators of the site also had several tools available within the application that they could use. The first of these was the ability to task backups of the site, which would save a copy of an mysqldump of the database to a directory on the web server, allowing the site to be restored to a previous state if necessary. The second tool was the ability to de-authorize all active sessions, meaning that any users would be required to log in again, before continuing to use the site (useful if hackers had infiltrated user accounts). The final tool was the ability to lock the site, which would prevent any users that were not administrative users from logging into the site, instead presenting them with a message information them that Niceway.to was down for maintenance.
 
 \newpage 
 \subsection{User Feedback Testing}
+\label{sec:rite}
 Usability testing is the process of getting actual users to use the system, with these users performing a set of tasks whilst being observed. The time taken to complete the various tasks, and any comments or criticisms the user had were recorded, as well as any bugs the user encountered. The purpose of these tests was to discover usability problems in the interface, and what could be made simpler.\ \\
 \ \\
 For the tests a sample of 15 users were selected, with a skill level ranging from low, to very high, with ages ranging from 21 to 46. The reason for this broad range was that users of different skill levels, and different ages, use and understand computers differently, and therefore what is considered intuitive for one user is not necessarily considered the same by others. This meant that the number of usability issues and simplifications that could be identified was greatly increased. The five tasks that the users were expected to complete are given below, and a full list of instruction can be found in appendix \ref{sec:utis}.
@@ -187,7 +191,7 @@ After users determined that their routes were stored in the ``My Profile'' area 
 An interesting thing to point out in task five, which was a merit of the RITE method, was how the editing of titles changed as a result of the tests conducted. One of the first users commented that having to click ``Save'' before being able to change the title, especially when it is already displayed on the page. He suggested putting an edit icon next to the title, and allowing users to change this value here would be more intuitive. This feedback was then implemented and it was observed that every single participant utilised this new feature, and thus sped up the time it took to complete that particular task
 
 \paragraph{Issues Identified}\ \\
-The main issues that were identified during the usability tests, and were then resolved in between testing stages, have been listed below. The advantage of resolving these issues in between tests is that subsequent participants were able to detect unique and novel issues, rather than each user identifying the same set of issues.
+Some of the main issues that were identified during the usability tests, and were then resolved in between testing stages, have been listed below. The advantage of resolving these issues in between tests is that subsequent participants were able to detect unique and novel issues, rather than each user identifying the same set of issues.
 \ \\
 \ \\
 \noindent 
