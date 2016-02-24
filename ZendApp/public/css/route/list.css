@@ -134,3 +134,13 @@
     margin-top: 8px;
     font-size: 18px;
 }
+
+.noResults {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 50px;
+}
+
+.noResults button {
+  margin-top: 10px;
+}

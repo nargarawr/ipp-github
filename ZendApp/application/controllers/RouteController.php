@@ -212,7 +212,7 @@ class RouteController extends BaseController {
                 && ($isReadOnly || $this->user->userId == $this->view->route->owner || $this->user->isAdmin);
         }
 
-
+        $this->view->startMapAt = $this->getRequest()->getParam('startMapAt', 0);
     }
 
     /**

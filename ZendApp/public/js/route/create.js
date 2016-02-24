@@ -30,14 +30,14 @@ $(document).ready(function () {
             var lat = $('#center_map_lat').val();
             var lng = $('#center_map_lng').val();
             mm = new MapManager(lat, lng, 13, routeId);
-        } else if (response.status == "ZERO_RESULTS") {
+        } else if (response.status == "ZERO_RESULTS" && ($('#startMapAt').val() == '0')) {
             // Center on Nottingham if user location not set
             mm = new MapManager(52.95338, -1.18689, 13, routeId);
-        } else {
+        } else if ($('#startMapAt').val() == '0') {
             // Center on user location if set
             var latlng = response.results[0].geometry.location;
             mm = new MapManager(latlng.lat, latlng.lng, 13, routeId);
-        }
+        } 
 
         var uploadManager = new UploadManager();
         var popupManager = new PopupManager();
@@ -57,10 +57,24 @@ $(document).ready(function () {
             }
         }).success(function (response) {
             var latlng = response.results[0].geometry.location;
-            map.setView([latlng.lat, latlng.lng], map.getZoom())
+            map.setView([latlng.lat, latlng.lng], map.getZoom());
         });
-
     });
+    
+    if ($('#startMapAt').val() != "0") {
+        $.ajax({
+            type: 'GET',
+            url:  "https://maps.googleapis.com/maps/api/geocode/json",
+            data: {
+                address: $('#startMapAt').val(),
+                key:     "AIzaSyCwkWD2VSfdZWqbc8GUSOe76SZju3bx460"
+            }
+        }).success(function (response) {
+            var latlng = response.results[0].geometry.location;
+            mm = new MapManager(latlng.lat, latlng.lng, 13, routeId);
+            map.setView([latlng.lat, latlng.lng], map.getZoom());
+        });
+    }
 });
 
 /**

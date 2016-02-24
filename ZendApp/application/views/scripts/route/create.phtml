@@ -3,6 +3,7 @@
 <input type="hidden" value="<?= ($this->routeExists) ? $this->latlng->lat : '' ?>" id="center_map_lat">
 <input type="hidden" value="<?= ($this->routeExists) ? $this->latlng->lng : '' ?>" id="center_map_lng">
 <input type="hidden" value="<?= $this->readOnly ?>" id="mapReadOnly">
+<input type="hidden" value="<?= $this->startMapAt ?>" id="startMapAt">
 
 <div id="map"></div>
 <div id="left-hand-display">

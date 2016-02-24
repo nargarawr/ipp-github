@@ -72,16 +72,30 @@
             Not what you were looking for? Trying being more specific (i.e, "<i>St.Ives, Cornwall</i>", instead of just
             "<i>St.Ives</i>")
         </p>
-        <? $i = 0; ?>
-        <? foreach ($this->routes as $route) { ?>
-            <? if (!($route->onPage)) { ?>
-                <? continue; ?>
+
+        <? if (count($this->routes) > 0) { ?>
+            <? $i = 0; ?>
+            <? foreach ($this->routes as $route) { ?>
+                <? if (!($route->onPage)) { ?>
+                    <? continue; ?>
+                <? } ?>
+                <?= $this->partial('route', 'route', null, array(
+                    'route' => $route,
+                    'mapId' => 'map_' . $i
+                )); ?>
+                <? $i++; ?>
             <? } ?>
-            <?= $this->partial('route', 'route', null, array(
-                'route' => $route,
-                'mapId' => 'map_' . $i
-            )); ?>
-            <? $i++; ?>
+        <? } else { ?>
+            <div class="noResults">
+                <div class="explanation">
+                    We don't currently have a route between <?= $this->startAddress ?>
+                    and <?= $this->endAddress ?>. <br>
+                    Why not create one?
+                </div>
+                <a href="/route/create/startMapAt/<?= $this->startAddress ?>">
+                  <button class="btn btn-success"> Create Route </button>
+                </a>
+            </div>
         <? } ?>
 
         <? if (count($this->routes) > $this->pageLimit) { ?>
@@ -123,4 +137,3 @@
     <input type="hidden" name="page_num" id="page_num" value="<?= $this->pageNum ?>">
     <input type="hidden" name="page_lim" id="page_lim" value="<?= $this->pageLimit ?>">
 </form>
-
