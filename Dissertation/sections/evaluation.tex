@@ -1,15 +1,21 @@
 \section{Evaluation of the Project}
-
-{\color{red}
-	Successes and Limitations of the Project
-	\begin{itemize}
-		\item As a result of the test...
-		\item + get proof that it is easy to use for morons, and claim this is a success (due to handling of errors and intuitive design)
-		\item + modular design and adherence to design patterns with well commented code
-		\item + 
-		\item +0.5, I worked well and was always ahead
-		\item - creation page was lacking in features
-		\item - routing unreliable at times, because of using free service
-		\item - lack of unit tests, especially considering zend and external devs
-	\end{itemize}
+\label{sec:eval}
+At the beginning of the project, the three main aims of Niceway.to were stated, and it seems fitting to now use these aims to evaluate whether or not Niceway.to was a success. These aims were to build a community of travel enthusiasts, improve the travelling experience of those that use Niceway.to, and allow for users of all skill groups to access it. Unfortunately, the first two of these cannot be evaluated at this point, due to the system having no user base. The system can, however, be evaluated as to how well it facilitates the interaction necessary for these to be achieved at a later date.\ \\
+\ \\
+The usability testing that was conducted was fairly conclusive in proving that the system was easy to use, for users of all skill groups. Of all the main actions that are available in Niceway.to, all of them could be completed by a brand new user to the system, with minimal help, in a short period of time, and this time would be lessened the more they used to site. This ease of use stems from the simple and descriptive language used throughout the site, the use of icons to depict the functionality of different features, and the use of errors messages that explained how to fix problems, rather than simply telling the user they had caused one. This meant that used could focus more on the content of the site, and were unrestricted and uninhibited by the medium in which it was represented.
+\ \\
+\ \\
+One of the key successes of the project is the work conducted to facilitate the growth of a community around Niceway.to. There were several different approaches that were taken, to appeal to a wider audience, and attract more users. The first of these was the social stream present on every route. This was a list of all social interactions performed by all users on that route. This meant that other users could see what other users felt about this route, and could contribute their own opinions too. This was the key selling point of Niceway.to, and allowed users to communicate with one another, and feel like part of a community, where all members are working towards a common goal. The other method employed was the introduction of the customisation user profile picture, that allowed users to show off achievements and milestones they had reached. This targeted users that enjoyed the collecting of items and required them to be active members of the community in order to do so.\ \\
+\ \\
+{\color{blue}
+another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good another reason the software is good 
 }
+\ \\
+\ \\
+As with most software, there are certain areas of this project that could be improved upon, if the project was to be worked on again, or more time was granted. The first of these was not in the application itself, but rather how it was implemented. Using the Zend framework, there is a huge amount of support for unit tests, and test driven development. However, in this project, these were not utilised, and a standard approach of testing each feature as it was implemented was used. This worked well for the beginning of the project, and meant that a lot of progress could be made very rapidly. However, as the project progressed, new features would begin to change older features in unexpected ways, and undetected bugs would begin to emerge. When these bugs were later found, time was required to revisited previously ``complete'' areas of the project, to change them to work with the new features, and remove these bugs. This meant that a lot of time was wasted redoing work that was already complete. This also means that when external developers take over the project, they will find it harder to track down bugs and solve them, due to the lack of an automated testing framework.\ \\
+\ \\
+As all routes on Niceway.to are used contributed, the tool for creating these routes needed to be simple to understand and use. The route creation page currently has support for users to add, edit, and delete points on a map, centre the map on specific locations, and join points with a route. This is the bare minimum functionality that one would expect, but it quickly becomes apparent that further functionality is required for such an important area of the website. This includes things such as being able to reorder points once a route has been constructed (at the moment, one wrong points requires other points to be moved or deleted), a better interface for modifying the details of individual points (at the moment, only a simple pop up is provided, which is inadequate for points with lots of detail), {\color{red}and one more! oh boy don't forget to fill this in otherwise that would be super embarrassing!}. This lack of features could quickly become a limiting factor of the site, and may deter contributors, therefore making it something that should be addressed.\ \\
+\ \\
+The final key limitation of the project, present on several pages on the application, is the routing software implemented. For the most part, the route provides accurate paths between points, in a relatively short period of time. However, for unknown reasons, there are occasions where parts of routes will simply not load, or take an extremely long time. This is probably due to this being a freely provided service, and the large number of requests being made by Niceway.to. This could be resolved by implementing a new routing service, potentially a premium service, which would provide more accurate, and more reliable results. Alternative (or in addition to this), the results of the routing could be cached on the server, to reduce the number of requests being made for routes, and allowing pages, and routes, to load much faster.
+
+
