@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  26 FEB 2016 16:20
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.1.20)  27 FEB 2016 15:58
 entering extended mode
 **dissertation-psyck.tex
 
@@ -1386,22 +1386,22 @@ tion-psyck.toc")
 ]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
 /introduction.tex")
-Underfull \hbox (badness 10000) in paragraph at lines 3--177
+Underfull \hbox (badness 10000) in paragraph at lines 3--178
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--177
+Underfull \hbox (badness 10000) in paragraph at lines 3--178
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--177
+Underfull \hbox (badness 10000) in paragraph at lines 3--178
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--177
+Underfull \hbox (badness 10000) in paragraph at lines 3--178
 
  []
 
@@ -1415,26 +1415,26 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.177 \newpage
+l.178 \newpage
                [1]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
 /motivation.tex")
-Underfull \hbox (badness 10000) in paragraph at lines 2--179
+Underfull \hbox (badness 10000) in paragraph at lines 2--180
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--179
+Underfull \hbox (badness 10000) in paragraph at lines 2--180
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--179
+Underfull \hbox (badness 10000) in paragraph at lines 2--180
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--179
+Underfull \hbox (badness 10000) in paragraph at lines 2--180
 
  []
 
@@ -1442,7 +1442,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.179 \newpage
+l.180 \newpage
                [2]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
 /background.tex"
@@ -2215,40 +2215,31 @@ Overfull \hbox (8.34718pt too wide) in paragraph at lines 195--223
 ) [30]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
 /evaluation.tex"
-Underfull \hbox (badness 10000) in paragraph at lines 3--20
+Underfull \hbox (badness 10000) in paragraph at lines 3--11
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--20
+Underfull \hbox (badness 10000) in paragraph at lines 3--11
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--20
+Underfull \hbox (badness 10000) in paragraph at lines 3--11
+
+ []
+
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 13--19
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--20
+Underfull \hbox (badness 10000) in paragraph at lines 13--19
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 3--20
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 3--20
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [31])
-[32]
+) [32]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
 /external.tex"
 Underfull \hbox (badness 10000) in paragraph at lines 3--6
@@ -2256,7 +2247,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 3--6
  []
 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 30--193
+Underfull \hbox (badness 10000) in paragraph at lines 30--194
 
  []
 
@@ -2299,17 +2290,17 @@ ges/further/notification.png> <C:/Users/Cxk/Google Drive/University/Fourth Year
 /G54IPP/Dissertation/images/further/chat.png>]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
 /summary.tex")
-Underfull \hbox (badness 10000) in paragraph at lines 2--197
+Underfull \hbox (badness 10000) in paragraph at lines 2--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--197
+Underfull \hbox (badness 10000) in paragraph at lines 2--198
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--197
+Underfull \hbox (badness 10000) in paragraph at lines 2--198
 
  []
 
@@ -2511,22 +2502,22 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 ]
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\sections
 /appendix/testing_results.tex")
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 236.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 237.
  [46]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 236.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 237.
 
 ("C:\Users\Cxk\Google Drive\University\Fourth Year\G54IPP\Dissertation\disserta
 tion-psyck.aux")
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 236.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 236.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 237.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 237.
 Package rerunfilecheck Info: File `dissertation-psyck.out' has not changed.
 (rerunfilecheck)             Checksum: 9707647817820A05EB7ACCA941844A39;3100.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 236.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 237.
  ) 
 Here is how much of TeX's memory you used:
  26198 strings out of 493921
  460669 string characters out of 3144882
- 638288 words of memory out of 3000000
+ 637288 words of memory out of 3000000
  28686 multiletter control sequences out of 15000+200000
  17341 words of font info for 71 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -2568,7 +2559,7 @@ les (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files
 )/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files (x86)/Mi
 KTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on dissertation-psyck.pdf (52 pages, 9708258 bytes).
+Output written on dissertation-psyck.pdf (52 pages, 9709005 bytes).
 PDF statistics:
  793 PDF objects out of 1000 (max. 8388607)
  206 named destinations out of 1000 (max. 500000)
